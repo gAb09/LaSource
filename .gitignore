@@ -9,3 +9,4 @@ Homestead.json
 lasource.sublime-project
 lasource.sublime-workspace
 readme.md
+*.DS_Store
