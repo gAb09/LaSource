@@ -4,9 +4,19 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
+    "repositories": [
+    {
+        "type": "vcs",
+        "url": "https://github.com/gAb09/helpers",
+        "url": "https://github.com/gAb09/menus"
+    }
+    ],
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.2.*"
+        "laravel/framework": "5.2.29",
+        "gab09/helpers": "1.*",
+        "gab09/menus": "1.*",
+        "laravelcollective/html": "5.2.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -20,7 +30,8 @@
             "database"
         ],
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Menus\\": "Packages/gab09/menus/src"
         }
     },
     "autoload-dev": {
