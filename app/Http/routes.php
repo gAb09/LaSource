@@ -11,6 +11,19 @@
 |
 */
 
+// Route::post('loginChoice', 'Auth\AuthController@ChoisirModeAuthentification');
+
+
+Route::auth();
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::group(['middleware' => 'auth'], function () {
+
+	Route::resource('menus', '\Menus\MenuController');
+
+});
+
+Route::get('/home', 'HomeController@index');
