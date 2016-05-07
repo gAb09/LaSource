@@ -11,10 +11,23 @@
 |
 */
 
-// Route::post('loginChoice', 'Auth\AuthController@ChoisirModeAuthentification');
+Route::get('/home', 'HomeController@index');
 
 
-Route::auth();
+// Authentication Routes...
+$this->get('login', 'Auth\AuthController@showLoginForm');
+$this->post('login', 'Auth\AuthController@logi');
+$this->get('logout', 'Auth\AuthController@logout');
+
+// Registration Routes...
+$this->get('register', 'Auth\AuthController@showRegistrationForm');
+$this->post('register', 'Auth\AuthController@register');
+
+// Password Reset Routes...
+$this->get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
+$this->post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
+$this->post('password/reset', 'Auth\PasswordController@reset');
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,8 +39,4 @@ Route::group(['middleware' => 'auth'], function () {
 
 });
 
-Route::get('/home', 'HomeController@index');
 
-Route::auth();
-
-Route::get('/home', 'HomeController@index');

@@ -109,4 +109,8 @@ return [
 
     'sendmail' => '/usr/sbin/sendmail -bs',
 
+    'to' => [
+    'address' => 'lasource@confluence09.fr',
+    'name' => 'OuaibMaistre La Source'
+],
 ];

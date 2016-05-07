@@ -47,15 +47,15 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/home') }}">Home</a></li>
+                    <li><a href="{{ url('/home') }}">Espace personnel</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
-                        <li><a href="{{ url('/login') }}">Login</a></li>
-                        <li><a href="{{ url('/register') }}">Register</a></li>
+                        <li><a href="{{ url('/login') }}">Connexion</a></li>
+                        <li><a href="{{ url('/register') }}">Inscription</a></li>
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -78,5 +78,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+    @section('script')
+
+    @show
+
 </body>
 </html>

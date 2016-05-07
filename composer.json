@@ -1,9 +1,8 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "name": "gab09/lasource",
+    "description": "Application de commandes de paniers de l’association La Source",
     "license": "MIT",
-    "type": "project",
+    "type": "library",
     "repositories": [
     {
         "type": "vcs",
@@ -16,7 +15,7 @@
         "laravel/framework": "5.2.29",
         "gab09/helpers": "1.*",
         "gab09/menus": "1.*",
-        "laravelcollective/html": "5.2.*"
+        "laravelcollective/html": "5.2.4"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -36,26 +35,10 @@
     },
     "autoload-dev": {
         "classmap": [
-            "tests/TestCase.php"
         ]
     },
     "scripts": {
-        "post-root-package-install": [
-            "php -r \"copy('.env.example', '.env');\""
-        ],
-        "post-create-project-cmd": [
-            "php artisan key:generate"
-        ],
-        "post-install-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postInstall",
-            "php artisan optimize"
-        ],
-        "post-update-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "php artisan optimize"
-        ]
     },
     "config": {
-        "preferred-install": "dist"
     }
 }
