@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
-use App\Client;
+use App\ClientOld;
+use App\Helpers\Transfert;
 use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -25,7 +26,7 @@ class AuthController extends Controller
     |
     */
 
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
+    use AuthenticatesAndRegistersUsers, ThrottlesLogins, Transfert;
 
     /**
      * Where to redirect users after login / registration.
@@ -33,6 +34,9 @@ class AuthController extends Controller
      * @var string
      */
     protected $redirectTo = '/home';
+
+    protected $username = 'pseudo';
+
 
     /**
      * Create a new authentication controller instance.
@@ -45,14 +49,15 @@ class AuthController extends Controller
     }
 
     /**
-     * Surcharge de Illuminate\Foundation\Auth\AuthenticatesUsers.
+     * Reprise partielle de Illuminate\Foundation\Auth\AuthenticatesUsers.
      * + Recours à l'ancien mode d'authentification (tryOldAuthentication()) si échec de la nouvelle.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function logi(Request $request)
+    public function patteblanche(Request $request)
     {
+
         $this->validateLogin($request);
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
@@ -71,7 +76,6 @@ class AuthController extends Controller
         if (Auth::guard($this->getGuard())->attempt($credentials, $request->has('remember'))) {
             return $this->handleUserWasAuthenticated($request, $throttles);
         }
-
         // If the login attempt was unsuccessful we will increment the number of attempts
         // to login and redirect the user back to the login form. Of course, when this
         // user surpasses their maximum number of attempts they will get locked out.
@@ -79,40 +83,16 @@ class AuthController extends Controller
             $this->incrementLoginAttempts($request);
         }
 
-        // Si l'utilisateur n'était pas transféré on essaie avec l'ancienne authentification 
-        var_dump(Auth::User());
-        if ($this->tryOldAuthentication($request, $throttles)) {
-            dd("Old OK");
-            return $this->handleUserWasAuthenticated($request, $throttles);
-        }else{
-            dd("Old pas OK");
-        }
-
-       return $this->sendFailedLoginResponse($request);
+        // Si l'utilisateur n'est pas authentifié avec la nouvelle procédure, 
+        // c'est peut-être parcequ'il n'a pas encore été transféré.
+        // On va donc 
+        // 1) chercher à authentifier avec l'ancienne procédure, 
+        // 2) le cas échéant, gérer le tranfert en envisageant tous les dysfonctionnement possibles,
+        // 3) contrôler sa bonne exécution,
+        // 4) authentifier l'utilisateur.
+        return $this->HandleTransfert($request, $throttles);
     }
 
-     /**
-     * Surcharge de Illuminate\Foundation\Auth\AuthenticatesUsers.
-     * Essaie l'ancien mode d'authentification (tryOldAuthentication()) si échec de la nouvelle.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-   private function tryOldAuthentication($request, $throttles){
-            var_dump("tryAuthOld");
-
-        //login_client existe ?
-        if(!empty($client = Client::where('login_client', $request->input("pseudo"))->first())) {
-             var_dump("login trouvé");
-           var_dump($request->input());
-            var_dump($client['attributes']);
-            // tryAuthOldViaLogin();
-            return false;
-        }else{
-            var_dump("pas de OldUser");
-            return false;
-        }
-    }
 
     /**
      * Get a validator for an incoming registration request.
@@ -123,25 +103,11 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'pseudo' => 'required|max:255',
+            'pseudo' => 'required|max:255|unique:users',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
-        ]);
+            ]);
     }
-
-    /**
-     * Surcharge de Illuminate\Foundation\Auth\AuthenticatesUsers.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return void
-     */
-    protected function validateLogin(Request $request)
-    {
-        $this->validate($request, [
-            $this->loginUsername() => 'required', 'password' => 'required',
-        ]);
-    }
-
 
     /**
      * Create a new user instance after a valid registration.
@@ -155,18 +121,9 @@ class AuthController extends Controller
             'pseudo' => $data['pseudo'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-        ]);
+            ]);
     }
 
-        /**
-     * Get the login username to be used by the controller.
-     *
-     * @return string
-     */
-    public function loginUsername()
-    {
-        return property_exists($this, 'username') ? $this->username : 'pseudo';
-    }
 
     /**
      * Surcharge de Surcharge de Illuminate\Foundation\Auth\AuthenticatesUsers\RegistersUsers
@@ -182,26 +139,11 @@ class AuthController extends Controller
         if ($validator->fails()) {
             $this->throwValidationException(
                 $request, $validator
-            );
+                );
         }
-        dd('register');
-
         Auth::guard($this->getGuard())->login($this->create($request->all()));
 
         return redirect($this->redirectPath());
-    }
-
-
-/* -------------------------------------------------------------------------------------
-Hachage SHA-1 - héritage de la première version
---------------------------------------------------------------------------------------- */
-
-function codageOLD($password)
-    {
-    $prefix = 'dkklqlsdqs7567hkj';
-    $sufix = 'kjlklsq7065chKg65';
-    $entree=$prefix.$entree.$sufix; 
-    return sha1($entree);
     }
 
 }
