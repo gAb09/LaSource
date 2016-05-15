@@ -5,6 +5,7 @@ namespace App\Helpers;
 use Illuminate\Http\Request;
 use App\User;
 use App\ClientOld;
+use Mail;
 
 trait Transfert
 {
@@ -48,7 +49,7 @@ trait Transfert
             return $this->sendFailedLoginResponse($request);
         }
 
-            return $this->handleUserWasAuthenticated($request, $throttles);
+        return $this->handleUserWasAuthenticated($request, $throttles);
     }
 
 
@@ -117,7 +118,7 @@ trait Transfert
 
      /**
      * ???????????????????.
-     * ????????????????? 
+     * ???????????????return dd(?? 
      *
      * @return \Illuminate\Http\Response ???????
      */
@@ -126,7 +127,14 @@ trait Transfert
         if(empty($clientOld = ClientOld::where('mail', $request->input("email"))->first())) {
             dd('mailNotFound');
         }else{
-            dd($clientOld->mail);
+            // dd($clientOld->mail);
+            $retour = Mail::send('auth.emails.test', ['clientOld' => $clientOld], function ($m) use ($clientOld) {
+                // $m->from(env('MAIL_SENDER_ADRESS'), env('MAIL_SENDER'));
+
+                $m->to('gbom@club-internet.fr', $clientOld->login_client)->subject('Your Reminder!');
+            });
+
+            return $retour;
         }
     }
 
