@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class EspaceClientController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -17,6 +17,7 @@ class HomeController extends Controller
         // $this->middleware('auth');
     }
 
+
     /**
      * Show the application dashboard.
      *
@@ -24,6 +25,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('espaceclient');
     }
 }

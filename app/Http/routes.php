@@ -11,17 +11,20 @@
 |
 */
 
-Route::get('/home', 'HomeController@index');
+Route::get('/', function () {
+	return view('accueil');
+});
+
 
 
 // Authentication Routes...
-$this->get('login', 'Auth\AuthController@showLoginForm');
-$this->post('login', 'Auth\AuthController@patteblanche');
-$this->get('logout', 'Auth\AuthController@logout');
+$this->get('connexion', 'Auth\AuthController@showLoginForm');
+$this->post('connexion', 'Auth\AuthController@connexion');
+$this->get('deconnexion', 'Auth\AuthController@deconnexion');
 
 // Registration Routes...
-$this->get('register', 'Auth\AuthController@showRegistrationForm');
-$this->post('register', 'Auth\AuthController@register');
+$this->get('inscription', 'Auth\AuthController@showRegistrationForm');
+$this->post('inscription', 'Auth\AuthController@register');
 
 // Password Reset Routes...
 $this->get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
@@ -32,11 +35,9 @@ $this->post('password/reset', 'Auth\PasswordController@reset');
 $this->post('transfert/resetoldlogin', 'Auth\AuthController@ResetOldloginViaMail');
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::group(['middleware' => 'auth'], function () {
+
+	Route::get('/espaceclient', 'EspaceClientController@index');
 
 	Route::resource('menus', '\Menus\MenuController');
 

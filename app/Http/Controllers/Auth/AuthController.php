@@ -55,7 +55,7 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function patteblanche(Request $request)
+    public function connexion(Request $request)
     {
 
         $this->validateLogin($request);
@@ -132,7 +132,7 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function register(Request $request)
+    public function inscription(Request $request)
     {
         $validator = $this->validator($request->all());
 

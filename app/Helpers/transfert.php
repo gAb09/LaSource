@@ -129,8 +129,6 @@ trait Transfert
         }else{
             // dd($clientOld->mail);
             $retour = Mail::send('auth.emails.test', ['clientOld' => $clientOld], function ($m) use ($clientOld) {
-                // $m->from(env('MAIL_SENDER_ADRESS'), env('MAIL_SENDER'));
-
                 $m->to('gbom@club-internet.fr', $clientOld->login_client)->subject('Your Reminder!');
             });
 
