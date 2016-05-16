@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('accueil', function () {
 	return view('accueil');
 });
 
@@ -20,7 +20,7 @@ Route::get('/', function () {
 // Authentication Routes...
 $this->get('connexion', 'Auth\AuthController@showLoginForm');
 $this->post('connexion', 'Auth\AuthController@connexion');
-$this->get('deconnexion', 'Auth\AuthController@deconnexion');
+$this->get('logout', 'Auth\AuthController@logout');
 
 // Registration Routes...
 $this->get('inscription', 'Auth\AuthController@showRegistrationForm');
@@ -32,7 +32,7 @@ $this->post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
 $this->post('password/reset', 'Auth\PasswordController@reset');
 
 // Transfert Routes...
-$this->post('transfert/resetoldlogin', 'Auth\AuthController@ResetOldloginViaMail');
+$this->post('transfert/identifviamail', 'Auth\AuthController@OldLoginFailed');
 
 
 Route::group(['middleware' => 'auth'], function () {

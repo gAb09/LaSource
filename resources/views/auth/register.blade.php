@@ -5,7 +5,25 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
+                <div class="panel-heading">
+                    Inscription<br />
+
+                    @if (\Session::has('statut'))
+                        @if (\Session::get('statut') == 'OldUserInconnu')
+                            Nous ne vous avons pas trouvé !!
+                        @elseif (\Session::get('statut') == 'OldAuthFailed')
+                            Nous n'avons pas pu vous identifier !!
+                        @elseif (\Session::get('statut') == 'TransfertFailed')
+                            Nous n'avons pas pu vous transférer !!
+                        @else
+                            ?????
+                        @endif
+                        <br />Nous sommes désolés, mais il est nécessaire de refaire votre inscription.
+                        <br />Le problème rencontré nous a été automatiquement communiqué,
+                        et nous faisons le nécessaire pour le résoudre. 
+                     @endif
+                    
+                </div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
                         {!! csrf_field() !!}

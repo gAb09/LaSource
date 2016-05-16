@@ -40,7 +40,8 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Laravel
+                    Laravel<br />Loggé : 
+                    {{ null !==(Auth::user()) ? Auth::user()->pseudo : 'aucun' }}
                 </a>
             </div>
 
@@ -63,7 +64,7 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Deconnexion</a></li>
                             </ul>
                         </li>
                     @endif

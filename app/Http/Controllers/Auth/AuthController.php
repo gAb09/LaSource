@@ -33,10 +33,23 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = 'espaceclient';
 
     protected $username = 'pseudo';
 
+    protected $loginView = 'auth.connexionform';
+
+    protected $redirectAfterLogout = 'accueil';
+
+    /**
+     * Create a new authentication controller instance.
+     *
+     * @return void
+     */
+    public function deconnexion()
+    {
+        return $this->logout;
+    }
 
     /**
      * Create a new authentication controller instance.
@@ -82,15 +95,12 @@ class AuthController extends Controller
         if ($throttles && ! $lockedOut) {
             $this->incrementLoginAttempts($request);
         }
+        var_dump('new failed');
 
-        // Si l'utilisateur n'est pas authentifié avec la nouvelle procédure, 
-        // c'est peut-être parcequ'il n'a pas encore été transféré.
-        // On va donc 
-        // 1) chercher à authentifier avec l'ancienne procédure, 
-        // 2) le cas échéant, gérer le tranfert en envisageant tous les dysfonctionnement possibles,
-        // 3) contrôler sa bonne exécution,
-        // 4) authentifier l'utilisateur.
+        // Si l'utilisateur n'est pas authentifié dans la nouvelle application, 
+        // il faut voir s'il existait dans l'ancienne mais pas encore été transféré.
         return $this->HandleTransfert($request, $throttles);
+
     }
 
 
