@@ -6,10 +6,11 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Connexion<br />
-                    @if(\Session::has('message_mail'))
-                        {{\Session::get('message_mail')}}
+                    @if(\Session::has('message_transfert'))
+                        {{\Session::get('message_transfert')}}
                     @endif
+                    <br />
+                    <h3>Connexion</h3>
                 </div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/connexion') }}">

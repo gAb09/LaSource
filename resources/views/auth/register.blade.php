@@ -6,23 +6,15 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Inscription<br />
+                    @if(\Session::has('message_transfert'))
+                        {{\Session::get('message_transfert')}}
+                    <br />Nous sommes désolés, mais il est nécessaire de refaire votre inscription.
+                    <br />Le problème rencontré nous a été automatiquement communiqué,
+                    et nous faisons le nécessaire pour le résoudre. 
+                    @endif
+                    <br />
+                    <h3>Inscription</h3>
 
-                    @if (\Session::has('statut'))
-                        @if (\Session::get('statut') == 'OldUserInconnu')
-                            Nous ne vous avons pas trouvé !!
-                        @elseif (\Session::get('statut') == 'OldAuthFailed')
-                            Nous n'avons pas pu vous identifier !!
-                        @elseif (\Session::get('statut') == 'TransfertFailed')
-                            Nous n'avons pas pu vous transférer !!
-                        @else
-                            ?????
-                        @endif
-                        <br />Nous sommes désolés, mais il est nécessaire de refaire votre inscription.
-                        <br />Le problème rencontré nous a été automatiquement communiqué,
-                        et nous faisons le nécessaire pour le résoudre. 
-                     @endif
-                    
                 </div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
@@ -35,9 +27,9 @@
                                 <input type="text" class="form-control" name="pseudo" value="{{ old('pseudo') }}">
 
                                 @if ($errors->has('pseudo'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('pseudo') }}</strong>
-                                    </span>
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('pseudo') }}</strong>
+                                </span>
                                 @endif
                             </div>
                         </div>
@@ -49,9 +41,9 @@
                                 <input type="email" class="form-control" name="email" value="{{ old('email') }}">
 
                                 @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('email') }}</strong>
+                                </span>
                                 @endif
                             </div>
                         </div>
@@ -63,9 +55,9 @@
                                 <input type="password" class="form-control" name="password">
 
                                 @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('password') }}</strong>
+                                </span>
                                 @endif
                             </div>
                         </div>
@@ -77,9 +69,9 @@
                                 <input type="password" class="form-control" name="password_confirmation">
 
                                 @if ($errors->has('password_confirmation'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                    </span>
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('password_confirmation') }}</strong>
+                                </span>
                                 @endif
                             </div>
                         </div>

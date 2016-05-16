@@ -7,7 +7,7 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Désolés. Nous n’avons pas trouvé le Pseudo “{{$pseudo}}”.<br />
+                    {{ $message_transfert}}.<br />
                     Nous pouvons réinitialiser votre compte client,<br />
                     mais par souci de sécurité, ceci doit se faire via une confirmation par courriel.
                 </div>
@@ -18,7 +18,7 @@
                         </div>
                     @endif
 
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/transfert/identifviamail') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/transfert/controloldmail') }}">
                         {!! csrf_field() !!}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">

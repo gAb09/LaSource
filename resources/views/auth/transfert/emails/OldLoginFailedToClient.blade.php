@@ -1,3 +1,5 @@
+<?php $clientOld = $datas['clientOld'] ?>
+
 Bonjour {{$clientOld->prenom}} {{$clientOld->nom}}.<br />
 
 Il semble que vous ayez un problème avec votre pseudo.

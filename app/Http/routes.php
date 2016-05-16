@@ -32,7 +32,10 @@ $this->post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
 $this->post('password/reset', 'Auth\PasswordController@reset');
 
 // Transfert Routes...
-$this->post('transfert/identifviamail', 'Auth\AuthController@OldLoginFailed');
+$this->post('transfert/controloldmail', 'Auth\AuthController@ControlOldMail');
+
+// Contact Routes...
+$this->get('contact', 'ContactController@Contact');
 
 
 Route::group(['middleware' => 'auth'], function () {
