@@ -5,7 +5,12 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Connexion</div>
+                <div class="panel-heading">
+                    Connexion<br />
+                    @if(\Session::has('message_mail'))
+                        {{\Session::get('message_mail')}}
+                    @endif
+                </div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/connexion') }}">
                         {!! csrf_field() !!}
@@ -14,7 +19,7 @@
                             <label class="col-md-4 control-label">Pseudo</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="pseudo" value="{{ old('pseudo') }}">
+                                <input type="text" class="form-control" name="pseudo" value="{{ $oldPseudo or old('pseudo') }}">
 
                                 @if ($errors->has('pseudo'))
                                     <span class="help-block">

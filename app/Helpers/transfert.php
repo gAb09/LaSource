@@ -24,6 +24,7 @@ trait Transfert
     | 
     */
 
+    private $statut_transfert = '';
 /**
 * Traitement du transfert.
 *
@@ -86,20 +87,16 @@ public function OldLoginFailed(Request $request)
     }else{
         var_dump($clientOld->mail);
 
-        $this->statutTransfert = 'OldLoginFailed';
+        $this->statut_transfert = 'OldLoginFailed';
 
         $this->SendMailOuaibmaistre($request, $clientOld);
 
-        $retour = Mail::send('auth.emails.test', ['clientOld' => $clientOld], function ($m) use ($clientOld) {
-            $m->to('gbom@club-internet.fr', $clientOld->login_client)->subject('Your Reminder!');
-        });
-
-        return $retour;
+        return $this->SendMailClient($request, $clientOld);
     }
 }
 
 /**
-* Si mail inconnu aussi, on fait une nouvelle inscription + set statutTransfert = OldUserInconnu.
+* Si mail inconnu aussi, on fait une nouvelle inscription + set statut_transfert = OldUserInconnu.
 *
 * @return \Illuminate\Http\Response ???????
 */
@@ -107,11 +104,11 @@ public function OldUserInconnu()
 {
     var_dump('mailNotFound : OldUserInconnu');
 
-    $this->statutTransfert = 'OldUserInconnu';
+    $this->statut_transfert = 'OldUserInconnu';
 
     $this->SendMailOuaibmaistre(null, null);
 
-    \Session::flash('statut', $this->statutTransfert);
+    \Session::flash('statut', $this->statut_transfert);
 
     return redirect()->action('Auth\AuthController@showRegistrationForm');
 }
@@ -120,9 +117,31 @@ public function OldUserInconnu()
 *
 * @param  \Illuminate\Http\Request  $request, $clientOld
 */
-public function SendMailOuaibmaistre($request, $clientOld = null)
-{
-    var_dump('mailOuaibmaistre : '.$this->statutTransfert);
+public function SendMailOuaibmaistre($request, $clientOld = null){
+    $statut_transfert = $this->statut_transfert;
+     // return view('auth.transfert.emails.mailOuaibmaistre')->with(compact('clientOld', 'statut_transfert')); //TEST MAIL
+    $mail = Mail::send('auth.transfert.emails.mailOuaibmaistre', compact('clientOld', 'statut_transfert'), function ($m) use ($clientOld, $statut_transfert) {
+        $m->to('lasource@confluence09.fr')->subject("$statut_transfert : $clientOld->nom");
+    });
+
+    return $mail;
+}
+
+/**
+*
+* @param  \Illuminate\Http\Request  $request, $clientOld
+*/
+public function SendMailClient($request, $clientOld = null){
+    $mail = Mail::send('auth.transfert.emails.oldLoginFailed', ['clientOld' => $clientOld], function ($m) use ($clientOld) {
+        $m->to($clientOld->mail, $clientOld->login_client)->subject('Your Reminder!');
+    });
+
+    if($mail){
+        \Session::flash('message_mail', 'Un mail de confrmation vient de vous être envoyé');
+        return redirect()->action('Auth\AuthController@showLoginForm');
+    }else{
+        return redirect()->action('ContactController@showContactForm');
+    }
 }
 
 

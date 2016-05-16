@@ -18,7 +18,7 @@ Route::get('accueil', function () {
 
 
 // Authentication Routes...
-$this->get('connexion', 'Auth\AuthController@showLoginForm');
+$this->get('connexion/{oldPseudo?}', 'Auth\AuthController@showLoginForm');
 $this->post('connexion', 'Auth\AuthController@connexion');
 $this->get('logout', 'Auth\AuthController@logout');
 

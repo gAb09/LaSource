@@ -120,6 +120,24 @@ class AuthController extends Controller
     }
 
     /**
+     * Show the application login form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showLoginForm($oldPseudo = null)
+    {
+        $view = property_exists($this, 'loginView')
+                    ? $this->loginView : 'auth.authenticate';
+
+        if (view()->exists($view)) {
+            return view($view)->with(compact('oldPseudo'));
+        }
+
+        return view('auth.login');
+    }
+
+
+    /**
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
