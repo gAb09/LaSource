@@ -41,15 +41,6 @@ class AuthController extends Controller
 
     protected $redirectAfterLogout = 'accueil';
 
-    /**
-     * Create a new authentication controller instance.
-     *
-     * @return void
-     */
-    public function deconnexion()
-    {
-        return $this->logout;
-    }
 
     /**
      * Create a new authentication controller instance.
@@ -59,11 +50,13 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+        $this->statut = \Session::get('transfert.statut');
     }
 
     /**
-     * Reprise partielle de Illuminate\Foundation\Auth\AuthenticatesUsers.
-     * + Recours à l'ancien mode d'authentification (tryOldAuthentication()) si échec de la nouvelle.
+     * Reprise de Illuminate\Foundation\Auth\AuthenticatesUsers.
+     * + Recours à l'ancienne procédure d'authentification
+     * avant de déclarer l'échec de la nouvelle.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -95,7 +88,6 @@ class AuthController extends Controller
         if ($throttles && ! $lockedOut) {
             $this->incrementLoginAttempts($request);
         }
-        var_dump('new failed');
 
         // Si l'utilisateur n'est pas authentifié dans la nouvelle application, 
         // il faut voir s'il existait dans l'ancienne mais pas encore été transféré.
@@ -127,7 +119,7 @@ class AuthController extends Controller
     public function showLoginForm($oldPseudo = null)
     {
         $view = property_exists($this, 'loginView')
-                    ? $this->loginView : 'auth.authenticate';
+                    ? $this->loginView : 'auth.connexionForm';
 
         if (view()->exists($view)) {
             return view($view)->with(compact('oldPseudo'));
@@ -174,4 +166,7 @@ class AuthController extends Controller
         return redirect($this->redirectPath());
     }
 
+    function __destruct() {
+        \Session::flash('transfert.statut', $this->statut);
+    }
 }

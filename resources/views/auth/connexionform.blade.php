@@ -6,8 +6,8 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    @if(\Session::has('message_transfert'))
-                        {{\Session::get('message_transfert')}}
+                    @if(\Session::has('transfert.message'))
+                        {{\Session::get('transfert.message')}}
                     @endif
                     <br />
                     <h3>Connexion</h3>

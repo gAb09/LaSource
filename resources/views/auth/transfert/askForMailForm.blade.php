@@ -7,9 +7,13 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {{ $message_transfert}}.<br />
-                    Nous pouvons réinitialiser votre compte client,<br />
+                    @if(\Session::has('transfert.message'))
+                        {{\Session::get('transfert.message')}}<br />
+                    Votre compte client peut être réinitialisé,<br />
                     mais par souci de sécurité, ceci doit se faire via une confirmation par courriel.
+                    @endif
+                    <br />
+                    <h3>Réinitialisation de compte</h3>
                 </div>
                 <div class="panel-body">
                     @if (session('status'))

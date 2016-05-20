@@ -6,8 +6,8 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    @if(\Session::has('message_transfert'))
-                        {{\Session::get('message_transfert')}}
+                    @if(\Session::has('transfert.message'))
+                        {{\Session::get('transfert.message')}}
                     <br />Nous sommes désolés, mais il est nécessaire de refaire votre inscription.
                     <br />Le problème rencontré nous a été automatiquement communiqué,
                     et nous faisons le nécessaire pour le résoudre. 

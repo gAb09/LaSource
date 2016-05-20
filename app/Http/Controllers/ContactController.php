@@ -32,19 +32,20 @@ class ContactController extends Controller
      *
      * @return void
      */
-    public function Contact()
-    {
-        return dd('vue “contacter OuaibMaistre” à créer');
-    }
-
-    /**
-     * Create a new authentication controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         // $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+    }
+
+
+    /**
+     * ????????????????.
+     *
+     * @return void
+     */
+    public function Contact()
+    {
+        return dd('vue “contacter OuaibMaistre” à créer');
     }
 
 }
