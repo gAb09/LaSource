@@ -37,7 +37,7 @@ class AuthController extends Controller
 
     protected $username = 'pseudo';
 
-    protected $loginView = 'auth.connexionform';
+    protected $loginView = 'auth.connexionForm';
 
     protected $redirectAfterLogout = 'accueil';
 
@@ -89,9 +89,11 @@ class AuthController extends Controller
             $this->incrementLoginAttempts($request);
         }
 
+
         // Si l'utilisateur n'est pas authentifié dans la nouvelle application, 
-        // il faut voir s'il existait dans l'ancienne mais pas encore été transféré.
-        return $this->HandleTransfert($request, $throttles);
+        // il faut voir s'il existait dans l'ancienne et pas encore transféré.
+        $this->setStatut('AuthFailed');
+        return $this->TryLogin($request, $throttles);
 
     }
 

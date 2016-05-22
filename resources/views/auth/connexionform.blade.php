@@ -79,7 +79,7 @@
                                     <i class="fa fa-btn fa-sign-in"></i>Se connecter
                                 </button>
 
-                                <a class="btn btn-link" href="{{ url('/password/reset') }}">Mot de passe oublié ?</a>
+                                <a class="btn btn-link" href="{{ url('/password/reset') }}">Identifiants oubliés ?</a>
                             </div>
                         </div>
                     </form>

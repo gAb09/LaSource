@@ -32,7 +32,7 @@ $this->post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
 $this->post('password/reset', 'Auth\PasswordController@reset');
 
 // Transfert Routes...
-$this->get('transfert/OldLoginFailed', 'Auth\AuthController@showOldLoginFailedForm');
+$this->get('transfert/OldLoginFailed/{pseudo?}', 'Auth\AuthController@askMailOldLoginFailed');
 $this->post('transfert/OldLoginFailed', 'Auth\AuthController@HandleOldLoginFailed');
 // $this->any('oldpassword/sendemail/{request?}', 'Transfert\OldPasswordController@sendResetLinkEmail');
 
