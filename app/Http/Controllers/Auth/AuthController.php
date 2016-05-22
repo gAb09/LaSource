@@ -129,6 +129,7 @@ class AuthController extends Controller
     }
 
 
+
     /**
      * Create a new user instance after a valid registration.
      *
@@ -143,7 +144,6 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
             ]);
     }
-
 
     /**
      * Surcharge de Surcharge de Illuminate\Foundation\Auth\AuthenticatesUsers\RegistersUsers

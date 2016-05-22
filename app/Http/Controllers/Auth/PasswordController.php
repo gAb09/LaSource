@@ -29,4 +29,31 @@ class PasswordController extends Controller
     {
         $this->middleware('guest');
     }
+
+
+    /**
+     * Surcharge de Illuminate\Foundation\Auth\ResetsPasswords.
+     * 'alert.success' remplace 'status'
+     *
+     * @param  string  $response
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function getSendResetLinkEmailSuccessResponse($response)
+    {
+        return redirect()->back()->with('alert.success', trans($response));
+    }
+
+    /**
+     * Surcharge de Illuminate\Foundation\Auth\ResetsPasswords.
+     * 'alert.success' remplace 'status'
+     *
+     * @param  string  $response
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function getResetSuccessResponse($response)
+    {
+        return redirect($this->redirectPath())->with('alert.success', trans($response));
+    }
+
+
 }

@@ -28,70 +28,82 @@ trait Transfert
 
     /**
      * 0) TransfertOK : transfert effectué.
-     * 1) OldLoginFailed : Non identifié (login ne match pas).
-     * 2) OldUserInconnu : Inconnu (login + mail ne match pas).
-     * 3) OldAuthFailed : Non authentifié (Ancienne procédure à échoué, transfert interrompu).
-     * 4) TransfertFailed : Problème en cours de transfert (Test nouvelle procédure à échoué, rollback transaction => transfert non effectué).
+     * 1) NewAuthFailed : Non authentifié (nouvelle procédure à échoué).
+     * 2) OldLoginFailed : Non identifié (login ne match pas old procédure).
+     * 3) OldUserInconnu : Inconnu (login + mail ne match pas).
+     * 4) OldAuthFailed : Non authentifié (ancienne procédure à échoué, transfert interrompu).
+     * 5) TransfertFailed : Problème en cours de transfert (Test nouvelle procédure à échoué, rollback transaction => transfert non effectué).
      *
      * @return void
      */
     private $statut = '';
 
 
+
     /**
     * Traitement du transfert.
-    *
-    * @param  \Illuminate\Http\Request  $request, $throttles
-    * @return \Illuminate\Http\Response
-    */
-    private function HandleTransfert($request, $throttles){
-
-        //Est-ce que le pseudo match un ancien login ?
-        return $this->TryOldLoginMatch($request, $throttles);
-    }
-
-
-    /**
     * Si le pseudo fourni n'est pas trouvé dans l'ancienne base (champs “login_client“) :
     * – on place le statut à “OldLoginFailed“
     * – on demande à l'utilisater son email pour savoir comment poursuivre la procédure.
     * 
-    * @param  \Illuminate\Http\Request
-    * @return \View ou void
+    * @param  \Illuminate\Http\Request  $request, $throttles
+    * @return \Illuminate\Http\Response
     */
-    private function TryOldLoginMatch($request, $throttles)
+    private function HandleTransfert($request, $throttles)
     {
+        //Est-ce que le pseudo match un ancien login ?
         $clientOld = ClientOld::where('login_client', $request->input("pseudo"))->first();
 
         if(empty($clientOld)) {
-            $this->SetOldLoginFailed($request);
-
-            return $this->askForMail();
+            return $this->ConnexionOldLoginFailed($request);
         }
         return $this->tryOldAuthentication($clientOld, $request, $throttles);
     }
 
 
-    /**
-    * Gère le statut pour le statut dans le cas "OldLoginFailed" .
+     /**
+    * Appelle le formulaire de connexion en mode "OldLoginFailed".
     *
     * @param  \Illuminate\Http\Request
+    * @return \Illuminate\Http\Response
     */
-    private function SetOldLoginFailed($request)
-    {
+     private function ConnexionOldLoginFailed($request)
+     {
         $this->statut = 'OldLoginFailed';
-        \Session::flash('transfert.message', 'Nous n\'avons pas trouvé le pseudo “'.$request->input('pseudo').'”.');
+        return view('auth.transfert.connexion_OldLoginFailed')->with('pseudo', $request->input("pseudo"));
     }
 
 
     /**
-    * Présente au client un formulaire pour saisir son mail.
+    * Appel de la vue "askMailOldLoginFailed.
     *
-    * @return View
+    * @return \Illuminate\Http\Response
     */
-    private function askForMail(){
-        return view('auth.transfert.askForMailForm');
+    public function showOldLoginFailedForm(){
+        return view('auth.transfert.askMailOldLoginFailed');
     }
+
+
+    /**
+    * Essai de l'ancien mode d'authentification.
+    *
+    * @param  \Illuminate\Http\Request - Model $clientOld - $throttles
+    * @return \Illuminate\Http\Response
+    */
+    private function tryOldAuthentication($clientOld, $request, $throttles){
+        $password_coded = $this->codageOLD($request->input('password'));
+
+        if ($password_coded == $clientOld->mdp_client) 
+        { 
+          return $this->DoTransfert($request, $throttles);
+      }
+
+      $this->statut = 'OldAuthFailed';
+      \Session::Flash('alert.danger', 'Nous n\'avons pas pu vous authentifier avec vos anciens identifiants');
+      return dd('vue à implémenter');
+  }
+
+
 
 
     /**
@@ -138,10 +150,10 @@ trait Transfert
     * @param  \Illuminate\Http\Request - Model $clientOld
     * @return \Illuminate\Http\Response
     */
-    public function HandleCurrentStatut($clientOld, $request){
-        $function = 'Handle'.$this->statut;
-        return $this->{$function}($clientOld, $request);
-    }
+    // public function HandleCurrentStatut($clientOld, $request){
+    //     $function = 'Handle'.$this->statut;
+    //     return $this->{$function}($clientOld, $request);
+    // }
 
 
     /**
@@ -152,17 +164,22 @@ trait Transfert
     * @param  \Illuminate\Http\Request - Model $clientOld
     * @return \Illuminate\Http\Response ???????
     */
-    private function HandleOldLoginFailed($clientOld, $request)
-    {
-        $param['subject'] = $this->statut;
-        $datas[] = $request->input('email');
-        $datas[] = $request;
-        $this->SendMailOM($param, $datas);
+    public function HandleOldLoginFailed(Request $request){
+        $this->validate($request, ['email' => 'required|email']);
 
-        $param['address'] = $request->input("email");
-        $param['subject'] = 'Paniers La Source : rappel de votre login';
-        $datas['clientOld'] = $clientOld;
-        return $this->SendMailClient($param, $datas, 'auth.transfert.emails.clients.OldLoginFailed');
+        if(empty($clientOld = ClientOld::where('mail', $request->input('email'))->first())) {
+            return $this->HandleOldUserInconnu($clientOld, $request);
+        }else{
+            $param['subject'] = $this->statut;
+            $datas[] = $request->input('email');
+            $datas[] = $request;
+            $this->SendMailOM($param, $datas);
+
+            $param['address'] = $request->input("email");
+            $param['subject'] = 'Paniers La Source : Récupération de pseudo';
+            $datas['clientOld'] = $clientOld;
+            return $this->SendMailClient($param, $datas, 'auth.transfert.emails.clients.OldLoginFailed');
+        }
     }
 
 
@@ -188,44 +205,10 @@ trait Transfert
         });
 
         if($envoi){
-            \Session::flash('transfert.message', 'Un mail vient de vous être envoyé');
-            return redirect()->action('Auth\AuthController@showLoginForm');
+            return redirect()->action('Auth\AuthController@showLoginForm')->with('alert.success', trans('mails.sent'));
         }else{
             return redirect()->action('ContactController@Contact');
         }
-    }
-
-
-
-    /**
-    * Essai de l'ancien mode d'authentification.
-    *
-    * @param  \Illuminate\Http\Request - Model $clientOld - $throttles
-    * @return \Illuminate\Http\Response
-    */
-    private function tryOldAuthentication($clientOld, $request, $throttles){
-        $password_coded = $this->codageOLD($request->input('password'));
-
-        if ($password_coded == $clientOld->mdp_client) 
-        { 
-          return $this->DoTransfert($request, $throttles);
-      }
-
-      $this->SetOldAuthFailed($request);
-
-      return $this->askForMail();
-  }
-
-
-    /**
-    * Gère le statut pour le statut dans le cas "OldAuthFailed" .
-    *
-    * @param  \Illuminate\Http\Request
-    */
-    private function SetOldAuthFailed($request)
-    {
-        $this->statut = 'OldAuthFailed';
-        \Session::flash('transfert.message', 'Nous n\'avons pas pu vous authentifier avec vos anciens identifiants');
     }
 
 
@@ -239,17 +222,20 @@ trait Transfert
     */
     private function HandleOldAuthFailed($clientOld, $request)
     {
-        $param['subject'] = $this->statut.' - '.$request->input('pseudo');
-        $datas[] = $request->input('email');
-        $datas[] = $request;
-        $this->SendMailOM($param, $datas);
+       $email = $request->input('email');
+       \Session::reflash('transfert.statut');
+       return redirect()->action('Transfert\OldPasswordController@sendResetLinkEmail', $email);
+        // $param['subject'] = $this->statut.' - '.$request->input('pseudo');
+        // $datas[] = $request->input('email');
+        // $datas[] = $request;
+        // $this->SendMailOM($param, $datas);
 
-        $param['address'] = $request->input("email");
-        $param['subject'] = 'Paniers La Source : rappel de vos identifiants';
-        $datas['clientOld'] = $clientOld;
-        $datas['mdp_tempo'] = $this->getMdpTempo();
-        return $this->SendMailClient($param, $datas, 'auth.transfert.emails.clients.OldAuthFailed');
-    }
+        // $param['address'] = $request->input("email");
+        // $param['subject'] = 'Paniers La Source : rappel de vos identifiants';
+        // $datas['clientOld'] = $clientOld;
+        // $datas['mdp_tempo'] = $this->getMdpTempo();
+        // return $this->SendMailClient($param, $datas, 'auth.transfert.emails.clients.OldAuthFailed');
+   }
 
 
     /**

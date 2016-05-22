@@ -6,10 +6,29 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    @if(\Session::has('transfert.message'))
-                        {{\Session::get('transfert.message')}}
+
+                    @if (session('alert.danger'))
+                        <div class="alert alert-danger">
+                            {!! session('alert.danger') !!}
+                        </div>
                     @endif
-                    <br />
+                    @hasSection('alert-danger')
+                        <div class="alert alert-danger">
+                            @yield('alert-danger')
+                        </div>
+                    @endif
+
+                    @if (session('alert.success'))
+                        <div class="alert alert-success">
+                            {!! session('alert.success') !!}
+                        </div>
+                    @endif
+                    @hasSection('alert-success')
+                        <div class="alert alert-success">
+                            @yield('alert-success')
+                        </div>
+                    @endif
+
                     <h3>Connexion</h3>
                 </div>
                 <div class="panel-body">
@@ -23,9 +42,9 @@
                                 <input type="text" class="form-control" name="pseudo" value="{{ $oldPseudo or old('pseudo') }}">
 
                                 @if ($errors->has('pseudo'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('pseudo') }}</strong>
-                                    </span>
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('pseudo') }}</strong>
+                                </span>
                                 @endif
                             </div>
                         </div>
@@ -37,9 +56,9 @@
                                 <input type="password" class="form-control" name="password">
 
                                 @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('password') }}</strong>
+                                </span>
                                 @endif
                             </div>
                         </div>

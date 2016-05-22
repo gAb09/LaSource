@@ -7,26 +7,36 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    @if(\Session::has('transfert.message'))
-                        {{\Session::get('transfert.message')}}<br />
-                    Votre compte client peut être réinitialisé,<br />
-                    mais par souci de sécurité, ceci doit se faire via une confirmation par courriel.
+                    <h3>@yield('titre')</h3>
+                    @if (session('alert.danger'))
+                        <div class="alert alert-danger">
+                            {!! session('alert.danger') !!}
+                        </div>
                     @endif
-                    <br />
-                    <h3>Réinitialisation de compte</h3>
-                </div>
-                <div class="panel-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
+                    @hasSection('alert-danger')
+                        <div class="alert alert-danger">
+                            @yield('alert-danger')
                         </div>
                     @endif
 
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/transfert/controloldmail') }}">
+                    @if (session('alert.success'))
+                        <div class="alert alert-success">
+                            {!! session('alert.success') !!}
+                        </div>
+                    @endif
+                    @hasSection('alert-success')
+                        <div class="alert alert-success">
+                            @yield('alert-success')
+                        </div>
+                    @endif
+
+                </div>
+                <div class="panel-body">
+                    @yield('action')
                         {!! csrf_field() !!}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">E-mail</label>
+                            <label class="col-md-4 control-label">E-Mail Address</label>
 
                             <div class="col-md-6">
                                 <input type="email" class="form-control" name="email" value="{{ old('email') }}">
