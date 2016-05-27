@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
-use App\ClientOld;
-use App\Helpers\Transfert;
+use App\Domaines\UserDomaine as User;
+use App\Domaines\ClientOldDomaine as ClientOld;
+
+use App\Http\Controllers\Transfert\TransfertTrait;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
@@ -26,7 +27,7 @@ class AuthController extends Controller
     |
     */
 
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins, Transfert;
+    use AuthenticatesAndRegistersUsers, ThrottlesLogins, TransfertTrait;
 
     /**
      * Where to redirect users after login / registration.
@@ -47,10 +48,13 @@ class AuthController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(User $user, ClientOld $client_old)
     {
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
         $this->statut = \Session::get('transfert.statut');
+        $this->user = $user;
+        $this->client_old = $client_old;
+
     }
 
     /**
@@ -93,7 +97,7 @@ class AuthController extends Controller
         // Si l'utilisateur n'est pas authentifié dans la nouvelle application, 
         // il faut voir s'il existait dans l'ancienne et pas encore transféré.
         $this->setStatut('AuthFailed');
-        return $this->TryLogin($request, $throttles);
+        return $this->TryPseudo($request, $throttles);
 
     }
 

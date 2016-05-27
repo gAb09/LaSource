@@ -12,23 +12,11 @@
                             {!! session('alert.danger') !!}
                         </div>
                     @endif
-                    @hasSection('alert-danger')
-                        <div class="alert alert-danger">
-                            @yield('alert-danger')
-                        </div>
-                    @endif
-
                     @if (session('alert.success'))
                         <div class="alert alert-success">
                             {!! session('alert.success') !!}
                         </div>
                     @endif
-                    @hasSection('alert-success')
-                        <div class="alert alert-success">
-                            @yield('alert-success')
-                        </div>
-                    @endif
-
                     <h3>Connexion</h3>
                 </div>
                 <div class="panel-body">
@@ -79,7 +67,7 @@
                                     <i class="fa fa-btn fa-sign-in"></i>Se connecter
                                 </button>
 
-                                <a class="btn btn-link" href="{{ url('/password/reset') }}">Identifiants oubliés ?</a>
+                                <a class="btn btn-link" href="{{ url('/password/reset') }}">“Problème d’identifiants” ?</a>
                             </div>
                         </div>
                     </form>
