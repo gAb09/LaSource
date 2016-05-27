@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Http\Controllers\Transfert;
 
-use Illuminate\Http\Request;
-use App\User;
-use App\ClientOld;
+// use Illuminate\Http\Request;
 use Mail;
 
 
-trait Transfert
+trait TransfertTrait
 {
     /*
     |--------------------------------------------------------------------------
@@ -31,21 +29,18 @@ trait Transfert
     |       SinonSi l'adresse est trouvée dans l'ancienne base => ResetOldCredentials + mail OM
     |       SinonSi l'adresse n'est pas trouvée du tout => OldUserInconnu => Inscription + mail OM
     |  
-    | 1) , 
-    | 2) si ok, gérer le tranfert en envisageant tous les dysfonctionnement possibles et ouvrir une transaction,
-    | 3) si ok contrôler la bonne exécution du transfert (en faisant un test via la nouvelle procédure) et commit ou rollback la transaction,
-    | 4) si ok authentifier l'utilisateur.
-    | 
     */
 
 
     /*
+     * Les STATUTS :
      * 0) AuthFailed : Utilisateur inconnu.
      * 1) ResetOldCredentials : Client a demandé la régénération de ses identifiants (OLD).
      * 2) OldUserInconnu : Inconnu (login + mail ne match pas).
      * 3) EnCours : transfert en cours, pas encore controlé (begin transaction).
-     * 4) TransfertFailed : Problème en cours de transfert (Test nouvelle procédure à échoué, rollback transaction => transfert non effectué).
-     * 5) OK : transfert terminé et validé (begin transaction).
+     * 4) TransfertFailed : Problème en cours de transfert
+     *    (Test nouvelle procédure à échoué, rollback transaction => transfert non effectué).
+     * 5) OK : transfert terminé et validé (commit transaction).
 
      *
      * @return void
@@ -55,31 +50,33 @@ trait Transfert
 
 
     /**
-    * Traitement du transfert.
-    * Si le pseudo fourni n'est pas trouvé dans l'ancienne base (champs “login_client“) :
-    * – on place le statut à “OldLoginFailed“
-    * – on demande à l'utilisater son email pour savoir comment poursuivre la procédure.
+    * Traitement du pseudo.
+    * – Si le pseudo fourni est trouvé dans la nouvelle base (champs “login_client“)
+    *   c'est que le user se trompe => connexionForm.
+    * – Si le pseudo fourni n'est pas trouvé dans l’ancienne base (champs “login_client“)
+    *   c'est que le problème ne vient pas d'un transfert à effectuer => connexionForm.
+    *   s'il est trouvé on tente l'ancienne authentification en lui passant le client_old trouvé.
     * 
     * @param  \Illuminate\Http\Request  $request, $throttles
     * @return \Illuminate\Http\Response
     */
-    private function TryLogin($request, $throttles)
+    private function TryPseudo($request, $throttles)
     {
-        if(!is_null($this->MatchNewLogin($request))){
+        if( !is_null( $this->PseudoInNewBDD($request) ) ){
             return $this->AuthFailed($request);
         }
 
-        if(!is_null($clientOld = $this->MatchOldLogin($request))) {
-            return $this->tryOldAuthentication($clientOld, $request, $throttles);
-        }else{
+        if( is_null( $clientOld = $this->PseudoInOldBDD($request) ) ) {
             return $this->AuthFailed($request);
+        }else{
+            return $this->tryOldAuthentication($clientOld, $request, $throttles);
         }
     }
 
 
-    private function MatchNewLogin($request)
+    private function PseudoInNewBDD($request)
     {
-        return User::where('pseudo', $request->input("pseudo"))->first();
+        return $this->user->FindBy('pseudo', $request->input("pseudo"));
     }
 
 
@@ -98,14 +95,14 @@ trait Transfert
     }
 
 
-    private function MatchOldLogin($request)
+    private function PseudoInOldBDD($request)
     {
-        return ClientOld::where('login_client', $request->input("pseudo"))->first();
+        return $this->client_old->FindBy('login_client', $request->input("pseudo"));
     }
 
 
     /**
-    * Essai de l'ancien mode d'authentification.
+    * Ancien mode d'authentification.
     *
     * @param  \Illuminate\Http\Request - Model $clientOld - $throttles
     * @return \Illuminate\Http\Response
@@ -118,7 +115,6 @@ trait Transfert
         }else{
             return $this->AuthFailed($request);
         }
-        return $this->AuthFailed($request);
     }
 
 
@@ -134,7 +130,7 @@ trait Transfert
     }
 
 
-    /**
+    /** ----------------------   A VOIR   -----------------------
     * Exécute le transfert avec vérification
     *
     * @param  \Illuminate\Http\Request
@@ -149,6 +145,31 @@ trait Transfert
         }
         return dd('DoTransfert à échoué');
     }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Hachage SHA-1 - héritage de la première version
+    |--------------------------------------------------------------------------
+    |
+    | Si l'utilisateur n'est pas authentifié avec la nouvelle procédure, 
+    | c'est peut-être parcequ'il n'a pas encore été transféré.
+    | On va donc 
+    | 1) chercher à authentifier avec l'ancienne procédure, 
+    | 2) le cas échéant, gérer le tranfert en envisageant tous les dysfonctionnement possibles,
+    | 3) contrôler sa bonne exécution,
+    | 4) authentifier l'utilisateur.
+    | 
+    */
+    private function oldCodage($password)
+    {
+        $prefix = 'dkklqlsdqs7567hkj';
+        $sufix = 'kjlklsq7065chKg65';
+        return sha1($prefix.$password.$sufix);
+    }
+
+
+
 
 
 
@@ -177,24 +198,6 @@ trait Transfert
             return $this->HandleCurrentStatut($clientOld, $request);
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     /** ----------------------   A REVOIR   -----------------------
@@ -273,28 +276,4 @@ trait Transfert
             return redirect()->action('ContactController@Contact');
         }
     }
-
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Hachage SHA-1 - héritage de la première version
-    |--------------------------------------------------------------------------
-    |
-    | Si l'utilisateur n'est pas authentifié avec la nouvelle procédure, 
-    | c'est peut-être parcequ'il n'a pas encore été transféré.
-    | On va donc 
-    | 1) chercher à authentifier avec l'ancienne procédure, 
-    | 2) le cas échéant, gérer le tranfert en envisageant tous les dysfonctionnement possibles,
-    | 3) contrôler sa bonne exécution,
-    | 4) authentifier l'utilisateur.
-    | 
-    */
-    private function oldCodage($password)
-    {
-        $prefix = 'dkklqlsdqs7567hkj';
-        $sufix = 'kjlklsq7065chKg65';
-        return sha1($prefix.$password.$sufix);
-    }
-
 }
