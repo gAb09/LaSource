@@ -1,4 +1,4 @@
-@extends('auth.askMailForm')
+@extends('auth.askMailLayout')
 
 @section('titre')
 Réinitialiser mon mot de passe

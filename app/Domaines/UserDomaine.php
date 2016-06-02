@@ -8,8 +8,8 @@ use App\User;
 class UserDomaine
 {
 
-	public function FindBy($Botte_foin, $aiguille)
+	public function FindBy($colonne, $quoi)
 	{
-		return User::where($Botte_foin, $aiguille)->first();
+		return User::where($colonne, $quoi)->first();
 	}
 }

@@ -8,8 +8,8 @@ use App\ClientOld;
 class ClientOldDomaine
 {
 
-	public function FindBy($Botte_foin, $aiguille)
+	public function FindBy($colonne, $quoi)
 	{
-		return ClientOld::where($Botte_foin, $aiguille)->first();
+		return ClientOld::where($colonne, $quoi)->first();
 	}
 }

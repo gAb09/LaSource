@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('/', function () {
+	return view('accueil');
+});
+
 Route::get('accueil', function () {
 	return view('accueil');
 });
@@ -28,7 +32,7 @@ $this->post('inscription', 'Auth\AuthController@register');
 
 // Password Reset Routes...
 $this->get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
-$this->post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
+$this->post('password/email', 'Auth\PasswordController@handleUserOrClientOld');
 $this->post('password/reset', 'Auth\PasswordController@reset');
 
 // Transfert Routes...
@@ -40,12 +44,12 @@ $this->post('transfert/OldLoginFailed', 'Auth\AuthController@HandleOldLoginFaile
 $this->get('contact', 'ContactController@Contact');
 
 
-Route::group(['middleware' => 'auth'], function () {
+// Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/espaceclient', 'EspaceClientController@index');
 
 	Route::resource('menus', '\Menus\MenuController');
 
-});
+// });
 
 

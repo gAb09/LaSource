@@ -4,6 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
+
+use App\Domaines\UserDomaine as User;
+use App\Domaines\ClientOldDomaine as ClientOld;
+
 
 class PasswordController extends Controller
 {
@@ -20,14 +27,22 @@ class PasswordController extends Controller
 
     use ResetsPasswords;
 
+    private $linkRequestView = 'auth.passwords.askMail';
+
+
+    private $broker;
+
+
     /**
      * Create a new password controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(User $user, ClientOld $client_old)
     {
         $this->middleware('guest');
+        $this->user = $user;
+        $this->client_old = $client_old;
     }
 
 
@@ -53,6 +68,92 @@ class PasswordController extends Controller
     protected function getResetSuccessResponse($response)
     {
         return redirect($this->redirectPath())->with('alert.success', trans($response));
+    }
+
+
+    /**
+     * Surcharge de Illuminate\Foundation\Auth\ResetsPasswords.
+     * Le passwordBroker n'est pas initialisé dans cette méthode,
+     * mais initialisé et passé par la méthode handleUserOrClientOld().
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  $broker
+     * @return \Illuminate\Http\Response
+     */
+    public function sendResetLinkEmail($request)
+    {
+        $this->validate($request, ['email' => 'required|email']);
+
+        $broker = $this->getBroker();
+
+        $response = Password::broker($broker)->sendResetLink(
+            $request->only('email'), $this->resetEmailBuilder()
+            );
+
+        switch ($response) {
+            case Password::RESET_LINK_SENT:
+            return $this->getSendResetLinkEmailSuccessResponse($response);
+
+            case Password::INVALID_USER:
+            default:
+            return $this->getSendResetLinkEmailFailureResponse($response);
+        }
+    }
+
+
+    /**
+     * Change la configuration selon que l'on à affaire à un user ou un ClientOld.
+     * Initialise et fournit le PasswordBroker à la méthode sendResetLinkEmail().
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function handleUserOrClientOld(Request $request)
+    {
+        if($this->mailInNewBDD($request)){
+            return $this->sendResetLinkEmail($request);
+        }
+
+        if($this->mailInOldBDD($request)){
+            \Config::set("auth.defaults.passwords","clientOld");
+
+            return $this->sendResetLinkEmail($request);
+        }
+        $link = link_to_action('Auth\AuthController@showRegistrationForm', 'vous réinscrire');
+        return redirect()->back()
+        ->withErrors(['email' => trans('passwords.user')])
+        ->with('alert.danger', trans('passwords.reinscription', ['link' => $link]))
+        ;
+    }
+
+
+    /**
+     * Recherche le mail dans la table users.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return boolean
+     */
+    public function mailInNewBDD($request)
+    {
+        if( !empty( $this->user->FindBy('email', $request->input('email')) )  ){
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
+     * Recherche le mail dans la table paniers_clients.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return boolean
+     */
+    public function mailInOldBDD($request)
+    {
+        if( !empty( $this->client_old->FindBy('email', $request->input('email')) ) ){
+            return true;
+        }
+        return false;
     }
 
 
