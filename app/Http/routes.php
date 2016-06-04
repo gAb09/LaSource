@@ -27,18 +27,17 @@ $this->post('connexion', 'Auth\AuthController@connexion');
 $this->get('logout', 'Auth\AuthController@logout');
 
 // Registration Routes...
-$this->get('inscription', 'Auth\AuthController@showRegistrationForm');
+$this->get('inscription/{compteinconnu?}', 'Auth\AuthController@showRegistrationForm');
 $this->post('inscription', 'Auth\AuthController@register');
 
 // Password Reset Routes...
 $this->get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
-$this->post('password/email', 'Auth\PasswordController@handleUserOrClientOld');
+$this->post('password/email', 'Auth\PasswordController@determineIfUserOrClientOld');
 $this->post('password/reset', 'Auth\PasswordController@reset');
 
 // Transfert Routes...
 $this->get('transfert/OldLoginFailed/{pseudo?}', 'Auth\AuthController@askMailOldLoginFailed');
 $this->post('transfert/OldLoginFailed', 'Auth\AuthController@HandleOldLoginFailed');
-// $this->any('oldpassword/sendemail/{request?}', 'Transfert\OldPasswordController@sendResetLinkEmail');
 
 // Contact Routes...
 $this->get('contact', 'ContactController@Contact');

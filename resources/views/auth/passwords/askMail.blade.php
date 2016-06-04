@@ -1,7 +1,7 @@
 @extends('auth.askMailLayout')
 
 @section('titre')
-Réinitialiser mon mot de passe
+Demande de réinitialisation des identifiants.
 @endsection
 
 @section('action')

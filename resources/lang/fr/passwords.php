@@ -13,11 +13,14 @@ return [
     |
     */
 
-    'password' => 'Le mot de passe doit comporter au moins 6 caractères, et être correctement confirmé.',
-    'reset' => 'Your password has been reset!',
+    'password' => 'Le mot de passe doit comporter au moins 6 caractères, et la confirmation valide.',
+    'mail_validation' => "Nous n'avons pas trouvé cet adresse mail.",
+
     'sent' => 'Un lien de restauration d’identifiants vient de vous être envoyé par courriel !',
-    'token' => 'This password reset token is invalid.',
-    'user' => "Nous n'avons pas trouvé cet adresse mail.",
-    'reinscription' => "Si vos tentatives n'aboutissent pas, vous pouvez :link .",
+    'reset_mail_subject' => "Paniers La Source : demande de réinitialisation des identifiants.",
+
+    'token' => 'Le lien de restauration a expiré ou est invalide.',
+    'reset' => 'Votre identification a été restaurée !',
+    'compteinconnu' => "Cette adresse ne correspond à aucun compte connu. <br />Vous pouvez réessayer ou bien :link .",
 
 ];

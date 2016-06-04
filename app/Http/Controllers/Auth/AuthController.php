@@ -36,6 +36,7 @@ class AuthController extends Controller
      */
     protected $redirectTo = 'espaceclient';
 
+
     protected $username = 'pseudo';
 
     protected $loginView = 'auth.connexionForm';
@@ -125,7 +126,7 @@ class AuthController extends Controller
     public function showLoginForm($oldPseudo = null)
     {
         $view = property_exists($this, 'loginView')
-                    ? $this->loginView : 'auth.connexionForm';
+        ? $this->loginView : 'auth.connexionForm';
 
         if (view()->exists($view)) {
             return view($view)->with(compact('oldPseudo'));
@@ -151,28 +152,27 @@ class AuthController extends Controller
             ]);
     }
 
+
     /**
-     * Surcharge de Surcharge de Illuminate\Foundation\Auth\AuthenticatesUsers\RegistersUsers
-     * Création de compte assujettie à réponse à un mail de confirmation.
+     * Surcharge de Illuminate\Foundation\Auth\RegistersUsers
+     * Show the application registration form.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function inscription(Request $request)
+    public function showRegistrationForm($compteinconnu = false)
     {
-        $validator = $this->validator($request->all());
-
-        if ($validator->fails()) {
-            $this->throwValidationException(
-                $request, $validator
-                );
+        if ($compteinconnu) {
+            $this->setStatut('CompteInconnu');
+            
+            // $param['subject'] = $this->statut.' - '.$request->input("email");
+            // $datas[] = $request;
+            // $this->SendMailOM($param, $datas);
         }
-        Auth::guard($this->getGuard())->login($this->create($request->all()));
 
-        return redirect($this->redirectPath());
+        return view('auth.register')->with(compact('compteinconnu'));
     }
 
-    function __destruct() {
-        \Session::flash('transfert.statut', $this->statut);
-    }
+
 }
+
+

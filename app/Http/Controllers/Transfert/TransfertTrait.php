@@ -27,7 +27,7 @@ trait TransfertTrait
     | ou demander le reset de ses identifiants via une adresse email.
     |       Si l'adresse est trouvée dans la nouvelle base => ResetNewCredentials
     |       SinonSi l'adresse est trouvée dans l'ancienne base => ResetOldCredentials + mail OM
-    |       SinonSi l'adresse n'est pas trouvée du tout => Reinscription => Inscription + mail OM
+    |       SinonSi l'adresse n'est pas trouvée du tout => CompteInconnu => Inscription + mail OM
     |  
     */
 
@@ -36,7 +36,7 @@ trait TransfertTrait
      * Les STATUTS :
      * 0) AuthFailed : Utilisateur inconnu.
      * 1) ResetOldCredentials : Client a demandé la régénération de ses identifiants (OLD).
-     * 2) Reinscription : Inconnu (login + mail ne match pas).
+     * 2) CompteInconnu : Non reconnu (login + mail ne match pas).
      * 3) EnCours : transfert en cours, pas encore controlé (begin transaction).
      * 4) TransfertFailed : Problème en cours de transfert
      *    (Test nouvelle procédure à échoué, rollback transaction => transfert non effectué).
@@ -51,9 +51,9 @@ trait TransfertTrait
 
     /**
     * Traitement du pseudo.
-    * – Si le pseudo fourni est trouvé dans la nouvelle base (champs “login_client“)
+    * – Si le pseudo fourni est trouvé dans la nouvelle base (users.pseudo)
     *   c'est que le user se trompe => connexionForm.
-    * – Si le pseudo fourni n'est pas trouvé dans l’ancienne base (champs “login_client“)
+    * – Sinon si le pseudo fourni n'est pas trouvé dans l’ancienne base (paniers_clients.login_client)
     *   c'est que le problème ne vient pas d'un transfert à effectuer => connexionForm.
     *   s'il est trouvé on tente l'ancienne authentification en lui passant le client_old trouvé.
     * 
@@ -169,55 +169,26 @@ trait TransfertTrait
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-    /** ----------------------   A REVOIR   -----------------------
-    * On vérifie si l'adresse mail fournie est connue.
-    * Si non on passe en statut "Reinscription".
-    * Si oui on poursuit le processus selon le statut actuel du transfert.
+    /**
     *
-    * @param  \Illuminate\Http\Request - Model $clientOld
-    * @return \Illuminate\Http\RedirectResponse
+    * @param  \Illuminate\Http\Request  $request, $clientOld
     */
-    public function ControlOldMail(Request $request){
-        $this->validate($request, ['email' => 'required|email']);
-
-        if(empty($clientOld = ClientOld::where('mail', $request->input('email'))->first())) {
-            return $this->HandleReinscription($clientOld, $request);
-        }else{
-            return $this->HandleCurrentStatut($clientOld, $request);
-        }
+    private function SendMailOM($param, $datas, $vue = 'auth.transfert.emails.mailToOM'){
+        Mail::send($vue, ['datas' => $datas], function ($m) use($datas, $param) {
+            $m->to = env('MAIL_OM_ADRESS');
+            $m->subject($param['subject']);
+        });
     }
 
 
-    /** ----------------------   A REVOIR   -----------------------
-    * Envoi du mail rapport au OuaibMaistre
-    * Redirige sur le formulaire d'enregistrement
-    *
-    * @param  \Illuminate\Http\Request - Model $clientOld
-    * @return \Illuminate\Http\RedirectResponse
-    */
-    private function HandleReinscription($clientOld, $request)
-    {
-        \Session::flash('transfert.message', 'L’adresse “'.$request->input("email").'” n\'a pu être trouvée. Nous n\'avons donc pas pu vous identifier');
-        $this->statut = "Reinscription";
 
-        $param['subject'] = $this->statut.' - '.$request->input("email");
-        $datas[] = $request;
-        $this->SendMailOM($param, $datas);
 
-        return redirect()->action('Auth\AuthController@showRegistrationForm');
-    }
+
+
+
+
+
+
 
 
 
@@ -234,7 +205,7 @@ trait TransfertTrait
     public function HandleresetOldCredentials(Request $request){
 
         if(empty($clientOld = ClientOld::where('mail', $request->input('email'))->first())) {
-            return $this->HandleReinscription($clientOld, $request);
+            return $this->HandleCompteInconnu($clientOld, $request);
         }else{
             $param['subject'] = $this->statut;
             $datas[] = $request->input('email');
@@ -248,17 +219,6 @@ trait TransfertTrait
         }
     }
 
-
-    /** ----------------------   A REVOIR   -----------------------
-    *
-    * @param  \Illuminate\Http\Request  $request, $clientOld
-    */
-    private function SendMailOM($param, $datas, $vue = 'auth.transfert.emails.mailToOM'){
-        Mail::send($vue, ['datas' => $datas], function ($m) use($datas, $param) {
-            $m->to = env('MAIL_SENDER_ADRESS');
-            $m->subject($param['subject']);
-        });
-    }
 
     /** ----------------------   A REVOIR   -----------------------
     *

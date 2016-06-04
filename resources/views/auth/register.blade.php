@@ -13,7 +13,7 @@
                     et nous faisons le nécessaire pour le résoudre. 
                     @endif
                     <br />
-                    <h3>Inscription</h3>
+                    <h3>Inscription{{$mail_inconnu}}</h3>
 
                 </div>
                 <div class="panel-body">
