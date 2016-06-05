@@ -21,6 +21,6 @@ return [
 
     'token' => 'Le lien de restauration a expiré ou est invalide.',
     'reset' => 'Votre identification a été restaurée !',
-    'compteinconnu' => "Cette adresse ne correspond à aucun compte connu. <br />Vous pouvez réessayer ou bien :link .",
+    'compteintrouvable' => "Cette adresse ne correspond à aucun compte connu. <br />Vous pouvez réessayer ou bien :link .",
 
 ];

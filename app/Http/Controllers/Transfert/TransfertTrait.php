@@ -27,16 +27,15 @@ trait TransfertTrait
     | ou demander le reset de ses identifiants via une adresse email.
     |       Si l'adresse est trouvée dans la nouvelle base => ResetNewCredentials
     |       SinonSi l'adresse est trouvée dans l'ancienne base => ResetOldCredentials + mail OM
-    |       SinonSi l'adresse n'est pas trouvée du tout => CompteInconnu => Inscription + mail OM
+    |       SinonSi l'adresse n'est pas trouvée du tout => CompteIntrouvable => Inscription
     |  
     */
 
 
     /*
      * Les STATUTS :
-     * 0) AuthFailed : Utilisateur inconnu.
-     * 1) ResetOldCredentials : Client a demandé la régénération de ses identifiants (OLD).
-     * 2) CompteInconnu : Non reconnu (login + mail ne match pas).
+     * 1) ResetOldCredentials : utilisateur a demandé la régénération de ses identifiants (OLD).
+     * 2) CompteIntrouvable : utilisateur natcasesort(array)on reconnu (login + mail ne match pas).
      * 3) EnCours : transfert en cours, pas encore controlé (begin transaction).
      * 4) TransfertFailed : Problème en cours de transfert
      *    (Test nouvelle procédure à échoué, rollback transaction => transfert non effectué).
@@ -193,31 +192,6 @@ trait TransfertTrait
 
 
 
-
-    /** ----------------------   A REVOIR   -----------------------
-    * Envoi du mail rapport au OuaibMaistre.
-    * Envoi au client d'un mail contenant son ancien login.
-    * Redirige sur la page de login.
-    *
-    * @param  \Illuminate\Http\Request - Model $clientOld
-    * @return \Illuminate\Http\Response ???????
-    */
-    public function HandleresetOldCredentials(Request $request){
-
-        if(empty($clientOld = ClientOld::where('mail', $request->input('email'))->first())) {
-            return $this->HandleCompteInconnu($clientOld, $request);
-        }else{
-            $param['subject'] = $this->statut;
-            $datas[] = $request->input('email');
-            $datas[] = $request;
-            $this->SendMailOM($param, $datas);
-
-            $param['address'] = $request->input("email");
-            $param['subject'] = 'Paniers La Source : Récupération de pseudo';
-            $datas['clientOld'] = $clientOld;
-            return $this->SendMailClient($param, $datas, 'auth.transfert.emails.clients.OldLoginFailed');
-        }
-    }
 
 
     /** ----------------------   A REVOIR   -----------------------

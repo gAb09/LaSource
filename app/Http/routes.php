@@ -27,7 +27,7 @@ $this->post('connexion', 'Auth\AuthController@connexion');
 $this->get('logout', 'Auth\AuthController@logout');
 
 // Registration Routes...
-$this->get('inscription/{compteinconnu?}', 'Auth\AuthController@showRegistrationForm');
+$this->get('inscription', 'Auth\AuthController@showRegistrationForm');
 $this->post('inscription', 'Auth\AuthController@register');
 
 // Password Reset Routes...

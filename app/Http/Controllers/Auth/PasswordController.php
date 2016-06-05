@@ -78,12 +78,13 @@ class PasswordController extends Controller
             return $this->sendResetLinkEmail($request);
         }
 
-        $compteinconnu = true;
-        $link = link_to("inscription/$compteinconnu", 'vous inscrire');
+        $this->SetStatut('CompteIntrouvable');
+
+        $link = link_to("inscription", 'vous inscrire');
 
         return redirect()->back()
         ->withErrors(['email' => trans('passwords.mail_validation')])
-        ->with('alert.danger', trans('passwords.compteinconnu', ['link' => $link]))
+        ->with('alert.danger', trans('passwords.compteintrouvable', ['link' => $link]))
         ;
     }
 

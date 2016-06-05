@@ -97,7 +97,6 @@ class AuthController extends Controller
 
         // Si l'utilisateur n'est pas authentifié dans la nouvelle application, 
         // il faut voir s'il existait dans l'ancienne et pas encore transféré.
-        $this->setStatut('AuthFailed');
         return $this->TryPseudo($request, $throttles);
 
     }
@@ -150,26 +149,6 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             ]);
-    }
-
-
-    /**
-     * Surcharge de Illuminate\Foundation\Auth\RegistersUsers
-     * Show the application registration form.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showRegistrationForm($compteinconnu = false)
-    {
-        if ($compteinconnu) {
-            $this->setStatut('CompteInconnu');
-            
-            // $param['subject'] = $this->statut.' - '.$request->input("email");
-            // $datas[] = $request;
-            // $this->SendMailOM($param, $datas);
-        }
-
-        return view('auth.register')->with(compact('compteinconnu'));
     }
 
 
