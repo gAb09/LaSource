@@ -61,7 +61,7 @@ class PasswordController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function HandleSendResetMail(Request $request)
+    public function HandleSendingResetMail(Request $request)
     {
         if($this->mailInNewBDD($request)){
             return $this->sendResetLinkEmail($request);
@@ -181,7 +181,7 @@ class PasswordController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    protected function handleReset(Request $request, ClientOld $client_old)
+    protected function handleResetCredentials(Request $request, ClientOld $client_old)
     {
         if($this->mailInNewBDD($request)){
             return $this->reset($request);

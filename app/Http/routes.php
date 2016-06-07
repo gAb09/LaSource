@@ -32,8 +32,8 @@ $this->post('inscription', 'Auth\AuthController@register');
 
 // Password Reset Routes...
 $this->get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
-$this->post('password/email', 'Auth\PasswordController@HandleSendResetMail');
-$this->post('password/reset', 'Auth\PasswordController@handleReset');
+$this->post('password/email', 'Auth\PasswordController@HandleSendingResetMail');
+$this->post('password/reset', 'Auth\PasswordController@handleResetCredentials');
 
 // Transfert Routes...
 $this->get('transfert/OldLoginFailed/{pseudo?}', 'Auth\AuthController@askMailOldLoginFailed');
