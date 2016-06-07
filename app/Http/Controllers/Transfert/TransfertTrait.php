@@ -135,7 +135,7 @@ trait TransfertTrait
     * @param  \Illuminate\Http\Request
     * @return \Illuminate\Http\Response
     */
-    private function DoTransfert($request, $throttles){
+    private function DoTransfert($request, $throttles = null){
         dd('DoTransfert');//CTRL
 
         if (1 == 1) 

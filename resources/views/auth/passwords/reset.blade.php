@@ -5,7 +5,31 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Reset Password</div>
+                <div class="panel-heading">
+                    <h3>Réinitialisation des identifiants</h3>
+                    @if (session('alert.danger'))
+                        <div class="alert alert-danger">
+                            {!! session('alert.danger') !!}
+                        </div>
+                    @endif
+                    @hasSection('alert-danger')
+                        <div class="alert alert-danger">
+                            @yield('alert-danger')
+                        </div>
+                    @endif
+
+                    @if (session('alert.success'))
+                        <div class="alert alert-success">
+                            {!! session('alert.success') !!}
+                        </div>
+                    @endif
+                    @hasSection('alert-success')
+                        <div class="alert alert-success">
+                            @yield('alert-success')
+                        </div>
+                    @endif
+
+                </div>
 
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/reset') }}">

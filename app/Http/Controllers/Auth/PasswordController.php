@@ -61,7 +61,7 @@ class PasswordController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function DetermineIfUserOrClientOld(Request $request)
+    public function HandleSendResetMail(Request $request)
     {
         if($this->mailInNewBDD($request)){
             return $this->sendResetLinkEmail($request);
@@ -161,6 +161,7 @@ class PasswordController extends Controller
         return redirect()->back()->with('alert.success', trans($response));
     }
 
+
     /**
      * Surcharge de Illuminate\Foundation\Auth\ResetsPasswords.
      * 'alert.success' remplace 'status'
@@ -171,6 +172,42 @@ class PasswordController extends Controller
     protected function getResetSuccessResponse($response)
     {
         return redirect($this->redirectPath())->with('alert.success', trans($response));
+    }
+
+
+    /**
+     * Aiguillage selon Users ou ClientOld.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    protected function handleReset(Request $request, ClientOld $client_old)
+    {
+        if($this->mailInNewBDD($request)){
+            return $this->reset($request);
+        }
+
+        if($this->mailInOldBDD($request)){
+         \Config::set("auth.defaults.passwords","clientOld");
+           // return $this->reset($request);
+         return $this->ResetOldCredentials($request, $client_old);
+     }
+     return redirect()->back()->with('alert.danger', trans('auth.failed'));
+ }
+
+
+    /**
+     * Reset le mot de passe dans clientOld.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    protected function ResetOldCredentials($request, ClientOld $client_old)
+    {
+        $new_mdp = $request->input('password');
+        $client_old = $client_old->FindBy('email', $request->input('email'));
+        $client_old->mdp_client = $this->oldCodage($new_mdp);
+        return $this->DoTransfert($request);
     }
 
 
