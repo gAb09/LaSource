@@ -11,6 +11,9 @@
 
                 <div class="panel-body">
                     You are logged in!
+                    {{var_dump($client->nom)}}
+                    {{var_dump($client->user->pseudo)}}
+                    {{var_dump(env('MAIL_GEST_NAME'))}}
                 </div>
             </div>
         </div>

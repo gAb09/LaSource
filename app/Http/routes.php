@@ -27,8 +27,8 @@ $this->post('connexion', 'Auth\AuthController@connexion');
 $this->get('logout', 'Auth\AuthController@logout');
 
 // Registration Routes...
-$this->get('inscription', 'Auth\AuthController@showRegistrationForm');
-$this->post('inscription', 'Auth\AuthController@register');
+$this->get('register', 'Auth\AuthController@showRegistrationForm');
+$this->post('register', 'Auth\AuthController@register');
 
 // Password Reset Routes...
 $this->get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
@@ -43,12 +43,12 @@ $this->post('transfert/OldLoginFailed', 'Auth\AuthController@HandleOldLoginFaile
 $this->get('contact', 'ContactController@Contact');
 
 
-// Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/espaceclient', 'EspaceClientController@index');
 
 	Route::resource('menus', '\Menus\MenuController');
 
-// });
+});
 
 

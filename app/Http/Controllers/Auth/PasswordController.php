@@ -63,6 +63,8 @@ class PasswordController extends Controller
      */
     public function HandleSendingResetMail(Request $request)
     {
+        $this->validate($request, ['email' => 'required|email']);
+
         if($this->mailInNewBDD($request)){
             return $this->sendResetLinkEmail($request);
         }
@@ -80,7 +82,7 @@ class PasswordController extends Controller
 
         $this->SetStatut('CompteIntrouvable');
 
-        $link = link_to("inscription", 'vous inscrire');
+        $link = link_to("register", 'vous inscrire');
 
         return redirect()->back()
         ->withErrors(['email' => trans('passwords.mail_validation')])
@@ -122,7 +124,7 @@ class PasswordController extends Controller
     /**
      * Surcharge de Illuminate\Foundation\Auth\ResetsPasswords.
      * Le passwordBroker n'est pas initialisé dans cette méthode,
-     * mais initialisé et passé par la méthode DetermineIfUserOrClientOld().
+     * mais initialisé et passé par la méthode  HandleSendingResetMail().
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  $broker
@@ -130,8 +132,6 @@ class PasswordController extends Controller
      */
     public function sendResetLinkEmail($request)
     {
-        $this->validate($request, ['email' => 'required|email']);
-
         $broker = $this->getBroker();
 
         $response = Password::broker($broker)->sendResetLink(
@@ -207,6 +207,7 @@ class PasswordController extends Controller
         $new_mdp = $request->input('password');
         $client_old = $client_old->FindBy('email', $request->input('email'));
         $client_old->mdp_client = $this->oldCodage($new_mdp);
+        $client_old->save();
         return $this->DoTransfert($request);
     }
 

@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Domaines\UserDomaine as User;
-use App\Domaines\ClientOldDomaine as ClientOld;
+use App\User as UserModel;
 
+use App\Client;
+use App\Domaines\ClientOldDomaine as ClientOld;
 use App\Http\Controllers\Transfert\TransfertTrait;
+use App\Http\Requests\InscriptionRequest;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
@@ -35,7 +39,6 @@ class AuthController extends Controller
      * @var string
      */
     protected $redirectTo = 'espaceclient';
-
 
     protected $username = 'pseudo';
 
@@ -136,6 +139,47 @@ class AuthController extends Controller
 
 
 
+
+    /**
+     * Surcharge de Illuminate\Foundation\Auth\RegistersUsers.
+     * Modification de la validation, recours à la classe InscriptionRequest.
+     *
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(InscriptionRequest $request)
+    {
+        $this->HandleReinscriptionCases($request);
+
+        Auth::guard($this->getGuard())->login($this->create($request->all()));
+
+        \Session::forget('transfert');
+
+        $this->sendMailConfirmInscription($request);
+
+        return redirect($this->redirectPath());
+    }
+
+    /**
+     * Alerte le Ouaibmaistre par mail si il s'agit d'une réinscription,
+     * suite à un transfert défectueux (CompteIntrouvable ou TransfertFailed).
+     *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     */
+    protected function HandleReinscriptionCases($request)
+    {
+        $statut = \Session::get('transfert.statut');
+        if( $statut == 'CompteIntrouvable' or $statut == 'TransfertFailed' ){
+            $datas = $request->except('password', 'password_confirmation', 'token');
+            $param['subject'] = $statut.' : '.$request->input('email');
+            $this->SendMailOM($param, $datas);
+        }
+
+    }
+
     /**
      * Create a new user instance after a valid registration.
      *
@@ -144,13 +188,52 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'pseudo' => $data['pseudo'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            ]);
+        $user = new UserModel;
+        $user->pseudo = $data['pseudo'];
+        $user->email = $data['email'];
+        $user->role_id = 10;
+        $user->password = bcrypt($data['password']);
+        $user->save();
+
+        $client = new Client;
+        $client->user_id = $user->id;
+        $client->prenom = $data['prenom'];
+        $client->nom = $data['nom'];
+        $client->ad1 = $data['ad1'];
+        $client->ad2 = $data['ad2'];
+        $client->cp = $data['cp'];
+        $client->telephone = $data['telephone'];
+        $client->mobile = $data['mobile'];
+        $client->save();
+        
+        return $user;
+
     }
 
+
+    /**
+     * Envoi d'un mail de confirmation au client, au gestionnaire et au Ouaibmaistre.
+     *
+     * @param  array  $data
+     * @return User
+     */
+    protected function sendMailConfirmInscription($request)
+    {
+        $input = $request->input();
+
+        $param['nomcomplet'] = $input['prenom'].' '.$input['nom'];
+        $param['address'] = $input['email'];
+        $param['subject'] = "Paniers La Source : Confirmation d'inscription";
+        $this->SendMailClient($param, null, 'auth.transfert.emails.ClientInscription');
+
+        $param['subject'] = 'Confirmation d’inscription : '.$input['prenom'].' '.$input['nom'].' -- '.$input['email'];
+        $datas['content'] = 'Confirmation d’inscription : '.$input['prenom'].' '.$input['nom'].' -- '.$input['email'];
+        $this->SendMailGestionnaire($param, $datas);
+        
+        $datas['content'] = $request->input();
+        $this->SendMailOuaibmaistre($param, $datas);
+
+    }
 
 }
 

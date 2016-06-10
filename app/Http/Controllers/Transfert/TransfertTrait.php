@@ -172,7 +172,7 @@ trait TransfertTrait
     *
     * @param  \Illuminate\Http\Request  $request, $clientOld
     */
-    private function SendMailOM($param, $datas, $vue = 'auth.transfert.emails.mailToOM'){
+    private function SendMailOuaibmaistre($param, $datas, $vue = 'auth.transfert.emails.Ouaibmaistre'){
         Mail::send($vue, ['datas' => $datas], function ($m) use($datas, $param) {
             $m->to = env('MAIL_OM_ADRESS');
             $m->subject($param['subject']);
@@ -180,34 +180,60 @@ trait TransfertTrait
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /** ----------------------   A REVOIR   -----------------------
+    /**
     *
     * @param  \Illuminate\Http\Request  $request, $clientOld
     */
-    public function SendMailClient($param, $datas, $vue){
-        $envoi = Mail::send($vue, ['datas' => $datas], function ($m) use($datas, $param) {
-            $m->to($param['address']);
+    private function SendMailGestionnaire($param, $datas, $vue = 'auth.transfert.emails.Gestionnaire'){
+        Mail::send($vue, ['datas' => $datas], function ($m) use($datas, $param) {
+            $m->to = env('MAIL_GEST_ADRESS');
             $m->subject($param['subject']);
         });
-
-        if($envoi){
-            return redirect()->action('Auth\AuthController@showLoginForm')->with('alert.success', trans('mails.sent'));
-        }else{
-            return redirect()->action('ContactController@Contact');
-        }
     }
+
+
+
+    /**
+    *
+    * @param  \Illuminate\Http\Request  $request, $clientOld
+    */
+    public function SendMailClient($params, $datas, $vue){
+        $envoi = Mail::send($vue, ['datas' => $datas], function ($m) use($datas, $params) {
+            $m->to($params['address']);
+            $m->subject($params['subject']);
+            $m->setBody($this->setBodyMailClientAfterInscription($params, $datas));
+        });
+
+        // if($envoi){
+        //     return redirect()->action('Auth\AuthController@showLoginForm')->with('alert.success', trans('mails.sent'));
+        // }else{
+        //     return redirect()->action('ContactController@Contact');
+        // }
+    }
+
+    /**
+    * Constitue le corps du mail destiné au client après inscription.
+    * @return  string
+    */
+    public function setBodyMailClientAfterInscription($params, $datas){
+        $body = 'Bonjour '.$params['nomcomplet'].',<br />';
+        $body .= 'Nous avons le plaisir de vous confirmer la validation de votre inscription <br />
+        aux Paniers Bios d’Ariège, sur notre ';
+        $body .= \Html::link('http://www.bioariege.fr', 'site Internet');
+        $body .= '.<br />';
+        $body .= '<br />';
+        $body .= 'Pour tout renseignement sur ce service, vous pouvez nous contacter :<br />
+        - par téléphone : 06 87 31 09 84<br />
+        - par E-mail : ';
+        $body .= \Html::mailto('paniers@bioariege.fr', 'paniers@bioariege.fr');
+        $body .= '.<br />';
+        $body .= '<br />';
+        $body .= 'Nous vous remercions de votre confiance <br />
+        et espérons que ce nouveau service vous apportera entière satisfaction.<br />
+        Les Bios d’Ariège - CIVAM BIO 09<br />
+        Signature ???';
+
+        return $body;
+    }
+
 }

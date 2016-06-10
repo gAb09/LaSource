@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Client;
+
 use App\Http\Requests;
 use Illuminate\Http\Request;
 
@@ -23,8 +25,13 @@ class EspaceClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('espaceclient');
+        $user = \Auth::user();
+
+        $user_id = $user->id;
+        $client = Client::with('User')->where('user_id', $user_id)->first();
+
+        return view('espaceclient')->with(compact('client', 'client'));
     }
 }

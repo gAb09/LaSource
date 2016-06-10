@@ -40,8 +40,8 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Laravel<br />Loggé : 
-                    {{ null !==(Auth::user()) ? Auth::user()->pseudo : 'aucun' }}
+                    Laravel<br />
+
                 </a>
             </div>
 
@@ -56,7 +56,7 @@
                     <!-- Authentication Links -->
                     @if (Auth::guest())
                         <li><a href="{{ url('/connexion') }}">Connexion</a></li>
-                        <li><a href="{{ url('/inscription') }}">Inscription</a></li>
+                        <li><a href="{{ url('/register') }}">Inscription</a></li>
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -74,7 +74,9 @@
     </nav>
 
     @yield('content')
-{{ var_dump( Session::all() ) }}
+    Loggé : {{ null !==(Auth::user()) ? Auth::user()->pseudo : 'aucun' }}
+                    <br >
+    Statut du transfert : {{ Session::get('transfert.statut') }}
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
