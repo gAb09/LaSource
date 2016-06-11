@@ -7,7 +7,3 @@ Demande de réinitialisation des identifiants.
 @section('action')
 <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/email') }}">
 @endsection
-
-@section('messageTransfert')
-@endsection
-

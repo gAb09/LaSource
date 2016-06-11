@@ -92,7 +92,7 @@ trait TransfertTrait
      {
         return redirect()->back()
         ->withInput($request->only($this->loginUsername(), 'remember'))
-        ->with('alert.danger', trans('auth.failed'))
+        ->with('status', trans('auth.failed'))
         ;
     }
 
@@ -130,7 +130,7 @@ trait TransfertTrait
      private function setStatut($statut)
      {
         $this->statut = $statut;
-        \Session::put('transfert.statut', $statut);
+        \Session::put('transfert_statut', $statut);
     }
 
 
@@ -147,17 +147,17 @@ trait TransfertTrait
         {
             $this->setStatut('OK');
             \DB::commit();
-            // TO_DO envoi mails
+            $this->sendMailsTransfertOk();
 
-            return redirect('espaceclient');
+            return redirect('espaceclient')->with('success', trans('transfert.success'));
         }
 
         $this->setStatut('TransfertFailed');
         \DB::rollback();
-        // TO_DO envois mails
+        $this->sendMailsTransfertFailed($request, $client_old);
 
         return redirect()->to('register')
-        ->with('alert.danger', trans('passwords.transfertfailed'));
+        ->with('status', trans('transfert.failed'));
     }
 
 
@@ -196,9 +196,38 @@ trait TransfertTrait
     }
 
     private function controlTransfert($user, $mdp){
-        $credentials = ['pseudo' => $user->pseudo, 'password' => $mdp];
+        $credentials = ['pseudo' => $user->pseudo, 'password' => ''];
 
         return \Auth::guard($this->getGuard())->attempt($credentials);
+
+    }
+
+    /**
+     * Envoi d'un mail d’information au Ouaibmaistre.
+     *
+     * @param  array  $data
+     */
+    protected function sendMailsTransfertOk()
+    {
+        $user = \Auth::user();
+
+        $params['subject'] = 'Transfert Ok : '.$user->email;
+        $datas['content'] = $user['attributes'];
+        $this->SendMailOuaibmaistre($params, $datas);
+
+    }
+
+    /**
+     * Envoi d'un mail d’information au Ouaibmaistre.
+     *
+     * @param  array  $data
+     */
+    protected function sendMailsTransfertFailed($request, $client_old)
+    {
+        $params['subject'] = 'Transfert failed : '.$client_old->email.' >> '.$request->input('email');
+        $datas['content']['clientOld'] = $client_old;
+        $datas['content']['request'] = $request;
+        $this->SendMailOuaibmaistre($params, $datas);
 
     }
 
@@ -258,39 +287,13 @@ trait TransfertTrait
         $envoi = Mail::send($vue, ['datas' => $datas], function ($m) use($datas, $params) {
             $m->to($params['address']);
             $m->subject($params['subject']);
-            $m->setBody($this->setBodyMailClientAfterInscription($params, $datas));
         });
-
-        // if($envoi){
-        //     return redirect()->action('Auth\AuthController@showLoginForm')->with('alert.success', trans('mails.sent'));
-        // }else{
-        //     return redirect()->action('ContactController@Contact');
-        // }
-    }
-
-    /**
-    * Constitue le corps du mail destiné au client après inscription.
-    * @return  string
-    */
-    public function setBodyMailClientAfterInscription($params, $datas){
-        $body = 'Bonjour '.$params['nomcomplet'].',<br />';
-        $body .= 'Nous avons le plaisir de vous confirmer la validation de votre inscription <br />
-        aux Paniers Bios d’Ariège, sur notre ';
-        $body .= \Html::link('http://www.bioariege.fr', 'site Internet');
-        $body .= '.<br />';
-        $body .= '<br />';
-        $body .= 'Pour tout renseignement sur ce service, vous pouvez nous contacter :<br />
-        - par téléphone : 06 87 31 09 84<br />
-        - par E-mail : ';
-        $body .= \Html::mailto('paniers@bioariege.fr', 'paniers@bioariege.fr');
-        $body .= '.<br />';
-        $body .= '<br />';
-        $body .= 'Nous vous remercions de votre confiance <br />
-        et espérons que ce nouveau service vous apportera entière satisfaction.<br />
-        Les Bios d’Ariège - CIVAM BIO 09<br />
-        Signature ???';
-
-        return $body;
+        if($envoi){
+            return redirect()->action('Auth\AuthController@showLoginForm')->with('success', trans('mails.sent'));
+        }else{
+            // TO_DO
+            // return redirect()->action('ContactController@Contact');
+        }
     }
 
 }

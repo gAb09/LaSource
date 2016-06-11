@@ -21,7 +21,5 @@ return [
 
     'token' => 'Le lien de restauration a expiré ou est invalide.',
     'reset' => 'Votre identification a été restaurée !',
-    'compteintrouvable' => "Cette adresse ne correspond à aucun compte connu. <br />Vous pouvez réessayer ou bien :link .",
-    'transfertfailed' => "Désolé le transfert depuis l'ancienne application a échoué. <br />Vous devez procéder à une nouvelle inscription.<br />Il vous sera possible de passer des nouvelles commandes,<br />mais, (temporairement) vous n'aurez pas accès à vos anciennes commandes.<br />Notre Ouaibmestre vient d'être prévenu de ce dysfonctionnement et va rapidement faire le nécessaire.",
 
 ];

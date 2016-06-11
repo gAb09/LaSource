@@ -1,4 +1,4 @@
-Bonjour,<br />
+Bonjour {{$datas['nomcomplet']}},<br />
 
 Nous avons le plaisir de vous confirmer la validation de votre inscription <br />
 aux Paniers Bios d'Ariège, sur notre {{\Html::link('http://www.bioariege.fr', 'site Internet')}}.<br />

@@ -1,1 +1,3 @@
-{{var_dump($datas)}}
+@foreach($datas as $data)
+{{var_dump($data)}}<br />
+@endforeach

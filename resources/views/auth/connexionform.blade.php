@@ -7,16 +7,17 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
 
-                    @if (session('alert.danger'))
+                    @if (session('status'))
                         <div class="alert alert-danger">
-                            {!! session('alert.danger') !!}
+                            {!! session('status') !!}
                         </div>
                     @endif
-                    @if (session('alert.success'))
+                    @if (session('success'))
                         <div class="alert alert-success">
-                            {!! session('alert.success') !!}
+                            {!! session('success') !!}
                         </div>
                     @endif
+                    
                     <h3>Connexion</h3>
                 </div>
                 <div class="panel-body">
@@ -27,7 +28,7 @@
                             <label class="col-md-4 control-label">Pseudo</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="pseudo" value="{{ $oldPseudo or old('pseudo') }}">
+                                <input type="text" class="form-control" name="pseudo" value="{{ old('pseudo') }}">
 
                                 @if ($errors->has('pseudo'))
                                 <span class="help-block">

@@ -55,7 +55,7 @@ class AuthController extends Controller
     public function __construct(User $user, ClientOld $client_old)
     {
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
-        $this->statut = \Session::get('transfert.statut');
+        $this->statut = \Session::get('transfert_statut');
         $this->user = $user;
         $this->client_old = $client_old;
 
@@ -120,25 +120,6 @@ class AuthController extends Controller
             ]);
     }
 
-    /**
-     * Show the application login form.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showLoginForm($oldPseudo = null)
-    {
-        $view = property_exists($this, 'loginView')
-        ? $this->loginView : 'auth.connexionForm';
-
-        if (view()->exists($view)) {
-            return view($view)->with(compact('oldPseudo'));
-        }
-
-        return view('auth.login');
-    }
-
-
-
 
     /**
      * Surcharge de Illuminate\Foundation\Auth\RegistersUsers.
@@ -155,7 +136,7 @@ class AuthController extends Controller
 
         Auth::guard($this->getGuard())->login($this->create($request->all()));
 
-        \Session::forget('transfert');
+        \Session::forget('transfert_statut');
 
         $this->sendMailConfirmInscription($request);
 
@@ -171,7 +152,7 @@ class AuthController extends Controller
      */
     protected function HandleReinscriptionCases($request)
     {
-        $statut = \Session::get('transfert.statut');
+        $statut = \Session::get('transfert_statut');
         if( $statut == 'CompteIntrouvable' or $statut == 'TransfertFailed' ){
             $datas = $request->except('password', 'password_confirmation', 'token');
             $param['subject'] = $statut.' : '.$request->input('email');
@@ -222,17 +203,17 @@ class AuthController extends Controller
     {
         $input = $request->input();
 
-        $param['nomcomplet'] = $input['prenom'].' '.$input['nom'];
-        $param['address'] = $input['email'];
-        $param['subject'] = "Paniers La Source : Confirmation d'inscription";
-        $this->SendMailClient($param, null, 'auth.transfert.emails.ClientInscription');
+        $datasclient['nomcomplet'] = $input['prenom'].' '.$input['nom'];
+        $params['address'] = $input['email'];
+        $params['subject'] = "Paniers La Source : Confirmation d'inscription";
+        $this->SendMailClient($params, $datasclient, 'auth.transfert.emails.ClientInscription');
 
-        $param['subject'] = 'Confirmation d’inscription : '.$input['prenom'].' '.$input['nom'].' -- '.$input['email'];
+        $params['subject'] = 'Confirmation d’inscription : '.$input['prenom'].' '.$input['nom'].' -- '.$input['email'];
         $datas['content'] = 'Confirmation d’inscription : '.$input['prenom'].' '.$input['nom'].' -- '.$input['email'];
-        $this->SendMailGestionnaire($param, $datas);
+        $this->SendMailGestionnaire($params, $datas);
         
         $datas['content'] = $request->input();
-        $this->SendMailOuaibmaistre($param, $datas);
+        $this->SendMailOuaibmaistre($params, $datas);
 
     }
 

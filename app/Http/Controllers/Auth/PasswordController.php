@@ -82,11 +82,9 @@ class PasswordController extends Controller
 
         $this->SetStatut('CompteIntrouvable');
 
-        $link = link_to("register", 'vous inscrire');
-
         return redirect()->back()
         ->withErrors(['email' => trans('passwords.mail_validation')])
-        ->with('alert.danger', trans('passwords.compteintrouvable', ['link' => $link]))
+        ->with('status', trans('transfert.compteintrouvable'))
         ;
     }
 
@@ -151,27 +149,27 @@ class PasswordController extends Controller
 
     /**
      * Surcharge de Illuminate\Foundation\Auth\ResetsPasswords.
-     * 'alert.success' remplace 'status'
+     * 'success' remplace 'status'
      *
      * @param  string  $response
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function getSendResetLinkEmailSuccessResponse($response)
     {
-        return redirect()->back()->with('alert.success', trans($response));
+        return redirect()->back()->with('success', trans($response));
     }
 
 
     /**
      * Surcharge de Illuminate\Foundation\Auth\ResetsPasswords.
-     * 'alert.success' remplace 'status'
+     * 'success' remplace 'status'
      *
      * @param  string  $response
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function getResetSuccessResponse($response)
     {
-        return redirect($this->redirectPath())->with('alert.success', trans($response));
+        return redirect($this->redirectPath())->with('success', trans($response));
     }
 
 
@@ -193,7 +191,7 @@ class PasswordController extends Controller
            // return $this->reset($request);
          return $this->resetOldCredentials($request, $client_old);
      }
-     return redirect()->back()->with('alert.danger', trans('auth.failed'));
+     return redirect()->back()->with('status', trans('auth.failed'));
  }
 
 

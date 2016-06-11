@@ -7,29 +7,19 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
+
+                    @if (session('status'))
+                        <div class="alert alert-danger">
+                            {!! session('status') !!}
+                        </div>
+                    @endif
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {!! session('success') !!}
+                        </div>
+                    @endif
+                    
                     <h3>@yield('titre')</h3>
-                    @if (session('alert.danger'))
-                        <div class="alert alert-danger">
-                            {!! session('alert.danger') !!}
-                        </div>
-                    @endif
-                    @hasSection('alert-danger')
-                        <div class="alert alert-danger">
-                            @yield('alert-danger')
-                        </div>
-                    @endif
-
-                    @if (session('alert.success'))
-                        <div class="alert alert-success">
-                            {!! session('alert.success') !!}
-                        </div>
-                    @endif
-                    @hasSection('alert-success')
-                        <div class="alert alert-success">
-                            @yield('alert-success')
-                        </div>
-                    @endif
-
                 </div>
                 <div class="panel-body">
                     @yield('action')

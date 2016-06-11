@@ -13,6 +13,7 @@ return [
     |
     */
 
-    'failed' => '<p>Nous n’avons pas pu vous authentifier.<br />Vous pouvez réessayer, sinon cliquer sur le lien “Problème d’identifiants ?”</p>',
+    'failed' => '<p>Nous n’avons pas pu vous authentifier.<br />
+    Vous pouvez réessayer, sinon cliquer sur le lien “Problème d’identifiants ?”</p>',
     'throttle' => 'Trop de tentatives de connexion. Vous pourrez essayer à nouveau dans :seconds secondes.',
 ];

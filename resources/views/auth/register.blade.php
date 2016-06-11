@@ -7,17 +7,17 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
 
-                    @if (session('alert.danger'))
+                    @if (session('status'))
                         <div class="alert alert-danger">
-                            {!! session('alert.danger') !!}
+                            {!! session('status') !!}
                         </div>
                     @endif
-                    @if (session('alert.success'))
+                    @if (session('success'))
                         <div class="alert alert-success">
-                            {!! session('alert.success') !!}
+                            {!! session('success') !!}
                         </div>
                     @endif
-
+                    
                     <h3>Inscription</h3>
                 </div>
                 <div class="panel-body">
