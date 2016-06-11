@@ -2,7 +2,7 @@
 
 namespace App\Domaines;
 
-use App\User;
+use App\Models\User;
 
 
 class UserDomaine

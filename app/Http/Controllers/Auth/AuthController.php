@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Domaines\UserDomaine as User;
-use App\User as UserModel;
+use App\Models\User as UserModel;
 
-use App\Client;
+use App\Models\Client;
 use App\Domaines\ClientOldDomaine as ClientOld;
 use App\Http\Controllers\Transfert\TransfertTrait;
 use App\Http\Requests\InscriptionRequest;
@@ -175,7 +175,7 @@ class AuthController extends Controller
         if( $statut == 'CompteIntrouvable' or $statut == 'TransfertFailed' ){
             $datas = $request->except('password', 'password_confirmation', 'token');
             $param['subject'] = $statut.' : '.$request->input('email');
-            $this->SendMailOM($param, $datas);
+            $this->SendMailOuaibmaistre($param, $datas);
         }
 
     }

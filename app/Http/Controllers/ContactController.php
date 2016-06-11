@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use App\Models\User;
 use App\ClientOld;
 use App\Helpers\Transfert;
 use App\Http\Controllers\Controller;
