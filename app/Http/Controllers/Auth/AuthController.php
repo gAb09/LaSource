@@ -100,7 +100,7 @@ class AuthController extends Controller
 
         // Si l'utilisateur n'est pas authentifié dans la nouvelle application, 
         // il faut voir s'il existait dans l'ancienne et pas encore transféré.
-        return $this->TryPseudo($request);
+        return $this->tryOldPseudo($request);
 
     }
 
@@ -202,6 +202,7 @@ class AuthController extends Controller
         $client->ad1 = $data['ad1'];
         $client->ad2 = $data['ad2'];
         $client->cp = $data['cp'];
+        $client->ville = $data['ville'];
         $client->telephone = $data['telephone'];
         $client->mobile = $data['mobile'];
         $client->save();

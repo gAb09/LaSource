@@ -209,7 +209,7 @@ class PasswordController extends Controller
         $client_old = $client_old->FindBy('email', $request->input('email'));
         $client_old->mdp_client = $this->oldCodage($new_mdp);
         $client_old->save();
-        return $this->handleTransfert($request);
+        return $this->handleTransfert($client_old);
     }
 
 

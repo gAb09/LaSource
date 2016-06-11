@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Transfert;
 
-// use Illuminate\Http\Request;
+use App\Models\User as UserModel;
+
+use App\Models\Client;
+use App\Domaines\ClientOldDomaine as ClientOld;
 use Mail;
 
 
@@ -59,21 +62,21 @@ trait TransfertTrait
     * @param  \Illuminate\Http\Request  $request
     * @return \Illuminate\Http\Response
     */
-    private function TryPseudo($request)
+    private function tryOldPseudo($request)
     {
-        if( !is_null( $this->PseudoInNewBDD($request) ) ){
-            return $this->AuthFailed($request);
+        if( !is_null( $this->pseudoInNewBDD($request) ) ){
+            return $this->authFailed($request);
         }
 
-        if( is_null( $clientOld = $this->PseudoInOldBDD($request) ) ) {
-            return $this->AuthFailed($request);
+        if( is_null( $client_old = $this->pseudoInOldBDD($request) ) ) {
+            return $this->authFailed($request);
         }else{
-            return $this->tryOldAuthentication($request, $clientOld);
+            return $this->tryOldAuthentication($request, $client_old);
         }
     }
 
 
-    private function PseudoInNewBDD($request)
+    private function pseudoInNewBDD($request)
     {
         return $this->user->FindBy('pseudo', $request->input("pseudo"));
     }
@@ -85,7 +88,7 @@ trait TransfertTrait
     * @param  \Illuminate\Http\Request
     * @return \Illuminate\Http\Response
     */
-     private function AuthFailed($request)
+     private function authFailed($request)
      {
         return redirect()->back()
         ->withInput($request->only($this->loginUsername(), 'remember'))
@@ -94,7 +97,7 @@ trait TransfertTrait
     }
 
 
-    private function PseudoInOldBDD($request)
+    private function pseudoInOldBDD($request)
     {
         return $this->client_old->FindBy('login_client', $request->input("pseudo"));
     }
@@ -103,16 +106,18 @@ trait TransfertTrait
     /**
     * Ancien mode d'authentification.
     *
-    * @param  \Illuminate\Http\Request - Model $clientOld
+    * @param  \Illuminate\Http\Request - Model $client_old
     * @return \Illuminate\Http\Response
     */
-    private function tryOldAuthentication($request, $clientOld){
-        $password_oldCoded = $this->oldCodage($request->input('password'));
+    private function tryOldAuthentication($request, $client_old){
+        $mdp = $request->input('password');
 
-        if ($password_oldCoded == $clientOld->mdp_client){
-            return $this->handleTransfert($clientOld);
+        $password_oldCoded = $this->oldCodage($mdp);
+
+        if ($password_oldCoded == $client_old->mdp_client){
+            return $this->handleTransfert($request, $client_old, $mdp);
         }else{
-            return $this->AuthFailed($request);
+            return $this->authFailed($request);
         }
     }
 
@@ -135,17 +140,24 @@ trait TransfertTrait
     * @param  App\Models\ClientOld
     * @return \Illuminate\Http\Response
     */
-    private function handleTransfert($clientOld){
+    private function handleTransfert($request, $client_old, $mdp){
         $this->setStatut('EnCours');
 
-        dd('handleTransfert');//CTRL
-
-        if ($this->tryTransfert($clientOld) == true) 
+        if ($this->doTransfert($client_old, $mdp) == true) 
         {
             $this->setStatut('OK');
-            return $this->handleUserWasAuthenticated($request, $throttles);
+            \DB::commit();
+            // TO_DO envoi mails
+
+            return redirect('espaceclient');
         }
-        return dd('handleTransfert à échoué');
+
+        $this->setStatut('TransfertFailed');
+        \DB::rollback();
+        // TO_DO envois mails
+
+        return redirect()->to('register')
+        ->with('alert.danger', trans('passwords.transfertfailed'));
     }
 
 
@@ -155,9 +167,39 @@ trait TransfertTrait
     * @param  \Illuminate\Http\Request
     * @return \Illuminate\Http\Response
     */
-    private function tryTransfert($request){
+    private function doTransfert($client_old, $mdp){
+        \DB::beginTransaction();
 
-        return ;
+        $user = new UserModel;
+        $user->id = $client_old->id_client;
+        $user->pseudo = $client_old->login_client;
+        $user->email = $client_old->email;
+        $user->role_id = 10;
+        $user->password = bcrypt($mdp);
+        $user->save();
+
+        $client = new Client;
+        $client->id = $user->id;
+        $client->user_id = $user->id;
+        $client->prenom = $client_old->prenom;
+        $client->nom = $client_old->nom;
+        $client->ad1 = $client_old->ad1;
+        $client->ad2 = $client_old->ad2;
+        $client->cp = $client_old->cp;
+        $client->ville = $client_old->ville;
+        $client->telephone = $client_old->telephone;
+        $client->mobile = $client_old->mobile;
+        $client->save();
+
+
+        return $this->controlTransfert($user, $mdp);
+    }
+
+    private function controlTransfert($user, $mdp){
+        $credentials = ['pseudo' => $user->pseudo, 'password' => $mdp];
+
+        return \Auth::guard($this->getGuard())->attempt($credentials);
+
     }
 
 
@@ -185,7 +227,7 @@ trait TransfertTrait
 
     /**
     *
-    * @param  \Illuminate\Http\Request  $request, $clientOld
+    * @param  TO_DO
     */
     private function SendMailOuaibmaistre($param, $datas, $vue = 'auth.transfert.emails.Ouaibmaistre'){
         Mail::send($vue, ['datas' => $datas], function ($m) use($datas, $param) {
@@ -197,7 +239,7 @@ trait TransfertTrait
 
     /**
     *
-    * @param  \Illuminate\Http\Request  $request, $clientOld
+    * @param  TO_DO
     */
     private function SendMailGestionnaire($param, $datas, $vue = 'auth.transfert.emails.Gestionnaire'){
         Mail::send($vue, ['datas' => $datas], function ($m) use($datas, $param) {
@@ -210,7 +252,7 @@ trait TransfertTrait
 
     /**
     *
-    * @param  \Illuminate\Http\Request  $request, $clientOld
+    * @param  TO_DO
     */
     public function SendMailClient($params, $datas, $vue){
         $envoi = Mail::send($vue, ['datas' => $datas], function ($m) use($datas, $params) {
