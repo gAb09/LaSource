@@ -100,7 +100,7 @@ class AuthController extends Controller
 
         // Si l'utilisateur n'est pas authentifié dans la nouvelle application, 
         // il faut voir s'il existait dans l'ancienne et pas encore transféré.
-        return $this->TryPseudo($request, $throttles);
+        return $this->TryPseudo($request);
 
     }
 

@@ -70,7 +70,7 @@ class PasswordController extends Controller
         }
 
         if($this->mailInOldBDD($request)){
-            $this->SetStatut('ResetOldCredentials');
+            $this->SetStatut('resetOldCredentials');
 
             $param['subject'] = $this->statut.' - '.$request->input("email");
             $datas[] = $request;
@@ -176,6 +176,7 @@ class PasswordController extends Controller
 
 
     /**
+     * Réponse de la route password/reset.
      * Aiguillage selon Users ou ClientOld.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -190,7 +191,7 @@ class PasswordController extends Controller
         if($this->mailInOldBDD($request)){
          \Config::set("auth.defaults.passwords","clientOld");
            // return $this->reset($request);
-         return $this->ResetOldCredentials($request, $client_old);
+         return $this->resetOldCredentials($request, $client_old);
      }
      return redirect()->back()->with('alert.danger', trans('auth.failed'));
  }
@@ -202,13 +203,13 @@ class PasswordController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    protected function ResetOldCredentials($request, ClientOld $client_old)
+    protected function resetOldCredentials($request, ClientOld $client_old)
     {
         $new_mdp = $request->input('password');
         $client_old = $client_old->FindBy('email', $request->input('email'));
         $client_old->mdp_client = $this->oldCodage($new_mdp);
         $client_old->save();
-        return $this->DoTransfert($request);
+        return $this->handleTransfert($request);
     }
 
 

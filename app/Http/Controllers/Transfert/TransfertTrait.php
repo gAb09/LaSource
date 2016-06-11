@@ -56,10 +56,10 @@ trait TransfertTrait
     *   c'est que le problème ne vient pas d'un transfert à effectuer => connexionForm.
     *   s'il est trouvé on tente l'ancienne authentification en lui passant le client_old trouvé.
     * 
-    * @param  \Illuminate\Http\Request  $request, $throttles
+    * @param  \Illuminate\Http\Request  $request
     * @return \Illuminate\Http\Response
     */
-    private function TryPseudo($request, $throttles)
+    private function TryPseudo($request)
     {
         if( !is_null( $this->PseudoInNewBDD($request) ) ){
             return $this->AuthFailed($request);
@@ -68,7 +68,7 @@ trait TransfertTrait
         if( is_null( $clientOld = $this->PseudoInOldBDD($request) ) ) {
             return $this->AuthFailed($request);
         }else{
-            return $this->tryOldAuthentication($clientOld, $request, $throttles);
+            return $this->tryOldAuthentication($request, $clientOld);
         }
     }
 
@@ -103,14 +103,14 @@ trait TransfertTrait
     /**
     * Ancien mode d'authentification.
     *
-    * @param  \Illuminate\Http\Request - Model $clientOld - $throttles
+    * @param  \Illuminate\Http\Request - Model $clientOld
     * @return \Illuminate\Http\Response
     */
-    private function tryOldAuthentication($clientOld, $request, $throttles){
+    private function tryOldAuthentication($request, $clientOld){
         $password_oldCoded = $this->oldCodage($request->input('password'));
 
         if ($password_oldCoded == $clientOld->mdp_client){
-            return $this->DoTransfert($request, $throttles);
+            return $this->handleTransfert($clientOld);
         }else{
             return $this->AuthFailed($request);
         }
@@ -129,20 +129,35 @@ trait TransfertTrait
     }
 
 
-    /** ----------------------   A VOIR   -----------------------
+    /** 
+    * Exécute le transfert avec vérification
+    *
+    * @param  App\Models\ClientOld
+    * @return \Illuminate\Http\Response
+    */
+    private function handleTransfert($clientOld){
+        $this->setStatut('EnCours');
+
+        dd('handleTransfert');//CTRL
+
+        if ($this->tryTransfert($clientOld) == true) 
+        {
+            $this->setStatut('OK');
+            return $this->handleUserWasAuthenticated($request, $throttles);
+        }
+        return dd('handleTransfert à échoué');
+    }
+
+
+    /** 
     * Exécute le transfert avec vérification
     *
     * @param  \Illuminate\Http\Request
     * @return \Illuminate\Http\Response
     */
-    private function DoTransfert($request, $throttles = null){
-        dd('DoTransfert');//CTRL
+    private function tryTransfert($request){
 
-        if (1 == 1) 
-        { 
-            return $this->handleUserWasAuthenticated($request, $throttles);
-        }
-        return dd('DoTransfert à échoué');
+        return ;
     }
 
 
