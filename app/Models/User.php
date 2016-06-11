@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Client extends Model
+class User extends Authenticatable
 {
     /**
      * The attributes that are mass assignable.
@@ -12,7 +12,7 @@ class Client extends Model
      * @var array
      */
     protected $fillable = [
-        'prenom', 'nom',
+        'pseudo', 'email', 'password', 'role_id'
     ];
 
     /**
@@ -21,11 +21,11 @@ class Client extends Model
      * @var array
      */
     protected $hidden = [
+        'password', 'remember_token',
     ];
 
-        public function User()
+    public function Client()
     {
-        return $this->belongsTo('App\User');
+        return $this->hasOne('App\Models\Client');
     }
-
 }

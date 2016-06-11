@@ -74,7 +74,7 @@ class PasswordController extends Controller
 
             $param['subject'] = $this->statut.' - '.$request->input("email");
             $datas[] = $request;
-            $this->SendMailOM($param, $datas);
+            $this->SendMailOuaibmaistre($param, $datas);
 
             \Config::set("auth.defaults.passwords","clientOld");
             return $this->sendResetLinkEmail($request);

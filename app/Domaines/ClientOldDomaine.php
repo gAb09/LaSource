@@ -2,7 +2,7 @@
 
 namespace App\Domaines;
 
-use App\ClientOld;
+use App\Models\ClientOld;
 
 
 class ClientOldDomaine
