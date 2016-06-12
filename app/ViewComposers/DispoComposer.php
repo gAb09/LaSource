@@ -5,7 +5,7 @@ namespace App\ViewComposers;
 use Illuminate\View\View;
 use App\Repositories\UserRepository;
 
-class RegisterComposer
+class DispoComposer
 {
     /**
      * The user repository implementation.

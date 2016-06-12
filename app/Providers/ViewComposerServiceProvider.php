@@ -14,8 +14,9 @@ class ViewComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer(
-            'profile', 'App\Http\ViewComposers\ProfileComposer'
-        );    }
+            'profile', 'App\Http\ViewComposers\DispoComposer'
+            );    
+    }
 
     /**
      * Register the application services.
