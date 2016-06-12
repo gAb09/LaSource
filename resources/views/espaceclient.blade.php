@@ -4,7 +4,7 @@
 
 <div class="container espace_client">
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+        <div class="">
             <div class="panel panel-default">
 
                     @if (session('status'))
@@ -19,7 +19,7 @@
                     @endif
                     
                 <div class="panel-heading">
-                    <h2>Espace client de {{$user->Client->prenom}} {{$user->Client->nom}}</h2>
+                    <h2>Espace client de {{$user->Client->prenom}} {{$user->Client->nom}}  ({{ $user->pseudo }})</h2>
                 </div>
 
                 <div class="panel-body">
@@ -35,6 +35,17 @@
                     Rôle : {{ $user->role->etiquette }}<br />
                     
                 </div>
+                <div class="panel-body">
+
+                    <h3>Mes commandes</h3>
+                    sfljdLJm<br />                    
+                    dsf.,F=,fd=<br />                    
+                    gEGdf,lg,<br />                    
+                    F,f;,=é'tqgfhg<br />                    
+                    v,;:c ;:,ùqfe<br />                    
+                    fldflù  ù<br />                    
+                </div>
+
             </div>
         </div>
     </div>

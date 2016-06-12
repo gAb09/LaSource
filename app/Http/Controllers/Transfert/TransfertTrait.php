@@ -196,7 +196,7 @@ trait TransfertTrait
     }
 
     private function controlTransfert($user, $mdp){
-        $credentials = ['pseudo' => $user->pseudo, 'password' => ''];
+        $credentials = ['pseudo' => $user->pseudo, 'password' => $mdp];
 
         return \Auth::guard($this->getGuard())->attempt($credentials);
 

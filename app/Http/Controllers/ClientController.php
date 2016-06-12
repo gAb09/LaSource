@@ -26,7 +26,7 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show()
     {
         $user = \Auth::user();
         $user = $user->load('Client');
@@ -35,4 +35,17 @@ class ClientController extends Controller
 
         return view('espaceclient')->with(compact('user'));
     }
+
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $user = User::with('client')->where('id', $id)->first();
+        return view('client.edit')->with(compact('user'));
+    }
+
 }

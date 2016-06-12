@@ -46,6 +46,8 @@ class AuthController extends Controller
 
     protected $redirectAfterLogout = 'accueil';
 
+    protected $registerView = 'client.register';
+
 
     /**
      * Create a new authentication controller instance.

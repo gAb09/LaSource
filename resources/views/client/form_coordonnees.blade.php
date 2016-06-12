@@ -1,35 +1,9 @@
-@extends('layouts.app')
-
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-
-                    @if (session('status'))
-                        <div class="alert alert-danger">
-                            {!! session('status') !!}
-                        </div>
-                    @endif
-                    @if (session('success'))
-                        <div class="alert alert-success">
-                            {!! session('success') !!}
-                        </div>
-                    @endif
-                    
-                    <h3>Inscription</h3>
-                </div>
-                <div class="panel-body">
-                    <form class="form-inline" role="form" method="POST" action="{{ url('/register') }}">
-                        {!! csrf_field() !!}
-
                         <!-- PRENOM -->
                         <div class="form-group{{ $errors->has('prenom') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Prenom *</label>
 
                             <div class="col-md-6">
-                                <input type="prenom" class="form-control" name="prenom" value="{{ old('prenom') }}">
+                                <input type="prenom" class="form-control" name="prenom" value="{{ $user->client->prenom or old('prenom') }}">
 
                                 @if ($errors->has('prenom'))
                                 <span class="help-block">
@@ -44,7 +18,7 @@
                             <label class="col-md-4 control-label">Nom *</label>
 
                             <div class="col-md-6">
-                                <input type="nom" class="form-control" name="nom" value="{{ old('nom') }}">
+                                <input type="nom" class="form-control" name="nom" value="{{ $user->client->nom or old('nom') }}">
 
                                 @if ($errors->has('nom'))
                                 <span class="help-block">
@@ -59,7 +33,7 @@
                             <label class="col-md-4 control-label">Adresse</label>
 
                             <div class="col-md-6">
-                                <input type="ad1" class="form-control" name="ad1" value="{{ old('ad1') }}">
+                                <input type="ad1" class="form-control" name="ad1" value="{{ $user->client->ad1 or old('ad1') }}">
 
                                 @if ($errors->has('ad1'))
                                 <span class="help-block">
@@ -74,7 +48,7 @@
                             <label class="col-md-4 control-label">Adresse (suite)</label>
 
                             <div class="col-md-6">
-                                <input type="ad2" class="form-control" name="ad2" value="{{ old('ad2') }}">
+                                <input type="ad2" class="form-control" name="ad2" value="{{ $user->client->ad2 or old('ad2') }}">
 
                                 @if ($errors->has('ad2'))
                                 <span class="help-block">
@@ -89,7 +63,7 @@
                             <label class="col-md-4 control-label">Code postal</label>
 
                             <div class="col-md-6">
-                                <input type="cp" class="form-control" name="cp" value="{{ old('cp') }}">
+                                <input type="cp" class="form-control" name="cp" value="{{ $user->client->cp or old('cp') }}">
 
                                 @if ($errors->has('cp'))
                                 <span class="help-block">
@@ -104,7 +78,7 @@
                             <label class="col-md-4 control-label">Ville</label>
 
                             <div class="col-md-6">
-                                <input type="ville" class="form-control" name="ville" value="{{ old('ville') }}">
+                                <input type="ville" class="form-control" name="ville" value="{{ $user->client->ville or old('ville') }}">
 
                                 @if ($errors->has('ville'))
                                 <span class="help-block">
@@ -119,7 +93,7 @@
                             <label class="col-md-4 control-label">Téléphone *</label>
 
                             <div class="col-md-6">
-                                <input type="telephone" class="form-control" name="telephone" value="{{ old('telephone') }}">
+                                <input type="telephone" class="form-control" name="telephone" value="{{ $user->client->telephone or old('telephone') }}">
 
                                 @if ($errors->has('telephone'))
                                 <span class="help-block">
@@ -134,7 +108,7 @@
                             <label class="col-md-4 control-label">Mobile</label>
 
                             <div class="col-md-6">
-                                <input type="mobile" class="form-control" name="mobile" value="{{ old('mobile') }}">
+                                <input type="mobile" class="form-control" name="mobile" value="{{ $user->client->mobile or old('mobile') }}">
 
                                 @if ($errors->has('mobile'))
                                 <span class="help-block">
@@ -149,7 +123,7 @@
                             <label class="col-md-4 control-label">Adresse Mail *</label>
 
                             <div class="col-md-6">
-                                <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                                <input type="email" class="form-control" name="email" value="{{ $user->email or old('email') }}">
 
                                 @if ($errors->has('email'))
                                 <span class="help-block">
@@ -158,63 +132,3 @@
                                 @endif
                             </div>
                         </div>
-
-                        <!-- PSEUDO -->
-                        <div class="form-group{{ $errors->has('pseudo') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Pseudo *</label>
-
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" name="pseudo" value="{{ old('pseudo') }}">
-
-                                @if ($errors->has('pseudo'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('pseudo') }}</strong>
-                                </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <!-- PASSWORD -->
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Mot de passe *</label>
-
-                            <div class="col-md-6">
-                                <input type="password" class="form-control" name="password">
-
-                                @if ($errors->has('password'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('password') }}</strong>
-                                </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <!-- PASSWORD CONFIRMATION -->
-                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Confirmation du mot de passe *</label>
-
-                            <div class="col-md-6">
-                                <input type="password" class="form-control" name="password_confirmation">
-
-                                @if ($errors->has('password_confirmation'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-user"></i>M’inscrire
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection

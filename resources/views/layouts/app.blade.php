@@ -43,7 +43,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Laravel<br />
+                    Les paniers de La Source<br />
 
                 </a>
             </div>
@@ -51,7 +51,7 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><p>Statut du transfert : {{ Session::get('transfert.statut') }}</p></li>
+                    <li><p>Statut du transfert : {{ Session::get('transfert_statut') }}</p></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -64,12 +64,12 @@
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                <span class="caret"></span>
+                                {{ $user->pseudo }} <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Deconnexion</a></li>
-                                <li><a href="{{ URL::route('client.edit', 1) }}">Modifier mes coordonnées</a></li>
+                                <li><a href="{{ URL::route('client.edit', $user->id) }}">Modifier mes coordonnées</a></li>
                             </ul>
                         </li>
                     @endif
