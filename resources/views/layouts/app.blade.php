@@ -15,6 +15,9 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
+    <!-- Styles persos -->
+    <link href="/css/lasource.css" rel="stylesheet">
+
     <style>
         body {
             font-family: 'Lato';
@@ -48,23 +51,25 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/espaceclient') }}">Espace Client</a></li>
+                    <li><p>Statut du transfert : {{ Session::get('transfert.statut') }}</p></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
+
                         <li><a href="{{ url('/connexion') }}">Connexion</a></li>
                         <li><a href="{{ url('/register') }}">Inscription</a></li>
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                                <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Deconnexion</a></li>
+                                <li><a href="{{ URL::route('client.edit', 1) }}">Modifier mes coordonnées</a></li>
                             </ul>
                         </li>
                     @endif
@@ -74,9 +79,7 @@
     </nav>
 
     @yield('content')
-    Loggé : {{ null !==(Auth::user()) ? Auth::user()->pseudo : 'aucun' }}
-                    <br >
-    Statut du transfert : {{ Session::get('transfert.statut') }}
+    
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>

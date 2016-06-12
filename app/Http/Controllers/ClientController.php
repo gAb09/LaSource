@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\User;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
 
-class EspaceClientController extends Controller
+class ClientController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -25,13 +26,13 @@ class EspaceClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function show(Request $request)
     {
         $user = \Auth::user();
+        $user = $user->load('Client');
+        // $user_id = $user->id;
+        // $client = Client::with('User')->where('user_id', $user_id)->first();
 
-        $user_id = $user->id;
-        $client = Client::with('User')->where('user_id', $user_id)->first();
-
-        return view('espaceclient')->with(compact('client', 'client'));
+        return view('espaceclient')->with(compact('user'));
     }
 }
