@@ -1,8 +1,8 @@
-@extends('layouts.app')
+    @extends('layouts.app')
 
 @section('content')
 
-<div class="container">
+<div class="container espace_client">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
@@ -18,13 +18,22 @@
                         </div>
                     @endif
                     
-                <div class="panel-heading">Espace Client</div>
+                <div class="panel-heading">
+                    <h2>Espace client de {{$user->Client->prenom}} {{$user->Client->nom}}</h2>
+                </div>
 
                 <div class="panel-body">
-                    You are logged in!
-                    {{var_dump($client->nom)}}
-                    {{var_dump($client->user->pseudo)}}
-                    {{var_dump(env('MAIL_GEST_NAME'))}}
+
+                    <h3>Mes coordonnées</h3>
+                    {{ $user->Client->prenom }} {{ $user->Client->nom }} ({{ $user->pseudo }})<br />
+                    {{ $user->Client->ad1 }}<br />
+                    {{ $user->Client->ad2 }}<br />
+                    {{ $user->Client->cp }} {{ $user->Client->ville }}<br />
+                    Tél : {{ $user->Client->telephone }}<br />
+                    Portable : {{ $user->Client->mobile }}<br />
+                    Courriel : {{ $user->email }}<br />
+                    Rôle : {{ $user->role->etiquette }}<br />
+                    
                 </div>
             </div>
         </div>

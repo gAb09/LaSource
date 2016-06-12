@@ -45,7 +45,11 @@ $this->get('contact', 'ContactController@Contact');
 
 Route::group(['middleware' => 'auth'], function () {
 
-	Route::get('/espaceclient', 'EspaceClientController@index');
+	Route::get('espaceclient', 'ClientController@show');
+	Route::resource('client', 'ClientController', ['names' => [
+		'show' => 'espaceclient'
+		]]);
+	Route::resource('user', 'UserController');
 
 	Route::resource('menus', '\Menus\MenuController');
 
