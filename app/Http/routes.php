@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,7 +46,7 @@ Route::get('contact', 'ContactController@Contact');
 
 // OuaibMaistre Routes...
 $this->get('om', 'OMController@index');
-$this->get('om/transfertdepots', 'OMController@transfertDepots');
+$this->get('om/transfertrelais', 'OMController@transfertRelais');
 
 
 Route::group(['middleware' => 'auth'], function () {
@@ -57,7 +58,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::resource('user', 'UserController');
 
-	Route::resource('depots', 'DepotController');
+	Route::resource('relais', 'RelaisController');
 
 	Route::resource('menus', '\Menus\MenuController');
 

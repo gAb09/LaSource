@@ -21,8 +21,10 @@
                     <h3>Administration</h3>
                 </div>
                 <div class="panel-body">
-                    {{Html::linkAction('OMController@transfertDepots', 'Transfert des dépôts')}}<br />
-                    {{Html::linkAction('OMController@transfertDepots', 'Transfert des ____')}}<br />
+                    {{Html::linkAction('OMController@transfertRelais', 'Transfert des relais')}}<br />
+                    {{Html::linkAction('RelaisController@index', 'Les relais')}}<br />
+                    <br />
+                    {{Html::linkAction('OMController@transfertRelais', 'Transfert des ____')}}<br />
                 </div>
             </div>
         </div>
