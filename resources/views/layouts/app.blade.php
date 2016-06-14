@@ -64,12 +64,12 @@
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ $user->pseudo }} <span class="caret"></span>
+                                {{Auth::user()->pseudo }} <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Deconnexion</a></li>
-                                <li><a href="{{ URL::route('client.edit', $user->id) }}">Modifier mes coordonnées</a></li>
+                                <li><a href="{{ URL::route('client.edit', Auth::user()->id) }}">Modifier mes coordonnées</a></li>
                             </ul>
                         </li>
                     @endif
@@ -77,6 +77,18 @@
             </div>
         </div>
     </nav>
+
+        <!-- - - - - - - - - - - - - - - - TOP CONTENT (2 zones) - - - - - - - - - - - - - - -->
+        <div class="container-fluid">
+
+            <div class="col-md-6 topcontent1">
+                @yield('topcontent1')
+            </div>
+
+            <div class="col-md-6 topcontent2">
+                @yield('topcontent2')
+            </div> 
+        </div>
 
     @yield('content')
 
