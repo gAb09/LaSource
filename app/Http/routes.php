@@ -39,8 +39,13 @@ $this->post('password/reset', 'Auth\PasswordController@handleResetCredentials');
 $this->get('transfert/OldLoginFailed/{pseudo?}', 'Auth\AuthController@askMailOldLoginFailed');
 $this->post('transfert/OldLoginFailed', 'Auth\AuthController@HandleOldLoginFailed');
 
+
 // Contact Routes...
-$this->get('contact', 'ContactController@Contact');
+Route::get('contact', 'ContactController@Contact');
+
+// OuaibMaistre Routes...
+$this->get('om', 'OMController@index');
+$this->get('om/transfertdepots', 'OMController@transfertDepots');
 
 
 Route::group(['middleware' => 'auth'], function () {
@@ -49,7 +54,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('client', 'ClientController', ['names' => [
 		'show' => 'espaceclient'
 		]]);
+
 	Route::resource('user', 'UserController');
+
+	Route::resource('depots', 'DepotController');
 
 	Route::resource('menus', '\Menus\MenuController');
 
