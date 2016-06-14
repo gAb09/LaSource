@@ -11,3 +11,43 @@
 .espace_client h2{
 	text-align: center;
 }
+
+
+
+
+
+
+.encadred {
+	background-color: rgba(255, 255, 255, 0.6);
+}
+
+.encadred2 {
+	background-color: rgba(255, 255, 255, 0.3);
+}
+
+
+
+.flexcontainer {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: flex-start;
+	align-items: stretch;
+}
+
+.portrait {
+	background-color: #fed;
+	border: solid;
+	border-width: 10px;
+	border-color: #fed;
+	/*display: inline-table;*/
+	margin: 5px;
+	text-align: center;
+	flex-grow: 1;
+	min-width: 220px;
+	min-height: 150px;
+}
+
+.portrait .nom {
+	margin-top: -5px;
+}
+

@@ -21,7 +21,7 @@
 
 	@foreach($relaiss as $relais)
 
-		<div class="portrait" ondblClick = "">
+		<div class="portrait" ondblClick = "javascript:document.location.href='http://lasource/relais/{{ $relais->id }}/edit';">
 
 			<p class="encadred2">
 				{{ $relais->ville }} {{ $relais->tel }}<br />
@@ -33,7 +33,7 @@
 				{{ $relais->ad2 }}<br />
 				@endif
 				{{ $relais->cp }} {{ $relais->ville }}<br />
-				{{ $relais->email }}<br />
+				{{ $relais->email }}
 				<p>{{ $relais->ouvertures }}</p>
 				<p>{{ $relais->remarques }}</p>
 

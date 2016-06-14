@@ -31,8 +31,8 @@ class OMController extends Controller
 			$relais->ville = $old->lieu_livraison;
 			$relais->tel = $old->tel;
 			$relais->email = $old->mail;
-			$relais->ouvertures = $old->horaires;
-			$relais->remarques = $old->remarques;
+			$relais->retrait = $old->horaires;
+			$relais->ouvertures = $old->remarques;
 			$relais->is_actif = 1;
 
 			$relais->save();
