@@ -42,7 +42,8 @@ $this->post('transfert/OldLoginFailed', 'Auth\AuthController@HandleOldLoginFaile
 
 
 // Contact Routes...
-Route::get('contact', 'ContactController@Contact');
+Route::get('contactLS', 'ContactController@ContactLS');
+Route::get('contactOM', 'ContactController@ContactOM');
 
 // OuaibMaistre Routes...
 $this->get('om', 'OMController@index');

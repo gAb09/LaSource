@@ -43,9 +43,19 @@ class ContactController extends Controller
      *
      * @return void
      */
-    public function Contact()
+    public function ContactOM()
     {
         return dd('vue “contacter OuaibMaistre” à créer');
+    }
+
+    /**
+     * ????????????????.
+     *
+     * @return void
+     */
+    public function ContactLS()
+    {
+        return dd('vue “contacter La Source” à créer');
     }
 
 }
