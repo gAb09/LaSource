@@ -33,6 +33,7 @@
                             <li>Liste des paniers (tous ??) avec les prochaines livraisons.</li>
                             <li>Coordonnées complètes de La Source :</li>
                         </ul>
+                        @include('accueil_texte')
                     </div>
                 </div>
             </div>
