@@ -1,0 +1,96 @@
+.nav > li > p{
+	color: #d00;
+	padding: 15px 15px 2px;
+	display: block;
+}
+
+.espace_client h2, .espace_client h3{
+	color: #00C;
+	display: block;
+}
+.espace_client h2{
+	text-align: center;
+}
+
+
+
+
+
+
+.encadred {
+	background-color: rgba(255, 255, 255, 0.6);
+}
+
+.encadred2 {
+	background-color: rgba(255, 255, 255, 0.3);
+}
+
+
+
+.flexcontainer {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: flex-start;
+	align-items: stretch;
+}
+
+.portrait {
+	background-color: #fed;
+	border: solid;
+	border-width: 10px;
+	border-color: #fed;
+	/*display: inline-table;*/
+	margin: 5px;
+	text-align: center;
+	flex-grow: 1;
+	min-width: 220px;
+	min-height: 150px;
+}
+
+.portrait .nom {
+	margin-top: -5px;
+}
+
+.footermain {
+	background-color: #dff;
+	position: fixed;
+	bottom: 0px;
+	text-align: center;
+}
+
+.footer {
+	background-color: #ffc;
+	position: relative;
+	bottom: 0px;
+}
+
+.footer.open {
+	top: 0px;
+	transition: all 1s;
+	height:580px;
+}
+
+.footer.closed {
+	transition: all 1s;
+	height:34px;
+}
+
+.footer1, .footer2 {
+	position: relative;
+	bottom: 0px;
+	height:45px;
+	text-align: center;
+}
+
+.footer1 {
+	background-color: #cdc;
+}
+
+.footer2 {
+	background-color: #dcd;
+}
+
+.relais {
+	font-size: 0.9em;
+}
+
