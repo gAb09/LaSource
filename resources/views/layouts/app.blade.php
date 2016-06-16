@@ -16,7 +16,7 @@
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
     <!-- Styles persos -->
-    <link href="/css/lasource.css" rel="stylesheet">
+    <link href="/css/global.css" rel="stylesheet">
 
     <style>
     body {
@@ -59,7 +59,6 @@
                     <!-- Authentication Links -->
                     @if (Auth::guest())
 
-                    <li><a href="{{ url('/espaceclient') }}">Espace Client</a></li>
                     <li><a href="{{ url('/connexion') }}">Connexion</a></li>
                     <li><a href="{{ url('/register') }}">Inscription</a></li>
                     @else
@@ -95,23 +94,23 @@
     @yield('content')
 
     <div class="container-fluid col-md-12 footermain">
-        <div class="col-md-6 footer1">
-            @section('footer1')
-            Association La Source<br />
-            {{Html::linkAction('ContactController@ContactLS', 'Contacter La Source par courriel')}}
-            @show
-        </div>
-
-        <div class="col-md-6 footer2">
-            @section('footer2')
-            {{Html::linkAction('ContactController@ContactOM', 'Contacter le Ouaibmaistre par courriel')}}
-            @show
-        </div> 
-        <div class="col-md-12 footer">
+        <div class="col-md-12 footer closed" onClick="javascript:gererVolet(this)">
             @section('footer')
-            footer
             @show
-        </div>
+            <div class="col-md-6 footer1">
+                @section('footer1')
+                Association La Source<br />
+                {{Html::linkAction('ContactController@ContactLS', 'Contacter La Source par courriel')}}
+                @show
+            </div>
+
+            <div class="col-md-6 footer2">
+                @section('footer2')
+                Pour tout problème relatif à l'inscription, la connexion ou un message d’erreur :<br />
+                {{Html::linkAction('ContactController@ContactOM', 'Contacter le Ouaibmaistre par courriel')}}
+                @show
+            </div>
+        </div> 
     </div>
 
 
@@ -121,7 +120,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
     @section('script')
-
+    <script src="/js/global.js"></script>
     @show
 
 </body>

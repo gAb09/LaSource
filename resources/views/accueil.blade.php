@@ -31,13 +31,7 @@
                     <div class="col-md-9">
                         <ul>
                             <li>Liste des paniers (tous ??) avec les prochaines livraisons.</li>
-                            <li>Coordonnées de La Source :</li>
-                            <li>Boutons :</li>
-                            <ol>
-                                <li>Connexion</li>
-                                <li>Inscription</li>
-                                <li>Espace client</li>
-                            </ol>
+                            <li>Coordonnées complètes de La Source :</li>
                         </ul>
                     </div>
                 </div>
@@ -49,6 +43,8 @@
 
 @section('footer')
 @parent
+<h4>Présentation de l’Association La Source</h4>
+@include('presentation')
 
 @endsection
 
