@@ -14,7 +14,11 @@ class ViewComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer(
-            'profile', 'App\Http\ViewComposers\DispoComposer'
+            'profile', 'App\ViewComposers\DispoComposer'
+            );
+
+        view()->composer(
+            'accueil', 'App\ViewComposers\AccueilComposer'
             );    
     }
 
