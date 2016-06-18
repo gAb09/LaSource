@@ -1,9 +1,9 @@
                         <!-- PRENOM -->
                         <div class="form-group{{ $errors->has('prenom') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Prenom *</label>
+                            <label class="col-md-4 control-label">Prenom&nbsp*</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="prenom" value="{{ $user->client->prenom or old('prenom') }}">
+                                <input type="text" class="form-control" name="prenom" value="{{ $item->client->prenom or old('prenom') }}">
 
                                 @if ($errors->has('prenom'))
                                 <span class="help-block">
@@ -15,10 +15,10 @@
 
                         <!-- NOM -->
                         <div class="form-group{{ $errors->has('nom') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Nom *</label>
+                            <label class="col-md-4 control-label">Nom&nbsp*</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="nom" value="{{ $user->client->nom or old('nom') }}">
+                                <input type="text" class="form-control" name="nom" value="{{ $item->client->nom or old('nom') }}">
 
                                 @if ($errors->has('nom'))
                                 <span class="help-block">
@@ -33,7 +33,7 @@
                             <label class="col-md-4 control-label">Adresse</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="ad1" value="{{ $user->client->ad1 or old('ad1') }}">
+                                <input type="text" class="form-control" name="ad1" value="{{ $item->client->ad1 or old('ad1') }}">
 
                                 @if ($errors->has('ad1'))
                                 <span class="help-block">
@@ -48,7 +48,7 @@
                             <label class="col-md-4 control-label">Adresse (suite)</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="ad2" value="{{ $user->client->ad2 or old('ad2') }}">
+                                <input type="text" class="form-control" name="ad2" value="{{ $item->client->ad2 or old('ad2') }}">
 
                                 @if ($errors->has('ad2'))
                                 <span class="help-block">
@@ -63,7 +63,7 @@
                             <label class="col-md-4 control-label">Code postal</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="cp" value="{{ $user->client->cp or old('cp') }}">
+                                <input type="text" class="form-control" name="cp" value="{{ $item->client->cp or old('cp') }}">
 
                                 @if ($errors->has('cp'))
                                 <span class="help-block">
@@ -78,7 +78,7 @@
                             <label class="col-md-4 control-label">Ville</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="ville" value="{{ $user->client->ville or old('ville') }}">
+                                <input type="text" class="form-control" name="ville" value="{{ $item->client->ville or old('ville') }}">
 
                                 @if ($errors->has('ville'))
                                 <span class="help-block">
@@ -90,10 +90,10 @@
 
                         <!-- TELEPHONE -->
                         <div class="form-group{{ $errors->has('telephone') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Téléphone *</label>
+                            <label class="col-md-4 control-label">Téléphone&nbsp*</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="telephone" value="{{ $user->client->telephone or old('telephone') }}">
+                                <input type="text" class="form-control" name="telephone" value="{{ $item->client->telephone or old('telephone') }}">
 
                                 @if ($errors->has('telephone'))
                                 <span class="help-block">
@@ -108,7 +108,7 @@
                             <label class="col-md-4 control-label">Mobile</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="mobile" value="{{ $user->client->mobile or old('mobile') }}">
+                                <input type="text" class="form-control" name="mobile" value="{{ $item->client->mobile or old('mobile') }}">
 
                                 @if ($errors->has('mobile'))
                                 <span class="help-block">
@@ -120,10 +120,10 @@
 
                         <!-- MAIL -->
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Adresse Mail *</label>
+                            <label class="col-md-4 control-label">Adresse Mail&nbsp*</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="email" value="{{ $user->email or old('email') }}">
+                                <input type="text" class="form-control" name="email" value="{{ $item->email or old('email') }}">
 
                                 @if ($errors->has('email'))
                                 <span class="help-block">

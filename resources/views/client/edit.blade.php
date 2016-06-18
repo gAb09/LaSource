@@ -18,11 +18,12 @@
                         </div>
                     @endif
                     
-                    <h3>Inscription</h3>
+                    <h3>{{$titre_page}}</h3>
                 </div>
                 <div class="panel-body">
-                    <form class="form-inline" role="form" method="POST" action="{{ url('/register') }}">
+                    <form class="form-inline" role="form" method="POST" action="{{ route('client.update', $item->id) }}">
                         {!! csrf_field() !!}
+                        <input type="hidden" class="form-control" name="_method" value="PUT">
 
                         @include('client.form_coordonnees')
 

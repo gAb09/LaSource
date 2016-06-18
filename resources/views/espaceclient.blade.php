@@ -19,20 +19,20 @@
                     @endif
                     
                 <div class="panel-heading">
-                    <h2>Espace client de {{$user->Client->prenom}} {{$user->Client->nom}}  ({{ $user->pseudo }})</h2>
+                    <h2>Espace client de {{$item->Client->prenom}} {{$item->Client->nom}}  ({{ $item->pseudo }})</h2>
                 </div>
 
                 <div class="panel-body">
 
                     <h3>Mes coordonnées</h3>
-                    {{ $user->Client->prenom }} {{ $user->Client->nom }} ({{ $user->pseudo }})<br />
-                    {{ $user->Client->ad1 }}<br />
-                    {{ $user->Client->ad2 }}<br />
-                    {{ $user->Client->cp }} {{ $user->Client->ville }}<br />
-                    Tél : {{ $user->Client->telephone }}<br />
-                    Portable : {{ $user->Client->mobile }}<br />
-                    Courriel : {{ $user->email }}<br />
-                    Rôle : {{ $user->role->etiquette }}<br />
+                    {{ $item->Client->prenom }} {{ $item->Client->nom }} ({{ $item->pseudo }})<br />
+                    {{ $item->Client->ad1 }}<br />
+                    {{ $item->Client->ad2 }}<br />
+                    {{ $item->Client->cp }} {{ $item->Client->ville }}<br />
+                    Tél : {{ $item->Client->telephone }}<br />
+                    Portable : {{ $item->Client->mobile }}<br />
+                    Courriel : {{ $item->email }}<br />
+                    Rôle : {{ $item->role->etiquette }}<br />
                     
                 </div>
                 <div class="panel-body">

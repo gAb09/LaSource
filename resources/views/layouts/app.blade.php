@@ -90,7 +90,7 @@
         </div> 
     </div>
 
-
+    <!-- - - - - - - - - - - - - - - -  CONTENT (2 zones) - - - - - - - - - - - - - - -->
     @yield('content')
 
     <div class="container-fluid col-md-12 footermain">

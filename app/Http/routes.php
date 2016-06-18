@@ -53,12 +53,10 @@ $this->get('om/transfertproducteur', 'OMController@transfertProducteur');
 
 Route::group(['middleware' => 'auth'], function () {
 
-	Route::get('espaceclient', 'ClientController@show');
-	Route::resource('client', 'ClientController', ['names' => [
-		'show' => 'espaceclient'
-		]]);
-
 	Route::resource('user', 'UserController');
+
+	Route::get('espaceclient', ['as' => 'espaceclient', 'uses' => 'ClientController@espaceclient']);
+	Route::resource('client', 'ClientController');
 
 	Route::resource('relais', 'RelaisController');
 
