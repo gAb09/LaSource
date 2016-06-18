@@ -48,6 +48,7 @@ Route::get('contactOM', 'ContactController@ContactOM');
 // OuaibMaistre Routes...
 $this->get('om', 'OMController@index');
 $this->get('om/transfertrelais', 'OMController@transfertRelais');
+$this->get('om/transfertproducteur', 'OMController@transfertProducteur');
 
 
 Route::group(['middleware' => 'auth'], function () {
@@ -60,6 +61,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'UserController');
 
 	Route::resource('relais', 'RelaisController');
+
+	Route::resource('producteur', 'ProducteurController');
 
 	Route::resource('menus', '\Menus\MenuController');
 

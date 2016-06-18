@@ -18,14 +18,22 @@
                         </div>
                     @endif
                     
-                    <h3>Administration</h3>
+                    <h3>{{$titre_page}}</h3>
                 </div>
                 <div class="panel-body">
-                    {{Html::linkAction('OMController@transfertRelais', 'Transfert des relais')}}<br />
-                    {{Html::linkAction('RelaisController@index', 'Les relais')}}<br />
-                    <br />
-                    {{Html::linkAction('OMController@transfertProducteur', 'Transfert des producteurs')}}<br />
-                    {{Html::linkAction('ProducteurController@index', 'Les producteurs')}}<br />
+                    <form class="form-inline" role="form" method="POST" action="{{ route('producteur.store') }}">
+                        {!! csrf_field() !!}
+
+                        @include('producteur.form')
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-btn fa-user"></i>Valider les modifications
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

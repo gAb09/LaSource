@@ -45,10 +45,10 @@ return [
     'ip'                   => 'Le champ :attribute doit être a valid IP address.',
     'json'                 => 'Le champ :attribute doit être a valid JSON string.',
     'max'                  => [
-        'numeric' => 'Le champ :attribute may not be greater than :max.',
-        'file'    => 'Le champ :attribute may not be greater than :max kilobytes.',
-        'string'  => 'Le champ :attribute may not be greater than :max characters.',
-        'array'   => 'Le champ :attribute may not have more than :max items.',
+        'numeric' => 'Le champ :attribute ne peut pas être supérieur à :max.',
+        'file'    => 'Le champ :attribute ne peut faire plus de :max kilobytes.',
+        'string'  => 'Le champ :attribute ne peut faire plus de :max caractères.',
+        'array'   => 'Le champ :attribute ne peut contenir plus de :max items.',
     ],
     'mimes'                => 'Le champ :attribute doit être a file of type: :values.',
     'min'                  => [
@@ -119,6 +119,7 @@ return [
     'ville' => 'Ville',
     'telephone' => 'Téléphone',
     'mobile' => 'Mobile',
+    'nompourpaniers' => 'Nom pour Paniers',
     ],
 
 ];

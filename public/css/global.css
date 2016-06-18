@@ -27,6 +27,14 @@
 
 
 
+
+
+
+
+
+
+
+
 .flexcontainer {
 	display: flex;
 	flex-flow: row wrap;
@@ -50,6 +58,21 @@
 .portrait .nom {
 	margin-top: -5px;
 }
+
+.is_actif {
+	background-color: green;
+}
+
+
+.is_not_actif {
+	background-color: red;
+}
+
+
+
+
+
+
 
 .footermain {
 	background-color: #dff;

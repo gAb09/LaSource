@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class InscriptionRequest extends Request
+class ProducteurRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,6 +24,7 @@ class InscriptionRequest extends Request
     public function rules()
     {
         return [
+        'exploitation' => 'required',
         'prenom' => 'required|alpha',
         'nom' => 'required|alpha',
         'ad1' => 'required_with:ad2,cp,ville',
@@ -32,10 +33,8 @@ class InscriptionRequest extends Request
         'ville' => 'required_with:ad1,ad2,cp',
         'telephone' => 'digits:8',
         'mobile' => 'digits:8',
-
-        'pseudo' => 'required|max:255|unique:users',
-        'email' => 'required|email|max:255|unique:users',
-        'password' => 'required|min:6|confirmed',
+        'email' => 'email|required',
+        'nompourpaniers' => 'required|max:16',
         ];
     }
 }

@@ -12,7 +12,7 @@ class Client extends Model
      * @var array
      */
     protected $fillable = [
-        'prenom', 'nom',
+    'prenom', 'nom',
     ];
 
     /**
@@ -23,7 +23,9 @@ class Client extends Model
     protected $hidden = [
     ];
 
-        public function User()
+
+
+    public function User()
     {
         return $this->belongsTo('App\Models\User');
     }
