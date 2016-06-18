@@ -19,6 +19,7 @@
                     @endif
                     
                     <h3>{{$titre_page}}</h3>
+                    <h3>{{dd($item)}}</h3>
                 </div>
                 <div class="panel-body">
                     <form class="form-inline" role="form" method="POST" action="{{ route('client.update', $item->id) }}">

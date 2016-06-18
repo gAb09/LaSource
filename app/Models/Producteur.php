@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\ModelTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Producteur extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, ModelTrait;
 
     /**
      * The attributes that should be mutated to dates.
@@ -18,41 +19,5 @@ class Producteur extends Model
 
     protected $appends = array('class_actif');
 
-
-    public function cleanTel($value)
-    {
-        $value = str_replace(' ', '', $value);
-        $value = str_replace('.', '', $value);
-        return $value;
-    }
-
-
-    public function formatTel($value)
-    {
-        $value = str_split($value, 2);
-        $value = implode(' ', $value);
-        return $value;
-    }
-
-
-    public function getMobileAttribute($value)
-    {
-        return $this->formatTel($value);
-    }
-
-
-    public function getTelAttribute($value)
-    {
-    	return $this->formatTel($value);
-    }
-
-
-    public function getClassActifAttribute($value)
-    {
-        if ($this->is_actif == 1) {
-            return 'is_actif';
-        }
-        return 'is_not_actif';
-    }
 
 }
