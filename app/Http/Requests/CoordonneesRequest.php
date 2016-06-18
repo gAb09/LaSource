@@ -26,8 +26,7 @@ class CoordonneesRequest extends Request
         return [
         'prenom' => 'required|alpha_dash',
         'nom' => 'required|alpha_dash',
-        'ad1' => 'required_with:cp,ville',
-        // 'ad2' => 'required_with:ad1,cp,ville',
+        'ad1' => 'required_with:ad2,cp,ville',
         'cp' => 'digits:5|required_with:ad1,ad2,ville',
         'ville' => 'required_with:ad1,ad2,cp',
         'tel' => 'required|numeric|digits:10',

@@ -78,6 +78,22 @@
         </div>
     </nav>
 
+    <!-- - - - - - - - - - - - - - - - MESSAGES - - - - - - - - - - - - - - -->
+    <div class="container-fluid">
+        <div class="col-md-12 messages">
+            @if (session('status'))
+            <div class="alert alert-danger">
+                {!! session('status') !!}
+            </div>
+            @endif
+            @if (session('success'))
+            <div class="alert alert-success">
+                {!! session('success') !!}
+            </div>
+            @endif
+        </div>
+    </div>
+
     <!-- - - - - - - - - - - - - - - - TOP CONTENT (2 zones) - - - - - - - - - - - - - - -->
     <div class="container-fluid">
 

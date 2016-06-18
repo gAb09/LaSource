@@ -6,18 +6,6 @@
     <div class="row">
         <div class="">
             <div class="panel panel-default">
-
-                    @if (session('status'))
-                        <div class="alert alert-danger">
-                            {!! session('status') !!}
-                        </div>
-                    @endif
-                    @if (session('success'))
-                        <div class="alert alert-success">
-                            {!! session('success') !!}
-                        </div>
-                    @endif
-                    
                 <div class="panel-heading">
                     <h2>Espace client de {{$item->Client->prenom}} {{$item->Client->nom}}  ({{ $item->pseudo }})</h2>
                 </div>
@@ -29,7 +17,7 @@
                     {{ $item->Client->ad1 }}<br />
                     {{ $item->Client->ad2 }}<br />
                     {{ $item->Client->cp }} {{ $item->Client->ville }}<br />
-                    Tél : {{ $item->Client->telephone }}<br />
+                    Tél : {{ $item->Client->tel }}<br />
                     Portable : {{ $item->Client->mobile }}<br />
                     Courriel : {{ $item->email }}<br />
                     Rôle : {{ $item->role->etiquette }}<br />

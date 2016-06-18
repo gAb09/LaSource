@@ -43,7 +43,7 @@
                             </div>
                         </div>
 
-                        <!-- ADRESSE 1 -->
+                        <!-- ad1 -->
                         <div class="form-group{{ $errors->has('ad1') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Adresse</label>
 
@@ -58,7 +58,7 @@
                             </div>
                         </div>
 
-                        <!-- ADRESSE 2 -->
+                        <!-- ad2 -->
                         <div class="form-group{{ $errors->has('ad2') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Adresse (suite)</label>
 
@@ -73,7 +73,7 @@
                             </div>
                         </div>
 
-                        <!-- CODE POSTAL -->
+                        <!-- cp -->
                         <div class="form-group{{ $errors->has('cp') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Code postal</label>
 
@@ -88,7 +88,7 @@
                             </div>
                         </div>
 
-                        <!-- VILLE -->
+                        <!-- ville -->
                         <div class="form-group{{ $errors->has('ville') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Ville</label>
 
@@ -104,7 +104,7 @@
                         </div>
 
 
-                        <!-- TELEPHONE -->
+                        <!-- tel -->
                         <?php $tel = $item->cleanTel($item->tel); $old_tel = $item->cleanTel(old('tel')); ?>
                         <div class="form-group{{ $errors->has('tel') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Téléphone&nbsp*</label>
@@ -138,7 +138,7 @@
                         </div>
 
 
-                        <!-- MAIL -->
+                        <!-- email -->
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Courriel&nbsp*</label>
 
@@ -154,7 +154,7 @@
                         </div>
 
 
-                        <!-- paniers -->
+                        <!-- nompourpaniers -->
                         <div class="form-group{{ $errors->has('nompourpaniers') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Nom pour Paniers&nbsp*</label>
 
@@ -170,7 +170,7 @@
                         </div>
 
 
-                        <!-- REMARQUES -->
+                        <!-- remarques -->
                         <div class="form-group{{ $errors->has('remarques') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Remarques</label>
 

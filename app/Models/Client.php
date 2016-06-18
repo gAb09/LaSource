@@ -38,6 +38,7 @@ class Client extends Model
         return $value;
     }
 
+
     public function formatTel($value)
     {
         $value = str_split($value, 2);
@@ -45,10 +46,18 @@ class Client extends Model
         return $value;
     }
 
+
     public function getMobileAttribute($value)
     {
         return $this->formatTel($value);
     }
+
+
+    public function getTelAttribute($value)
+    {
+        return $this->formatTel($value);
+    }
+
 
     public function getClassActifAttribute($value)
     {
@@ -56,11 +65,6 @@ class Client extends Model
             return 'is_actif';
         }
         return 'is_not_actif';
-    }
-
-    public function getTelAttribute($value)
-    {
-        return $this->formatTel($value);
     }
 
 }

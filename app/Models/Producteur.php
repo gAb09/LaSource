@@ -18,12 +18,14 @@ class Producteur extends Model
 
     protected $appends = array('class_actif');
 
+
     public function cleanTel($value)
     {
         $value = str_replace(' ', '', $value);
         $value = str_replace('.', '', $value);
         return $value;
     }
+
 
     public function formatTel($value)
     {
@@ -32,10 +34,18 @@ class Producteur extends Model
         return $value;
     }
 
+
     public function getMobileAttribute($value)
     {
         return $this->formatTel($value);
     }
+
+
+    public function getTelAttribute($value)
+    {
+    	return $this->formatTel($value);
+    }
+
 
     public function getClassActifAttribute($value)
     {
@@ -45,8 +55,4 @@ class Producteur extends Model
         return 'is_not_actif';
     }
 
-    public function getTelAttribute($value)
-    {
-    	return $this->formatTel($value);
-    }
 }

@@ -44,7 +44,6 @@ class ClientController extends Controller
     public function store(ClientRequest $request)
     {
         $item = new Client;
-        $item->exploitation = $request->exploitation;
         $item->nom = $request->nom;
         $item->prenom = $request->prenom;
         $item->ad1 = $request->ad1;
@@ -53,14 +52,13 @@ class ClientController extends Controller
         $item->ville = $request->ville;
         $item->tel = $item->cleanTel($request->tel);
         $item->mobile = $item->cleanTel($request->mobile);
-        $item->nompourpaniers = $request->nompourpaniers;
                 // $item->is_actif = (isset($request->is_actif)?1:0); // ToDo ??
                 // $item->email = $request->email; // ToDo
 
         if($item->save()){
-            return redirect()->route('client.index')->with('success', 'Le client a bien été créé');
+            return redirect()->route('espaceclient')->with('success', trans('message.client.storeOk'));
         }else{
-            return redirect()->back()->with('status', 'Problème lors de la création');
+            return redirect()->back()->with('status', trans('message.client.storefailed'));
         }
 
     }
@@ -68,7 +66,7 @@ class ClientController extends Controller
 
     public function edit($id)
     {
-        $item = User::with('client')->where('id', $id)->first();
+        $item = Client::with('user')->where('id', $id)->first();
         $titre_page = 'Modification de mes coordonnées';
 
         return view('client.edit')->with(compact('item', 'titre_page'));
@@ -79,7 +77,6 @@ class ClientController extends Controller
     {
         $item = Client::where('id', $id)->first();
 
-        $item->exploitation = $request->exploitation;
         $item->nom = $request->nom;
         $item->prenom = $request->prenom;
         $item->ad1 = $request->ad1;
@@ -88,7 +85,6 @@ class ClientController extends Controller
         $item->ville = $request->ville;
         $item->tel = $item->cleanTel($request->tel);
         $item->mobile = $item->cleanTel($request->mobile);
-        $item->nompourpaniers = $request->nompourpaniers;
         // $item->is_actif = (isset($request->is_actif)?1:0); // ToDo ??
         // $item->email = $request->email; // ToDo
 
