@@ -25,16 +25,16 @@ class ProducteurRequest extends Request
     {
         return [
         'exploitation' => 'required',
-        'prenom' => 'required|alpha',
-        'nom' => 'required|alpha',
-        'ad1' => 'required_with:ad2,cp,ville',
+        'prenom' => 'required|alpha_dash',
+        'nom' => 'required|alpha_dash',
+        'ad1' => 'required_with:cp,ville',
         // 'ad2' => 'required_with:ad1,cp,ville',
         'cp' => 'digits:5|required_with:ad1,ad2,ville',
         'ville' => 'required_with:ad1,ad2,cp',
-        'telephone' => 'digits:8',
-        'mobile' => 'digits:8',
+        'tel' => 'required|numeric|digits:10',
+        'mobile' => 'numeric|digits:10',
         'email' => 'email|required',
-        'nompourpaniers' => 'required|max:16',
+        'nompourpaniers' => 'required|max:20',
         ];
     }
 }

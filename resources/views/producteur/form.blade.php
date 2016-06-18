@@ -1,6 +1,6 @@
                         <!-- exploitation -->
                         <div class="form-group{{ $errors->has('exploitation') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Exploitation *</label>
+                            <label class="col-md-4 control-label">Exploitation&nbsp*</label>
 
                             <div class="col-md-6">
                                 <input type="text" class="form-control" name="exploitation" value="{{ $item->exploitation or old('exploitation') }}">
@@ -15,7 +15,7 @@
 
                         <!-- nom -->
                         <div class="form-group{{ $errors->has('nom') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Nom *</label>
+                            <label class="col-md-4 control-label">Nom&nbsp*</label>
 
                             <div class="col-md-6">
                                 <input type="text" class="form-control" name="nom" value="{{ $item->nom or old('nom') }}">
@@ -30,7 +30,7 @@
 
                         <!-- prenom -->
                         <div class="form-group{{ $errors->has('prenom') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Prénom *</label>
+                            <label class="col-md-4 control-label">Prénom&nbsp*</label>
 
                             <div class="col-md-6">
                                 <input type="text" class="form-control" name="prenom" value="{{ $item->prenom or old('prenom') }}">
@@ -105,11 +105,12 @@
 
 
                         <!-- TELEPHONE -->
+                        <?php $tel = $item->cleanTel($item->tel); $old_tel = $item->cleanTel(old('tel')); ?>
                         <div class="form-group{{ $errors->has('tel') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Téléphone *</label>
+                            <label class="col-md-4 control-label">Téléphone&nbsp*</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="tel" value="{{ $item->tel or old('tel') }}">
+                                <input type="text" class="form-control" name="tel" value="{{ $tel or $old_tel }}">
 
                                 @if ($errors->has('tel'))
                                 <span class="help-block">
@@ -121,11 +122,12 @@
 
 
                         <!-- Mobile -->
+                        <?php $mobile = $item->cleanTel($item->mobile); $old_mobile = $item->cleanTel(old('mobile')); ?>
                         <div class="form-group{{ $errors->has('mobile') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Mobile *</label>
+                            <label class="col-md-4 control-label">Mobile</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="mobile" value="{{ $item->mobile or old('mobile') }}">
+                                <input type="text" class="form-control" name="mobile" value="{{ $mobile or $old_mobile }}">
 
                                 @if ($errors->has('mobile'))
                                 <span class="help-block">
@@ -138,7 +140,7 @@
 
                         <!-- MAIL -->
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Courriel</label>
+                            <label class="col-md-4 control-label">Courriel&nbsp*</label>
 
                             <div class="col-md-6">
                                 <input type="text" class="form-control" name="email" value="{{ $item->email or old('email') }}">
@@ -154,7 +156,7 @@
 
                         <!-- paniers -->
                         <div class="form-group{{ $errors->has('nompourpaniers') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Nom pour Paniers</label>
+                            <label class="col-md-4 control-label">Nom pour Paniers&nbsp*</label>
 
                             <div class="col-md-6">
                                 <input type="textarea" class="form-control" name="nompourpaniers" value="{{ $item->nompourpaniers or old('nompourpaniers') }}">

@@ -26,12 +26,12 @@ class InscriptionRequest extends Request
         return [
         'prenom' => 'required|alpha',
         'nom' => 'required|alpha',
-        'ad1' => 'required_with:ad2,cp,ville',
+        'ad1' => 'required_with:cp,ville',
         // 'ad2' => 'required_with:ad1,cp,ville',
         'cp' => 'digits:5|required_with:ad1,ad2,ville',
         'ville' => 'required_with:ad1,ad2,cp',
-        'telephone' => 'digits:8',
-        'mobile' => 'digits:8',
+        'telephone' => 'digits:10',
+        'mobile' => 'digits:10',
 
         'pseudo' => 'required|max:255|unique:users',
         'email' => 'required|email|max:255|unique:users',

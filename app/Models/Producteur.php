@@ -18,11 +18,18 @@ class Producteur extends Model
 
     protected $appends = array('class_actif');
 
-    private function formatTel($value)
+    public function cleanTel($value)
     {
-    	$value = str_split($value, 2);
-    	$value = implode(' ', $value);
-    	return $value;
+        $value = str_replace(' ', '', $value);
+        $value = str_replace('.', '', $value);
+        return $value;
+    }
+
+    public function formatTel($value)
+    {
+        $value = str_split($value, 2);
+        $value = implode(' ', $value);
+        return $value;
     }
 
     public function getMobileAttribute($value)

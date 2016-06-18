@@ -117,8 +117,9 @@ return [
     'ad2' => 'Adresse suite',
     'cp' => 'Code postal',
     'ville' => 'Ville',
-    'telephone' => 'Téléphone',
+    'tel' => 'Téléphone',
     'mobile' => 'Mobile',
+    'email' => 'Courriel',
     'nompourpaniers' => 'Nom pour Paniers',
     ],
 

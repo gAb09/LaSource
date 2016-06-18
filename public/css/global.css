@@ -46,7 +46,7 @@
 	background-color: #fed;
 	border: solid;
 	border-width: 10px;
-	border-color: #fed;
+	border-color: Cornsilk;
 	/*display: inline-table;*/
 	margin: 5px;
 	text-align: center;
@@ -60,12 +60,12 @@
 }
 
 .is_actif {
-	background-color: green;
+	background-color: Cornsilk;
 }
 
 
 .is_not_actif {
-	background-color: red;
+	background-color: Crimson;
 }
 
 
