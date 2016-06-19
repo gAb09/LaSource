@@ -6,18 +6,6 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-
-                    @if (session('status'))
-                    <div class="alert alert-danger">
-                        {!! session('status') !!}
-                    </div>
-                    @endif
-                    @if (session('success'))
-                    <div class="alert alert-success">
-                        {!! session('success') !!}
-                    </div>
-                    @endif
-                    
                     <h3>{{$titre_page}}</h3>
                 </div>
                 <div class="panel-body">
