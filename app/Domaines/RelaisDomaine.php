@@ -3,18 +3,15 @@
 namespace App\Domaines;
 
 use App\Models\Relais;
+use App\Domaines\Domaine;
 
 
-class RelaisDomaine
+class RelaisDomaine extends Domaine
 {
+	protected $model;
 
-	public function FindBy($colonne, $critere)
-	{
-		return Relais::where($colonne, $critere)->first();
+	public function __construct(){
+		$this->model = new Relais;
 	}
 
-	static public function all($order)
-	{
-		return Relais::orderBy($order)->get();
-	}
 }

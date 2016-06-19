@@ -2,13 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Relais;
+use App\Domaines\RelaisDomaine as Domaine;
+use App\Http\Requests\RelaisRequest;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
 class RelaisController extends Controller
 {
+    private $domaine;
+    
+    public function __construct(Domaine $domaine)
+    {
+        $this->domaine = $domaine;
+    }
+
+
     public function index()
     {
     	$relaiss = Relais::where('is_actif', 1)->get();
