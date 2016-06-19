@@ -17,27 +17,27 @@ Route::get('/', function () {
 });
 
 Route::get('accueil', function () {
-	return view('accueil')->with('titre_page', trans('titrepage.accueil'));
+	return view('accueil');
 });
 
 Route::get('lasource', function () {
-	return view('lasource')->with('titre_page', trans('titrepage.lasource'));
+	return view('lasource');
 });
 
 Route::get('lesproducteurs', function () {
-	return view('lesproducteurs')->with('titre_page', trans('titrepage.lesproducteurs'));
+	return view('lesproducteurs');
 });
 
 Route::get('lesrelais', function () {
-	return view('lesrelais')->with('titre_page', trans('titrepage.lesrelais'));
+	return view('lesrelais');
 });
 
 Route::get('lescolis', function () {
-	return view('lescolis')->with('titre_page', trans('titrepage.lescolis'));
+	return view('lescolis');
 });
 
 Route::get('leslivraisons', function () {
-	return view('leslivraisons')->with('titre_page', trans('titrepage.leslivraisons'));
+	return view('leslivraisons');
 });
 
 

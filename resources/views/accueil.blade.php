@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('topcontent1')
-<h1 class="titrepage">Les paniers de viande bio de La Source</h1>
+<h1 class="titrepage">{{ trans('titrepage.accueil') }}</h1>
 @stop
 
 @section('content')

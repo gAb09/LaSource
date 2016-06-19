@@ -20,29 +20,55 @@ class RelaisController extends Controller
 
     public function index()
     {
-    	$relaiss = $this->domaine->allActifs();
-    	$titre_page = 'Les relais';
+    	$items = $this->domaine->all();
+    	return view('relais.index')->with(compact('items'));
+    }
 
-    	return view('relais.index')->with(compact('relaiss', 'titre_page'));
+
+    public function create()
+    {
+        $item =  $this->domaine->newModel();
+
+        return view('relais.create')->with(compact('item'));
+    }
+
+
+    public function store(RelaisRequest $request)
+    {
+        if($this->domaine->store($request)){
+            return redirect()->route('relais.index')->with('success', trans('message.relais.storeOk'));
+        }else{
+            return redirect()->back()->with('status', trans('message.relais.storefailed'));
+        }
     }
 
 
     public function edit($id)
     {
-    	$relais = $this->domaine->FindFirst('id', $id);
-    	$titre_page = 'Edition du relais “'.$relais->nom.'”';
+    	$item = $this->domaine->findFirst('id', $id);
 
-    	return view('relais.edit')->with(compact('relais', 'titre_page'));
+    	return view('relais.edit')->with(compact('item'));
     }
 
 
-    public function update($id)
+    public function update($id, RelaisRequest $request)
     {
-    	return "update : relais n° $id";
-        // $relais = $this->domaine->FindFirst('id', $id);
-    	// $message = "???";
-
-    	// return view('relais.index')->with(compact('message'));
+        if($this->domaine->update($id, $request)){
+            return redirect()->route('relais.index')->with('success', trans('message.relais.updateOk'));
+        }else{
+            return redirect()->back()->with('status', trans('message.relais.updatefailed'));
+        }
     }
+
+    public function destroy($id)
+    {        
+        if($this->domaine->destroy($id)){
+            return redirect()->route('relais.index')->with('success', trans('message.relais.deleteOk'));
+        }else{
+            return redirect()->back()->with('status', trans('message.relais.deletefailed'));
+        }
+
+    }
+
 
 }

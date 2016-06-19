@@ -7,35 +7,37 @@
 
 
 @section('topcontent1')
-<h1 class="titrepage">{{$titre_page}}</h1>
+<h1 class="titrepage">{{trans('titrepage.relais.index')}}</h1>
 @stop
 
 
 @section('topcontent2')
+	<a href="{{ route('relais.create') }}" class="btn-xs btn-primary"> <i class="fa fa-btn fa-trash-o"></i>Ajouter un relais</a>
 @stop
+
 
 
 @section('content')
 
 <div class="offset3 span11 flexcontainer">
 
-	@foreach($relaiss as $relais)
+	@foreach($items as $item)
 
-		<div class="portrait" ondblClick = "javascript:document.location.href='http://lasource/relais/{{ $relais->id }}/edit';">
+		<div class="portrait  {{$item->class_actif}}" ondblClick = "javascript:document.location.href='{{ route('relais.edit', $item->id) }}';">
 
 			<p class="encadred2">
-				{{ $relais->ville }} {{ $relais->tel }}<br />
-				{{ $relais->retrait }}
+				{{ $item->ville }} {{ $item->tel }}<br />
+				{{ $item->retrait }}
 			</p>
-				{{ $relais->nom }}<br />
-				{{ $relais->ad1 }}<br />
-				@if($relais->ad2)
-				{{ $relais->ad2 }}<br />
+				{{ $item->nom }}<br />
+				{{ $item->ad1 }}<br />
+				@if($item->ad2)
+				{{ $item->ad2 }}<br />
 				@endif
-				{{ $relais->cp }} {{ $relais->ville }}<br />
-				{{ $relais->email }}
-				<p>{{ $relais->ouvertures }}</p>
-				<p>{{ $relais->remarques }}</p>
+				{{ $item->cp }} {{ $item->ville }}<br />
+				{{ $item->email }}
+				<p>{{ $item->ouvertures }}</p>
+				<p>{{ $item->remarques }}</p>
 
 
 		</div>

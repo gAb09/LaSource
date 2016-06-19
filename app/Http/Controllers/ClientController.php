@@ -32,15 +32,6 @@ class ClientController extends Controller
     }
 
 
-    public function create()
-    {
-        $item =  new Client;
-        $titre_page = 'Création d’un client';
-
-        return view('client.create')->with(compact('titre_page', 'item'));
-    }
-
-
     public function store(ClientRequest $request)
     {
         $item = new Client;
@@ -67,9 +58,7 @@ class ClientController extends Controller
     public function edit($id)
     {
         $item = Client::with('user')->where('id', $id)->first();
-        $titre_page = 'Modification de mes coordonnées';
-
-        return view('client.edit')->with(compact('item', 'titre_page'));
+        return view('client.edit')->with(compact('item'));
     }
 
 

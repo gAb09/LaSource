@@ -73,7 +73,6 @@
 
     <!-- - - - - - - - - - - - - - - - MESSAGES - - - - - - - - - - - - - - -->
     <div class="container-fluid">
-        @include('messages')
         <div class="col-md-12 messages">
             @if (session('status'))
             <div class="alert alert-danger">

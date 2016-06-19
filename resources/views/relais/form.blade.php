@@ -1,9 +1,9 @@
-                        <!-- NOM -->
+                        <!-- nom -->
                         <div class="form-group{{ $errors->has('nom') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Nom *</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="nom" value="{{ $relais->nom or old('nom') }}">
+                                <input type="text" class="form-control" name="nom" value="{{ $item->nom or old('nom') }}">
 
                                 @if ($errors->has('nom'))
                                 <span class="help-block">
@@ -13,12 +13,12 @@
                             </div>
                         </div>
 
-                        <!-- RETRAIT -->
+                        <!-- retrait -->
                         <div class="form-group{{ $errors->has('retrait') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Retrait des colis *</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="retrait" value="{{ $relais->retrait or old('retrait') }}">
+                                <input type="text" class="form-control" name="retrait" value="{{ $item->retrait or old('retrait') }}">
 
                                 @if ($errors->has('retrait'))
                                 <span class="help-block">
@@ -28,12 +28,12 @@
                             </div>
                         </div>
 
-                        <!-- ADRESSE 1 -->
+                        <!-- ad1 -->
                         <div class="form-group{{ $errors->has('ad1') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Adresse</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="ad1" value="{{ $relais->ad1 or old('ad1') }}">
+                                <input type="text" class="form-control" name="ad1" value="{{ $item->ad1 or old('ad1') }}">
 
                                 @if ($errors->has('ad1'))
                                 <span class="help-block">
@@ -43,12 +43,12 @@
                             </div>
                         </div>
 
-                        <!-- ADRESSE 2 -->
+                        <!-- ad2 -->
                         <div class="form-group{{ $errors->has('ad2') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Adresse (suite)</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="ad2" value="{{ $relais->ad2 or old('ad2') }}">
+                                <input type="text" class="form-control" name="ad2" value="{{ $item->ad2 or old('ad2') }}">
 
                                 @if ($errors->has('ad2'))
                                 <span class="help-block">
@@ -58,12 +58,12 @@
                             </div>
                         </div>
 
-                        <!-- CODE POSTAL -->
+                        <!-- cp -->
                         <div class="form-group{{ $errors->has('cp') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Code postal</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="cp" value="{{ $relais->cp or old('cp') }}">
+                                <input type="text" class="form-control" name="cp" value="{{ $item->cp or old('cp') }}">
 
                                 @if ($errors->has('cp'))
                                 <span class="help-block">
@@ -73,12 +73,12 @@
                             </div>
                         </div>
 
-                        <!-- VILLE -->
+                        <!-- ville -->
                         <div class="form-group{{ $errors->has('ville') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Ville</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="ville" value="{{ $relais->ville or old('ville') }}">
+                                <input type="text" class="form-control" name="ville" value="{{ $item->ville or old('ville') }}">
 
                                 @if ($errors->has('ville'))
                                 <span class="help-block">
@@ -88,12 +88,13 @@
                             </div>
                         </div>
 
-                        <!-- TELEPHONE -->
+                        <!-- tel -->
+                        <?php $tel = $item->cleanTel($item->tel); $old_tel = $item->cleanTel(old('tel')); ?>
                         <div class="form-group{{ $errors->has('tel') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Téléphone *</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="tel" value="{{ $relais->tel or old('tel') }}">
+                                <input type="text" class="form-control" name="tel" value="{{ $tel or $old_tel }}">
 
                                 @if ($errors->has('tel'))
                                 <span class="help-block">
@@ -104,12 +105,12 @@
                         </div>
 
 
-                        <!-- MAIL -->
+                        <!-- email -->
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Courriel</label>
+                            <label class="col-md-4 control-label">Courriel&nbsp*</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="email" value="{{ $relais->email or old('email') }}">
+                                <input type="text" class="form-control" name="email" value="{{ $item->email or old('email') }}">
 
                                 @if ($errors->has('email'))
                                 <span class="help-block">
@@ -120,12 +121,12 @@
                         </div>
 
 
-                        <!-- OUVERTURES -->
+                        <!-- ouvertures -->
                         <div class="form-group{{ $errors->has('ouvertures') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Ouvertures</label>
 
                             <div class="col-md-6">
-                                <input type="textarea" class="form-control" name="ouvertures" value="{{ $relais->ouvertures or old('ouvertures') }}">
+                                <input type="textarea" class="form-control" name="ouvertures" value="{{ $item->ouvertures or old('ouvertures') }}">
 
                                 @if ($errors->has('ouvertures'))
                                 <span class="help-block">
@@ -136,12 +137,25 @@
                         </div>
 
 
-                        <!-- REMARQUES -->
+                        <!-- is_actif -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Actif</label>
+                            <div class="col-md-6">
+                                <input type="checkbox" class="form-control" name="is_actif" 
+                                @if($item->is_actif or old('is_actif'))
+                                checked="checked" 
+                                @endif
+                                value="{{ $item->is_actif or old('is_actif') }}">
+                            </div>
+                        </div>
+
+
+                        <!-- remarques -->
                         <div class="form-group{{ $errors->has('remarques') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Remarques</label>
 
                             <div class="col-md-6">
-                                <input type="textarea" class="form-control" name="remarques" value="{{ $relais->remarques or old('remarques') }}">
+                                <input type="textarea" class="form-control" name="remarques" value="{{ $item->remarques or old('remarques') }}">
 
                                 @if ($errors->has('remarques'))
                                 <span class="help-block">

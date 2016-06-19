@@ -17,4 +17,23 @@ return [
         'lesrelais'     => 'Nos points relais',
         'lescolis'     => 'Les colis',
         'leslivraisons'     => 'Les prochaines livraisons',
+
+        'relais' => 
+            [
+                'index' => 'Les relais',
+                'create'  => 'Création d’un relais',
+                'edit'  => 'Édition du relais “:nom”',
+            ],
+
+        'producteur' => 
+            [
+                'index' => 'Les producteurs',
+                'create'  => 'Création d’un producteur',
+                'edit'  => 'Édition du producteur “:exploitation”',
+            ],
+
+        'client' => 
+            [
+                'edit'  => 'Modification de mes coordonnées',
+            ],
     ];

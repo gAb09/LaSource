@@ -6,14 +6,13 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3>{{ trans('titrepage.client.edit') }}</h3>
+                    <h3>{{ trans('titrepage.relais.create') }}</h3>
                 </div>
                 <div class="panel-body">
-                    <form class="form-inline" role="form" method="POST" action="{{ route('client.update', $item->id) }}">
+                    <form class="form-inline" role="form" method="POST" action="{{ route('relais.store') }}">
                         {!! csrf_field() !!}
-                        <input type="hidden" class="form-control" name="_method" value="PUT">
 
-                        @include('client.form_coordonnees')
+                        @include('relais.form')
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">

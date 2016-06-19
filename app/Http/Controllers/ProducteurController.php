@@ -21,18 +21,14 @@ class ProducteurController extends Controller
     public function index()
     {
         $items = $this->domaine->all();
-        $titre_page = 'Les producteurs';
-
-        return view('producteur.index')->with(compact('titre_page', 'items'));
+        return view('producteur.index')->with(compact('items'));
     }
 
 
     public function create()
     {
         $item =  $this->domaine->newModel();
-        $titre_page = 'Création d’un producteur';
-
-        return view('producteur.create')->with(compact('titre_page', 'item'));
+        return view('producteur.create')->with(compact('item'));
     }
 
 
@@ -49,9 +45,7 @@ class ProducteurController extends Controller
     public function edit($id)
     {
     	$item = $this->domaine->findFirst('id', $id);
-    	$titre_page = 'Edition du producteur “'.$item->exploitation.'”';
-
-    	return view('producteur.edit')->with(compact('item', 'titre_page'));
+    	return view('producteur.edit')->with(compact('item'));
     }
 
 
