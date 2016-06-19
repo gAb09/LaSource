@@ -20,7 +20,7 @@ class RelaisController extends Controller
 
     public function index()
     {
-    	$relaiss = Relais::where('is_actif', 1)->get();
+    	$relaiss = $this->domaine->allActifs();
     	$titre_page = 'Les relais';
 
     	return view('relais.index')->with(compact('relaiss', 'titre_page'));
@@ -29,7 +29,7 @@ class RelaisController extends Controller
 
     public function edit($id)
     {
-    	$relais = Relais::where('id', $id)->first();
+    	$relais = $this->domaine->FindFirst('id', $id);
     	$titre_page = 'Edition du relais “'.$relais->nom.'”';
 
     	return view('relais.edit')->with(compact('relais', 'titre_page'));
@@ -39,7 +39,7 @@ class RelaisController extends Controller
     public function update($id)
     {
     	return "update : relais n° $id";
-    	// $relais = Relais::where('', $id)->first();
+        // $relais = $this->domaine->FindFirst('id', $id);
     	// $message = "???";
 
     	// return view('relais.index')->with(compact('message'));

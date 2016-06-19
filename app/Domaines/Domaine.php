@@ -29,4 +29,8 @@ class Domaine
 		return $this->model->delete();
 	}
 
+	public function allActifs()
+	{
+		return $this->model->where('is_actif', 1)->get();
+	}
 }
