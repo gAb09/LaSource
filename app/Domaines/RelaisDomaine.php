@@ -8,9 +8,9 @@ use App\Models\Relais;
 class RelaisDomaine
 {
 
-	public function FindBy($colonne, $quoi)
+	public function FindBy($colonne, $critere)
 	{
-		return Relais::where($colonne, $quoi)->first();
+		return Relais::where($colonne, $critere)->first();
 	}
 
 	static public function all($order)
