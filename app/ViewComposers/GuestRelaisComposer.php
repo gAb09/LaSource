@@ -7,7 +7,7 @@ use App\Domaines\RelaisDomaine as Relais;
 use Illuminate\View\View;
 use App\Repositories\UserRepository;
 
-class AccueilComposer
+class GuestRelaisComposer
 {
     /**
      * The user repository implementation.

@@ -51,27 +51,20 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><p>Statut du transfert : {{ Session::get('transfert_statut') }}</p></li>
+                    @if (Auth::guest())
+                    <!-- Infos sur les Paniers et La Source -->
+                        @include('layouts.menuLeft.guest')
+                    @endif
                 </ul>
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
-                    <!-- Authentication Links -->
+                    @include('layouts.menuRight.dev')
                     @if (Auth::guest())
-
-                    <li><a href="{{ url('/connexion') }}">Connexion</a></li>
-                    <li><a href="{{ url('/register') }}">Inscription</a></li>
+                    <!-- Authentication Links -->
+                        @include('layouts.menuRight.guest')
                     @else
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            {{Auth::user()->pseudo }} <span class="caret"></span>
-                        </a>
-
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Deconnexion</a></li>
-                            <li><a href="{{ URL::route('client.edit', Auth::user()->id) }}">Modifier mes coordonnées</a></li>
-                        </ul>
-                    </li>
+                        @include('layouts.menuRight.auth')
                     @endif
                 </ul>
             </div>
@@ -80,6 +73,7 @@
 
     <!-- - - - - - - - - - - - - - - - MESSAGES - - - - - - - - - - - - - - -->
     <div class="container-fluid">
+        @include('messages')
         <div class="col-md-12 messages">
             @if (session('status'))
             <div class="alert alert-danger">

@@ -1,3 +1,10 @@
+@extends('layouts.app')
+
+@section('topcontent1')
+<h1 class="titrepage">{{$titre_page}}</h1>
+@stop
+
+@section('content')
 <div itemprop="articleBody">
 	<p><img src="/images/a_images/logo_la_source.jpg" alt="logo la source" width="160" height="160" /><img src="/images/a_photos_articles/soorce-18.jpg" alt="soorce-18" width="213" height="160" /> <img src="/images/a_photos_articles/soorce-24.jpg" alt="soorce-24" width="213" height="160" /></p>
 	<p>Ce sont <strong>18 éleveurs certifiés en Agriculture Biologique</strong> qui&nbsp;:</p>
@@ -33,3 +40,4 @@
 
 	
 </div>
+@endsection

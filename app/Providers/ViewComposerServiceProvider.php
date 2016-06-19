@@ -18,7 +18,11 @@ class ViewComposerServiceProvider extends ServiceProvider
             );
 
         view()->composer(
-            'accueil', 'App\ViewComposers\AccueilComposer'
+            'lesrelais', 'App\ViewComposers\GuestRelaisComposer'
+            );    
+
+        view()->composer(
+            'lesproducteurs', 'App\ViewComposers\GuestProducteurComposer'
             );    
 
         view()->composer(
