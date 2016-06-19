@@ -2,29 +2,26 @@
 
 namespace App\ViewComposers;
 
-use App\Domaines\RelaisDomaine as Relais;
+use App\Domaines\RelaisDomaine;
 
 use Illuminate\View\View;
 use App\Repositories\UserRepository;
 
 class GuestRelaisComposer
 {
-    /**
-     * The user repository implementation.
-     *
-     * @var UserRepository
-     */
-    // protected $users;
 
+    private $domaine;
+    
     /**
      * Create a new profile composer.
      *
      * @param  UserRepository  $users
      * @return void
      */
-    public function __construct()
+    public function __construct(RelaisDomaine $domaine)
     {
         // Dependencies automatically resolved by service container...
+        $this->domaine = $domaine;
     }
 
     /**
@@ -35,7 +32,7 @@ class GuestRelaisComposer
      */
     public function compose(View $view)
     {
-        $relaiss = Relais::all('ville');
+        $relaiss = $this->domaine->allActifs('ville');
         $view->with(compact('relaiss'));
     }
 }
