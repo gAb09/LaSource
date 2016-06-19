@@ -109,25 +109,22 @@
     <!-- - - - - - - - - - - - - - - -  CONTENT (2 zones) - - - - - - - - - - - - - - -->
     @yield('content')
 
-    <div class="container-fluid col-md-12 footermain">
-        <div class="col-md-12 footer closed" onClick="javascript:gererVolet(this)">
-            @section('footer')
+    <div class="container-fluid col-md-12 footercontainer">
+        <div class="col-md-6 footer1">
+            @section('footer1')
+            Association La Source<br />
+            {{$lasource->tel}}<br />
+            {{Html::linkAction('ContactController@ContactLS', 'Contacter La Source par courriel')}}
             @show
-            <div class="col-md-6 footer1">
-                @section('footer1')
-                Association La Source<br />
-                {{Html::linkAction('ContactController@ContactLS', 'Contacter La Source par courriel')}}
-                @show
-            </div>
-
-            <div class="col-md-6 footer2">
-                @section('footer2')
-                Pour tout problème relatif à l'inscription, la connexion ou un message d’erreur :<br />
-                {{Html::linkAction('ContactController@ContactOM', 'Contacter le Ouaibmaistre par courriel')}}
-                @show
-            </div>
-        </div> 
-    </div>
+        </div>
+        <div class="col-md-6 footer2 closed" onClick="javascript:gererVolet(this)">
+            @section('footer2')
+            Pour tout problème relatif <br />
+            à l'inscription, la connexion ou un message d’erreur :<br />
+            {{Html::linkAction('ContactController@ContactOM', 'Contacter le Ouaibmaistre par courriel')}}
+            @show
+        </div>
+    </div> 
 
 
 

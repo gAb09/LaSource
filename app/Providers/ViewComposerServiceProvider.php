@@ -20,6 +20,10 @@ class ViewComposerServiceProvider extends ServiceProvider
         view()->composer(
             'accueil', 'App\ViewComposers\AccueilComposer'
             );    
+
+        view()->composer(
+            'layouts.app', 'App\ViewComposers\LayoutComposer'
+            );    
     }
 
     /**

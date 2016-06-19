@@ -26,6 +26,22 @@
 }
 
 
+.titrepage {
+	margin-top: 0px;
+}
+
+.topcontent1 {
+	background-color: green;
+	min-height: 30px
+}
+
+.topcontent2 {
+	background-color: yellow;
+	min-height: 30px
+}
+
+
+
 
 
 
@@ -74,12 +90,18 @@
 
 
 
-.footermain {
-	background-color: #dff;
+.footercontainer {
+	background-color: Azure;
 	position: fixed;
 	bottom: 0px;
 	text-align: center;
 }
+
+.footercontainer .div {
+	min-height: 30px
+	text-align: center;
+}
+
 
 .footer {
 	background-color: #ffc;
@@ -87,30 +109,34 @@
 	bottom: 0px;
 }
 
-.footer.open {
+.footer2.open {
 	top: 0px;
 	transition: all 1s;
 	height:580px;
 }
 
-.footer.closed {
+.footer2.closed {
 	transition: all 1s;
-	height:34px;
+	height:38px;
 }
 
-.footer1, .footer2 {
+/*.footer1, .footer2 {
 	position: relative;
 	bottom: 0px;
 	height:45px;
 	text-align: center;
 }
-
+*/
 .footer1 {
-	background-color: #cdc;
+	background-color: Pink;
 }
 
 .footer2 {
-	background-color: #dcd;
+	background-color: CornSilk;
+}
+
+.footer3 {
+	background-color: Yellow;
 }
 
 .relais {

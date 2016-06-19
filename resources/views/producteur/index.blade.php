@@ -8,11 +8,11 @@
 
 @section('topcontent1')
 <h1 class="titrepage">{{$titre_page}}</h1>
-	<a href="{{ route('producteur.create') }}" class="btn-xs btn-primary"> <i class="fa fa-btn fa-trash-o"></i>Ajouter un producteur</a>
 @stop
 
 
 @section('topcontent2')
+	<a href="{{ route('producteur.create') }}" class="btn-xs btn-primary"> <i class="fa fa-btn fa-trash-o"></i>Ajouter un producteur</a>
 @stop
 
 

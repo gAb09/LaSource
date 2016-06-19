@@ -42,13 +42,6 @@
 </div>
 @endsection
 
-@section('footer')
-@parent
-<h4>Présentation de l’Association La Source</h4>
-@include('presentation')
-
-@endsection
-
 @section('footer1')
 @parent
 
@@ -56,5 +49,13 @@
 
 @section('footer2')
 @parent
+<h4>Présentation de l’Association La Source</h4>
+@include('presentation')
 
 @endsection
+
+@section('footer3')
+@parent
+
+@endsection
+

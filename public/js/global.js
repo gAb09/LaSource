@@ -1,8 +1,8 @@
 function gererVolet(item)
 {
-	if (item.className == "col-md-12 footer open") {
-		item.className = "col-md-12 footer closed";
+	if (item.className == "col-md-6 footer2 open") {
+		item.className = "col-md-6 footer2 closed";
 	}else{
-		item.className = "col-md-12 footer open";
+		item.className = "col-md-6 footer2 open";
 	}
 }
