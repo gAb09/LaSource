@@ -97,19 +97,9 @@
 	text-align: center;
 }
 
-.footercontainer .div {
-	min-height: 30px
-	text-align: center;
-}
 
 
-.footer {
-	background-color: #ffc;
-	position: relative;
-	bottom: 0px;
-}
-
-.footer2.open {
+/*.footer2.open {
 	top: 0px;
 	transition: all 1s;
 	height:580px;
@@ -119,20 +109,14 @@
 	transition: all 1s;
 	height:38px;
 }
-
-/*.footer1, .footer2 {
-	position: relative;
-	bottom: 0px;
-	height:45px;
-	text-align: center;
-}
 */
+
 .footer1 {
 	background-color: Pink;
 }
 
 .footer2 {
-	background-color: CornSilk;
+	/*background-color: CornSilk;*/
 }
 
 .footer3 {
