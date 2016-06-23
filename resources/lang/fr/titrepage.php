@@ -15,7 +15,7 @@ return [
         'lesproducteurs'     => 'Nos producteurs',
         'lasource'     => 'Présentation de l’Association La Source',
         'lesrelais'     => 'Nos points relais',
-        'lescolis'     => 'Les colis',
+        'lespaniers'     => 'Les paniers',
         'leslivraisons'     => 'Les prochaines livraisons',
 
         'relais' => 
@@ -30,6 +30,13 @@ return [
                 'index' => 'Les producteurs',
                 'create'  => 'Création d’un producteur',
                 'edit'  => 'Édition du producteur “:exploitation”',
+            ],
+
+        'panier' => 
+            [
+                'index' => 'Les paniers',
+                'create'  => 'Création d’un panier',
+                'edit'  => 'Édition du panier “:nom_court',
             ],
 
         'client' => 

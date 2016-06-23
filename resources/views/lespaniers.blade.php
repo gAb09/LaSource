@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('topcontent1')
-<h1 class="titrepage">{{ trans('titrepage.lescolis') }}</h1>
+<h1 class="titrepage">{{ trans('titrepage.lespaniers') }}</h1>
 @stop
 
 @section('content')

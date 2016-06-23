@@ -38,13 +38,13 @@ return [
         'deletefailed'  => 'Problème. Le relais n’a pas pu être supprimé…',
     ],
 
-    'colis' => [
-        'updateOk'      => 'Le colis a bien été modifié.',
-        'updatefailed'  => 'Problème. Le colis n’a pas été mis à jour…',
-        'storeOK'       => 'Le colis a bien été créé.',
-        'storefailed'   => 'Problème. Le colis n’a pas pu être créé…',
-        'deleteOk'      => 'Le colis a bien été supprimé.',
-        'deletefailed'  => 'Problème. Le colis n’a pas pu être supprimé…',
+    'panier' => [
+        'updateOk'      => 'Le panier a bien été modifié.',
+        'updatefailed'  => 'Problème. Le panier n’a pas été mis à jour…',
+        'storeOk'       => 'Le panier a bien été créé.',
+        'storefailed'   => 'Problème. Le panier n’a pas pu être créé…',
+        'deleteOk'      => 'Le panier a bien été supprimé.',
+        'deletefailed'  => 'Problème. Le panier n’a pas pu être supprimé…',
     ],
 
     'user' => [
