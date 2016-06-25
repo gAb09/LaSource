@@ -70,6 +70,7 @@ $this->get('om', 'OMController@index');
 $this->get('om/transfertrelais', 'OMController@transfertRelais');
 $this->get('om/transfertproducteur', 'OMController@transfertProducteur');
 $this->get('om/transfertpanier', 'OMController@transfertPanier');
+$this->get('om/transfertlivraison', 'OMController@transfertLivraison');
 
 
 Route::group(['middleware' => 'auth'], function () {
@@ -84,6 +85,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('producteur', 'ProducteurController');
 
 	Route::resource('panier', 'PanierController');
+
+	Route::resource('livraison', 'LivraisonController');
 
 	Route::resource('menus', '\Menus\MenuController');
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Relais;
 use App\Models\Producteur;
 use App\Models\Panier;
+use App\Models\Livraison;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -98,4 +99,27 @@ class OMController extends Controller
 		}
 		return redirect()->back();
 	}
+
+	public function transfertLivraison()
+	{
+		$olds = \DB::connection('mysql_old')->table('paniers_dates')->select('*')->get();
+
+		foreach ($olds as $old) {
+			$item = new Livraison;
+
+			$item->id = $old->id_date;
+			$item->date_livraison = $old->livraison;
+			$item->date_cloture = $old->cloture_cde;
+			$item->date_paiement = $old->cloture_paie;
+			$item->created_at = null;
+			$item->updated_at = null;
+			$item->deleted_at = null;
+			$item->is_actif = 1;
+			$item->remarques = '';
+
+			$item->save();
+		}
+		return redirect()->back();
+	}
+
 }
