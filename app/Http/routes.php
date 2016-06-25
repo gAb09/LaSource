@@ -32,8 +32,8 @@ Route::get('lesrelais', function () {
 	return view('lesrelais');
 });
 
-Route::get('lescolis', function () {
-	return view('lescolis');
+Route::get('lespaniers', function () {
+	return view('lespaniers');
 });
 
 Route::get('leslivraisons', function () {
@@ -69,6 +69,8 @@ Route::get('contactOM', 'ContactController@ContactOM');
 $this->get('om', 'OMController@index');
 $this->get('om/transfertrelais', 'OMController@transfertRelais');
 $this->get('om/transfertproducteur', 'OMController@transfertProducteur');
+$this->get('om/transfertpanier', 'OMController@transfertPanier');
+$this->get('om/transfertlivraison', 'OMController@transfertLivraison');
 
 
 Route::group(['middleware' => 'auth'], function () {
@@ -81,6 +83,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('relais', 'RelaisController');
 
 	Route::resource('producteur', 'ProducteurController');
+
+	Route::resource('panier', 'PanierController');
+
+	Route::resource('livraison', 'LivraisonController');
 
 	Route::resource('menus', '\Menus\MenuController');
 

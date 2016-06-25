@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Relais;
 use App\Models\Producteur;
+use App\Models\Panier;
+use App\Models\Livraison;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -23,21 +25,21 @@ class OMController extends Controller
 	{
 		$olds = \DB::connection('mysql_old')->table('paniers_lieux')->select('*')->get();
 		foreach ($olds as $old) {
-			$relais = new Relais;
+			$item = new Relais;
 
-			$relais->id = $old->id_lieu;
-			$relais->nom = $old->relais;
-			$relais->ad1 = $old->ad1;
-			$relais->ad2 = $old->ad2;
-			$relais->cp = $old->cp;
-			$relais->ville = $old->lieu_livraison;
-			$relais->tel = $old->tel;
-			$relais->email = $old->mail;
-			$relais->retrait = $old->horaires;
-			$relais->ouvertures = $old->remarques;
-			$relais->is_actif = 1;
+			$item->id = $old->id_lieu;
+			$item->nom = $old->item;
+			$item->ad1 = $old->ad1;
+			$item->ad2 = $old->ad2;
+			$item->cp = $old->cp;
+			$item->ville = $old->lieu_livraison;
+			$item->tel = $old->tel;
+			$item->email = $old->mail;
+			$item->retrait = $old->horaires;
+			$item->ouvertures = $old->remarques;
+			$item->is_actif = 1;
 
-			$relais->save();
+			$item->save();
 		}
 		return redirect()->back();
 	}
@@ -47,31 +49,77 @@ class OMController extends Controller
 	{
 		$olds = \DB::connection('mysql_old')->table('civam_guide')->select('*')->get();
 		foreach ($olds as $old) {
-			$producteur = new Producteur;
-			if($old->paniers != '0'){
-				$producteur->id = $old->id_producteur;
-				$producteur->exploitation = $old->exploitation;
-				$producteur->nom = $old->nom;
-				$producteur->prenom = $old->prenom;
-				$producteur->ad1 = $old->adresse;
-				$producteur->ad2 = $old->adresse;
-				$producteur->cp = $old->cp;
-				$producteur->ville = $old->commune;
-				$old->tel = str_replace('.', '', $old->tel);
-				$producteur->tel = $old->tel;
-				$old->mobile = str_replace('.', '', $old->mobile);
-				$producteur->mobile = $old->mobile;
-				if(is_null($old->mail)){
-					$producteur->email = "Inconnu";
-				}else{
-					$producteur->email = $old->mail;
-				}
-				$producteur->nompourpaniers = $old->paniers;
-				$producteur->is_actif = 1;
+			$item = new Producteur;
 
-				$producteur->save();
+			if($old->paniers != '0'){
+				$item->id = $old->id_item;
+				$item->exploitation = $old->exploitation;
+				$item->nom = $old->nom;
+				$item->prenom = $old->prenom;
+				$item->ad1 = $old->adresse;
+				$item->ad2 = $old->adresse;
+				$item->cp = $old->cp;
+				$item->ville = $old->commune;
+				$old->tel = str_replace('.', '', $old->tel);
+				$item->tel = $old->tel;
+				$old->mobile = str_replace('.', '', $old->mobile);
+				$item->mobile = $old->mobile;
+				if(is_null($old->mail)){
+					$item->email = "Inconnu";
+				}else{
+					$item->email = $old->mail;
+				}
+				$item->nompourpaniers = $old->paniers;
+				$item->is_actif = 1;
+
+				$item->save();
 			}
+			return redirect()->back();
+		}
+	}
+
+	public function transfertPanier()
+	{
+		$olds = \DB::connection('mysql_old')->table('paniers_colis')->select('*')->get();
+
+		foreach ($olds as $old) {
+			$item = new Panier;
+
+			$item->id = $old->id_colis;
+			$item->type = $old->type_panier;
+			$item->famille = $old->ssfamille;
+			$item->nom = $old->colis;
+			$item->nom_court = $old->colis_abrev;
+			$item->idee = $old->idee;
+			$item->prix_commun = $old->pu;
+			$item->remarques = $old->remarques;
+			$item->is_actif = 1;
+
+			$item->save();
 		}
 		return redirect()->back();
 	}
+
+	public function transfertLivraison()
+	{
+		$olds = \DB::connection('mysql_old')->table('paniers_dates')->select('*')->get();
+
+		foreach ($olds as $old) {
+			$item = new Livraison;
+
+			$item->id = $old->id_date;
+			$item->date_livraison = $old->livraison;
+			$item->date_cloture = $old->cloture_cde;
+			$item->date_paiement = $old->cloture_paie;
+			$item->created_at = null;
+			$item->updated_at = null;
+			$item->deleted_at = null;
+			$item->is_actif = 1;
+			$item->remarques = '';
+
+			$item->save();
+		}
+		return redirect()->back();
+	}
+
 }

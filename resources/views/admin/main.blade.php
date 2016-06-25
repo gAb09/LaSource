@@ -14,6 +14,12 @@
                     <br />
                     {{Html::linkAction('OMController@transfertProducteur', 'Transfert des producteurs')}}<br />
                     {{Html::linkAction('ProducteurController@index', 'Les producteurs')}}<br />
+                    <br />
+                    {{Html::linkAction('OMController@transfertPanier', 'Transfert des paniers')}}<br />
+                    {{Html::linkAction('PanierController@index', 'Les paniers')}}<br />
+                    <br />
+                    {{Html::linkAction('OMController@transfertLivraison', 'Transfert des livraisons')}}<br />
+                    {{Html::linkAction('LivraisonController@index', 'Les livraisons')}}<br />
                 </div>
             </div>
         </div>
