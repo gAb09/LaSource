@@ -51,5 +51,6 @@ $app->singleton(
 | from the actual running of the application and sending responses.
 |
 */
+setlocale(LC_ALL, 'fr_FR'); // TOTO Trouver meilleur emplacement
 
 return $app;
