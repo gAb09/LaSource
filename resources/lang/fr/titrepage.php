@@ -39,6 +39,13 @@ return [
                 'edit'  => 'Édition du panier “:nom_court',
             ],
 
+        'livraison' => 
+            [
+                'index' => 'Les livraisons',
+                'create'  => 'Création d’une livraison',
+                'edit'  => 'Édition de la livraison “:date_livraison',
+            ],
+
         'client' => 
             [
                 'edit'  => 'Modification de mes coordonnées',

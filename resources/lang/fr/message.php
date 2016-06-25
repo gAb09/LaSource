@@ -47,6 +47,15 @@ return [
         'deletefailed'  => 'Problème. Le panier n’a pas pu être supprimé…',
     ],
 
+    'livraison' => [
+        'updateOk'      => 'La livraison a bien été modifiée.',
+        'updatefailed'  => 'Problème. La livraison n’a pas été mise à jour…',
+        'storeOk'       => 'La livraison a bien été créée.',
+        'storefailed'   => 'Problème. La livraison n’a pas pu être créée…',
+        'deleteOk'      => 'La livraison a bien été supprimée.',
+        'deletefailed'  => 'Problème. La livraison n’a pas pu être supprimée…',
+    ],
+
     'user' => [
         'updateOk'     => 'Vos identifiants ont bien été modifiés.',
         'updatefailed' => 'Problème. Vos identifiants n\ont pas été mis à jour…',
