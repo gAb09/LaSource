@@ -16,6 +16,8 @@ class LivraisonRequest extends Request
         return true;
     }
 
+
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,17 +26,9 @@ class LivraisonRequest extends Request
     public function rules()
     {
         return [
-        // 'exploitation' => 'required',
-        // 'prenom' => 'required|alpha_dash',
-        // 'nom' => 'required|alpha_dash',
-        // 'ad1' => 'required_with:cp,ville',
-        // // 'ad2' => 'required_with:ad1,cp,ville',
-        // 'cp' => 'digits:5|required_with:ad1,ad2,ville',
-        // 'ville' => 'required_with:ad1,ad2,cp',
-        // 'tel' => 'required|numeric|digits:10',
-        // 'mobile' => 'numeric|digits:10',
-        // 'email' => 'email|required',
-        // 'nompourpaniers' => 'required|max:20',
+        'date_livraison' => 'required|date_format:Y-m-d',
+        'date_cloture' => 'required|date_format:Y-m-d',
+        'date_paiement' => 'required|date_format:Y-m-d',
         ];
     }
 }

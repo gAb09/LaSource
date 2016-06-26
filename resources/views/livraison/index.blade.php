@@ -12,7 +12,12 @@
 
 
 @section('topcontent2')
-<a href="{{ route('livraison.create') }}" class="btn-xs btn-primary"> <i class="fa fa-btn fa-trash-o"></i>Ajouter une livraison</a>
+<button href="" 
+class="btn-xs btn-primary"
+onclick="javascript:createLivraison();"
+> 
+	<i class="fa fa-btn fa-trash-o"></i>Ajouter une livraison
+</button>
 @stop
 
 
@@ -29,18 +34,21 @@
 				Id
 			</th>
 			<th>
-				Date de livraison
-			</th>
-			<th>
 				Date de clôture des commandes
 			</th>
 			<th>
-				Date limte de paiement
+				Date limite de paiement
+			</th>
+			<th>
+				Date de livraison
+			</th>
+			<th>
+				bouton
 			</th>
 		</thead>
 
 
-		<tbody>
+		<tbody id="livraisons" >
 
 			@foreach($items as $item)
 

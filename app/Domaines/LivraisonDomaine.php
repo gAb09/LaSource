@@ -34,20 +34,12 @@ class LivraisonDomaine extends Domaine
 	}
 
 	private function handleRequest($request){
-		// $this->model->exploitation = $request->exploitation;
-		// $this->model->nom = $request->nom;
-		// $this->model->prenom = $request->prenom;
-		// $this->model->ad1 = $request->ad1;
-		// $this->model->ad2 = $request->ad2;
-		// $this->model->cp = $request->cp;
-		// $this->model->ville = $request->ville;
-		// $this->model->tel = $this->model->cleanTel($request->tel);
-		// $this->model->mobile = $this->model->cleanTel($request->mobile);
-		// $this->model->email = $request->email;
-		// $this->model->nompourpaniers = $request->nompourpaniers;
-		// $this->model->is_actif = (isset($request->is_actif)?1:0);
+		$this->model->date_cloture = $request->date_cloture;
+		$this->model->date_paiement = $request->date_paiement;
+		$this->model->date_livraison = $request->date_livraison;
+		$this->model->remarques = $request->remarques;
+		$this->model->is_actif = (isset($request->is_actif)?1:0);
 		
-		return $this->model->save();
 	}
 
 }

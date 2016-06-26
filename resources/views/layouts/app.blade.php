@@ -72,20 +72,6 @@
     </nav>
 
     <!-- - - - - - - - - - - - - - - - MESSAGES - - - - - - - - - - - - - - -->
-    <div class="container-fluid">
-        <div class="col-md-12 messages">
-            @if (session('status'))
-            <div class="alert alert-danger">
-                {!! session('status') !!}
-            </div>
-            @endif
-            @if (session('success'))
-            <div class="alert alert-success">
-                {!! session('success') !!}
-            </div>
-            @endif
-        </div>
-    </div>
 
     <!-- - - - - - - - - - - - - - - - TOP CONTENT (2 zones) - - - - - - - - - - - - - - -->
     <div class="container-fluid">
@@ -102,29 +88,7 @@
     <!-- - - - - - - - - - - - - - - -  CONTENT (2 zones) - - - - - - - - - - - - - - -->
     @yield('content')
 
-    <div class="container-fluid col-md-12 footercontainer">
-        <div class="col-md-4 footer1">
-            @section('footer1')
-            Association La Source<br />
-            {{$lasource->tel}}<br />
-            {{Html::linkAction('ContactController@ContactLS', 'Contacter La Source par courriel')}}
-            @show
-        </div>
-        <div class="col-md-4 footer2">
-            @section('footer2')
-            Version 2.2.0
-            @show
-        </div>
-        <div class="col-md-4 footer3">
-            @section('footer3')
-            Pour tout problème relatif <br />
-            à l'inscription, la connexion ou un message d’erreur :<br />
-            {{Html::linkAction('ContactController@ContactOM', 'Contacter le Ouaibmaistre par courriel')}}
-            @show
-        </div>
-    </div> 
-
-
+{{var_dump(\Session::all())}}
 
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
