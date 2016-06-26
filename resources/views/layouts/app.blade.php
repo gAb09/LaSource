@@ -54,6 +54,8 @@
                     @if (Auth::guest())
                     <!-- Infos sur les Paniers et La Source -->
                         @include('layouts.menuLeft.guest')
+                    @else
+                        @include('layouts.menuLeft.auth')
                     @endif
                 </ul>
 

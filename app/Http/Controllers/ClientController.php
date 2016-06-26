@@ -32,6 +32,14 @@ class ClientController extends Controller
     }
 
 
+    public function index()
+    {
+        $items = Client::with('User')->get();
+        return view('client.index')->with(compact('items'));
+
+    }
+
+
     public function store(ClientRequest $request)
     {
         $item = new Client;

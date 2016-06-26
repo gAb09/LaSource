@@ -55,6 +55,7 @@ return [
 
         'client' => 
             [
+                'index' => 'Les clients',
                 'edit'  => 'Modification de mes coordonnées',
             ],
     ];
