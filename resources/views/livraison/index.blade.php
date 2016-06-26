@@ -63,7 +63,7 @@ onclick="javascript:createLivraison();"
 			Date de livraison
 		</div>
 		<div>
-			bouton
+			
 		</div>
 	</div>
 

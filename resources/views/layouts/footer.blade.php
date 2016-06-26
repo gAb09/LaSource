@@ -8,7 +8,7 @@
         </div>
         <div class="col-md-4 footer2">
             @section('footer2')
-            Version 2.2.0
+            {{ trans('divers.version') }}
             @show
         </div>
         <div class="col-md-4 footer3">
