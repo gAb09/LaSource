@@ -1,30 +1,17 @@
-@extends('layouts.app')
+<form class="form-inline" role="form" method="POST" action="{{ route('livraison.store') }}">
+	{!! csrf_field() !!}
+	<div 
+	class="flexcontainer ligne_livraison"
+	id="row_{{ $item->id }}" 
+	>
 
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3>{{ trans('titrepage.livraison.create') }}</h3>
-                </div>
-                <div class="panel-body">
-                    <form class="form-inline" role="form" method="POST" action="{{ route('livraison.store') }}">
-                        {!! csrf_field() !!}
 
-                        @include('livraisons.form')
+	@include('livraison.form')
 
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-user"></i>Valider les modifications
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+	<button type="submit" class="btn btn-xs btn-primary">
+		<i class="fa fa-btn fa-user"></i>Valider
+	</button>
+
 </div>
-@endsection
+
+</form>

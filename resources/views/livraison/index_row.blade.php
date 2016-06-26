@@ -1,28 +1,28 @@
-<tr 
-class="s"
+<div 
+class="flexcontainer ligne_livraison"
 id="row_{{ $item->id }}" 
-onDblClick="javascript:edit(this, {{ $item->id }});"
+onDblClick="javascript:edit({{ $item->id }});"
 >
 
 	<!-- id -->
-	<td>
+	<div>
 		{{ $item->id }}
-	</td>
-
-	<!-- date_livraison -->
-	<td>
-		{!! $item->livraison !!}
-	</td>
+	</div>
 
 	<!-- date_cloture -->
-	<td>
+	<div>
 		{!! $item->cloture !!}
-	</td>
+	</div>
 
 	<!-- date_paiement -->
-	<td>
+	<div>
 		{!! $item->paiement !!}
-	</td>
+	</div>
+
+	<!-- date_livraison -->
+	<div>
+		{!! $item->livraison !!}
+	</div>
 
 
-</tr>
+</div>

@@ -88,6 +88,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::resource('livraison', 'LivraisonController');
 
+	Route::resource('modepaiement', 'ModePaiementController');
+
 	Route::resource('menus', '\Menus\MenuController');
 
 });

@@ -9,8 +9,13 @@ use App\Repositories\UserRepository;
 
 class GuestProducteurComposer
 {
-    private $domaine;
-    
+    /**
+     * The producteur repository implementation.
+     *
+     * @var ProducteurDomaine
+     */
+    protected $domaine;
+
     /**
      * Create a new profile composer.
      *

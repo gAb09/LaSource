@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class LivraisonRequest extends Request
+class ModePaiementRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,8 +16,6 @@ class LivraisonRequest extends Request
         return true;
     }
 
-
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -26,9 +24,12 @@ class LivraisonRequest extends Request
     public function rules()
     {
         return [
-        'date_livraison' => 'required|date_format:Y-m-d',
-        'date_cloture' => 'required|date_format:Y-m-d',
-        'date_paiement' => 'required|date_format:Y-m-d',
+        // 'nom' => 'required',
+        // 'nom_court' => 'required|alpha_dash',
+        // 'famille' => 'required|alpha_dash',
+        // 'type' => 'required_with:cp,ville',
+        // 'idee' => '',
+        // 'prix_commun' => 'required|max:20',
         ];
     }
 }

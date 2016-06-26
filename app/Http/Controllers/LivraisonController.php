@@ -27,10 +27,10 @@ class LivraisonController extends Controller
                 $item->paiement = gabHelpers::DatesFrlongue($item->date_paiement);
             }
             if($key = 'date_cloture'){
-                $item->cloture = gabHelpers::DatesFrlongue($item->date_paiement);
+                $item->cloture = gabHelpers::DatesFrlongue($item->date_cloture);
             }
             if($key = 'date_livraison'){
-                $item->livraison = gabHelpers::DatesFrlongue($item->date_paiement);
+                $item->livraison = gabHelpers::DatesFrlongue($item->date_livraison);
             }
         });
 
@@ -41,12 +41,15 @@ class LivraisonController extends Controller
     public function create()
     {
         $item =  $this->domaine->newModel();
+
         return view('livraison.create')->with(compact('item'));
     }
 
 
     public function store(LivraisonRequest $request)
     {
+                // return dd($request->all());
+
         if($this->domaine->store($request)){
             return redirect()->route('livraison.index')->with('success', trans('message.livraison.storeOk'));
         }else{
@@ -58,12 +61,15 @@ class LivraisonController extends Controller
     public function edit($id)
     {
     	$item = $this->domaine->findFirst('id', $id);
-    	return view('livraison.form')->with(compact('item'));
+
+        return view('livraison.edit')->with(compact('item'));
     }
 
 
     public function update($id, LivraisonRequest $request)
     {
+                // return dd($request->all());
+
         if($this->domaine->update($id, $request)){
             return redirect()->route('livraison.index')->with('success', trans('message.livraison.updateOk'));
         }else{
@@ -74,6 +80,7 @@ class LivraisonController extends Controller
 
     public function destroy($id)
     {        
+        return dd('Faut-il permettre la suppression ??');
         if($this->domaine->destroy($id)){
             return redirect()->route('livraison.index')->with('success', trans('message.livraison.deleteOk'));
         }else{

@@ -12,51 +12,77 @@
 
 
 @section('topcontent2')
-<a href="{{ route('livraison.create') }}" class="btn-xs btn-primary"> <i class="fa fa-btn fa-trash-o"></i>Ajouter une livraison</a>
+<button href="" 
+class="btn-xs btn-primary"
+onclick="javascript:createLivraison();"
+> 
+<i class="fa fa-btn fa-trash-o"></i>Ajouter une livraison
+</button>
+@stop
+            
+
+
+@section('message')
+@parent
+    @if ($errors->has('date_cloture'))
+    <div class="alert alert-danger">
+        {{ $errors->first('date_cloture') }}
+    </div>
+    @endif
+
+    @if ($errors->has('date_paiement'))
+    <div class="alert alert-danger">
+        {{ $errors->first('date_paiement') }}
+    </div>
+    @endif
+
+
+    @if ($errors->has('date_livraison'))
+    <div class="alert alert-danger">
+        {{ $errors->first('date_livraison') }}
+    </div>
+    @endif
+
+
 @stop
 
 
 @section('content')
+	<div class="flexcontainer ligne_livraison">
 
-<div class="offset3 span11 flexcontainer">
-
-	<table class="livraisons">
-		<caption> caption
-		</caption>
-
-		<thead>
-			<th>
-				Id
-			</th>
-			<th>
-				Date de livraison
-			</th>
-			<th>
-				Date de clôture des commandes
-			</th>
-			<th>
-				Date limte de paiement
-			</th>
-		</thead>
+		<div>
+			Id
+		</div>
+		<div>
+			Date de clôture des commandes
+		</div>
+		<div>
+			Date limite de paiement
+		</div>
+		<div>
+			Date de livraison
+		</div>
+		<div>
+			
+		</div>
+	</div>
 
 
-		<tbody>
+<div id="tablebody">
 
-			@foreach($items as $item)
+	@foreach($items as $item)
 
-			@include('livraison.index_row')
+	@include('livraison.index_row')
 
-			@endforeach
+	@endforeach
 
-		</tbody>
-
-	</table>
 
 </div>
 
+
 @stop
 
-    @section('script')
-    @parent
-    <script src="/js/livraison.js"></script>
-    @stop
+@section('script')
+@parent
+<script src="/js/livraison.js"></script>
+@stop

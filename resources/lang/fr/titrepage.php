@@ -46,8 +46,16 @@ return [
                 'edit'  => 'Édition de la livraison “:date_livraison',
             ],
 
+        'modepaiement' => 
+            [
+                'index' => 'Les modes de paiement',
+                'create'  => 'Création d’un mode de paiement',
+                'edit'  => 'Édition du mode de paiement “:nom”',
+            ],
+
         'client' => 
             [
+                'index' => 'Les clients',
                 'edit'  => 'Modification de mes coordonnées',
             ],
     ];

@@ -1,3 +1,24 @@
+/*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+LAYOUT
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+.layout_flexcontainer {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.layout-flexcontent {
+  flex: 1;
+}
+
+
+
+
+
+/*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+ESPACE CLIENT
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
 .nav > li > p{
 	color: #d00;
 	padding: 15px 15px 2px;
@@ -18,12 +39,12 @@
 LIVRAISONS
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-.livraisons td{
-	width: 1%;
+.ligne_livraison div{
+	min-width: 20%;
 }
 
-.livraisons input{
-	width: 50%;
+.ligne_livraison form{
+	width: 100%;
 }
 
 
@@ -106,9 +127,9 @@ LIVRAISONS
 
 .footercontainer {
 	background-color: Azure;
-	position: fixed;
+/*	position: fixed;
 	bottom: 0px;
-	text-align: center;
+*/	text-align: center;
 }
 
 

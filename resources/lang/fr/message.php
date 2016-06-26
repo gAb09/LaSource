@@ -47,6 +47,15 @@ return [
         'deletefailed'  => 'Problème. Le panier n’a pas pu être supprimé…',
     ],
 
+    'modepaiement' => [
+        'updateOk'      => 'Le mode de paiement a bien été modifié.',
+        'updatefailed'  => 'Problème. Le mode de paiement n’a pas été mis à jour…',
+        'storeOk'       => 'Le mode de paiement a bien été créé.',
+        'storefailed'   => 'Problème. Le mode de paiement n’a pas pu être créé…',
+        'deleteOk'      => 'Le mode de paiement a bien été supprimé.',
+        'deletefailed'  => 'Problème. Le mode de paiement n’a pas pu être supprimé…',
+    ],
+
     'livraison' => [
         'updateOk'      => 'La livraison a bien été modifiée.',
         'updatefailed'  => 'Problème. La livraison n’a pas été mise à jour…',

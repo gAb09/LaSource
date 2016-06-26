@@ -9,8 +9,13 @@ use App\Repositories\UserRepository;
 
 class GuestRelaisComposer
 {
+    /**
+     * The relais repository implementation.
+     *
+     * @var RelaisDomaine
+     */
+    protected $domaine;
 
-    private $domaine;
     
     /**
      * Create a new profile composer.
@@ -20,8 +25,8 @@ class GuestRelaisComposer
      */
     public function __construct(RelaisDomaine $domaine)
     {
-        // Dependencies automatically resolved by service container...
         $this->domaine = $domaine;
+        // Dependencies automatically resolved by service container...
     }
 
     /**

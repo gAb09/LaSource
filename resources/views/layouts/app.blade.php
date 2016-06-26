@@ -28,7 +28,7 @@
     }
     </style>
 </head>
-<body id="app-layout">
+<body id="app-layout" class="layout_flexcontainer">
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
             <div class="navbar-header">
@@ -54,6 +54,8 @@
                     @if (Auth::guest())
                     <!-- Infos sur les Paniers et La Source -->
                         @include('layouts.menuLeft.guest')
+                    @else
+                        @include('layouts.menuLeft.auth')
                     @endif
                 </ul>
 
@@ -72,6 +74,7 @@
     </nav>
 
     <!-- - - - - - - - - - - - - - - - MESSAGES - - - - - - - - - - - - - - -->
+    @section('message')
     <div class="container-fluid">
         <div class="col-md-12 messages">
             @if (session('status'))
@@ -86,8 +89,10 @@
             @endif
         </div>
     </div>
+    @show
 
     <!-- - - - - - - - - - - - - - - - TOP CONTENT (2 zones) - - - - - - - - - - - - - - -->
+    <main class="layout-flexcontent">
     <div class="container-fluid">
 
         <div class="col-md-6 topcontent1">
@@ -101,30 +106,9 @@
 
     <!-- - - - - - - - - - - - - - - -  CONTENT (2 zones) - - - - - - - - - - - - - - -->
     @yield('content')
+    </main>
 
-    <div class="container-fluid col-md-12 footercontainer">
-        <div class="col-md-4 footer1">
-            @section('footer1')
-            Association La Source<br />
-            {{$lasource->tel}}<br />
-            {{Html::linkAction('ContactController@ContactLS', 'Contacter La Source par courriel')}}
-            @show
-        </div>
-        <div class="col-md-4 footer2">
-            @section('footer2')
-            Version 2.2.0
-            @show
-        </div>
-        <div class="col-md-4 footer3">
-            @section('footer3')
-            Pour tout problème relatif <br />
-            à l'inscription, la connexion ou un message d’erreur :<br />
-            {{Html::linkAction('ContactController@ContactOM', 'Contacter le Ouaibmaistre par courriel')}}
-            @show
-        </div>
-    </div> 
-
-
+    @include('layouts.footer')
 
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
