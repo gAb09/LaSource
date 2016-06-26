@@ -19,28 +19,35 @@ onclick="javascript:createLivraison();"
 <i class="fa fa-btn fa-trash-o"></i>Ajouter une livraison
 </button>
 @stop
+            
 
 
-@section('content')
+@section('message')
+@parent
     @if ($errors->has('date_cloture'))
-    <span class="help-block">
-        <strong>{{ $errors->first('date_cloture') }}</strong>
-    </span>
+    <div class="alert alert-danger">
+        {{ $errors->first('date_cloture') }}
+    </div>
     @endif
 
     @if ($errors->has('date_paiement'))
-    <span class="help-block">
-        <strong>{{ $errors->first('date_paiement') }}</strong>
-    </span>
+    <div class="alert alert-danger">
+        {{ $errors->first('date_paiement') }}
+    </div>
     @endif
 
 
     @if ($errors->has('date_livraison'))
-    <span class="help-block">
-        <strong>{{ $errors->first('date_livraison') }}</strong>
-    </span>
+    <div class="alert alert-danger">
+        {{ $errors->first('date_livraison') }}
+    </div>
     @endif
 
+
+@stop
+
+
+@section('content')
 	<div class="flexcontainer ligne_livraison">
 
 		<div>
