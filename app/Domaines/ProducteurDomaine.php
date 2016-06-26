@@ -44,7 +44,6 @@ class ProducteurDomaine extends Domaine
 		$this->model->email = $request->email;
 		$this->model->nompourpaniers = $request->nompourpaniers;
 		$this->model->is_actif = (isset($request->is_actif)?1:0);
-		return $this->model->save();
 	}
 
 }

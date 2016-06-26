@@ -2,8 +2,6 @@
 
 namespace App\Domaines;
 
-use App\Models\Producteur;
-
 
 class Domaine
 {
