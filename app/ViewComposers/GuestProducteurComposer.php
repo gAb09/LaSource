@@ -10,11 +10,11 @@ use App\Repositories\UserRepository;
 class GuestProducteurComposer
 {
     /**
-     * The user repository implementation.
+     * The producteur repository implementation.
      *
-     * @var UserRepository
+     * @var ProducteurDomaine
      */
-    // protected $users;
+    protected $domaine;
 
     /**
      * Create a new profile composer.
@@ -22,8 +22,9 @@ class GuestProducteurComposer
      * @param  UserRepository  $users
      * @return void
      */
-    public function __construct()
+    public function __construct(Producteur $domaine)
     {
+        $this->domaine = $domaine;
         // Dependencies automatically resolved by service container...
     }
 
@@ -35,7 +36,7 @@ class GuestProducteurComposer
      */
     public function compose(View $view)
     {
-        $producteurs = Producteur::all('exploitation');
+        $producteurs = $this->domaine->all('exploitation');
         $view->with(compact('producteurs'));
     }
 }

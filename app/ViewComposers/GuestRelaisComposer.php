@@ -10,11 +10,11 @@ use App\Repositories\UserRepository;
 class GuestRelaisComposer
 {
     /**
-     * The user repository implementation.
+     * The relais repository implementation.
      *
-     * @var UserRepository
+     * @var RelaisDomaine
      */
-    // protected $users;
+    protected $domaine;
 
     /**
      * Create a new profile composer.
@@ -22,8 +22,9 @@ class GuestRelaisComposer
      * @param  UserRepository  $users
      * @return void
      */
-    public function __construct()
+    public function __construct(Relais $domaine)
     {
+        $this->domaine = $domaine;
         // Dependencies automatically resolved by service container...
     }
 
@@ -35,7 +36,7 @@ class GuestRelaisComposer
      */
     public function compose(View $view)
     {
-        $relaiss = Relais::all('ville');
+        $relaiss = $this->domaine->all('ville');
         $view->with(compact('relaiss'));
     }
 }
