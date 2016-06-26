@@ -11,6 +11,7 @@ class ModePaiement extends Model
 {
     use SoftDeletes, ModelTrait;
 
+    protected $table = 'modepaiements';
     /**
      * The attributes that are mass assignable.
      *
