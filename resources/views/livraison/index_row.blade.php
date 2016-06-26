@@ -1,33 +1,28 @@
-<tr 
-class=""
+<div 
+class="flexcontainer ligne_livraison"
 id="row_{{ $item->id }}" 
-onDblClick="javascript:edit(this, {{ $item->id }});"
+onDblClick="javascript:edit({{ $item->id }});"
 >
 
 	<!-- id -->
-	<td>
+	<div>
 		{{ $item->id }}
-	</td>
+	</div>
 
 	<!-- date_cloture -->
-	<td>
+	<div>
 		{!! $item->cloture !!}
-	</td>
+	</div>
 
 	<!-- date_paiement -->
-	<td>
+	<div>
 		{!! $item->paiement !!}
-    @if ($errors->has('date_paiement'))
-    <span class="help-block">
-        <strong>{{ $errors->first('date_paiement') }}</strong>
-    </span>
-    @endif
-	</td>
+	</div>
 
 	<!-- date_livraison -->
-	<td>
+	<div>
 		{!! $item->livraison !!}
-	</td>
+	</div>
 
 
-</tr>
+</div>

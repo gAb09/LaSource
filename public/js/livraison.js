@@ -1,8 +1,8 @@
-function edit(ligne, numero_ligne) {
+function edit(numero_ligne) {
 
 	var request = getXMLHttpRequest();
 	var url = document.location.pathname+'/';
-
+	var ligne = document.getElementById('row_' + numero_ligne);
 	ligne.className = ligne.className+' edit';
 
 	request.onreadystatechange = function() {
@@ -23,15 +23,14 @@ function edit(ligne, numero_ligne) {
 
 
 function createLivraison() {
-	tablo = document.getElementById('livraisons');
-
+	var tablebody = document.getElementById('tablebody');
 	var request = getXMLHttpRequest();
 	var url = document.location.pathname+'/create';
-	ligne = document.createElement("tr");
-	first = tablo.firstChild;
+	ligne = document.createElement("div");
+	first = tablebody.firstChild;
 
 	// ligne.className = ligne.className+' flexcontainer';
-	tablo.insertBefore(ligne, tablo.childNodes[0]);
+	tablebody.insertBefore(ligne, tablebody.childNodes[0]);
 
 	request.onreadystatechange = function() {
 		if (request.readyState == 4 && (request.status == 200 || request.status === 0)) {

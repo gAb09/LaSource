@@ -18,12 +18,12 @@
 LIVRAISONS
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-.livraisons td{
-	width: 24%;
+.ligne_livraison div{
+	min-width: 20%;
 }
 
-.livraisons input{
-	width: 50%;
+.ligne_livraison form{
+	width: 100%;
 }
 
 

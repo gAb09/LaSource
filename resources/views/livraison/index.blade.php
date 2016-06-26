@@ -16,55 +16,66 @@
 class="btn-xs btn-primary"
 onclick="javascript:createLivraison();"
 > 
-	<i class="fa fa-btn fa-trash-o"></i>Ajouter une livraison
+<i class="fa fa-btn fa-trash-o"></i>Ajouter une livraison
 </button>
 @stop
 
 
 @section('content')
+    @if ($errors->has('date_cloture'))
+    <span class="help-block">
+        <strong>{{ $errors->first('date_cloture') }}</strong>
+    </span>
+    @endif
 
-<div class="offset3 span11 flexcontainer">
-
-	<table class="livraisons">
-		<caption> caption
-		</caption>
-
-		<thead>
-			<th>
-				Id
-			</th>
-			<th>
-				Date de clôture des commandes
-			</th>
-			<th>
-				Date limite de paiement
-			</th>
-			<th>
-				Date de livraison
-			</th>
-			<th>
-				bouton
-			</th>
-		</thead>
+    @if ($errors->has('date_paiement'))
+    <span class="help-block">
+        <strong>{{ $errors->first('date_paiement') }}</strong>
+    </span>
+    @endif
 
 
-		<tbody id="livraisons" >
+    @if ($errors->has('date_livraison'))
+    <span class="help-block">
+        <strong>{{ $errors->first('date_livraison') }}</strong>
+    </span>
+    @endif
 
-			@foreach($items as $item)
+	<div class="flexcontainer ligne_livraison">
 
-			@include('livraison.index_row')
+		<div>
+			Id
+		</div>
+		<div>
+			Date de clôture des commandes
+		</div>
+		<div>
+			Date limite de paiement
+		</div>
+		<div>
+			Date de livraison
+		</div>
+		<div>
+			bouton
+		</div>
+	</div>
 
-			@endforeach
 
-		</tbody>
+<div id="tablebody">
 
-	</table>
+	@foreach($items as $item)
+
+	@include('livraison.index_row')
+
+	@endforeach
+
 
 </div>
 
+
 @stop
 
-    @section('script')
-    @parent
-    <script src="/js/livraison.js"></script>
-    @stop
+@section('script')
+@parent
+<script src="/js/livraison.js"></script>
+@stop
