@@ -28,7 +28,7 @@
     }
     </style>
 </head>
-<body id="app-layout">
+<body id="app-layout" class="layout_flexcontainer">
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
             <div class="navbar-header">
@@ -90,6 +90,7 @@
     @show
 
     <!-- - - - - - - - - - - - - - - - TOP CONTENT (2 zones) - - - - - - - - - - - - - - -->
+    <main class="layout-flexcontent">
     <div class="container-fluid">
 
         <div class="col-md-6 topcontent1">
@@ -103,6 +104,7 @@
 
     <!-- - - - - - - - - - - - - - - -  CONTENT (2 zones) - - - - - - - - - - - - - - -->
     @yield('content')
+    </main>
 
     @include('layouts.footer')
 
