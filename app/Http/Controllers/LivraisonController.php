@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Domaines\LivraisonDomaine as Domaine;
 use App\Http\Requests\LivraisonRequest;
-use Gab\Helpers\gabHelpers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -22,17 +21,6 @@ class LivraisonController extends Controller
     public function index()
     {
         $items = $this->domaine->index();
-        $items->each(function ($item, $key) {
-            if($key = 'date_paiement'){
-                $item->paiement = gabHelpers::DatesFrlongue($item->date_paiement);
-            }
-            if($key = 'date_cloture'){
-                $item->cloture = gabHelpers::DatesFrlongue($item->date_cloture);
-            }
-            if($key = 'date_livraison'){
-                $item->livraison = gabHelpers::DatesFrlongue($item->date_livraison);
-            }
-        });
 
         return view('livraison.index')->with(compact('items'));
     }
@@ -48,6 +36,7 @@ class LivraisonController extends Controller
 
     public function store(LivraisonRequest $request)
     {
+                // return dd('store');
                 // return dd($request->all());
 
         if($this->domaine->store($request)){
@@ -61,14 +50,15 @@ class LivraisonController extends Controller
     public function edit($id)
     {
     	$item = $this->domaine->findFirst('id', $id);
-
-        return view('livraison.edit')->with(compact('item'));
+        $date_titrepage = $item->date_livraisonFR;
+        return view('livraison.edit')->with(compact('item','date_titrepage' ));
     }
 
 
     public function update($id, LivraisonRequest $request)
     {
-                // return dd($request->all());
+                 // return dd('update');
+               // return dd($request->all());
 
         if($this->domaine->update($id, $request)){
             return redirect()->route('livraison.index')->with('success', trans('message.livraison.updateOk'));
@@ -88,6 +78,5 @@ class LivraisonController extends Controller
         }
 
     }
-
 
 }
