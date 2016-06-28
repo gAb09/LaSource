@@ -16,7 +16,7 @@
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
     <!-- Styles persos -->
-    <link href="/css/global.css" rel="stylesheet">
+    <link href="/css/lasource/global.css" rel="stylesheet">
 
     <style>
     body {
