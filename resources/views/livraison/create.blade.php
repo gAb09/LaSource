@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('livraison.create_edit')
 
 @section('titre')
 @parent
@@ -17,26 +17,32 @@
 
 
 @section('topcontent2')
-@include('livraison.modemploi')
+@parent
 @stop
 
 
-@section('content')
-
-<div class="col-md-12">
+@section('create_edit')
 
 	<form class="form-inline" role="form" method="POST" action="{{ route('livraison.store') }}">
 		{!! csrf_field() !!}
 
-		@include('livraison.form')
+	<!-- Les dates -->
+	<div class="col-md-12 flexcontainer livraison_dates">
+		@include('livraison.form_dates')
+	</div>
 
-		<button type="submit" class="btn btn-success">
-			<i class="fa fa-btn fa-check"></i>Store globalement
+	<!-- Les paniers -->
+	<div class="col-md-12 flexcontainer livraison_paniers">
+		@include('livraison.form_paniers')
+	</div>
+
+	<div class="col-md-12 flexcontainer livraison_footer">
+		<button type="submit" class="btn  btn-success">
+			<i class="fa fa-btn fa-save"></i>Validation globale
 		</button>
+	</div>
 
 
 	</form>
-
-</div>
 
 @stop

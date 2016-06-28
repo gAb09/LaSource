@@ -2,37 +2,140 @@
 @include('livraison.form_paniers_modale')
 @show
 
-<h4 class="col-md-2">Les paniers</h4>
+<div>
+	<h4 class="col-md-12">Les paniers</h4><br />
+	<button type="button" class="btn btn-success btn-xs">
+		<i class="fa fa-btn fa-check"></i>Valider tous les paniers
+	</button>
+</div>
 
-<div id="lescolis" class="col-md-8" style="background-color:#CCE">
-	<p class="flexcontainer" style="justify-content:space-between">
-		<span>sqsqsqq</span>	
-		<span>sqsqsqq</span>	
-		<span>sqsqsqq</span>	
+<div id="lespaniers" class="lespaniers col-md-8">
+
+	<p class="flexcontainer unpanier" style="justify-content:space-between">
+		<span>Nom</span>	
+		<span>Description</span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span>Producteur</span>	
+		<span>Prix</span>	
+		<button type="button" class="btn btn-success btn-xs">
+			<i class="fa fa-btn fa-check"></i>Valider ce panier
+		</button>
 		<button type="button" class="btn btn-warning btn-xs">
 			<i class="fa fa-btn fa-unlink"></i>Délier ce panier
 		</button>
 	</p>
-	<p class="flexcontainer" style="justify-content:space-between">
-		<span>sqsqsqq</span>	
-		<span>sqsqsqq</span>	
-		<span>sqsqsqq</span>	
+
+	<p class="flexcontainer unpanier" style="justify-content:space-between">
+		<span>Nom</span>	
+		<span>Description</span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span>Producteur</span>	
+		<span>Prix</span>	
+		<button type="button" class="btn btn-success btn-xs">
+			<i class="fa fa-btn fa-check"></i>Valider ce panier
+		</button>
 		<button type="button" class="btn btn-warning btn-xs">
 			<i class="fa fa-btn fa-unlink"></i>Délier ce panier
 		</button>
 	</p>
-	<p class="flexcontainer" style="justify-content:space-between">
-		<span>sqsqsqq</span>	
-		<span>sqsqsqq</span>	
-		<span>sqsqsqq</span>	
+
+	<p class="flexcontainer unpanier" style="justify-content:space-between">
+		<span>Nom</span>	
+		<span>Description</span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span>Producteur</span>	
+		<span>Prix</span>	
+		<button type="button" class="btn btn-success btn-xs">
+			<i class="fa fa-btn fa-check"></i>Valider ce panier
+		</button>
 		<button type="button" class="btn btn-warning btn-xs">
 			<i class="fa fa-btn fa-unlink"></i>Délier ce panier
 		</button>
 	</p>
+
+	<p class="flexcontainer unpanier" style="justify-content:space-between">
+		<span>Nom</span>	
+		<span>Description</span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span>Producteur</span>	
+		<span>Prix</span>	
+		<button type="button" class="btn btn-success btn-xs">
+			<i class="fa fa-btn fa-check"></i>Valider ce panier
+		</button>
+		<button type="button" class="btn btn-warning btn-xs">
+			<i class="fa fa-btn fa-unlink"></i>Délier ce panier
+		</button>
+	</p>
+
+	<p class="flexcontainer unpanier" style="justify-content:space-between">
+		<span>Nom</span>	
+		<span>Description</span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span></span>	
+		<span>Producteur</span>	
+		<span>Prix</span>	
+		<button type="button" class="btn btn-success btn-xs">
+			<i class="fa fa-btn fa-check"></i>Valider ce panier
+		</button>
+		<button type="button" class="btn btn-warning btn-xs">
+			<i class="fa fa-btn fa-unlink"></i>Délier ce panier
+		</button>
+	</p>
+
+
 </div>
 
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
-	<i class="fa fa-btn fa-shopping-basket"></i>Choisir parmi les paniers
+	<i class="fa fa-btn fa-shopping-basket"></i>Lier de nouveaux paniers
 </button>
 

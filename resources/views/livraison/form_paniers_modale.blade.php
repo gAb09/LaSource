@@ -7,7 +7,7 @@
         <h4 class="modal-title" id="myModalLabel">Modal title</h4>
       </div>
       <div class="modal-body">
-        Choisir un (plusieurs) panier(s) pour la livraison du {!! $item->date_livraisonFR !!}
+        Choisir un (plusieurs) panier(s) pour la livraison {!! $item->date_livraisonFR or 'à venir' !!}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
