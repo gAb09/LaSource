@@ -5,6 +5,11 @@
 @stop
 
 
+@section('message')
+@parent
+@include('livraison.errors')
+@stop
+
 
 @section('topcontent1')
 <h1 class="titrepage">{{ trans('titrepage.livraison.create') }}</h1>
@@ -12,6 +17,7 @@
 
 
 @section('topcontent2')
+@include('livraison.modemploi')
 @stop
 
 
@@ -21,23 +27,13 @@
 
 	<form class="form-inline" role="form" method="POST" action="{{ route('livraison.store') }}">
 		{!! csrf_field() !!}
-		<!-- Les dates -->
-		<div class="col-md-12 flexcontainer" style="background-color:#EEE">
-			@include('livraison.dates_form')
-		</div>
-		
-		<!-- Les paniers -->
-		<div class="col-md-12" style="background-color:#EEE;margin-top:10px">
-			@include('livraison.paniers_form')
-		</div>
-		
+
+		@include('livraison.form')
+
 		<button type="submit" class="btn btn-success">
-			<i class="fa fa-btn fa-user"></i>Valider globalement
+			<i class="fa fa-btn fa-check"></i>Store globalement
 		</button>
 
-		<button type="submit" class="btn btn-primary">
-			<i class="fa fa-btn fa-user"></i>Préparer mail aux clients
-		</button>
 
 	</form>
 

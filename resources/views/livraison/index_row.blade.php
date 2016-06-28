@@ -1,7 +1,7 @@
 <div 
 class="flexcontainer ligne_livraison"
 id="row_{{ $item->id }}" 
-onDblClick="javascript:edit({{ $item->id }});"
+onDblClick="javascript:document.location.href='{{ route('livraison.edit', $item->id) }}' ;"
 >
 
 	<!-- id -->
@@ -11,17 +11,17 @@ onDblClick="javascript:edit({{ $item->id }});"
 
 	<!-- date_cloture -->
 	<div>
-		{!! $item->cloture !!}
+		{!! $item->date_clotureFR !!}
 	</div>
 
 	<!-- date_paiement -->
 	<div>
-		{!! $item->paiement !!}
+		{!! $item->date_paiementFR !!}
 	</div>
 
 	<!-- date_livraison -->
 	<div>
-		{!! $item->livraison !!}
+		{!! $item->date_livraisonFR !!}
 	</div>
 
 

@@ -43,7 +43,7 @@ return [
             [
                 'index' => 'Les livraisons',
                 'create'  => 'Création d’une livraison',
-                'edit'  => 'Édition de la livraison “:date_livraison',
+                'edit'  => 'Édition de la livraison du&nbsp:date_titrepage',
             ],
 
         'modepaiement' => 
