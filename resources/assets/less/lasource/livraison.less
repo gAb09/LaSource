@@ -1,3 +1,6 @@
+/*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Vue index
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 .ligne_livraison div{
 	min-width: 20%;
 }
@@ -6,12 +9,10 @@
 	width: 100%;
 }
 
-.lespaniers{
-	background-color:#e5e5d9;
-}
-
-
-.livraison_dates, .livraison_paniers, .livraison_footer{
+/*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Vue handle (create & edit)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+.form_dates, .form_paniers, .livraison_footer{
 	background-color:#EEE;
 	text-align: left;
 	margin-top:10px;
@@ -22,3 +23,53 @@
 .livraison_footer{
 	justify-content:center;
 }
+
+.unpanierchoisi{
+	justify-content: space-around;
+	flex-flow: row nowrap;
+	align-items:center;
+	margin-top:5px;
+	background-color:#DDD;
+	border-radius:30px;
+}
+
+
+.unpanierchoisi input{
+	width:70px;
+}
+
+
+/*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Vue modale (choisir un panier)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+.modal-choisirpaniers {
+	margin: 30px auto;
+	width: 75%;
+}
+
+.choisirunpanier {
+	flex-direction: row;
+	justify-content: space-around;
+	width: 100%;
+	margin-top: 5px;
+}
+
+
+.choisirunpanier:hover {
+	box-shadow: 0px 0px 16px #aaa;
+}
+
+
+.choisirunpanier div{
+	flex: 0 1 18%;
+}
+
+.choisirunpanier .nom{
+	flex: 0 1 70%;
+}
+
+.lied{
+	background-color:#ACEFAC;
+}
+

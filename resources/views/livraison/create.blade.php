@@ -1,4 +1,4 @@
-@extends('livraison.create_edit')
+@extends('livraison.handle')
 
 @section('titre')
 @parent
@@ -21,28 +21,9 @@
 @stop
 
 
-@section('create_edit')
+@section('globalform_action')
 
-	<form class="form-inline" role="form" method="POST" action="{{ route('livraison.store') }}">
-		{!! csrf_field() !!}
-
-	<!-- Les dates -->
-	<div class="col-md-12 flexcontainer livraison_dates">
-		@include('livraison.form_dates')
-	</div>
-
-	<!-- Les paniers -->
-	<div class="col-md-12 flexcontainer livraison_paniers">
-		@include('livraison.form_paniers')
-	</div>
-
-	<div class="col-md-12 flexcontainer livraison_footer">
-		<button type="submit" class="btn  btn-success">
-			<i class="fa fa-btn fa-save"></i>Validation globale
-		</button>
-	</div>
-
-
-	</form>
-
+<form class="form-inline" role="form" method="POST" action="{{ route('livraison.store') }}">
+	{!! csrf_field() !!}
+	
 @stop

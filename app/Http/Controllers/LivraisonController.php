@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domaines\LivraisonDomaine as Domaine;
+use App\Domaines\PanierDomaine as Panier;
 use App\Http\Requests\LivraisonRequest;
 
 use Illuminate\Http\Request;
@@ -11,10 +12,12 @@ use App\Http\Requests;
 class LivraisonController extends Controller
 {
     private $domaine;
+    private $paniers;
     
-    public function __construct(Domaine $domaine)
+    public function __construct(Domaine $domaine, Panier $paniers)
     {
         $this->domaine = $domaine;
+        $this->paniers = $paniers;
     }
 
 
@@ -29,8 +32,9 @@ class LivraisonController extends Controller
     public function create()
     {
         $item =  $this->domaine->newModel();
+        $paniers = $this->paniers->choixPaniers();
 
-        return view('livraison.create')->with(compact('item'));
+        return view('livraison.create')->with(compact('item', 'paniers'));
     }
 
 
@@ -51,14 +55,16 @@ class LivraisonController extends Controller
     {
     	$item = $this->domaine->findFirst('id', $id);
         $date_titrepage = $item->date_livraisonFR;
-        return view('livraison.edit')->with(compact('item','date_titrepage' ));
+        $paniers = $this->paniers->choixPaniers();
+
+        return view('livraison.edit')->with(compact('item','date_titrepage', 'paniers' ));
     }
 
-
+// 
     public function update($id, LivraisonRequest $request)
     {
                  // return dd('update');
-               // return dd($request->all());
+               return dd($request->all());
 
         if($this->domaine->update($id, $request)){
             return redirect()->route('livraison.index')->with('success', trans('message.livraison.updateOk'));

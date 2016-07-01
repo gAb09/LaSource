@@ -39,4 +39,15 @@ class PanierDomaine extends Domaine
 		$this->model->remarques = $request->remarques;
 	}
 
+	public function choixPaniers()
+	{
+		$items = $this->model->with('Producteur', 'livraison')->where('is_actif', 1)->orderBy('type')->get();
+		$items->each(function($item, $key){
+			if(!empty($item->livraison->first()))
+			$item->lied = "lied";
+		// return var_dump($item);
+		});
+		return $items;
+
+	}
 }

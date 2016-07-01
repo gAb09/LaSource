@@ -1,137 +1,41 @@
 @section('modal')
-@include('livraison.form_paniers_modale')
+@include('livraison.choixpaniers_modale')
 @show
 
-<div>
+<div class="">
 	<h4 class="col-md-12">Les paniers</h4><br />
 	<button type="button" class="btn btn-success btn-xs">
 		<i class="fa fa-btn fa-check"></i>Valider tous les paniers
 	</button>
 </div>
 
-<div id="lespaniers" class="lespaniers col-md-8">
+<div id="panierschoisis" class="panierschoisis col-md-8">
+	@foreach($paniers as $panier)
+	@if($panier->lied == 'lied')
+	<div class="flexcontainer unpanierchoisi">
 
-	<p class="flexcontainer unpanier" style="justify-content:space-between">
-		<span>Nom</span>	
-		<span>Description</span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span>Producteur</span>	
-		<span>Prix</span>	
+		<div>{{ $panier->type }}{{ $panier->lied }}</div>	
+
+		<div>{!! $panier->nom_court !!}</div>
+
+		<div>Producteur</div>
+
+		<div class="champ">
+			Prix
+			<input type="text" name="prix_commun" value="{{ $panier->prix_commun or old('prix_commun') }}">
+		</div>
+
 		<button type="button" class="btn btn-success btn-xs">
 			<i class="fa fa-btn fa-check"></i>Valider ce panier
 		</button>
+
 		<button type="button" class="btn btn-warning btn-xs">
 			<i class="fa fa-btn fa-unlink"></i>Délier ce panier
 		</button>
-	</p>
 
-	<p class="flexcontainer unpanier" style="justify-content:space-between">
-		<span>Nom</span>	
-		<span>Description</span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span>Producteur</span>	
-		<span>Prix</span>	
-		<button type="button" class="btn btn-success btn-xs">
-			<i class="fa fa-btn fa-check"></i>Valider ce panier
-		</button>
-		<button type="button" class="btn btn-warning btn-xs">
-			<i class="fa fa-btn fa-unlink"></i>Délier ce panier
-		</button>
-	</p>
-
-	<p class="flexcontainer unpanier" style="justify-content:space-between">
-		<span>Nom</span>	
-		<span>Description</span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span>Producteur</span>	
-		<span>Prix</span>	
-		<button type="button" class="btn btn-success btn-xs">
-			<i class="fa fa-btn fa-check"></i>Valider ce panier
-		</button>
-		<button type="button" class="btn btn-warning btn-xs">
-			<i class="fa fa-btn fa-unlink"></i>Délier ce panier
-		</button>
-	</p>
-
-	<p class="flexcontainer unpanier" style="justify-content:space-between">
-		<span>Nom</span>	
-		<span>Description</span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span>Producteur</span>	
-		<span>Prix</span>	
-		<button type="button" class="btn btn-success btn-xs">
-			<i class="fa fa-btn fa-check"></i>Valider ce panier
-		</button>
-		<button type="button" class="btn btn-warning btn-xs">
-			<i class="fa fa-btn fa-unlink"></i>Délier ce panier
-		</button>
-	</p>
-
-	<p class="flexcontainer unpanier" style="justify-content:space-between">
-		<span>Nom</span>	
-		<span>Description</span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span></span>	
-		<span>Producteur</span>	
-		<span>Prix</span>	
-		<button type="button" class="btn btn-success btn-xs">
-			<i class="fa fa-btn fa-check"></i>Valider ce panier
-		</button>
-		<button type="button" class="btn btn-warning btn-xs">
-			<i class="fa fa-btn fa-unlink"></i>Délier ce panier
-		</button>
-	</p>
-
-
+	</div>
+	@endif
+	@endforeach
 </div>
 
 <!-- Button trigger modal -->

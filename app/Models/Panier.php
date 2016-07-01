@@ -19,5 +19,15 @@ class Panier extends Model
 
     protected $appends = array('class_actif');
 
+    public function Producteur()
+    {
+        return $this->belongsToMany('App\Models\Producteur');
+    }
+
+    public function Livraison()
+    {
+        return $this->belongsToMany('App\Models\Livraison');
+    }
+
 
 }
