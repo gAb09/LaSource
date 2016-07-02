@@ -1,50 +1,23 @@
-function edit(numero_ligne) {
+$(function() {
+    $("#clotureEnClair").datepicker({
+        dateFormat: "DD d MM yy",
+        altField: "#date_cloture",
+        altFormat: "yy-m-d"
+    });
+});
 
-	var request = getXMLHttpRequest();
-	var url = document.location.pathname+'/';
-	var ligne = document.getElementById('row_' + numero_ligne);
-	ligne.className = ligne.className+' edit';
+$(function() {
+    $("#paiementEnClair").datepicker({
+        dateFormat: "DD d MM yy",
+        altField: "#date_paiement",
+        altFormat: "yy-m-d"
+    });
+});
 
-	request.onreadystatechange = function() {
-		if (request.readyState == 4 && (request.status == 200 || request.status === 0)) {
-			if (request.responseText) {
-				response = request.responseText;
-				ligne.innerHTML = response;
-			} else {
-				alert('pas OK');
-			}
-		}
-	};
-
-	request.open('GET', url + numero_ligne + '/edit', true);
-	request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-	request.send(null);
-}
-
-
-function createLivraison() {
-	var tablebody = document.getElementById('tablebody');
-	var request = getXMLHttpRequest();
-	var url = document.location.pathname+'/create';
-	ligne = document.createElement("div");
-	first = tablebody.firstChild;
-
-	// ligne.className = ligne.className+' flexcontainer';
-	tablebody.insertBefore(ligne, tablebody.childNodes[0]);
-
-	request.onreadystatechange = function() {
-		if (request.readyState == 4 && (request.status == 200 || request.status === 0)) {
-			if (request.responseText) {
-				response = request.responseText;
-				ligne.innerHTML = response;
-			} else {
-				alert('pas OK');
-			}
-		}
-	};
-
-	request.open('GET', url, true);
-	request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-	request.send(null);
-}
-
+$(function() {
+    $("#livraisonEnClair").datepicker({
+        dateFormat: "DD d MM yy",
+        altField: "#date_livraison",
+        altFormat: "yy-m-d"
+    });
+});

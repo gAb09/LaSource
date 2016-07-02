@@ -31,7 +31,7 @@ class LivraisonController extends Controller
 
     public function create()
     {
-        $item =  $this->domaine->newModel();
+        $item = $this->domaine->create();
         $paniers = $this->paniers->choixPaniers();
 
         return view('livraison.create')->with(compact('item', 'paniers'));
@@ -53,8 +53,8 @@ class LivraisonController extends Controller
 
     public function edit($id)
     {
-    	$item = $this->domaine->findFirst('id', $id);
-        $date_titrepage = $item->date_livraisonFR;
+    	$item = $this->domaine->edit($id);
+        $date_titrepage = $item->livraisonEnClair;
         $paniers = $this->paniers->choixPaniers();
 
         return view('livraison.edit')->with(compact('item','date_titrepage', 'paniers' ));
@@ -64,7 +64,7 @@ class LivraisonController extends Controller
     public function update($id, LivraisonRequest $request)
     {
                  // return dd('update');
-               return dd($request->all());
+               // return dd($request->all());
 
         if($this->domaine->update($id, $request)){
             return redirect()->route('livraison.index')->with('success', trans('message.livraison.updateOk'));

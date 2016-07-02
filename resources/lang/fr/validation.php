@@ -30,7 +30,7 @@ return [
     'boolean'              => 'Le champ :attribute doit être vrai ou faux.',
     'confirmed'            => 'La confirmation de “:attribute” n’est pas valide.',
     'date'                 => 'Le champ :attribute doit être une date valide.',
-    'date_format'          => 'Le champ :attribute doit être saisie dans ce format :format.',
+    'date_format'          => 'Le champ :attribute doit être saisi au format : format :format.',
     'different'            => 'Les champs :attribute et :other doivent être différents.',
     'digits'               => 'Le champ :attribute doit comporter :digits chiffres.',
     'digits_between'       => 'Le champ :attribute doit comporter entre :min et :max digits.',

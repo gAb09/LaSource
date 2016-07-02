@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Livraison extends Model
 {
-    use SoftDeletes, ModelTrait;
+	use SoftDeletes, ModelTrait;
 
     /**
      * The attributes that should be mutated to dates.

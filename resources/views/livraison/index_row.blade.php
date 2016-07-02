@@ -1,5 +1,5 @@
 <div 
-class="flexcontainer ligne_livraison"
+class="flexcontainer ligne_livraison ombrable"
 id="row_{{ $item->id }}" 
 onDblClick="javascript:document.location.href='{{ route('livraison.edit', $item->id) }}' ;"
 >

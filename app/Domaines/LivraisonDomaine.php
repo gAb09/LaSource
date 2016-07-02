@@ -32,6 +32,14 @@ class LivraisonDomaine extends Domaine
 		return $items;
 	}
 
+	public function create(){
+        $item =  $this->model;
+        // $item->date_cloture = $item->date_paiement= $item->date_livraison = "À renseigner";
+        $item->clotureEnClair = $item->paiementEnClair= $item->livraisonEnClair = "À renseigner";
+
+
+		return $this->model;
+	}
 
 	public function store($request){
 		$this->handleRequest($request);
@@ -48,12 +56,24 @@ class LivraisonDomaine extends Domaine
 	}
 
 
+	public function edit($id){
+		$this->model = Livraison::where('id', $id)->first();
+		
+		$this->model->clotureEnClair = $this->model->date_cloture->formatLocalized('%A %e %B %Y');
+		$this->model->paiementEnClair = $this->model->date_paiement->formatLocalized('%A %e %B %Y');
+		$this->model->livraisonEnClair = $this->model->date_livraison->formatLocalized('%A %e %B %Y');
+
+		return $this->model;
+	}
+
+
 	public function update($id, $request){
 		$this->model = Livraison::where('id', $id)->first();
 		$this->handleRequest($request);
 
 		return $this->model->save();
 	}
+
 
 	private function handleRequest($request){
 		$this->model->date_cloture = $request->date_cloture;

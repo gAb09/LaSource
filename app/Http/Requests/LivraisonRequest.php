@@ -26,9 +26,9 @@ class LivraisonRequest extends Request
     public function rules()
     {
         return [
-        'date_livraison' => 'required|date_format:Y-m-d',
-        'date_cloture' => 'required|date_format:Y-m-d',
-        'date_paiement' => 'required|date_format:Y-m-d',
+        'date_livraison' => 'required',
+        'date_cloture' => 'required',
+        'date_paiement' => 'required',
         ];
     }
 }
