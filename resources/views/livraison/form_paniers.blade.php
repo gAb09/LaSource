@@ -14,7 +14,7 @@
 	@if($panier->lied == 'lied')
 	<div class="flexcontainer unpanierchoisi">
 
-		<div>{{ $panier->type }}{{ $panier->lied }}</div>	
+		<div>{{ $panier->type }}</div>	
 
 		<div>{!! $panier->nom_court !!}</div>
 
