@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Domaines\LivraisonDomaine as Livraison;
 use App\Domaines\PanierDomaine as Panier;
+use App\Domaines\ProducteurDomaine as Producteur;
 use App\Http\Requests\LivraisonRequest;
 
 use Illuminate\Http\Request;
@@ -13,11 +14,13 @@ class LivraisonController extends Controller
 {
     private $livraison;
     private $paniers;
+    private $producteurs;
     
-    public function __construct(livraison $livraison, Panier $paniers)
+    public function __construct(livraison $livraison, Panier $paniers, Producteur $producteurs)
     {
         $this->livraison = $livraison;
         $this->paniers = $paniers;
+        $this->producteurs = $producteurs;
     }
 
 
@@ -56,9 +59,9 @@ class LivraisonController extends Controller
     	$item = $this->livraison->edit($id);
         // return dd($item);
         $date_titrepage = $item->livraisonEnClair;
-        $paniers = $this->paniers->choixPaniers($item->id);
+        $paniers = $this->paniers->choixPaniers($id);
 
-        return view('livraison.edit')->with(compact('item','date_titrepage', 'paniers' ));
+        return view('livraison.edit')->with(compact('item','date_titrepage', 'paniers', 'producteurs' ));
     }
 
 
@@ -85,5 +88,14 @@ class LivraisonController extends Controller
         }
 
     }
+
+    public function choixProducteurs($id)
+    {
+        $datas = $this->producteurs->choixProducteurs($id);
+        $producteurs = $datas['producteurs'];
+        $titre_page = trans('titrepage.livraison.choixproducteurs', ['panier' => $datas['titre_page']]);;
+        return view('livraison.ModalChoixProducteurs')->with(compact('producteurs', 'titre_page'));
+    }
+
 
 }

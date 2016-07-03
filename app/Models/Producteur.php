@@ -19,5 +19,9 @@ class Producteur extends Model
 
     protected $appends = array('class_actif');
 
+    public function Panier()
+    {
+        return $this->belongsToMany('App\Models\Panier');
+    }
 
 }

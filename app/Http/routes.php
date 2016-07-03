@@ -87,6 +87,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('panier', 'PanierController');
 
 	Route::resource('livraison', 'LivraisonController');
+	Route::get('livraison/choixProducteurs/{id}', 'LivraisonController@choixProducteurs');
+	
 
 	Route::resource('modepaiement', 'ModePaiementController');
 

@@ -9,6 +9,7 @@ use App\Domaines\Domaine;
 class ProducteurDomaine extends Domaine
 {
 	protected $model;
+	protected $titre_page;
 
 	public function __construct(){
 		$this->model = new Producteur;
@@ -44,6 +45,31 @@ class ProducteurDomaine extends Domaine
 		$this->model->email = $request->email;
 		$this->model->nompourpaniers = $request->nompourpaniers;
 		$this->model->is_actif = (isset($request->is_actif)?1:0);
+	}
+
+	public function choixProducteurs($id)
+	{
+		$collection = $this->model->with('Panier')->where('is_actif', 1)->orderBy('nompourpaniers')->get();
+
+		$collection->each(function($model) use($id)
+		{
+			$paniers = $model->panier;
+			if(!empty($paniers))
+			{
+				$paniers->each(function($panier) use($id, $model)
+				{
+					if ( $panier->id == $id)
+					{
+						$model->lied = "lied";
+						$this->titre_page = $panier->nom_court;
+					}
+				});
+			}
+		});
+
+		$datas['producteurs'] = $collection;
+		$datas['titre_page'] = $this->titre_page;
+		return $datas;
 	}
 
 }
