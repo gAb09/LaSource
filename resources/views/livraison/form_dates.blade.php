@@ -1,8 +1,5 @@
 <div>
 	<h4 class="col-md-12">Les dates</h4><br />
-	<button type="submit" class="btn btn-xs btn-success">
-		<i class="fa fa-btn fa-check"></i>Valider les dates
-	</button>
 </div>
 
 <!-- date_cloture -->
@@ -25,6 +22,11 @@
 	<input type="hidden" id="date_livraison" name="date_livraison" value="{{$item->date_livraison or old('date_livraison') }}">
 	<input type="text" id="livraisonEnClair" name="livraisonEnClair" value=" {{ $item->livraisonEnClair }}">
 </div>
+
+<div>
+	<!-- Décale les dates vers la gauche -->
+</div>
+
 
 @section('script')
 @parent

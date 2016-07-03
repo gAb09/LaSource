@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Domaines\LivraisonDomaine as Domaine;
+use App\Domaines\LivraisonDomaine as Livraison;
 use App\Domaines\PanierDomaine as Panier;
 use App\Http\Requests\LivraisonRequest;
 
@@ -11,19 +11,19 @@ use App\Http\Requests;
 
 class LivraisonController extends Controller
 {
-    private $domaine;
+    private $livraison;
     private $paniers;
     
-    public function __construct(Domaine $domaine, Panier $paniers)
+    public function __construct(livraison $livraison, Panier $paniers)
     {
-        $this->domaine = $domaine;
+        $this->livraison = $livraison;
         $this->paniers = $paniers;
     }
 
 
     public function index()
     {
-        $items = $this->domaine->index();
+        $items = $this->livraison->index();
 
         return view('livraison.index')->with(compact('items'));
     }
@@ -31,8 +31,8 @@ class LivraisonController extends Controller
 
     public function create()
     {
-        $item = $this->domaine->create();
-        $paniers = $this->paniers->choixPaniers();
+        $item = $this->livraison->create();
+        $paniers = $this->paniers->choixPaniers($item->id);
 
         return view('livraison.create')->with(compact('item', 'paniers'));
     }
@@ -41,9 +41,9 @@ class LivraisonController extends Controller
     public function store(LivraisonRequest $request)
     {
                 // return dd('store');
-                // return dd($request->all());
+                return dd($request->all());
 
-        if($this->domaine->store($request)){
+        if($this->livraison->store($request)){
             return redirect()->route('livraison.index')->with('success', trans('message.livraison.storeOk'));
         }else{
             return redirect()->back()->with('status', trans('message.livraison.storefailed'));
@@ -53,20 +53,21 @@ class LivraisonController extends Controller
 
     public function edit($id)
     {
-    	$item = $this->domaine->edit($id);
+    	$item = $this->livraison->edit($id);
+        // return dd($item);
         $date_titrepage = $item->livraisonEnClair;
-        $paniers = $this->paniers->choixPaniers();
+        $paniers = $this->paniers->choixPaniers($item->id);
 
         return view('livraison.edit')->with(compact('item','date_titrepage', 'paniers' ));
     }
 
-// 
+
     public function update($id, LivraisonRequest $request)
     {
                  // return dd('update');
-               // return dd($request->all());
+               return dd($request->all());
 
-        if($this->domaine->update($id, $request)){
+        if($this->livraison->update($id, $request)){
             return redirect()->route('livraison.index')->with('success', trans('message.livraison.updateOk'));
         }else{
             return redirect()->back()->with('status', trans('message.livraison.updatefailed'));
@@ -77,7 +78,7 @@ class LivraisonController extends Controller
     public function destroy($id)
     {        
         return dd('Faut-il permettre la suppression ??');
-        if($this->domaine->destroy($id)){
+        if($this->livraison->destroy($id)){
             return redirect()->route('livraison.index')->with('success', trans('message.livraison.deleteOk'));
         }else{
             return redirect()->back()->with('status', trans('message.livraison.deletefailed'));

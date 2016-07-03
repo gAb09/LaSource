@@ -16,13 +16,7 @@
 
 
 @section('topcontent2')
-<h4>Créer/modifier une livraison :</h4>
-<ol>
-	<li>Assigner les 3 dates.</li>
-	<li>Appeler la liste des paniers pour en lier à cette livraison ou individuellement les délier.</li>
-	<li>Une fois un (plusieurs) panier(s) ajouté(s), pensez à vérifier le producteur et le prix associés.</li>
-	<li>Il est possible de valider indépendament les dates, un panier, tous les paniers ou l'ensemble de la page.</li>
-</ol>
+@include('livraison.modemploi')
 @stop
 
 
@@ -44,9 +38,10 @@
 
 	<div class="col-md-12 flexcontainer livraison_footer">
 		<button type="submit" class="btn  btn-success">
-			<i class="fa fa-btn fa-save"></i>Validation globale
+			<i class="fa fa-btn fa-save"></i>Valider cette livraison
 		</button>
 	</div>
+</div>
 
 
 </form>

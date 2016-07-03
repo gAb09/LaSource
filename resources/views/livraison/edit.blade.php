@@ -7,7 +7,6 @@
 
 @section('message')
 @parent
-@include('livraison.errors')
 @stop
 
 

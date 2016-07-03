@@ -9,15 +9,15 @@ use Gab\Helpers\gabHelpers as Help;
 
 class LivraisonDomaine extends Domaine
 {
-	protected $model;
+	protected $livraison;
 
 	public function __construct(){
-		$this->model = new Livraison;
+		$this->livraison = new Livraison;
 	}
 
 	public function index()
 	{
-		$items = $this->model->orderBy('id', 'desc')->get();
+		$items = $this->livraison->orderBy('id', 'desc')->get();
 		$items->each(function ($item, $key) {
 			if($key = 'date_paiement'){
 				$item->date_paiementFR = Help::DatesFrlongue($item->date_paiement);
@@ -33,23 +33,22 @@ class LivraisonDomaine extends Domaine
 	}
 
 	public function create(){
-        $item =  $this->model;
-        // $item->date_cloture = $item->date_paiement= $item->date_livraison = "À renseigner";
-        $item->clotureEnClair = $item->paiementEnClair= $item->livraisonEnClair = "À renseigner";
+        $item =  $this->livraison;
+        $item->clotureEnClair = $item->paiementEnClair= $item->livraisonEnClair = " en création";
 
 
-		return $this->model;
+		return $this->livraison;
 	}
 
 	public function store($request){
 		$this->handleRequest($request);
 
-		return $this->model->save();
+		return $this->livraison->save();
 	}
 
 	public function findFirst($colonne, $critere)
 	{
-		$item = $this->model->where($colonne, $critere)->first();
+		$item = $this->livraison->where($colonne, $critere)->first();
 		$item->date_livraisonFR = Help::DatesFrlongue($item->date_livraison);
 		return $item;
 
@@ -57,30 +56,30 @@ class LivraisonDomaine extends Domaine
 
 
 	public function edit($id){
-		$this->model = Livraison::where('id', $id)->first();
+		$this->livraison = Livraison::with('Panier')->where('id', $id)->first();
 		
-		$this->model->clotureEnClair = $this->model->date_cloture->formatLocalized('%A %e %B %Y');
-		$this->model->paiementEnClair = $this->model->date_paiement->formatLocalized('%A %e %B %Y');
-		$this->model->livraisonEnClair = $this->model->date_livraison->formatLocalized('%A %e %B %Y');
+		$this->livraison->clotureEnClair = $this->livraison->date_cloture->formatLocalized('%A %e %B %Y');
+		$this->livraison->paiementEnClair = $this->livraison->date_paiement->formatLocalized('%A %e %B %Y');
+		$this->livraison->livraisonEnClair = $this->livraison->date_livraison->formatLocalized('%A %e %B %Y');
 
-		return $this->model;
+		return $this->livraison;
 	}
 
 
 	public function update($id, $request){
-		$this->model = Livraison::where('id', $id)->first();
+		$this->livraison = Livraison::where('id', $id)->first();
 		$this->handleRequest($request);
 
-		return $this->model->save();
+		return $this->livraison->save();
 	}
 
 
 	private function handleRequest($request){
-		$this->model->date_cloture = $request->date_cloture;
-		$this->model->date_paiement = $request->date_paiement;
-		$this->model->date_livraison = $request->date_livraison;
-		$this->model->remarques = $request->remarques;
-		$this->model->is_actif = (isset($request->is_actif)?1:0);
+		$this->livraison->date_cloture = $request->date_cloture;
+		$this->livraison->date_paiement = $request->date_paiement;
+		$this->livraison->date_livraison = $request->date_livraison;
+		$this->livraison->remarques = $request->remarques;
+		$this->livraison->is_actif = (isset($request->is_actif)?1:0);
 		
 	}
 

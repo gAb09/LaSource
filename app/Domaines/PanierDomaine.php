@@ -4,6 +4,7 @@ namespace App\Domaines;
 
 use App\Models\Panier;
 use App\Domaines\Domaine;
+use Illuminate\Http\Request;
 
 
 class PanierDomaine extends Domaine
@@ -39,15 +40,34 @@ class PanierDomaine extends Domaine
 		$this->panier->remarques = $request->remarques;
 	}
 
-	public function choixPaniers()
+	public function choixPaniers($id = null)
 	{
 		$items = $this->panier->with('Producteur', 'livraison')->where('is_actif', 1)->orderBy('type')->get();
-		$items->each(function($item, $key){
-			if(!empty($item->livraison->first()))
-			$item->lied = "lied";
-		// return var_dump($item);
+
+		/* create */
+		if ($id == null) { 
+			return $items;
+		}
+
+		/* update */
+		$items->each(function($item) use($id)
+		{
+			$livraisons = $item->livraison;
+			if(!empty($livraisons))
+			{
+				$livraisons->each(function($livraison) use($id, $item)
+				{
+					if ( $livraison->id == $id)
+					{
+						$item->lied = "lied";
+					}
+				});
+			}
 		});
 		return $items;
-
 	}
 }
+
+
+
+
