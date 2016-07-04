@@ -41,35 +41,35 @@
 					<a class="btn btn-xs" 
 					onClick="javascript:ModalChoixProducteurs({{$panier->id}})" 
 					data-toggle="modal" data-target="#ModalChoixProducteurs">
-						<i class="fa fa-btn fa-edit"></i>Modifier la liste
-					</a>
-				</div>
-			</td>
+					<i class="fa fa-btn fa-edit"></i>Modifier la liste
+				</a>
+			</div>
+		</td>
 
-			<!-- prix -->
-			<td>
-				Prix
-				<input type="text" name="prix_commun[]" value="{{ $panier->prix_commun or old('prix_commun') }}">
-			</td>
+		<!-- prix -->
+		<td>
+			Prix
+			<input type="text" name="prix_commun[]" value="{{ $panier->prix_commun or old('prix_commun') }}">
+		</td>
+		@include(livraison.includes.detachPanierFrom)
+		<td>
+		</td>
+	</tr>
 
-			<td>
-				<button type="button" class="btn btn-warning btn-xs">
-					<i class="fa fa-btn fa-unlink"></i>Retirer ce panier
-				</button>
-			</td>
-		</tr>
+	@empty
 
-		@empty
+	<h4>Aucun panier n’est encore lié à cette livraison</h4>
 
-		<h4>Aucun panier n’est encore lié à cette livraison</h4>
-
-		@endforelse
-	</tbody>
+	@endforelse
+</tbody>
 </table>
 
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ModalChoixPaniers">
 	<i class="fa fa-btn fa-shopping-basket"></i>Ajouter d’autres paniers
 </button>
+
+
+
 
 

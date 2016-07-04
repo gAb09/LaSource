@@ -66,6 +66,14 @@ class PanierDomaine extends Domaine
 		});
 		return $items;
 	}
+
+	public function detachFromLivraison($panier, $livraison)
+	{
+		$item = Panier::find($panier);
+		$item->livraison()->detach($livraison);
+	}
+
+
 }
 
 
