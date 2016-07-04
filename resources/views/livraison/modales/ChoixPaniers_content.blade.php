@@ -3,16 +3,13 @@
 {{ $panier->pivot }}
 
 <div class="flexcontainer choisirunpanier ombrable {{ $panier->lied }}">
-	@include('livraison.includes.detachPanierFrom')
+	@include('livraison.includes.detachPanierForm')
 	<div class"type">{{ $panier->type }}</div>	
 	<div class="nom">{!! $panier->nom !!}</div>	
 </div>
 @else
 <div class="flexcontainer choisirunpanier ombrable">
-
-	<button type="button" class="btn btn-primary btn-xs">
-		<i class="fa fa-btn fa-check"></i>Ajouter ce panier
-	</button>
+	@include('livraison.includes.attachPanierForm')
 	<div class"type">{{ $panier->type }}</div>	
 	<div class="nom">{!! $panier->nom !!}</div>	
 </div>

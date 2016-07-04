@@ -73,6 +73,12 @@ class PanierDomaine extends Domaine
 		$item->livraison()->detach($livraison);
 	}
 
+	public function attachToLivraison($panier, $livraison)
+	{
+		$item = Panier::find($panier);
+		$item->livraison()->attach($livraison);
+	}
+
 
 }
 

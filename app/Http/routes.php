@@ -86,7 +86,12 @@ Route::group(['middleware' => 'auth'], function () {
 
 // Paniers...
 	Route::resource('panier', 'PanierController');
-	Route::post('panier/{panier}/livraison/{livraison}', ['as' => 'panierDetachLivraison', 'uses' => 'PanierController@detachFromLivraison']);
+	Route::post('detach/panier/{panier}/fromlivraison/{livraison}', 
+		['as' => 'panierDetachLivraison', 'uses' => 'PanierController@detachFromLivraison']
+		);
+	Route::post('attach/panier/{panier}/tolivraison/{livraison}', 
+		['as' => 'panierAttacToLivraison', 'uses' => 'PanierController@attachToLivraison']
+		);
 
 	Route::resource('livraison', 'LivraisonController');
 	Route::get('livraison/choixProducteurs/{id}', 'LivraisonController@choixProducteurs');

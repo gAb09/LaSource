@@ -51,8 +51,8 @@
 			Prix
 			<input type="text" name="prix_commun[]" value="{{ $panier->prix_commun or old('prix_commun') }}">
 		</td>
-		@include('livraison.includes.detachPanierFrom')
 		<td>
+		@include('livraison.includes.detachPanierForm')
 		</td>
 	</tr>
 
