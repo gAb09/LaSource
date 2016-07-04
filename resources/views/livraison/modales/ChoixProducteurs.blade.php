@@ -11,7 +11,7 @@
 
       <div id="modal-bodyChoixProducteurs" class="modal-body col-md-12 ChoixProducteurs">
 
-@include('livraison.ModalChoixProducteurs_content')
+@include('livraison.modales.ChoixProducteurs_content')
 
 
 

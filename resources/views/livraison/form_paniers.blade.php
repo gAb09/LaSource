@@ -1,6 +1,6 @@
 @section('modal')
-@include('livraison.ModalChoixPaniers')
-@include('livraison.ModalEditPanier')
+@include('livraison.modales.ChoixPaniers')
+@include('livraison.modales.EditPanier')
 <div class="modal fade" id="ModalChoixProducteurs" tabindex="-1" role="dialog" aria-labelledby="ModalChoixProducteursLabel">
 </div>
 @show
