@@ -1,23 +1,28 @@
 <!-- Modal -->
-<div class="modal fade" id="ModalChoixPaniers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-choixpaniers" role="document">
-    <div class="modal-content">
+<form id="syncPaniers" class="form-inline" role="form" method="POST" action="{{ route('livraisonSyncPaniers', [$item->id]) }}">
+  {!! csrf_field() !!}
+  <div class="modal fade" id="ModalChoixPaniers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-choixpaniers" role="document">
+      <div class="modal-content">
 
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">
-          <?php $date = ($item->livraisonEnClair)?'du '.$item->livraisonEnClair:'à venir';?>
-          {!! trans('titrepage.livraison.choixpaniers', ['date' => $item->livraisonEnClair]) !!}
-        </h4>
-      </div>
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          @include('livraison.includes.syncPanierButton')
+          <h4 class="modal-title" id="myModalLabel">
+            <?php $date = ($item->livraisonEnClair)?'du '.$item->livraisonEnClair:'à venir';?>
+            {!! trans('titrepage.livraison.choixpaniers', ['date' => $item->livraisonEnClair]) !!}
+          </h4>
+        </div>
 
-      <div id="modal-body" class="modal-body col-md-12 flexcontainer">
-        @include('livraison.modales.ChoixPaniers_content')
-      </div>
+        <div id="modal-body" class="modal-body col-md-12 flexcontainer">
+          @include('livraison.modales.ChoixPaniers_content')
+        </div>
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
+        <div class="modal-footer">
+          @include('livraison.includes.syncPanierButton')
+          <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</form>

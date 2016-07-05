@@ -24,8 +24,11 @@
 </div>
 
 <div>
-	<!-- Décale les dates vers la gauche -->
+		<button type="submit" class="btn btn-sm btn-success">
+			<i class="fa fa-btn fa-save"></i>Valider ces dates
+		</button>
 </div>
+</form>
 
 
 @section('script')

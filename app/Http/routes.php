@@ -86,19 +86,25 @@ Route::group(['middleware' => 'auth'], function () {
 
 // Paniers...
 	Route::resource('panier', 'PanierController');
-	Route::post('detach/panier/{panier}/fromlivraison/{livraison}', 
-		['as' => 'panierDetachLivraison', 'uses' => 'PanierController@detachFromLivraison']
-		);
-	Route::post('attach/panier/{panier}/tolivraison/{livraison}', 
-		['as' => 'panierAttacToLivraison', 'uses' => 'PanierController@attachToLivraison']
-		);
 
+// Livraisons...
 	Route::resource('livraison', 'LivraisonController');
 	Route::get('livraison/choixProducteurs/{id}', 'LivraisonController@choixProducteurs');
 	
+	Route::post('livraison/{livraison}/syncPaniers', 
+		['as' => 'livraisonSyncPaniers', 'uses' => 'LivraisonController@syncPaniers']
+		);
 
+	Route::post('livraison/{livraison}/detachpanier/{panier}', 
+		['as' => 'livraisonDetachPanier', 'uses' => 'LivraisonController@detachPanier']
+		);
+
+
+
+// ModePaiement...
 	Route::resource('modepaiement', 'ModePaiementController');
 
+// Menus...
 	Route::resource('menus', '\Menus\MenuController');
 
 });

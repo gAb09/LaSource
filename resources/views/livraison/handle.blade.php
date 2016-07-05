@@ -23,39 +23,22 @@
 @section('content')
 
 <div class="col-md-12">
-	@section('globalform_action')
+	@section('createOrEdit')
 	@show
-
-	<!-- Les dates -->
-	<div class="col-md-12 flexcontainer form_dates">
-		@include('livraison.form_dates')
-	</div>
-
-	<!-- Les paniers -->
-	<div class="col-md-12 flexcontainer form_paniers">
-		@include('livraison.form_paniers')
-	</div>
-
-	<div class="col-md-12 flexcontainer livraison_footer">
-		<button type="submit" class="btn  btn-success">
-			<i class="fa fa-btn fa-save"></i>Valider cette livraison
-		</button>
-	</div>
 </div>
 
 
-</form>
-
-<button type="submit" class="btn btn-info">
+<a href="{{ URL::route('livraison.index') }}" class="btn btn-info">
 	<i class="fa fa-btn fa-list-ul"></i>Retour à la liste
-</button>
+</a>
 
-<button type="submit" class="btn btn-primary">
+<a type="submit" class="btn btn-primary">
 	<i class="fa fa-btn fa-envelope"></i>Préparer mail pour clients
-</button>
+</a>
 
 </div>
 
 @stop
+
 @section('script')
 @stop

@@ -113,8 +113,9 @@
         </div> 
     </div>
 
-    <!-- - - - - - - - - - - - - - - -  CONTENT (2 zones) - - - - - - - - - - - - - - -->
+    <!-- - - - - - - - - - - - - - - -  CONTENT () - - - - - - - - - - - - - - -->
     @yield('content')
+    
     </main>
 
     @include('layouts.footer')

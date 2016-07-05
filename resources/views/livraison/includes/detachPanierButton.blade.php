@@ -1,4 +1,4 @@
-<form class="form-inline" role="form" method="POST" action="{{ route('panierDetachLivraison', [$panier->id, $item->id]) }}">
+<form class="form-inline" role="form" method="POST" action="{{ route('livraisonDetachPanier', [$item->id, $panier->id]) }}">
 	{!! csrf_field() !!}
 
 	<button type="submit" class="btn btn-warning btn-xs">

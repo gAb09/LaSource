@@ -33,17 +33,21 @@ class LivraisonDomaine extends Domaine
 	}
 
 	public function create(){
-        $item =  $this->livraison;
-        $item->clotureEnClair = $item->paiementEnClair= $item->livraisonEnClair = " en création";
+		$item =  $this->livraison;
+		$item->clotureEnClair = $item->paiementEnClair= $item->livraisonEnClair = " en création";
 
-
-		return $this->livraison;
+		return $item;
 	}
 
 	public function store($request){
 		$this->handleRequest($request);
 
-		return $this->livraison->save();
+		$result = $this->livraison->save();
+		if($result){
+			return $this->livraison->id;
+		}else{
+			return $result;
+		}
 	}
 
 	public function findFirst($colonne, $critere)
@@ -83,12 +87,22 @@ class LivraisonDomaine extends Domaine
 		
 	}
 
-	private function traduitDate($item)
+
+	public function syncPaniers($livraison, $paniers = array())
 	{
-		$item->date_paiementFR = gabHelpers::DatesFrlongue($item->date_paiement);
-		$item->date_clotureFR = gabHelpers::DatesFrlongue($item->date_cloture);
-		$item->date_livraisonFR = gabHelpers::DatesFrlongue($item->date_livraison);
-		return $item;
+		$item = Livraison::find($livraison);
+		if(is_null($paniers)){
+			$item->panier()->detach();
+		}else{
+			$item->panier()->sync($paniers);
+		}
 	}
+
+    public function detachPanier($livraison, $panier)
+    {
+       $item = Livraison::find($livraison);
+       $item->panier()->detach($panier);
+   }
+
 
 }

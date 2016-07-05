@@ -50,3 +50,17 @@ function ModalChoixProducteurs(toto){
 $('#ModalChoixProducteurs').on('hidden.bs.modal', function (e) {
     $('#ModalChoixProducteurs').text("");
 });
+
+
+function toggleLied(panier){
+  if($( panier ).hasClass( "lied" )){
+    $( panier ).removeClass( "lied" );
+    $(panier).children('input').prop('checked', false);
+  }else{
+    $( panier ).addClass( "lied" );
+    $(panier).children('input').prop('checked', true);
+  }
+
+}
+
+

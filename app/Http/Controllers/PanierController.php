@@ -69,19 +69,4 @@ class PanierController extends Controller
 
     }
 
-    public function detachFromLivraison($panier, $livraison)
-    {
-        $this->domaine->detachFromLivraison($panier, $livraison);
-        return redirect()->back();
-    }
-
-
-    public function attachToLivraison($panier, $livraison)
-    {
-        // return "attach panier $panier ToLivraison $livraison";
-        $this->domaine->attachToLivraison($panier, $livraison);
-        return redirect()->back();
-    }
-
-
 }
