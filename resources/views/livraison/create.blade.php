@@ -27,7 +27,7 @@
 	
 	<!-- Les dates -->
 	<div class="col-md-12 flexcontainer form_dates">
-		@include('livraison.form_dates')
+		@include('livraison.createdit.self')
 	</div>
 
 	@stop

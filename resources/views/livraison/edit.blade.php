@@ -28,12 +28,12 @@
 
 	<!-- Les dates -->
 	<div class="col-md-12 flexcontainer form_dates">
-		@include('livraison.form_dates')
+		@include('livraison.createdit.self')
 	</div>
 
 	<!-- Les paniers -->
 	<div class="col-md-12 flexcontainer form_paniers">
-		@include('livraison.form_paniers')
+		@include('livraison.createdit.paniers')
 	</div>
 
 
