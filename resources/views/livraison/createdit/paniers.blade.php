@@ -58,7 +58,7 @@
 </table>
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ModalChoixPaniers">
+<button type="button" class="btn btn-primary btn-sm" onClick="javascript:listPaniers({{$item->id}})" data-toggle="modal" data-target="#ModallistPaniers">
 	<i class="fa fa-btn fa-shopping-basket"></i>Ajouter des paniers
 </button>
 

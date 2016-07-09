@@ -41,24 +41,24 @@ class PanierDomaine extends Domaine
 		$this->panier->remarques = $request->remarques;
 	}
 
-	public function choixPaniers($id = null)
+	public function listPaniers($livraison_id = null)
 	{
 		$items = $this->panier->with('Producteur', 'livraison')->where('is_actif', 1)->orderBy('type')->get();
 
 		/* create */
-		if ($id == null) { 
+		if ($livraison_id == null) { 
 			return $items;
 		}
 
 		/* update */
-		$items->each(function($item) use($id)
+		$items->each(function($item) use($livraison_id)
 		{
 			$livraisons = $item->livraison;
 			if(!empty($livraisons))
 			{
-				$livraisons->each(function($livraison) use($id, $item)
+				$livraisons->each(function($livraison) use($livraison_id, $item)
 				{
-					if ( $livraison->id == $id)
+					if ( $livraison->id == $livraison_id)
 					{
 						$item->lied = "lied";
 					}

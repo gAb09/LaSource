@@ -75,33 +75,36 @@ $this->get('om/transfertlivraison', 'OMController@transfertLivraison');
 
 Route::group(['middleware' => 'auth'], function () {
 
+// User...
 	Route::resource('user', 'UserController');
 
+
+// Client...
 	Route::get('espaceclient', ['as' => 'espaceclient', 'uses' => 'ClientController@espaceclient']);
+
 	Route::resource('client', 'ClientController');
 
+
+// Relais...
 	Route::resource('relais', 'RelaisController');
 
+
+// Producteur...
 	Route::resource('producteur', 'ProducteurController');
 
-// Paniers...
+
+// Panier...
 	Route::resource('panier', 'PanierController');
 
 
-// Livraisons...
+// Livraison...
 	Route::resource('livraison', 'LivraisonController');
 
-	Route::get('livraison/panier/{panier_id}/listProducteurs', 
-		['as' => 'listProducteursForPanier', 'uses' => 'LivraisonController@listProducteursForPanier']
+	// Pivot Panier
+	Route::get('livraison/{livraison_id}/listpaniers', 
+		['as' => 'livraisonListpaniers', 'uses' => 'LivraisonController@listPaniers']
 		);
 
-
-// Pivot Panier / Producteur...
-	Route::post('panier/{panier_id}/syncProducteurs', 
-		['as' => 'PanierSyncProducteurs', 'uses' => 'PanierController@syncProducteurs']
-		);
-	
-// Pivot Livraison / Panier...
 	Route::post('livraison/{livraison}/detachpanier/{panier}', 
 		['as' => 'livraisonDetachPanier', 'uses' => 'LivraisonController@detachPanier']
 		);
@@ -110,6 +113,16 @@ Route::group(['middleware' => 'auth'], function () {
 		['as' => 'livraisonSyncPaniers', 'uses' => 'LivraisonController@syncPaniers']
 		);
 
+
+// Pivot Panier / Producteur...
+	Route::get('livraison/panier/{panier_id}/listProducteurs', 
+		['as' => 'listProducteursForPanier', 'uses' => 'LivraisonController@listProducteursForPanier']
+		);
+
+	Route::post('panier/{panier_id}/syncProducteurs', 
+		['as' => 'PanierSyncProducteurs', 'uses' => 'PanierController@syncProducteurs']
+		);
+	
 
 
 // ModePaiement...

@@ -60,7 +60,7 @@ class LivraisonController extends Controller
     	$item = $this->domaine->edit($id);
         // return dd($item);
         $date_titrepage = $item->livraisonEnClair;
-        $paniers = $this->panier->choixPaniers($id);
+        $paniers = $this->panier->listPaniers($id);
 
         return view('livraison.edit')->with(compact('item','date_titrepage', 'paniers' ));
     }
@@ -90,15 +90,23 @@ class LivraisonController extends Controller
     }
 
 
-    /*
-    | Obtention des infos pour constituer la liste des producteurs liés à un des paniers de cette livraison.
-    */
-    public function listProducteursForPanier($panier_id)
+    /**
+    * Obtention des infos pour constituer la liste des paniers liés à cette livraison.
+    * ToDo : Méthode de ce controleur où de PanierController ? Ou encore ProducteurController ?
+    *
+    * @param integer $panier_id
+    * @return Object View
+    **/
+    public function listPaniers($livraison_id)
     {
-        $panier = $this->panier->findFirst('id', $panier_id);
-        $producteurs = $this->producteur->listProducteursForPanier($panier_id);
-        $titre_page = trans('titrepage.panier.choixproducteurs', ['panier_nomcourt' => $panier->nom_court]);
-        return view('livraison.modales.listProducteursForPanier')->with(compact('panier_id', 'producteurs', 'titre_page'));
+        // dd('listPaniers');
+        $item = $this->domaine->findFirst('id', $livraison_id);
+        $item->livraisonEnClair = $item->date_livraison->formatLocalized('%A %e %B %Y');
+        // dd($item);
+        $paniers = $this->panier->listPaniers($livraison_id);
+        $titre_page = trans('titrepage.livraison.listPaniers', ['date' => $item->livraisonEnClair]);
+
+        return view('livraison.modales.listPaniers')->with(compact('item', 'paniers', 'titre_page'));
     }
 
 
@@ -113,6 +121,23 @@ class LivraisonController extends Controller
     {
         $this->domaine->detachPanier($livraison, $panier);
         return redirect()->back();
-   }
+    }
+
+    /**
+    * Obtention des infos pour constituer la liste des producteurs liés à un des paniers de cette livraison.
+    * ToDo : Méthode de ce controleur où de PanierController ? Ou encore ProducteurController ?
+    *
+    * @param integer $panier_id
+    * @return Object View
+    **/
+    public function listProducteursForPanier($panier_id)
+    {
+        $panier = $this->panier->findFirst('id', $panier_id);
+        $producteurs = $this->producteur->listProducteursForPanier($panier_id);
+        $titre_page = trans('titrepage.panier.choixproducteurs', ['panier_nomcourt' => $panier->nom_court]);
+        return view('livraison.modales.listProducteursForPanier')->with(compact('panier_id', 'producteurs', 'titre_page'));
+    }
+
+
 
 }

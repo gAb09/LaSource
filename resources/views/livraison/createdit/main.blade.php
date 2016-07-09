@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('modal')
-  <div class="modal fade" id="ModalChoixPaniers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-@include('livraison.modales.ChoixPaniers')
+  <div class="modal fade" id="ModallistPaniers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+{{-- @include('livraison.modales.listPaniers') --}}
   </div>
 
 {{-- @include('livraison.modales.EditPanier') --}}

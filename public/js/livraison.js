@@ -22,9 +22,13 @@ $(function() {
     });
 });
 
-function listProducteursForPanier(toto){
+/*
+| Acquisition du contenu html pour la vue modale : listProducteursForPanier
+|
+*/
+function listProducteursForPanier(idpanier){
 
-    var ad = 'http://lasource/livraison/panier/' + toto + '/listProducteurs';
+    var ad = 'http://lasource/livraison/panier/' + idpanier + '/listProducteurs';
 
     $.ajax({
        url : ad,
@@ -47,9 +51,35 @@ function listProducteursForPanier(toto){
 
 }
 
-$('#ModallistProducteursForPanier').on('hidden.bs.modal', function (e) {
-    $('#ModallistProducteursForPanier').text("");
-});
+/*
+| Acquisition du contenu html pour la vue modale : listPaniers
+|
+*/
+function listPaniers(livraison_id){
+
+    var ad = 'http://lasource/livraison/' + livraison_id + '/listpaniers';
+
+    $.ajax({
+       url : ad,
+       type : 'GET',
+       dataType : 'html',
+       success : function(code_html, statut){
+           $(code_html).appendTo("#ModallistPaniers");
+       },
+
+       error : function(resultat, statut, erreur){
+           alert(resultat);
+           alert(statut);
+           alert(erreur);
+       },
+
+       complete : function(resultat, statut){
+
+       }
+   });
+
+}
+
 
 
 function toggleLied(panier){

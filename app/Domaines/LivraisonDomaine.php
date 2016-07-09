@@ -98,6 +98,7 @@ class LivraisonDomaine extends Domaine
 		}
 	}
 
+
     public function detachPanier($livraison, $panier)
     {
        $item = Livraison::find($livraison);
