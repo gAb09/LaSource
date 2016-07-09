@@ -12,15 +12,15 @@ use App\Http\Requests;
 
 class LivraisonController extends Controller
 {
-    private $domaine;
-    private $paniers;
-    private $producteurs;
+    protected $domaine;
+    protected $panier;
+    protected $producteur;
     
-    public function __construct(livraison $domaine, Panier $paniers, Producteur $producteurs)
+    public function __construct(livraison $domaine, Panier $panier, Producteur $producteur)
     {
         $this->domaine = $domaine;
-        $this->paniers = $paniers;
-        $this->producteurs = $producteurs;
+        $this->panier = $panier;
+        $this->producteur = $producteur;
     }
 
 
@@ -60,9 +60,9 @@ class LivraisonController extends Controller
     	$item = $this->domaine->edit($id);
         // return dd($item);
         $date_titrepage = $item->livraisonEnClair;
-        $paniers = $this->paniers->choixPaniers($id);
+        $paniers = $this->panier->choixPaniers($id);
 
-        return view('livraison.edit')->with(compact('item','date_titrepage', 'paniers', 'producteurs' ));
+        return view('livraison.edit')->with(compact('item','date_titrepage', 'paniers' ));
     }
 
 
@@ -89,12 +89,16 @@ class LivraisonController extends Controller
 
     }
 
-    public function choixProducteurs($id)
+
+    /*
+    | Obtention des infos pour constituer la liste des producteurs liés à un des paniers de cette livraison.
+    */
+    public function listProducteursForPanier($panier_id)
     {
-        $datas = $this->producteurs->choixProducteurs($id);
-        $producteurs = $datas['producteurs'];
-        $titre_page = trans('titrepage.livraison.choixproducteurs', ['panier' => $datas['titre_page']]);;
-        return view('livraison.ModalChoixProducteurs')->with(compact('producteurs', 'titre_page'));
+        $panier = $this->panier->findFirst('id', $panier_id);
+        $producteurs = $this->producteur->listProducteursForPanier($panier_id);
+        $titre_page = trans('titrepage.panier.choixproducteurs', ['panier_nomcourt' => $panier->nom_court]);
+        return view('livraison.modales.listProducteursForPanier')->with(compact('panier_id', 'producteurs', 'titre_page'));
     }
 
 

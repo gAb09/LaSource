@@ -47,18 +47,18 @@ class ProducteurDomaine extends Domaine
 		$this->model->is_actif = (isset($request->is_actif)?1:0);
 	}
 
-	public function choixProducteurs($id)
+	public function listProducteursForPanier($panier_id)
 	{
 		$collection = $this->model->with('Panier')->where('is_actif', 1)->orderBy('nompourpaniers')->get();
 
-		$collection->each(function($model) use($id)
+		$collection->each(function($model) use($panier_id)
 		{
 			$paniers = $model->panier;
 			if(!empty($paniers))
 			{
-				$paniers->each(function($panier) use($id, $model)
+				$paniers->each(function($panier) use($panier_id, $model)
 				{
-					if ( $panier->id == $id)
+					if ( $panier->id == $panier_id)
 					{
 						$model->lied = "lied";
 						$this->titre_page = $panier->nom_court;
@@ -67,9 +67,7 @@ class ProducteurDomaine extends Domaine
 			}
 		});
 
-		$datas['producteurs'] = $collection;
-		$datas['titre_page'] = $this->titre_page;
-		return $datas;
+		return $collection;
 	}
 
 }

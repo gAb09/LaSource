@@ -5,6 +5,7 @@ namespace App\Domaines;
 
 class Domaine
 {
+	protected $model;
 
 	public function newModel()
 	{

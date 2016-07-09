@@ -11,6 +11,7 @@ class PanierDomaine extends Domaine
 {
 	protected $panier;
 
+
 	public function __construct(){
 		$this->panier = new Panier;
 	}
@@ -66,6 +67,12 @@ class PanierDomaine extends Domaine
 		});
 		return $items;
 	}
+
+	public function findFirst($colonne, $critere)
+	{
+		return $this->panier->where($colonne, $critere)->first();
+	}
+
 
 }
 

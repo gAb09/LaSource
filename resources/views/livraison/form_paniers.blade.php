@@ -1,22 +1,15 @@
-@section('modal')
-@include('livraison.modales.ChoixPaniers')
-@include('livraison.modales.EditPanier')
-<div class="modal fade" id="ModalChoixProducteurs" tabindex="-1" role="dialog" aria-labelledby="ModalChoixProducteursLabel">
-</div>
-@show
-
 <div class="">
-	<h4 class="col-md-12">Les paniers{{$item->id}}</h4><br />
+	<h4 class="col-md-12">Les paniers</h4><br />
 </div>
 
 <table class="panierschoisis col-md-8">
 	<tbody>
-		<tr class="unpanierchoisi">
 		@forelse($item->Panier as $panier)
+		<tr class="unpanierchoisi">
 
 			<td>
 				<a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#ModalEditPanier">
-					<i class="fa fa-btn fa-edit"></i>Modifier <br />ce panier
+					<i class="fa fa-btn fa-edit"></i>Éditer panier
 				</a>
 
 			</td>
@@ -38,7 +31,7 @@
 					@endforelse
 				</select>
 				<div>
-					<a class="btn btn-xs" onClick="javascript:ModalChoixProducteurs({{$panier->id}})" data-toggle="modal" data-target="#ModalChoixProducteurs">
+					<a class="btn btn-xs" onClick="javascript:listProducteursForPanier({{$panier->id}})" data-toggle="modal" data-target="#ModallistProducteursForPanier">
 						<i class="fa fa-btn fa-edit"></i>
 						Modifier la liste
 					</a>
@@ -48,24 +41,25 @@
 			<!-- prix -->
 			<td>
 				Prix
-				<input type="text" name="prix_commun[]" value="{{ $panier->prix_commun or old('prix_commun') }}">
+				<input type="text" class="prix" name="prix_commun[]" value="{{ $panier->prix_commun or old('prix_commun') }}">
 			</td>
 			<td>
-				@include('livraison.includes.detachPanierButton')
+				@include('livraison.button.detachPanier')
+				@include('livraison.button.validPanier')
 			</td>
 
 		@empty
 
 		<h4>Aucun panier n’est encore lié à cette livraison</h4>
 
-		@endforelse
 		</tr>
+		@endforelse
 	</tbody>
 </table>
 
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ModalChoixPaniers">
-	<i class="fa fa-btn fa-shopping-basket"></i>Gérer les paniers
+	<i class="fa fa-btn fa-shopping-basket"></i>Ajouter des paniers
 </button>
 
 

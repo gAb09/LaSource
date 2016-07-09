@@ -87,16 +87,27 @@ Route::group(['middleware' => 'auth'], function () {
 // Paniers...
 	Route::resource('panier', 'PanierController');
 
+
 // Livraisons...
 	Route::resource('livraison', 'LivraisonController');
-	Route::get('livraison/choixProducteurs/{id}', 'LivraisonController@choixProducteurs');
-	
-	Route::post('livraison/{livraison}/syncPaniers', 
-		['as' => 'livraisonSyncPaniers', 'uses' => 'LivraisonController@syncPaniers']
+
+	Route::get('livraison/panier/{panier_id}/listProducteurs', 
+		['as' => 'listProducteursForPanier', 'uses' => 'LivraisonController@listProducteursForPanier']
 		);
 
+
+// Pivot Panier / Producteur...
+	Route::post('panier/{panier_id}/syncProducteurs', 
+		['as' => 'PanierSyncProducteurs', 'uses' => 'PanierController@syncProducteurs']
+		);
+	
+// Pivot Livraison / Panier...
 	Route::post('livraison/{livraison}/detachpanier/{panier}', 
 		['as' => 'livraisonDetachPanier', 'uses' => 'LivraisonController@detachPanier']
+		);
+
+	Route::post('livraison/{livraison}/syncPaniers', 
+		['as' => 'livraisonSyncPaniers', 'uses' => 'LivraisonController@syncPaniers']
 		);
 
 

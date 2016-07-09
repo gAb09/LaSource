@@ -1,5 +1,18 @@
 @extends('layouts.app')
 
+@section('modal')
+  <div class="modal fade" id="ModalChoixPaniers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+@include('livraison.modales.ChoixPaniers')
+  </div>
+
+{{-- @include('livraison.modales.EditPanier') --}}
+
+<div class="modal fade" id="ModallistProducteursForPanier" tabindex="-1" role="dialog" aria-labelledby="ModallistProducteursForPanierLabel">
+</div><!-- /.modal -->
+
+@show
+
+
 @section('titre')
 @parent
 @stop
@@ -23,7 +36,7 @@
 @section('content')
 
 <div class="col-md-12">
-	@section('createOrEdit')
+	@section('createdit')
 	@show
 </div>
 
@@ -41,4 +54,6 @@
 @stop
 
 @section('script')
+@parent
+<script src="/js/livraison.js"></script>
 @stop

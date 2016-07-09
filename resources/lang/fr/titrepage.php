@@ -37,6 +37,7 @@ return [
                 'index' => 'Les paniers',
                 'create'  => 'Création d’un panier',
                 'edit'  => 'Édition du panier “:nom_court',
+                'choixproducteurs'  => 'Choisir un (plusieurs) producteur(s) fournissant le panier :<br /> :panier_nomcourt',
             ],
 
         'livraison' => 
@@ -45,7 +46,6 @@ return [
                 'create'  => 'Création d’une livraison',
                 'edit'  => 'Édition de la livraison du&nbsp:date_titrepage',
                 'choixpaniers'  => 'Choisir un (plusieurs) panier(s) pour la livraison : :date',
-                'choixproducteurs'  => 'Choisir un (plusieurs) producteur(s) pour le panier :<br /> :panier',
                 'editpanier'  => 'Modification du panier :panier',
             ],
         

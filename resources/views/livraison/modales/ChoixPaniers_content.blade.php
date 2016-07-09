@@ -1,3 +1,7 @@
+<form id="syncPaniers" class="form-inline" role="form" method="POST" action="{{ route('livraisonSyncPaniers', [$item->id]) }}">
+	{!! csrf_field() !!}
+	@include('livraison.button.syncPanier')
+
 	@foreach($paniers as $panier)
 
 	@if($panier->lied)
@@ -17,3 +21,6 @@
 	</div>
 	@endif
 	@endforeach
+	@include('livraison.button.syncPanier')
+
+</form>

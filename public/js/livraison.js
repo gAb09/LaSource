@@ -22,16 +22,16 @@ $(function() {
     });
 });
 
-function ModalChoixProducteurs(toto){
+function listProducteursForPanier(toto){
 
-    var ad = 'http://lasource/livraison/choixProducteurs/' + toto;
+    var ad = 'http://lasource/livraison/panier/' + toto + '/listProducteurs';
 
     $.ajax({
        url : ad,
        type : 'GET',
        dataType : 'html',
        success : function(code_html, statut){
-           $(code_html).appendTo("#ModalChoixProducteurs");
+           $(code_html).appendTo("#ModallistProducteursForPanier");
        },
 
        error : function(resultat, statut, erreur){
@@ -47,8 +47,8 @@ function ModalChoixProducteurs(toto){
 
 }
 
-$('#ModalChoixProducteurs').on('hidden.bs.modal', function (e) {
-    $('#ModalChoixProducteurs').text("");
+$('#ModallistProducteursForPanier').on('hidden.bs.modal', function (e) {
+    $('#ModallistProducteursForPanier').text("");
 });
 
 

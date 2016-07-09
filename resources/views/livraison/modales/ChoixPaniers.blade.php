@@ -1,13 +1,9 @@
 <!-- Modal -->
-<form id="syncPaniers" class="form-inline" role="form" method="POST" action="{{ route('livraisonSyncPaniers', [$item->id]) }}">
-  {!! csrf_field() !!}
-  <div class="modal fade" id="ModalChoixPaniers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-choixpaniers" role="document">
       <div class="modal-content">
 
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          @include('livraison.includes.syncPanierButton')
           <h4 class="modal-title" id="myModalLabel">
             <?php $date = ($item->livraisonEnClair)?'du '.$item->livraisonEnClair:'à venir';?>
             {!! trans('titrepage.livraison.choixpaniers', ['date' => $item->livraisonEnClair]) !!}
@@ -19,10 +15,7 @@
         </div>
 
         <div class="modal-footer">
-          @include('livraison.includes.syncPanierButton')
           <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
-  </div>
-</form>

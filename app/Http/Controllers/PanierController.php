@@ -69,4 +69,12 @@ class PanierController extends Controller
 
     }
 
+
+    public function syncProducteurs()
+    {
+        dd('syncProducteurs');
+        // dd($request->input('resultat'));
+        $this->domaine->syncPaniers($livraison, $request->input('resultat'));
+        return redirect()->back();
+    }
 }

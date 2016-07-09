@@ -31,7 +31,3 @@
 </form>
 
 
-@section('script')
-@parent
-<script src="/js/livraison.js"></script>
-@stop

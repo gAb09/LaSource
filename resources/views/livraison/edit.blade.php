@@ -1,4 +1,4 @@
-@extends('livraison.handle')
+@extends('livraison.createdit.main')
 
 @section('titre')
 @parent
@@ -20,7 +20,7 @@
 @stop
 
 
-@section('createOrEdit')
+@section('createdit')
 
 <form class="form-inline" role="form" method="POST" action="{{ route('livraison.update', $item->id) }}">
 	{!! csrf_field() !!}
