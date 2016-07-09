@@ -74,6 +74,18 @@ class PanierDomaine extends Domaine
 	}
 
 
+	public function syncPaniers($panier, $producteurs = array())
+	{
+		$item = Panier::find($panier);
+		if(is_null($producteurs)){
+			$item->producteur()->detach();
+		}else{
+			$item->producteur()->sync($producteurs);
+		}
+	}
+
+
+
 }
 
 
