@@ -22,19 +22,24 @@
 
 @section('createdit')
 
+	<!-- Les dates -->
 <form class="form-inline" role="form" method="POST" action="{{ route('livraison.update', $item->id) }}">
 	{!! csrf_field() !!}
 	<input type="hidden" class="form-control" name="_method" value="PUT">
 
-	<!-- Les dates -->
 	<div class="col-md-12 flexcontainer form_dates">
 		@include('livraison.createdit.self')
 	</div>
+</form>
 
 	<!-- Les paniers -->
+<form class="form-inline" role="form" method="POST" action="{{ route('livraisonSyncPaniers', [$item->id]) }}">
+	{!! csrf_field() !!}
+
 	<div class="col-md-12 flexcontainer form_paniers">
 		@include('livraison.createdit.paniers')
 	</div>
+</form>
 
 
 	@stop

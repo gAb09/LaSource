@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('modal')
-  <div class="modal fade" id="ModallistPaniers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-{{-- @include('livraison.modales.listPaniers') --}}
-  </div>
+<div class="modal fade" id="ModallistPaniers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	{{-- @include('livraison.modales.listPaniers') --}}
+</div>
 
 {{-- @include('livraison.modales.EditPanier') --}}
 
@@ -35,20 +35,19 @@
 
 @section('content')
 
-<div class="col-md-12">
+<div class="createdit container-fluid">
 	@section('createdit')
 	@show
 </div>
 
+<div class="container-fluid flexcontainer" style="justify-content:space-around">
+	<a href="{{ URL::route('livraison.index') }}" class="btn btn-info">
+		<i class="fa fa-btn fa-list-ul"></i>Retour à la liste
+	</a>
 
-<a href="{{ URL::route('livraison.index') }}" class="btn btn-info">
-	<i class="fa fa-btn fa-list-ul"></i>Retour à la liste
-</a>
-
-<a type="submit" class="btn btn-primary">
-	<i class="fa fa-btn fa-envelope"></i>Préparer mail pour clients
-</a>
-
+	<a type="submit" class="btn btn-primary">
+		<i class="fa fa-btn fa-envelope"></i>Préparer mail pour clients
+	</a>
 </div>
 
 @stop

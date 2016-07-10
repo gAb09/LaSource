@@ -84,7 +84,12 @@ function listPaniers(livraison_id)
 
 }
 
-
+function reporterValeur(input)
+{
+  var valeur = $(input).val();
+  // alert( valeur );
+ $(input).parents('tr').find('.prixlivraison').val(valeur);
+}
 
 
 function toggleLied(panier)

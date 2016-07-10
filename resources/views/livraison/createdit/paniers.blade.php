@@ -1,31 +1,28 @@
-<div class="">
-	<h4 class="col-md-12">Les paniers</h4><br />
-</div>
-
-<form class="form-inline" role="form" method="POST" action="{{ route('livraisonSyncPaniers', [$item->id]) }}">
-	{!! csrf_field() !!}
+	<h4 class="">Les paniers</h4>
 
 
 
-	<table class="panierschoisis col-md-10">
+	<table class="panierschoisis col-md-9">
 		<tbody>
 			@forelse($item->Panier as $panier)
 			<tr class="unpanierchoisi">
 
-				<td>
+				<td style="width:10px">
 					<a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#ModalEditPanier">
-						<i class="fa fa-btn fa-edit"></i>Éditer panier n° {{ $panier->id }}
+						<i class="fa fa-btn fa-edit fa-lg"></i>{{ $panier->id }}
 					</a>
 
 					<!-- panier id -->
 					<input type="hidden" class="id" name="panier_id[]" value="{{ $panier->id or old('panier_id') }}">
 
 				</td>
-				<!-- type -->
-				<td>{{ $panier->type }}</td>	
+				<!-- type
+				<td style="width:150px">
+					{{ $panier->type }}
+				</td>	 -->
 
 				<!-- nom_court -->
-				<td>
+				<td style="width:150px">
 					{!! $panier->nom_court !!}
 				</td>
 
@@ -49,37 +46,39 @@
 				<!-- prix livraison-->
 				<td>
 					Prix livraison
-					<input type="text" class="prix" name="prix_commun[]" value="{{ $panier->prix_commun or old('prix_commun') }}">
+					<input type="text" class="prixlivraison" name="prix_livraison[]" value="{{ $panier->pivot->prix_livraison or old('prix_livraison') }}">
 				</td>
+
+				<!-- prix commun-->
 				<td>				
-					Prix commun
-					<input type="text" class="prix" name="prix_livraison[]" value="{{ $panier->pivot->prix_livraison or old('prix_livraison') }}">
-				</td>
-				<td>
-					@include('livraison.button.detachPanier')
-					@include('livraison.button.syncPanier')
-				</td>
+					Prix base
+					<input type="text" class="prix" name="prix_commun[]" value="{{ $panier->prix_commun or old('prix_commun') }}" onClick="javascript:reporterValeur(this)">
+					</td>
+					<td>
+						<button type="button" class="btn btn-warning btn-xs" onClick="javascript:document.location.href='{{ route('livraisonDetachPanier', ['livraison' => $item->id, 'panier' => $panier->id]) }}';">
+							<i class="fa fa-btn fa-unlink fa-lg"></i>Retirer de cette livraison
+						</button>
+					</td>
 
-				@empty
+					@empty
 
-				<h4>Aucun panier n’est encore lié à cette livraison</h4>
+					<h4>Aucun panier n’est encore lié à cette livraison</h4>
 
-			</tr>
-			@endforelse
-		</tbody>
-	</table>
-
-</form>
-
-	<div class="panierschoisis col-md-2 col-md-offset-10">
-
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-sm" onClick="javascript:listPaniers({{$item->id}})" data-toggle="modal" data-target="#ModallistPaniers">
-	<i class="fa fa-btn fa-shopping-basket"></i>Ajouter des paniers
-</button>
-</div>
+				</tr>
+				@endforelse
+			</tbody>
+		</table>
 
 
+		<!-- Button trigger modal -->
+		<div class="boutonspaniers flexcontainer" >
 
+			<button type="submit" class="btn btn-success btn-xs">
+				<i class="fa fa-btn fa-save"></i> <br />Valider ces paniers
+			</button>
 
+			<button type="button" class="btn btn-primary btn-xs" onClick="javascript:listPaniers({{$item->id}})" data-toggle="modal" data-target="#ModallistPaniers">
+				<i class="fa fa-btn fa-shopping-basket"></i> <br />Ajouter des paniers
+			</button>
 
+		</div>

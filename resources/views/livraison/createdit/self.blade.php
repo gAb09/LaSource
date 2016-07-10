@@ -25,9 +25,8 @@
 
 <div>
 		<button type="submit" class="btn btn-sm btn-success">
-			<i class="fa fa-btn fa-save"></i>Valider ces dates
+			<i class="fa fa-btn fa-save fa-lg"></i>Valider ces dates
 		</button>
 </div>
-</form>
 
 
