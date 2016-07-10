@@ -28,21 +28,24 @@
 
 				<!-- producteur -->
 				<td>
+					{{var_dump($panier->pivot->producteur)}}
 					<select name="producteur[]">
-						@forelse($panier->producteur as $producteur)
-							@if(is_null($panier->pivot->producteur))
-						<option value="Indéterminé" selected="selected">Indéterminé </option>
-							@elseif($panier->pivot->producteur == $producteur->id)
-						<option value="{!! $producteur->id !!}" selected="selected">
-							@else
-						<option value="{!! $producteur->id !!}">
-							@endif
-							
-							{!! $producteur->nompourpaniers !!}
-						</option>
-						@empty
-						<option value="Indéterminé" selected="selected">Problème </option>
-						@endforelse
+					@if(is_null($panier->pivot->producteur) or $panier->pivot->producteur == 0)
+					<option value="" selected="selected">indéterminé</option>
+					@endif
+							@forelse($panier->producteur as $producteur)
+
+								@if($panier->pivot->producteur == $producteur->id)
+									<option value="{!! $producteur->id !!}" selected="selected">{!! $producteur->nompourpaniers !!}</option>
+
+								@else
+									<option value="{!! $producteur->id !!}">{!! $producteur->nompourpaniers !!}</option>
+								@endif
+
+							@empty
+								<option value="0" selected="selected">liste vide </option>
+							@endforelse
+
 					</select>
 					<div>
 						<a class="btn btn-xs" onClick="javascript:listProducteursForPanier({{$panier->id}})" data-toggle="modal" data-target="#ModallistProducteursForPanier">
@@ -62,32 +65,32 @@
 				<td>				
 					Prix base
 					<input type="text" class="prix" name="prix_commun[]" value="{{ $panier->prix_commun or old('prix_commun') }}" onClick="javascript:reporterValeur(this)">
-					</td>
-					<td>
-						<button type="button" class="btn btn-warning btn-xs" onClick="javascript:document.location.href='{{ route('livraisonDetachPanier', ['livraison' => $item->id, 'panier' => $panier->id]) }}';">
-							<i class="fa fa-btn fa-unlink fa-lg"></i>Retirer de cette livraison
-						</button>
-					</td>
+				</td>
+				<td>
+					<button type="button" class="btn btn-warning btn-xs" onClick="javascript:document.location.href='{{ route('livraisonDetachPanier', ['livraison' => $item->id, 'panier' => $panier->id]) }}';">
+						<i class="fa fa-btn fa-unlink fa-lg"></i>Retirer de cette livraison
+					</button>
+				</td>
 
-					@empty
+				@empty
 
-					<h4>Aucun panier n’est encore lié à cette livraison</h4>
+				<h4>Aucun panier n’est encore lié à cette livraison</h4>
 
-				</tr>
-				@endforelse
-			</tbody>
-		</table>
+			</tr>
+			@endforelse
+		</tbody>
+	</table>
 
 
-		<!-- Button trigger modal -->
-		<div class="boutonspaniers flexcontainer" >
+	<!-- Button trigger modal -->
+	<div class="boutonspaniers flexcontainer" >
 
-			<button type="submit" class="btn btn-success btn-xs">
-				<i class="fa fa-btn fa-save"></i> <br />Valider ces paniers
-			</button>
+		<button type="submit" class="btn btn-success btn-xs">
+			<i class="fa fa-btn fa-save"></i> <br />Valider ces paniers
+		</button>
 
-			<button type="button" class="btn btn-primary btn-xs" onClick="javascript:listPaniers({{$item->id}})" data-toggle="modal" data-target="#ModallistPaniers">
-				<i class="fa fa-btn fa-shopping-basket"></i> <br />Ajouter des paniers
-			</button>
+		<button type="button" class="btn btn-primary btn-xs" onClick="javascript:listPaniers({{$item->id}})" data-toggle="modal" data-target="#ModallistPaniers">
+			<i class="fa fa-btn fa-shopping-basket"></i> <br />Ajouter des paniers
+		</button>
 
-		</div>
+	</div>
