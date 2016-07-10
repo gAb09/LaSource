@@ -22,7 +22,7 @@ class Livraison extends Model
 
     public function Panier()
     {
-        return $this->belongsToMany('App\Models\Panier');
+        return $this->belongsToMany('App\Models\Panier')->withPivot('producteur', 'prix_livraison');
     }
 
 

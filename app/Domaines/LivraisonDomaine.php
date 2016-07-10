@@ -88,22 +88,48 @@ class LivraisonDomaine extends Domaine
 	}
 
 
-	public function syncPaniers($livraison, $paniers = array())
+	public function livraisonSyncPaniers($livraison, $paniers = array())
 	{
+		// return dd($paniers);
+
 		$item = Livraison::find($livraison);
 		if(is_null($paniers)){
 			$item->panier()->detach();
 		}else{
-			$item->panier()->sync($paniers);
+			$this->handleLivraisonSyncPaniers($item, $paniers);
 		}
 	}
 
 
-    public function detachPanier($livraison, $panier)
-    {
-       $item = Livraison::find($livraison);
-       $item->panier()->detach($panier);
-   }
+	public function handleLivraisonSyncPaniers($item, $paniers)
+	{
+
+		// return dd('handleLivraisonSyncPaniers');
+		// dd($paniers);
+		unset($paniers['_token']);
+		$datas = array();
+		$nombre = count($paniers['panier_id'])-1;
+		// dd($nombre);
+		if (array_key_exists('producteur', $paniers)) {
+			for ($i=0; $i <= $nombre; $i++) { 
+				$datas[ $paniers['panier_id'][$i] ]['producteur'] = $paniers['producteur'][$i];
+				$datas[ $paniers['panier_id'][$i] ]['prix_livraison'] = $paniers['prix_livraison'][$i];
+			}
+			$item->panier()->sync($datas);
+		}
+
+		// dd($datas);
+		$item->panier()->sync($paniers['panier_id']);
+	}
+
+
+
+
+	public function detachPanier($livraison, $panier)
+	{
+		$item = Livraison::find($livraison);
+		$item->panier()->detach($panier);
+	}
 
 
 }

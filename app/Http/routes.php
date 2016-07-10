@@ -105,7 +105,7 @@ Route::group(['middleware' => 'auth'], function () {
 		['as' => 'livraisonListpaniers', 'uses' => 'LivraisonController@listPaniers']
 		);
 
-	Route::post('livraison/{livraison}/detachpanier/{panier}', 
+	Route::any('livraison/{livraison}/detachpanier/{panier}', 
 		['as' => 'livraisonDetachPanier', 'uses' => 'LivraisonController@detachPanier']
 		);
 

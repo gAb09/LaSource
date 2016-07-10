@@ -68,7 +68,7 @@ class LivraisonController extends Controller
 
     public function update($id, LivraisonRequest $request)
     {
-        return dd($request->all());
+        // return dd($request->all());
 
         if($this->domaine->update($id, $request)){
             return redirect()->route('livraison.index')->with('success', trans('message.livraison.updateOk'));
@@ -112,15 +112,16 @@ class LivraisonController extends Controller
 
     public function syncPaniers($livraison, Request $request)
     {
-        // dd($request->input('resultat'));
-        $this->domaine->syncPaniers($livraison, $request->input('resultat'));
+        // dd($request->all());
+        $this->domaine->livraisonSyncPaniers($livraison, $request->all());
         return redirect()->back();
     }
 
     public function detachPanier($livraison, $panier)
     {
+        // dd("detach panier $panier de $livraison");
         $this->domaine->detachPanier($livraison, $panier);
-        return redirect()->back();
+        return redirect()->action('LivraisonController@edit', ['livraison' => $livraison]);
     }
 
     /**
