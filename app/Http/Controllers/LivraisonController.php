@@ -71,7 +71,7 @@ class LivraisonController extends Controller
         // return dd($request->all());
 
         if($this->domaine->update($id, $request)){
-            return redirect()->route('livraison.index')->with('success', trans('message.livraison.updateOk'));
+            return redirect()->back()->with('success', trans('message.livraison.updateOk'));
         }else{
             return redirect()->back()->with('status', trans('message.livraison.updatefailed'));
         }
