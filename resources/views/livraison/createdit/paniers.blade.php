@@ -30,7 +30,14 @@
 				<td>
 					<select name="producteur[]">
 						@forelse($panier->producteur as $producteur)
-						<option value="{!! $producteur->nompourpaniers !!}">{!! $producteur->nompourpaniers !!}</option>
+							@if($panier->pivot->producteur == $producteur->id)
+						<option value="{!! $producteur->id !!}" selected="selected">
+							@else
+						<option value="{!! $producteur->id !!}">
+							@endif
+							
+							{!! $producteur->nompourpaniers !!}
+						</option>
 						@empty
 						<option value="Indéterminé">Indéterminé</option>
 						@endforelse
