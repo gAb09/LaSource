@@ -28,10 +28,9 @@
 
 				<!-- producteur -->
 				<td>
-					{{var_dump($panier->pivot->producteur)}}
 					<select name="producteur[]">
 					@if(is_null($panier->pivot->producteur) or $panier->pivot->producteur == 0)
-					<option value="" selected="selected">indéterminé</option>
+					<option value="0" selected="selected">producteur à déterminer</option>
 					@endif
 							@forelse($panier->producteur as $producteur)
 
@@ -43,7 +42,7 @@
 								@endif
 
 							@empty
-								<option value="0" selected="selected">liste vide </option>
+								<option value="0" selected="selected">la liste des producteurs est vide</option>
 							@endforelse
 
 					</select>
