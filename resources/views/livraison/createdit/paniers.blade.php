@@ -49,7 +49,7 @@
 					<div>
 						<a class="btn btn-xs" onClick="javascript:listProducteursForPanier({{$panier->id}})" data-toggle="modal" data-target="#ModallistProducteursForPanier">
 							<i class="fa fa-btn fa-edit"></i>
-							Modifier la liste
+							Modifier les producteurs liés
 						</a>
 					</div>
 				</td>
@@ -89,7 +89,7 @@
 		</button>
 
 		<button type="button" class="btn btn-primary btn-xs" onClick="javascript:listPaniers({{$item->id}})" data-toggle="modal" data-target="#ModallistPaniers">
-			<i class="fa fa-btn fa-shopping-basket"></i> <br />Ajouter des paniers
+			<i class="fa fa-btn fa-shopping-basket"></i> <br />Liste des paniers
 		</button>
 
 	</div>
