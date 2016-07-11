@@ -113,7 +113,7 @@ class LivraisonController extends Controller
     public function syncPaniers($livraison, Request $request)
     {
         // dd($request->all());
-        $this->domaine->livraisonSyncPaniers($livraison, $request->all());
+        $this->domaine->livraisonSyncPaniers($livraison, $request->except('_token'));
         return redirect()->back();
     }
 

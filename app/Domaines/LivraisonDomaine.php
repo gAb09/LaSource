@@ -90,10 +90,11 @@ class LivraisonDomaine extends Domaine
 
 	public function livraisonSyncPaniers($livraison, $paniers = array())
 	{
-		// return dd($paniers);
+		// return 	dd($paniers);
 
+		unset($paniers['_token']);
 		$item = Livraison::find($livraison);
-		if(is_null($paniers)){
+		if(empty($paniers)){
 			$item->panier()->detach();
 		}else{
 			$this->handleLivraisonSyncPaniers($item, $paniers);
@@ -106,7 +107,6 @@ class LivraisonDomaine extends Domaine
 
 		// return dd('handleLivraisonSyncPaniers');
 		// dd($paniers);
-		unset($paniers['_token']);
 		$datas = array();
 		$nombre = count($paniers['panier_id'])-1;
 		// dd($nombre);

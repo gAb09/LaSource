@@ -1,5 +1,4 @@
 <form id="PanierSyncProducteurs" class="form-inline" role="form" method="POST" action="{{ route('PanierSyncProducteurs', [$panier_id]) }}">
-  {!! csrf_field() !!}
   <table class="col-md-12">
     <tbody>
       @foreach($producteurs as $producteur)
