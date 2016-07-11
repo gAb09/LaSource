@@ -71,6 +71,7 @@ class LivraisonDomaine extends Domaine
 
 
 	public function update($id, $request){
+
 		$this->livraison = Livraison::where('id', $id)->first();
 		$this->handleRequest($request);
 

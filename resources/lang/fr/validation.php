@@ -121,6 +121,7 @@ return [
     'mobile' => 'Mobile',
     'email' => 'Courriel',
     'nompourpaniers' => 'Nom pour Paniers',
+    'today' => 'aujourd’hui',
     ],
 
 ];
