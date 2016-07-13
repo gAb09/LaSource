@@ -112,14 +112,11 @@ class LivraisonDomaine extends Domaine
 		$nombre = count($paniers['panier_id'])-1;
 		// dd($nombre);
 		if (array_key_exists('producteur', $paniers)) {
-			for ($i=0; $i <= $nombre; $i++) { 
-				$datas[ $paniers['panier_id'][$i] ]['producteur'] = $paniers['producteur'][$i];
-				$datas[ $paniers['panier_id'][$i] ]['prix_livraison'] = $paniers['prix_livraison'][$i];
+			foreach ($paniers['panier_id'] as $panier) {
+				$datas[$panier] = [ 'producteur' => $paniers['producteur'][$panier], 'prix_livraison' => $paniers['prix_livraison'][$panier] ];
 			}
 			$item->panier()->sync($datas);
 		}
-
-		// dd($datas);
 		$item->panier()->sync($paniers['panier_id']);
 	}
 

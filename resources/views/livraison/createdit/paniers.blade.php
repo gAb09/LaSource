@@ -4,46 +4,56 @@
 
 	<table class="panierschoisis col-md-9">
 		<tbody>
-			@forelse($item->Panier as $panier)
+			@forelse($panierschoisis as $panier)
+
 			<tr class="unpanierchoisi">
 
-				<td style="width:10px">
+				<td style="width:15%">
+					<!-- Edit -->
 					<a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#ModalEditPanier">
-						<i class="fa fa-btn fa-edit fa-lg"></i>{{ $panier->id }}
+						<i class="fa fa-btn fa-edit fa-lg"></i>
 					</a>
-
 					<!-- panier id -->
+					Panier n° {{ $panier->id }}
 					<input type="hidden" class="id" name="panier_id[]" value="{{ $panier->id or old('panier_id') }}">
-
 				</td>
+
 				<!-- type
 				<td style="width:150px">
 					{{ $panier->type }}
 				</td>	 -->
 
 				<!-- nom_court -->
-				<td style="width:150px">
+				<td class="nomcourt" style="width:15%">
 					{!! $panier->nom_court !!}
 				</td>
 
+
 				<!-- producteur -->
-				<td>
-					<select name="producteur[]">
-					@if(is_null($panier->pivot->producteur) or $panier->pivot->producteur == 0)
-					<option value="0" selected="selected">producteur à déterminer</option>
+				<td class="form-group {{ $errors->has('producteur.'.$panier->id) ? ' has-error' : '' }}" style="width:58%">
+					<!-- validation -->
+					@if ($errors->has('producteur.'.$panier->id))
+					<span class="help-block">
+						<strong>{{ $errors->first('producteur.'.$panier->id) }}</strong>
+					</span>
 					@endif
-							@forelse($panier->producteur as $producteur)
+					<!-- affichage -->
+					<select name="producteur[{{ $panier->id }}]">
+						@if($panier->prod_value == 0))
+						<option value="0" selected="selected">producteur à déterminer</option>
+						@endif
+						@forelse($panier->producteur as $producteur)
 
-								@if($panier->pivot->producteur == $producteur->id)
-									<option value="{!! $producteur->id !!}" selected="selected">{!! $producteur->nompourpaniers !!}</option>
+						@if($panier->prod_value == $producteur->id)
+						<option value="{!! $producteur->id !!}" selected="selected">{!! $producteur->nompourpaniers !!}</option>
 
-								@else
-									<option value="{!! $producteur->id !!}">{!! $producteur->nompourpaniers !!}</option>
-								@endif
+						@else
+						<option value="{!! $producteur->id !!}">{!! $producteur->nompourpaniers !!}</option>
+						@endif
 
-							@empty
-								<option value="0" selected="selected">la liste des producteurs est vide</option>
-							@endforelse
+						@empty
+						<option value="0" selected="selected">la liste des producteurs est vide</option>
+						@endforelse
 
 					</select>
 					<div>
@@ -55,17 +65,24 @@
 				</td>
 
 				<!-- prix livraison-->
-				<td>
+				<td class="form-group {{ $errors->has('prix_livraison.'.$panier->id) ? ' has-error' : '' }}" style="width:40%">
+					<!-- validation -->
+					@if ($errors->has('prix_livraison.'.$panier->id))
+					<span class="help-block">
+						<strong>{{ $errors->first('prix_livraison.'.$panier->id) }}</strong>
+					</span>
+					@endif
+					<!-- affichage -->
 					Prix livraison
-					<input type="text" class="prixlivraison" name="prix_livraison[]" value="{{ $panier->pivot->prix_livraison or old('prix_livraison') }}">
+					<input id="prixlivraison" type="text" class="prix" style="width:40px" name="prix_livraison[{{ $panier->id}}]" value="{{ $panier->liv_value }}">
 				</td>
 
 				<!-- prix commun-->
-				<td>				
+				<td style="width:15%">				
 					Prix base
-					<input type="text" class="prix" name="prix_commun[]" value="{{ $panier->prix_commun or old('prix_commun') }}" onClick="javascript:reporterValeur(this)">
+					<input type="text" class="prix"  name="prix_commun[]" value="{{ $panier->prix_commun or old('prix_commun') }}" onClick="javascript:reporterValeur(this)">
 				</td>
-				<td>
+				<td style="width:15%">
 					<button type="button" class="btn btn-warning btn-xs" onClick="javascript:document.location.href='{{ route('livraisonDetachPanier', ['livraison' => $item->id, 'panier' => $panier->id]) }}';">
 						<i class="fa fa-btn fa-unlink fa-lg"></i>Retirer de cette livraison
 					</button>
@@ -79,7 +96,6 @@
 			@endforelse
 		</tbody>
 	</table>
-
 
 	<!-- Button trigger modal -->
 	<div class="boutonspaniers flexcontainer" >

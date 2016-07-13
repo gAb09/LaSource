@@ -6,6 +6,7 @@ use App\Domaines\LivraisonDomaine as Livraison;
 use App\Domaines\PanierDomaine as Panier;
 use App\Domaines\ProducteurDomaine as Producteur;
 use App\Http\Requests\LivraisonRequest;
+use App\Http\Requests\PanierForLivraisonRequest;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -61,8 +62,10 @@ class LivraisonController extends Controller
         // return dd($item);
         $date_titrepage = $item->livraisonEnClair;
         $paniers = $this->panier->listPaniers($id);
+        $panierschoisis = $this->panier->paniersChoisis($id);
+        // dd($panierschoisis);
 
-        return view('livraison.edit')->with(compact('item','date_titrepage', 'paniers' ));
+        return view('livraison.edit')->with(compact('item','date_titrepage', 'paniers', 'panierschoisis' ));
     }
 
 
@@ -110,7 +113,7 @@ class LivraisonController extends Controller
     }
 
 
-    public function syncPaniers($livraison, Request $request)
+    public function syncPaniers($livraison, PanierForLivraisonRequest $request)
     {
         // dd($request->all());
         $this->domaine->livraisonSyncPaniers($livraison, $request->except('_token'));
