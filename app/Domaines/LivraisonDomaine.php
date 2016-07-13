@@ -96,9 +96,9 @@ class LivraisonDomaine extends Domaine
 		unset($paniers['_token']);
 		$item = Livraison::find($livraison);
 		if(empty($paniers)){
-			$item->panier()->detach();
+			return $item->panier()->detach();
 		}else{
-			$this->handleLivraisonSyncPaniers($item, $paniers);
+			return $this->handleLivraisonSyncPaniers($item, $paniers);
 		}
 	}
 
@@ -115,9 +115,9 @@ class LivraisonDomaine extends Domaine
 			foreach ($paniers['panier_id'] as $panier) {
 				$datas[$panier] = [ 'producteur' => $paniers['producteur'][$panier], 'prix_livraison' => $paniers['prix_livraison'][$panier] ];
 			}
-			$item->panier()->sync($datas);
+			return $item->panier()->sync($datas);
 		}
-		$item->panier()->sync($paniers['panier_id']);
+		return $item->panier()->sync($paniers['panier_id']);
 	}
 
 

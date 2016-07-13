@@ -26,9 +26,18 @@ class LivraisonRequest extends Request
     public function rules()
     {
         return [
-        'date_livraison' => 'required|date_format:Y-m-d|after:date_paiement',
-        'date_paiement' => 'required|date_format:Y-m-d|after:date_cloture',
-        'date_cloture' => 'required|date_format:Y-m-d|after:now',
+        'date_livraison' => 'required|date|after:now',
+        'date_paiement' => 'required|date|before:date_livraison',
+        'date_cloture' => 'required|date|before:date_paiement',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+        'date_livraison.after' => 'La date de livraison doit être postérieure à aujourd’hui.',
+        'date_paiement.before' => 'La date de paiement doit être antérieure à celle de livraison',
+        'date_cloture.before' => 'La date de cloture doit être antérieure à celle de paiement',
         ];
     }
 }

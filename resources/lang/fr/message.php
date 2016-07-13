@@ -57,12 +57,14 @@ return [
     ],
 
     'livraison' => [
-        'updateOk'      => 'La livraison a bien été modifiée.',
-        'updatefailed'  => 'Problème. La livraison n’a pas été mise à jour…',
+        'updateOk'      => 'Les dates ont bien été modifiées.',
+        'updatefailed'  => 'Problème. La livraison n’a pas pu être mise à jour…',
         'storeOk'       => 'La livraison a bien été créée.',
         'storefailed'   => 'Problème. La livraison n’a pas pu être créée…',
         'deleteOk'      => 'La livraison a bien été supprimée.',
         'deletefailed'  => 'Problème. La livraison n’a pas pu être supprimée…',
+        'syncOk'        => 'Les paniers ont bien été actualisés :result.',
+        'syncfailed'    => 'Problème. La livraison n’a pas pu être actualisée',
     ],
 
     'user' => [
