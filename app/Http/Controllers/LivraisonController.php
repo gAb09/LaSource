@@ -10,6 +10,7 @@ use App\Http\Requests\PanierForLivraisonRequest;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Carbon\Carbon;
 
 class LivraisonController extends Controller
 {
@@ -59,8 +60,8 @@ class LivraisonController extends Controller
     public function edit($id)
     {
     	$item = $this->domaine->edit($id);
-        // return dd($item);
-        $date_titrepage = $item->livraisonEnClair;
+        // return dd($item->ClotureEnClair);
+        $date_titrepage = $item->LivraisonEnClair;
         $paniers = $this->panier->listPaniers($id);
         $panierschoisis = $this->panier->paniersChoisis($id);
         // dd($panierschoisis);
@@ -147,6 +148,11 @@ class LivraisonController extends Controller
         return view('livraison.modales.listProducteursForPanier')->with(compact('panier_id', 'producteurs', 'titre_page'));
     }
 
-
+    public function handleDate($nom, $valeur)
+    {
+        $vue = 'livraison.partials.'.$nom;
+        $item = $this->domaine->handleDate($nom, $valeur);
+        return view($vue)->with('item', $item);
+    }
 
 }

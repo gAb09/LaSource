@@ -1,29 +1,64 @@
 $(function()
 {
-  $("#clotureEnClair").datepicker({
-    dateFormat: "DD d MM yy",
-    altField: "#date_cloture",
-    altFormat: "yy-m-d"
+  $("#date_cloture").datepicker({
+    dateFormat: "yy-mm-dd",
+    showOn: "button",
+    buttonText: "Choisir",
+    onClose: function(date, dp) {var nom = 'date_cloture'; getDates(nom, date);},
   });
 });
 
-$(function()
-{
-  $("#paiementEnClair").datepicker({
-    dateFormat: "DD d MM yy",
-    altField: "#date_paiement",
-    altFormat: "yy-m-d"
-  });
-});
 
 $(function()
 {
-  $("#livraisonEnClair").datepicker({
-    dateFormat: "DD d MM yy",
-    altField: "#date_livraison",
-    altFormat: "yy-m-d"
+  $("#date_paiement").datepicker({
+    dateFormat: "yy-mm-dd",
+    showOn: "button",
+    buttonText: "Choisir",
+    onClose: function(date, dp) {var nom = 'date_paiement'; getDates(nom, date);},
   });
 });
+
+
+$(function()
+{
+  $("#date_livraison").datepicker({
+    dateFormat: "yy-mm-dd",
+    showOn: "button",
+    buttonText: "Choisir",
+    onClose: function(date, dp) {var nom = 'date_livraison'; getDates(nom, date);},
+  });
+});
+
+
+/*
+| Acquisition du contenu html pour les dates
+|
+*/
+function getDates(nom, date)
+{
+  var ad = 'http://lasource/livraison/date/'+nom+'/'+date;
+var cible = '#div_'+nom;
+alert(cible);
+  $.ajax({
+   url : ad,
+   type : 'GET',
+   dataType : 'html',
+   success : function(code_html, statut){
+     $("#div_"+nom).empty().append(code_html);
+   },
+
+   error : function(resultat, statut, erreur){
+     alert(resultat);
+     alert(statut);
+     alert(erreur);
+   },
+
+   complete : function(resultat, statut){
+
+   }
+ });
+}
 
 /*
 | Acquisition du contenu html pour la vue modale : listProducteursForPanier
@@ -88,7 +123,7 @@ function reporterValeur(input)
 {
   var valeur = $(input).val();
   // alert( valeur );
- $(input).parents('tr').find('#prixlivraison').val(valeur);
+  $(input).parents('tr').find('#prixlivraison').val(valeur);
 }
 
 

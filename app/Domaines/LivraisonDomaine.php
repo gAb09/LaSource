@@ -4,7 +4,8 @@ namespace App\Domaines;
 
 use App\Models\Livraison;
 use App\Domaines\Domaine;
-use Gab\Helpers\gabHelpers as Help;
+// use Gab\Helpers\gabHelpers as Help;
+use Carbon\Carbon;
 
 
 class LivraisonDomaine extends Domaine
@@ -18,17 +19,6 @@ class LivraisonDomaine extends Domaine
 	public function index()
 	{
 		$items = $this->livraison->orderBy('id', 'desc')->get();
-		$items->each(function ($item, $key) {
-			if($key = 'date_paiement'){
-				$item->date_paiementFR = Help::DatesFrlongue($item->date_paiement);
-			}
-			if($key = 'date_cloture'){
-				$item->date_clotureFR = Help::DatesFrlongue($item->date_cloture);
-			}
-			if($key = 'date_livraison'){
-				$item->date_livraisonFR = Help::DatesFrlongue($item->date_livraison);
-			}
-		});
 		return $items;
 	}
 
@@ -53,7 +43,6 @@ class LivraisonDomaine extends Domaine
 	public function findFirst($colonne, $critere)
 	{
 		$item = $this->livraison->where($colonne, $critere)->first();
-		$item->date_livraisonFR = Help::DatesFrlongue($item->date_livraison);
 		return $item;
 
 	}
@@ -62,7 +51,7 @@ class LivraisonDomaine extends Domaine
 	public function edit($id){
 		$this->livraison = Livraison::with('Panier')->where('id', $id)->first();
 		
-		$this->livraison->clotureEnClair = $this->livraison->date_cloture->formatLocalized('%A %e %B %Y');
+		// $this->livraison->clotureEnClair = $this->livraison->date_cloture->formatLocalized('%A %e %B %Y');
 		$this->livraison->paiementEnClair = $this->livraison->date_paiement->formatLocalized('%A %e %B %Y');
 		$this->livraison->livraisonEnClair = $this->livraison->date_livraison->formatLocalized('%A %e %B %Y');
 
@@ -127,6 +116,39 @@ class LivraisonDomaine extends Domaine
 	{
 		$item = Livraison::find($livraison);
 		$item->panier()->detach($panier);
+	}
+
+
+
+
+	public function handleDate($nom, $valeur)
+	{
+		$now = Carbon::now();
+		$date = Carbon::createFromFormat('Y-m-d', $valeur);
+
+		$enclair = $date->formatLocalized('%A %e %B %Y');
+		$delai = $date->diffInDays($now, true);
+		$item = new Livraison;
+        // dd("handleDate, nom : $nom - valeur : $valeur - date : $date - vue : $vue");
+		switch ($nom) {
+			case 'date_cloture':
+			$item->date_cloture = $valeur;
+			$item->date_cloture_enclair = $enclair;
+			$item->date_paiement_delai = $delai;
+			break;
+			case 'date_paiement':
+			$item->date_paiement = $valeur;
+			$item->date_paiement_enclair = $enclair;
+			$item->date_paiement_delai = $delai;
+			break;
+			case 'date_livraison':
+			$item->date_livraison = $valeur;
+			$item->date_livraison_enclair = $enclair;
+			$item->date_livraison_delai = $delai;
+			break;
+		}
+
+		return $item;
 	}
 
 

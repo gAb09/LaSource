@@ -11,17 +11,17 @@ onDblClick="javascript:document.location.href='{{ route('livraison.edit', $item-
 
 	<!-- date_cloture -->
 	<div>
-		{!! $item->date_clotureFR !!}
+		{!! $item->ClotureEnClair !!}
 	</div>
 
 	<!-- date_paiement -->
 	<div>
-		{!! $item->date_paiementFR !!}
+		{!! $item->PaiementEnClair !!}
 	</div>
 
 	<!-- date_livraison -->
 	<div>
-		{!! $item->date_livraisonFR !!}
+		{!! $item->LivraisonEnClair !!}
 	</div>
 
 
