@@ -1,51 +1,62 @@
 $(function()
 {
-  $("#date_cloture").datepicker({
+  $("#datepicker_cloture").datepicker({
     dateFormat: "yy-mm-dd",
+    altField: "#date_cloture",
+    altFormat: "yy-m-d",
     showOn: "button",
     buttonText: "Choisir",
-    onClose: function(date, dp) {var nom = 'date_cloture'; getDates(nom, date);},
+    onClose: function(valeur, dp) {var nom = 'date_cloture'; getComboDate(nom, valeur);},
   });
 });
 
 
 $(function()
 {
-  $("#date_paiement").datepicker({
+  $("#datepicker_paiement").datepicker({
     dateFormat: "yy-mm-dd",
+    altField: "#date_paiement",
+    altFormat: "yy-m-d",
     showOn: "button",
     buttonText: "Choisir",
-    onClose: function(date, dp) {var nom = 'date_paiement'; getDates(nom, date);},
+    onClose: function(valeur, dp) {var nom = 'date_paiement'; getComboDate(nom, valeur);},
   });
 });
 
 
 $(function()
 {
-  $("#date_livraison").datepicker({
+  $("#datepicker_livraison").datepicker({
     dateFormat: "yy-mm-dd",
+    altField: "#date_livraison",
+    altFormat: "yy-m-d",
     showOn: "button",
     buttonText: "Choisir",
-    onClose: function(date, dp) {var nom = 'date_livraison'; getDates(nom, date);},
+    onClose: function(valeur, dp) {var nom = 'date_livraison'; getComboDate(nom, valeur);},
   });
 });
+
+
 
 
 /*
 | Acquisition du contenu html pour les dates
 |
 */
-function getDates(nom, date)
+function getComboDate(nom, valeur)
 {
-  var ad = 'http://lasource/livraison/date/'+nom+'/'+date;
-var cible = '#div_'+nom;
-alert(cible);
+  var ad = 'http://lasource/livraison/combodate/'+valeur;
+  var span_enclair = '#'+nom+'_enclair';
+  var span_delai = '#'+nom+'_delai';
+  var input_date = '#'+nom;
   $.ajax({
    url : ad,
    type : 'GET',
-   dataType : 'html',
-   success : function(code_html, statut){
-     $("#div_"+nom).empty().append(code_html);
+   dataType : 'json',
+   success : function(data, statut){
+     $(span_enclair).empty().append(data['enclair']);
+     $(span_delai).empty().append(data['delai']);
+     $(input_date).empty().append(data['valeur']);
    },
 
    error : function(resultat, statut, erreur){
@@ -59,6 +70,8 @@ alert(cible);
    }
  });
 }
+
+
 
 /*
 | Acquisition du contenu html pour la vue modale : listProducteursForPanier

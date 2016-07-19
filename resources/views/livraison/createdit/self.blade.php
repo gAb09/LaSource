@@ -22,5 +22,3 @@
 		<i class="fa fa-btn fa-save fa-lg"></i>Valider ces dates
 	</button>
 </div>
-
-

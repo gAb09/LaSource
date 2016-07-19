@@ -61,7 +61,7 @@ class LivraisonController extends Controller
     {
     	$item = $this->domaine->edit($id);
         // return dd($item->ClotureEnClair);
-        $date_titrepage = $item->LivraisonEnClair;
+        $date_titrepage = $item->date_livraison_enclair;
         $paniers = $this->panier->listPaniers($id);
         $panierschoisis = $this->panier->paniersChoisis($id);
         // dd($panierschoisis);
@@ -148,11 +148,10 @@ class LivraisonController extends Controller
         return view('livraison.modales.listProducteursForPanier')->with(compact('panier_id', 'producteurs', 'titre_page'));
     }
 
-    public function handleDate($nom, $valeur)
+    public function getComboDate($valeur)
     {
-        $vue = 'livraison.partials.'.$nom;
-        $item = $this->domaine->handleDate($nom, $valeur);
-        return view($vue)->with('item', $item);
+        $data = $this->domaine->getComboDate($valeur);
+        return response()->json($data);
     }
 
 }

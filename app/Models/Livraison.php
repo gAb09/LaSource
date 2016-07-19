@@ -51,7 +51,7 @@ class Livraison extends Model
         $now = Carbon::now();
         Carbon::setLocale('fr');
         // return $value->diffForHumans($now, true);
-        return $value->diffInDays($now, true);
+        return $now->diffInDays($value, false);
     }
 
     public function getDatePaiementDelaiAttribute($value)
@@ -60,7 +60,7 @@ class Livraison extends Model
         $now = Carbon::now();
         Carbon::setLocale('fr');
         // return $value->diffForHumans($now, true);
-        return $value->diffInDays($now, true);
+        return $now->diffInDays($value, false);
     }
 
     public function getDateLivraisonDelaiAttribute($value)
@@ -69,7 +69,14 @@ class Livraison extends Model
         $now = Carbon::now();
         Carbon::setLocale('fr');
         // return $value->diffForHumans($now, true);
-        return $value->diffInDays($now, true);
+        return $now->diffInDays($value, false);
+    }
+
+    public function getLivraisonDelaiExpliciteAttribute($value)
+    {
+        $value = $this->date_livraison_delai;
+        $value = 'toto';
+        return $value;
     }
 
 }

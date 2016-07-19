@@ -54,4 +54,20 @@
 @section('script')
 @parent
 <script src="/js/livraison.js"></script>
+
+<script type="text/javascript">
+
+var clot = "{{ old('date_cloture', $item->date_cloture) }}";
+clot = clot.split(" ")[0];
+getComboDate('date_cloture', clot);
+
+var paie = "{{ old('date_paiement', $item->date_paiement) }}";
+paie = paie.split(" ")[0];
+getComboDate('date_paiement', paie);
+
+var liv = "{{ old('date_livraison', $item->date_livraison) }}";
+liv = liv.split(" ")[0];
+getComboDate('date_livraison', liv);
+
+</script>
 @stop

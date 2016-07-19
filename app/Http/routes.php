@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('livraison/date/{date}/{valeur}', 'LivraisonController@handleDate');
+Route::get('livraison/combodate/{valeur}', 'LivraisonController@getComboDate');
 
 Route::get('/', function () {
 	return view('accueil');

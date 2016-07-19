@@ -121,35 +121,52 @@ class LivraisonDomaine extends Domaine
 
 
 
-	public function handleDate($nom, $valeur)
+	public function getComboDate($valeur)
 	{
 		$now = Carbon::now();
-		$date = Carbon::createFromFormat('Y-m-d', $valeur);
+		$valeur = Carbon::createFromFormat('Y-m-d', $valeur);
 
-		$enclair = $date->formatLocalized('%A %e %B %Y');
-		$delai = $date->diffInDays($now, true);
-		$item = new Livraison;
+		$enclair = $valeur->formatLocalized('%A %e %B %Y');
+        // Carbon::setLocale('fr');
+        $delai = $now->diffInDays($valeur, false);
+
         // dd("handleDate, nom : $nom - valeur : $valeur - date : $date - vue : $vue");
-		switch ($nom) {
-			case 'date_cloture':
-			$item->date_cloture = $valeur;
-			$item->date_cloture_enclair = $enclair;
-			$item->date_paiement_delai = $delai;
-			break;
-			case 'date_paiement':
-			$item->date_paiement = $valeur;
-			$item->date_paiement_enclair = $enclair;
-			$item->date_paiement_delai = $delai;
-			break;
-			case 'date_livraison':
-			$item->date_livraison = $valeur;
-			$item->date_livraison_enclair = $enclair;
-			$item->date_livraison_delai = $delai;
-			break;
-		}
+		$datas['date'] = $valeur;
+		$datas['enclair'] = $enclair;
+		$datas['delai'] = $delai;
 
-		return $item;
+		return $datas;
 	}
+
+	// public function handleDate($nom, $valeur)
+	// {
+	// 	$now = Carbon::now();
+	// 	$date = Carbon::createFromFormat('Y-m-d', $valeur);
+
+	// 	$enclair = $date->formatLocalized('%A %e %B %Y');
+	// 	$delai = $date->diffInDays($now, false);
+	// 	$item = new Livraison;
+ //        // dd("handleDate, nom : $nom - valeur : $valeur - date : $date - vue : $vue");
+	// 	switch ($nom) {
+	// 		case 'date_cloture':
+	// 		$item->date_cloture = $valeur;
+	// 		$item->date_cloture_enclair = $enclair;
+	// 		$item->date_cloture_delai = $delai;
+	// 		break;
+	// 		case 'date_paiement':
+	// 		$item->date_paiement = $valeur;
+	// 		$item->date_paiement_enclair = $enclair;
+	// 		$item->date_paiement_delai = $delai;
+	// 		break;
+	// 		case 'date_livraison':
+	// 		$item->date_livraison = $valeur;
+	// 		$item->date_livraison_enclair = $enclair;
+	// 		$item->date_livraison_delai = $delai;
+	// 		break;
+	// 	}
+
+	// 	return $item;
+	// }
 
 
 }
