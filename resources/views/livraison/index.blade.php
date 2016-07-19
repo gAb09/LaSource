@@ -23,7 +23,6 @@ class="btn btn-primary"
 
 @section('message')
 @parent
-@include('livraison.errors')
 @stop
 
 
