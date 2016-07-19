@@ -123,12 +123,19 @@ class LivraisonDomaine extends Domaine
 
 	public function getComboDate($valeur)
 	{
+		if ($valeur == 0) {
+			$datas['date'] = '';
+			$datas['enclair'] = 'À définir';
+			$datas['delai'] = '– – – –';
+			return $datas;
+		}
+		
 		$now = Carbon::now();
 		$valeur = Carbon::createFromFormat('Y-m-d', $valeur);
 
 		$enclair = $valeur->formatLocalized('%A %e %B %Y');
         // Carbon::setLocale('fr');
-        $delai = $now->diffInDays($valeur, false);
+		$delai = $now->diffInDays($valeur, false);
 
         // dd("handleDate, nom : $nom - valeur : $valeur - date : $date - vue : $vue");
 		$datas['date'] = $valeur;

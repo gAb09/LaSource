@@ -30,19 +30,25 @@ class Livraison extends Model
     public function getDateClotureEnclairAttribute($value)
     {
         $value = $this->date_cloture;
-        return $value->formatLocalized('%A %e %B %Y');
+        if (!is_null($value)) {
+            return $value->formatLocalized('%A %e %B %Y');
+        }
     }
 
     public function getDatePaiementEnclairAttribute($value)
     {
         $value = $this->date_paiement;
-        return $value->formatLocalized('%A %e %B %Y');
+        if (!is_null($value)) {
+            return $value->formatLocalized('%A %e %B %Y');
+        }
     }
 
     public function getDateLivraisonEnclairAttribute($value)
     {
         $value = $this->date_livraison;
-        return $value->formatLocalized('%A %e %B %Y');
+        if (!is_null($value)) {
+            return $value->formatLocalized('%A %e %B %Y');
+        }
     }
 
     public function getDateClotureDelaiAttribute($value)

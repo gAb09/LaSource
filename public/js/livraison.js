@@ -36,7 +36,10 @@ $(function()
   });
 });
 
+function getComboCloture(valeur)
+{
 
+}
 
 
 /*
@@ -45,6 +48,9 @@ $(function()
 */
 function getComboDate(nom, valeur)
 {
+  valeur = valeur.split(" ")[0];
+  if (valeur === '') {valeur = 0;}
+
   var ad = 'http://lasource/livraison/combodate/'+valeur;
   var span_enclair = '#'+nom+'_enclair';
   var span_delai = '#'+nom+'_delai';

@@ -19,7 +19,6 @@
 
 @section('message')
 @parent
-@include('livraison.errors')
 @stop
 
 
@@ -57,9 +56,7 @@
 
 <script type="text/javascript">
 
-var clot = "{{ old('date_cloture', $item->date_cloture) }}";
-clot = clot.split(" ")[0];
-getComboDate('date_cloture', clot);
+getComboDate('date_cloture', "{{ old('date_cloture', $item->date_cloture) }}");
 
 var paie = "{{ old('date_paiement', $item->date_paiement) }}";
 paie = paie.split(" ")[0];
