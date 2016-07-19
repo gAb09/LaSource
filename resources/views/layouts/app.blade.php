@@ -84,7 +84,7 @@
     <!-- - - - - - - - - - - - - - - - MESSAGES - - - - - - - - - - - - - - -->
     @section('message')
 
-{{-- var_dump(\Session::all()) --}}
+{{ var_dump(\Session::all()) }}
 
     <div class="container-fluid">
         <div class="col-md-12 messages">
