@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
+use Carbon\Carbon;
+
 class LivraisonRequest extends Request
 {
     /**
@@ -16,6 +18,10 @@ class LivraisonRequest extends Request
         return true;
     }
 
+    private $margeCloture = 5;
+    private $margePaiement = 10;
+    private $margeLivraison = 15;
+
 
 
     /**
@@ -25,19 +31,25 @@ class LivraisonRequest extends Request
      */
     public function rules()
     {
+        $buteeCloture = "$this->margeCloture day";
+        $buteePaiement = "$this->margePaiement day";
+        $buteeLivraison = "$this->margeLivraison day";
+
         return [
-        'date_livraison' => 'required|date|after:now',
-        'date_paiement' => 'required|date|before:date_livraison',
-        'date_cloture' => 'required|date|before:date_paiement',
+        'date_cloture' => "required|date|after:$buteeCloture|before:date_paiement",
+        'date_paiement' => "required|date|after:$buteePaiement|before:date_livraison",
+        'date_livraison' => "required|date|after:$buteeLivraison",
         ];
     }
 
     public function messages()
     {
         return [
-        'date_livraison.after' => 'La date de livraison doit être postérieure à aujourd’hui.',
-        'date_paiement.before' => 'La date de paiement doit être antérieure à celle de livraison',
-        'date_cloture.before' => 'La date de cloture doit être antérieure à celle de paiement',
+        'date_cloture.after' => "La date de clôture est dans moins de $this->margeCloture jours.",
+        'date_cloture.before' => 'La date de cloture doit être plus proche que celle de paiement.',
+        'date_paiement.before' => 'La date de paiement doit être plus proche que celle de livraison.',
+        'date_paiement.after' => "La date de paiement est dans moins de $this->margePaiement jours.",
+        'date_livraison.after' => "La date de livraison est dans moins de $this->margeLivraison jours.",
         ];
     }
 }
