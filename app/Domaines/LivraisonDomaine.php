@@ -136,6 +136,7 @@ class LivraisonDomaine extends Domaine
 		$enclair = $valeur->formatLocalized('%A %e %B %Y');
         // Carbon::setLocale('fr');
 		$delai = $now->diffInDays($valeur, false);
+		$delai = $this->getDelaiExplicite($delai);
 
         // dd("handleDate, nom : $nom - valeur : $valeur - date : $date - vue : $vue");
 		$datas['date'] = $valeur;
@@ -145,35 +146,46 @@ class LivraisonDomaine extends Domaine
 		return $datas;
 	}
 
-	// public function handleDate($nom, $valeur)
-	// {
-	// 	$now = Carbon::now();
-	// 	$date = Carbon::createFromFormat('Y-m-d', $valeur);
 
-	// 	$enclair = $date->formatLocalized('%A %e %B %Y');
-	// 	$delai = $date->diffInDays($now, false);
-	// 	$item = new Livraison;
- //        // dd("handleDate, nom : $nom - valeur : $valeur - date : $date - vue : $vue");
-	// 	switch ($nom) {
-	// 		case 'date_cloture':
-	// 		$item->date_cloture = $valeur;
-	// 		$item->date_cloture_enclair = $enclair;
-	// 		$item->date_cloture_delai = $delai;
-	// 		break;
-	// 		case 'date_paiement':
-	// 		$item->date_paiement = $valeur;
-	// 		$item->date_paiement_enclair = $enclair;
-	// 		$item->date_paiement_delai = $delai;
-	// 		break;
-	// 		case 'date_livraison':
-	// 		$item->date_livraison = $valeur;
-	// 		$item->date_livraison_enclair = $enclair;
-	// 		$item->date_livraison_delai = $delai;
-	// 		break;
-	// 	}
+	/**
+	* Obtenir un texte explicite décrivant le délai entre une date et aujourd’hui.
+	* Découpage en 3 parties : prefix chiffre suffix
+	* • prefix = il y a | dans
+	* • chiffre = valeur absolue de $delai
+	* • suffix = jour | jours
+	* 
+	* @param integer $delai
+	* 
+	* @return string
+	**/
+	public function getDelaiExplicite($delai)
+	{
+		// var_dump("delai : $delai");
+		$chiffre = abs($delai);
 
-	// 	return $item;
-	// }
+		if ($delai == 0) {
+			$delai_explicite = 'aujourd’hui';
+			return $delai_explicite;
+		}
+
+		if ($delai >= 1) {
+			$prefix = 'dans ';
+		}else{
+			$prefix = 'il y a ';
+		}
+
+		if ($chiffre == 1) {
+			$suffix = ' jour';
+		}else{
+			$suffix = ' jours';
+		}
+
+		$delai_explicite = $prefix.$chiffre.$suffix;
+
+		// dd("delai_explicite : $delai_explicite – prefix : $prefix – chiffre : $chiffre – suffix : $suffix");
+
+		return $delai_explicite;
+	}
 
 
 }
