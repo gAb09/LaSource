@@ -45,14 +45,15 @@ class PanierDomaine extends Domaine
 	{
 		$items = $this->panier->with('Producteur', 'livraison')->where('is_actif', 1)->orderBy('type')->get();
 
-		/* create */
+		/* livraison.create */
 		if ($livraison_id == null) { 
 			return $items;
 		}
 
-		/* update */
+		/* livraison.update */
 		$items->each(function($item) use($livraison_id)
 		{
+			$item->nom = str_replace(['<br />', '<br/>'], " - ", $item->nom);
 			$item = $this->preparePaniersForView($item, $livraison_id);
 		});
 		return $items;

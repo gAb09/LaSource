@@ -38,7 +38,7 @@
 @section('modal')
 @show
     <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
+        <div style="width:97%" class="container">
             <div class="navbar-header">
 
                 <!-- Collapsed Hamburger -->

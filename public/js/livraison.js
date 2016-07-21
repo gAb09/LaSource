@@ -85,6 +85,12 @@ function getComboDate(nom, valeur)
 */
 function listProducteursForPanier(idpanier)
 {
+
+    if (changed) {
+        var box = confirm("Attention vous avez apporté des modifications sur les paniers. \nSi vous cliquez sur Ok, vous accéderez à la liste des producteurs, mais ces modifications seront perdues.");
+        if (!box) {return false;}
+    }
+
     var ad = 'http://lasource/livraison/panier/' + idpanier + '/listProducteurs';
 
     $.ajax({
@@ -107,6 +113,8 @@ function listProducteursForPanier(idpanier)
     });
 
 }
+
+
 
 /**
 * Acquisition du contenu html pour la vue modale : listPaniers
@@ -157,7 +165,7 @@ function reporterPrixBase(input)
     // alert(input_livraison.val() === prix_base);
     if (input_livraison.val() !== prix_base){
         input_livraison.val(prix_base);
-        detectChange();
+        detectChangementDatasPaniers();
     }
 }
 
@@ -174,8 +182,15 @@ function toggleLied(panier)
 
 }
 
+
+/**
+* Alerte si des modifications apportées à un (plusieurs) panier(s) n'ont pas été validées.
+* Annulation possible.
+* 
+**/
 var changed = 0;
-function detectChange()
+
+function detectChangementDatasPaniers()
 {
     changed = true;
     // alert('changement : ' + changed);
@@ -185,14 +200,13 @@ function detectChange()
 $(function()
 {
     $(".producteur").change(function(){
-        detectChange();
+        detectChangementDatasPaniers();
     });
 });
 
 $(function()
 {
     $(".prixlivraison").change(function(){
-        detectChange();
+        detectChangementDatasPaniers();
     });
 });
-

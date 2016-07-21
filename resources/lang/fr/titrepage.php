@@ -37,7 +37,7 @@ return [
                 'index' => 'Les paniers',
                 'create'  => 'Création d’un panier',
                 'edit'  => 'Édition du panier “:nom_court',
-                'choixproducteurs'  => 'Choisir un (plusieurs) producteur(s) fournissant le panier :<br /> :panier_nomcourt',
+                'choixproducteurs'  => 'Désigner un (plusieurs) producteur(s) fournissant le panier : :panier_nomcourt',
             ],
 
         'livraison' => 

@@ -73,13 +73,13 @@
 					</span>
 					@endif
 					<!-- affichage -->
-					Prix livraison
+					Prix livraison &nbsp;
 					<input type="text" class="prix prixlivraison" style="width:40px" name="prix_livraison[{{ $panier->id}}]" value="{{ $panier->liv_value }}">
 				</td>
 
 				<!-- prix commun-->
 				<td style="width:15%">				
-					Prix base
+					Prix base &nbsp;
 					<input type="text" class="prix"  name="prix_commun[]" value="{{ $panier->prix_commun or old('prix_commun') }}" onClick="javascript:reporterPrixBase(this)">
 				</td>
 				<td style="width:15%">

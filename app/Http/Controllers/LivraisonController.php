@@ -142,6 +142,8 @@ class LivraisonController extends Controller
     public function listProducteursForPanier($panier_id)
     {
         $panier = $this->panier->findFirst('id', $panier_id);
+        $panier->nom_court = str_replace(['<br />', '<br/>'], " - ", $panier->nom_court);
+
         $producteurs = $this->producteur->listProducteursForPanier($panier_id);
         $titre_page = trans('titrepage.panier.choixproducteurs', ['panier_nomcourt' => $panier->nom_court]);
         return view('livraison.modales.listProducteursForPanier')->with(compact('panier_id', 'producteurs', 'titre_page'));

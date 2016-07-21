@@ -1,6 +1,6 @@
 <!-- Modal -->
 <div class="modal-listPaniers" role="document">
-  <div class="modal-content">
+  <div class="modal-content container-fluid">
 
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -9,7 +9,7 @@
       </h4>
     </div>
 
-    <div id="modal-body" class="modal-body col-md-12 flexcontainer">
+    <div id="modal-body" class="modal-body col-md-12">
       @include('livraison.modales.listPaniers_content')
     </div>
 

@@ -1,5 +1,9 @@
 <form id="PanierSyncProducteurs" class="form-inline" role="form" method="POST" action="{{ route('PanierSyncProducteurs', [$panier_id]) }}">
   {!! csrf_field() !!}
+    <div class="modemploi">
+    Les producteurs fournissant ce panier sont surlignés en vert. Un clic sur sa ligne lie/délie un producteur.
+  </div>
+
   <table class="col-md-12">
     <tbody>
       @foreach($producteurs as $producteur)
@@ -28,5 +32,6 @@
 
     </tbody>
   </table>
-  <button type="submit" class="btn btn-primary">Save changes</button>
+  <br />
+  <button type="submit" class="btn btn-primary">Valider</button>
 </form>
