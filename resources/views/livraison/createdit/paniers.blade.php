@@ -38,7 +38,7 @@
 					</span>
 					@endif
 					<!-- affichage -->
-					<select name="producteur[{{ $panier->id }}]">
+					<select class="producteur" name="producteur[{{ $panier->id }}]">
 						@if($panier->prod_value == 0))
 						<option value="0" selected="selected">producteur à déterminer</option>
 						@endif
@@ -74,7 +74,7 @@
 					@endif
 					<!-- affichage -->
 					Prix livraison
-					<input id="prixlivraison" type="text" class="prix" style="width:40px" name="prix_livraison[{{ $panier->id}}]" value="{{ $panier->liv_value }}">
+					<input id="prixlivraison" type="text" class="prix prixlivraison" style="width:40px" name="prix_livraison[{{ $panier->id}}]" value="{{ $panier->liv_value }}">
 				</td>
 
 				<!-- prix commun-->

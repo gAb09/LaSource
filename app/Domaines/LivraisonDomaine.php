@@ -30,7 +30,7 @@ class LivraisonDomaine extends Domaine
 	}
 
 	public function store($request){
-		$this->handleRequest($request);
+		$this->handleDatas($request);
 
 		$result = $this->livraison->save();
 		if($result){
@@ -52,8 +52,8 @@ class LivraisonDomaine extends Domaine
 		$this->livraison = Livraison::with('Panier')->where('id', $id)->first();
 		
 		// $this->livraison->clotureEnClair = $this->livraison->date_cloture->formatLocalized('%A %e %B %Y');
-		$this->livraison->paiementEnClair = $this->livraison->date_paiement->formatLocalized('%A %e %B %Y');
-		$this->livraison->livraisonEnClair = $this->livraison->date_livraison->formatLocalized('%A %e %B %Y');
+		// $this->livraison->paiementEnClair = $this->livraison->date_paiement->formatLocalized('%A %e %B %Y');
+		// $this->livraison->livraisonEnClair = $this->livraison->date_livraison->formatLocalized('%A %e %B %Y');
 
 		return $this->livraison;
 	}
@@ -62,13 +62,13 @@ class LivraisonDomaine extends Domaine
 	public function update($id, $request){
 
 		$this->livraison = Livraison::where('id', $id)->first();
-		$this->handleRequest($request);
+		$this->handleDatas($request);
 
 		return $this->livraison->save();
 	}
 
 
-	private function handleRequest($request){
+	private function handleDatas($request){
 		$this->livraison->date_cloture = $request->date_cloture;
 		$this->livraison->date_paiement = $request->date_paiement;
 		$this->livraison->date_livraison = $request->date_livraison;
@@ -78,12 +78,12 @@ class LivraisonDomaine extends Domaine
 	}
 
 
-	public function livraisonSyncPaniers($livraison, $paniers = array())
+	public function livraisonSyncPaniers($livraison_id, $paniers = array())
 	{
 		// return 	dd($paniers);
 
 		unset($paniers['_token']);
-		$item = Livraison::find($livraison);
+		$item = Livraison::find($livraison_id);
 		if(empty($paniers)){
 			return $item->panier()->detach();
 		}else{
