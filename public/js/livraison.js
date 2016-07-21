@@ -115,6 +115,15 @@ function listProducteursForPanier(idpanier)
 }
 
 
+/**
+* Vider la modale listProducteurs à sa fermeture
+*
+* @param 
+**/
+$('#ModallistProducteursForPanier').on('hidden.bs.modal', function () {
+    $('#ModallistProducteursForPanier').empty();
+});
+
 
 /**
 * Acquisition du contenu html pour la vue modale : listPaniers
@@ -150,6 +159,19 @@ function listPaniers(livraison_id)
     });
 
 }
+
+
+/**
+* Vider la modale listPaniers à sa fermeture
+*
+* @param 
+**/
+$('#ModallistPaniers').on('hidden.bs.modal', function () {
+    $('#ModallistPaniers').empty();
+});
+
+
+
 
 /**
 * Report du prix de base dans l'input .prixlivraison
