@@ -144,14 +144,14 @@ function listPaniers(livraison_id)
 }
 
 /**
-* Report du prix de base pour le prix livraison
+* Report du prix de base dans l'input .prixlivraison
 *
 * @param 
 **/
-function reporterValeur(input)
+function reporterPrixBase(input)
 {
     var prix_base = $(input).val();
-    var input_livraison = $(input).parents('tr').find('#prixlivraison');
+    var input_livraison = $(input).parents('tr').find('.prixlivraison');
     // alert( input_livraison.val() );
     // alert( prix_base );
     // alert(input_livraison.val() === prix_base);

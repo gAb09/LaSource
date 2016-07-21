@@ -74,13 +74,13 @@
 					@endif
 					<!-- affichage -->
 					Prix livraison
-					<input id="prixlivraison" type="text" class="prix prixlivraison" style="width:40px" name="prix_livraison[{{ $panier->id}}]" value="{{ $panier->liv_value }}">
+					<input type="text" class="prix prixlivraison" style="width:40px" name="prix_livraison[{{ $panier->id}}]" value="{{ $panier->liv_value }}">
 				</td>
 
 				<!-- prix commun-->
 				<td style="width:15%">				
 					Prix base
-					<input type="text" class="prix"  name="prix_commun[]" value="{{ $panier->prix_commun or old('prix_commun') }}" onClick="javascript:reporterValeur(this)">
+					<input type="text" class="prix"  name="prix_commun[]" value="{{ $panier->prix_commun or old('prix_commun') }}" onClick="javascript:reporterPrixBase(this)">
 				</td>
 				<td style="width:15%">
 					<button type="button" class="btn btn-warning btn-xs" onClick="javascript:document.location.href='{{ route('livraisonDetachPanier', ['livraison' => $item->id, 'panier' => $panier->id]) }}';">
