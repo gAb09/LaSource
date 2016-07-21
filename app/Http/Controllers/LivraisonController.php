@@ -60,9 +60,9 @@ class LivraisonController extends Controller
     public function edit($id)
     {
     	$item = $this->domaine->edit($id);
-        // return dd($item->ClotureEnClair);
+
         $date_titrepage = $item->date_livraison_enclair;
-        $paniers = $this->panier->listPaniers($id);
+
         $panierschoisis = $this->panier->paniersChoisis($id);
         // dd($panierschoisis);
 
@@ -105,10 +105,9 @@ class LivraisonController extends Controller
     {
         // dd('listPaniers');
         $item = $this->domaine->findFirst('id', $livraison_id);
-        $item->livraisonEnClair = $item->date_livraison->formatLocalized('%A %e %B %Y');
         // dd($item);
         $paniers = $this->panier->listPaniers($livraison_id);
-        $titre_page = trans('titrepage.livraison.listPaniers', ['date' => $item->livraisonEnClair]);
+        $titre_page = trans('titrepage.livraison.listPaniers', ['date' => $item->date_livraison_enclair]);
 
         return view('livraison.modales.listPaniers')->with(compact('item', 'paniers', 'titre_page'));
     }
