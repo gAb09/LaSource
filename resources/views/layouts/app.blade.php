@@ -35,8 +35,8 @@
 </head>
 
 <body id="app-layout" class="layout_flexcontainer">
-@section('modal')
-@show
+    @section('modal')
+    @show
     <nav class="navbar navbar-default navbar-static-top">
         <div style="width:97%" class="container">
             <div class="navbar-header">
@@ -61,9 +61,9 @@
                 <ul class="nav navbar-nav">
                     @if (Auth::guest())
                     <!-- Infos sur les Paniers et La Source -->
-                        @include('layouts.menuLeft.guest')
+                    @include('layouts.menuLeft.guest')
                     @else
-                        @include('layouts.menuLeft.auth')
+                    @include('layouts.menuLeft.auth')
                     @endif
                 </ul>
 
@@ -72,9 +72,9 @@
                     @include('layouts.menuRight.dev')
                     @if (Auth::guest())
                     <!-- Authentication Links -->
-                        @include('layouts.menuRight.guest')
+                    @include('layouts.menuRight.guest')
                     @else
-                        @include('layouts.menuRight.auth')
+                    @include('layouts.menuRight.auth')
                     @endif
                 </ul>
             </div>
@@ -84,7 +84,7 @@
     <!-- - - - - - - - - - - - - - - - MESSAGES - - - - - - - - - - - - - - -->
     @section('message')
 
-{{-- var_dump(\Session::all()) --}}
+    {{-- var_dump(\Session::all()) --}}
 
     <div class="container-fluid">
         <div class="col-md-12 messages">
@@ -104,20 +104,21 @@
 
     <!-- - - - - - - - - - - - - - - - TOP CONTENT (2 zones) - - - - - - - - - - - - - - -->
     <main class="layout-flexcontent">
-    <div class="container-fluid">
+        
+        <div class="container-fluid">
 
-        <div class="col-md-6 topcontent1">
-            @yield('topcontent1')
+            <div class="col-md-6 topcontent1">
+                @yield('topcontent1')
+            </div>
+
+            <div class="col-md-6 topcontent2">
+                @yield('topcontent2')
+            </div> 
         </div>
 
-        <div class="col-md-6 topcontent2">
-            @yield('topcontent2')
-        </div> 
-    </div>
-
-    <!-- - - - - - - - - - - - - - - -  CONTENT () - - - - - - - - - - - - - - -->
-    @yield('content')
-    
+        <!-- - - - - - - - - - - - - - - -  CONTENT () - - - - - - - - - - - - - - -->
+        @yield('content')
+        
     </main>
 
     @include('layouts.footer')
