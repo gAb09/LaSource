@@ -81,6 +81,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'UserController');
 
 
+// User...
+	Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@Main']);
+
+
 // Client...
 	Route::get('espaceclient', ['as' => 'espaceclient', 'uses' => 'ClientController@espaceclient']);
 
@@ -132,6 +136,9 @@ Route::group(['middleware' => 'auth'], function () {
 
 // Menus...
 	Route::resource('menus', '\Menus\MenuController');
+
+// Mails...
+	Route::get('mailslivraison', 'MailController@Livraisons');
 
 });
 

@@ -47,6 +47,7 @@ return [
                 'edit'  => 'Édition de la livraison du&nbsp:date_titrepage',
                 'listPaniers'  => 'Choisir un (plusieurs) panier(s) pour la livraison : :date',
                 'editpanier'  => 'Modification du panier :panier',
+                'enCours'  => 'Les livraisons en cours',
             ],
         
 
@@ -61,5 +62,9 @@ return [
             [
                 'index' => 'Les clients',
                 'edit'  => 'Modification de mes coordonnées',
+            ],
+        'dashboard' => 
+            [
+                'main' => 'Tableau de bord',
             ],
     ];

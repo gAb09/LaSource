@@ -41,9 +41,6 @@ class="btn btn-primary"
 		<th>
 			Date de livraison
 		</th>
-		<th>
-			
-		</th>
 	</thead>
 
 	<tbody>
