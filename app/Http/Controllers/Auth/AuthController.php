@@ -108,6 +108,20 @@ class AuthController extends Controller
 
 
     /**
+     * Handle an authentication attempt.
+     *
+     * @return Response
+     */
+    public function authenticated()
+    {
+        if (Auth::user()->role->id == 5){
+            return redirect()->intended('dashboard');
+        }
+        if (Auth::user()->role->id == 10){
+            return redirect()->intended('espaceclient');
+        }
+    }
+    /**
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
