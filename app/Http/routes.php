@@ -99,7 +99,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('producteur', 'ProducteurController');
 
 
-// Panier...
+// PANIER...
 	Route::resource('panier', 'PanierController');
 
 
@@ -144,8 +144,6 @@ Route::group(['middleware' => 'auth'], function () {
 // Menus...
 	Route::resource('menus', '\Menus\MenuController');
 
-// Mails...
-	Route::get('mailslivraison', 'MailController@Livraisons');
 
 });
 

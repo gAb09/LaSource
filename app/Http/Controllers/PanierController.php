@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Domaines\PanierDomaine as Domaine;
+use App\Domaines\PanierDomaine as Panier;
 use App\Http\Requests\PanierRequest;
 
 use Illuminate\Http\Request;
@@ -12,7 +12,7 @@ class PanierController extends Controller
 {
     private $domaine;
     
-    public function __construct(Domaine $domaine)
+    public function __construct(Panier $domaine)
     {
         $this->domaine = $domaine;
     }

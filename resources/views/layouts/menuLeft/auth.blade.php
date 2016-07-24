@@ -7,7 +7,6 @@
 		<li><a href="{{ route('dashboard') }}">En cours</a></li>
 		<li><a href="{{ route('livraison.create') }}">Créer</a></li>
 		<li><a href="{{action('LivraisonController@index')}}">Toutes</a></li>
-		<li><a href="{{action('MailController@Livraisons')}}">Composer mails</a></li>
 		<li><a href="{{ url('/logout') }}">Réhabiliter</a></li>
 	</ul>
 </li>

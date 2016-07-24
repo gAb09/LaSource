@@ -9,41 +9,41 @@ use Illuminate\Http\Request;
 
 class PanierDomaine extends Domaine
 {
-	protected $panier;
+	protected $model;
 
 
 	public function __construct(){
-		$this->panier = new Panier;
+		$this->model = new Panier;
 	}
 
 	public function store($request){
 		$this->handleRequest($request);
 
-		return $this->panier->save();
+		return $this->model->save();
 	}
 
 	public function update($id, $request){
-		$this->panier = Panier::where('id', $id)->first();
+		$this->model = Panier::where('id', $id)->first();
 		$this->handleRequest($request);
 
-		return $this->panier->save();
+		return $this->model->save();
 	}
 
 
 	private function handleRequest($request){
-		$this->panier->nom = $request->nom;
-		$this->panier->nom_court = $request->nom_court;
-		$this->panier->famille = $request->famille;
-		$this->panier->type = $request->type;
-		$this->panier->idee = $request->idee;
-		$this->panier->prix_commun = $request->prix_commun;
-		$this->panier->is_actif = (isset($request->is_actif)?1:0);
-		$this->panier->remarques = $request->remarques;
+		$this->model->nom = $request->nom;
+		$this->model->nom_court = $request->nom_court;
+		$this->model->famille = $request->famille;
+		$this->model->type = $request->type;
+		$this->model->idee = $request->idee;
+		$this->model->prix_commun = $request->prix_commun;
+		$this->model->is_actif = (isset($request->is_actif)?1:0);
+		$this->model->remarques = $request->remarques;
 	}
 
 	public function listPaniers($livraison_id = null)
 	{
-		$items = $this->panier->with('Producteur', 'livraison')->where('is_actif', 1)->orderBy('type')->get();
+		$items = $this->model->with('Producteur', 'livraison')->where('is_actif', 1)->orderBy('type')->get();
 
 		/* livraison.create */
 		if ($livraison_id == null) { 
@@ -95,7 +95,7 @@ class PanierDomaine extends Domaine
 
 	public function findFirst($colonne, $critere)
 	{
-		return $this->panier->where($colonne, $critere)->first();
+		return $this->model->where($colonne, $critere)->first();
 	}
 
 
