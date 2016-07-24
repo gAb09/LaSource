@@ -28,5 +28,24 @@ class DashboardController extends Controller
         return view('dashboard.main')->with(compact('livraisons'));
     }
 
+    public function composerMails()
+    {
+        return view('dashboard.partials.mails');
+    }
+
+    public function sendMailLivraisonsOuvertes($params, $datas, $vue){
+        $envoi = Mail::send($vue, ['datas' => $datas], function ($m) use($datas, $params) {
+            $m->to($params['address']);
+            $m->subject($params['subject']);
+        });
+        if($envoi){
+            return redirect()->action('Auth\AuthController@showLoginForm')->with('success', trans('mails.sent'));
+        }else{
+            // TO_DO
+            return redirect()->action('ContactController@Contact');
+        }
+    }
+
+
 
 }

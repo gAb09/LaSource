@@ -22,7 +22,7 @@
 
 @section('createdit')
 
-	<!-- Les dates -->
+<!-- Les dates -->
 <form class="form-inline" role="form" method="POST" action="{{ route('livraison.update', $item->id) }}">
 	{!! csrf_field() !!}
 	<input type="hidden" class="form-control" name="_method" value="PUT">
@@ -32,7 +32,7 @@
 	</div>
 </form>
 
-	<!-- Les paniers -->
+<!-- Les paniers -->
 <form class="form-inline" role="form" method="POST" action="{{ route('livraisonSyncPaniers', [$item->id]) }}">
 	{!! csrf_field() !!}
 
@@ -41,5 +41,4 @@
 	</div>
 </form>
 
-
-	@stop
+@stop

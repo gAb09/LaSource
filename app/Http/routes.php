@@ -103,8 +103,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('panier', 'PanierController');
 
 
-// Livraison...
-	Route::resource('livraison', 'LivraisonController');
+// LIVRAISON...
 
 	// Pivot Panier
 	Route::get('livraison/{livraison_id}/listpaniers', 
@@ -129,6 +128,14 @@ Route::group(['middleware' => 'auth'], function () {
 		['as' => 'PanierSyncProducteurs', 'uses' => 'PanierController@syncProducteurs']
 		);
 	
+// DASHBOARD
+	//composerMails
+	Route::get('dashboard/composerMails', 
+		['as' => 'dashboardComposerMails', 'uses' => 'DashboardController@composerMails']
+		);
+
+
+	Route::resource('livraison', 'LivraisonController');
 
 
 // ModePaiement...
