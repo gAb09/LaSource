@@ -79,7 +79,7 @@
                             <label class="col-md-4 control-label">Idée</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="idee" value="{{ $item->idee or old('idee') }}">
+                                <textarea rows="5" cols="50" class="" name="idee">{!! $item->idee or old('idee') !!}</textarea>
 
                                 @if ($errors->has('idee'))
                                 <span class="help-block">

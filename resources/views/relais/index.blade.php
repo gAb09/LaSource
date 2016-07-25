@@ -25,7 +25,7 @@
 
 		<div class="portrait  {{$item->class_actif}}" ondblClick = "javascript:document.location.href='{{ route('relais.edit', $item->id) }}';">
 
-			<p class="encadred2">
+			<p class="blanccalque33">
 				{{ $item->ville }} {{ $item->tel }}<br />
 				{{ $item->retrait }}
 			</p>

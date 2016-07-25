@@ -24,7 +24,7 @@
 
 		<div class="portrait {{$item->class_actif}}" ondblClick = "javascript:document.location.href='http://lasource/producteur/{{ $item->id }}/edit';">
 
-			<p class="encadred2">
+			<p class="blanccalque33">
 				{{ $item->exploitation }}<br />
 				{{ $item->prenom }} {{ $item->nom }}<br />
 				{{ $item->paniers }}

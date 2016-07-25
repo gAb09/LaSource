@@ -12,29 +12,25 @@
 
 
 @section('topcontent2')
-	<a href="{{ route('panier.create') }}" class="btn-xs btn-primary"> <i class="fa fa-btn fa-trash-o"></i>Ajouter un panier</a>
+<a href="{{ route('panier.create') }}" class="btn-xs btn-primary"> <i class="fa fa-btn fa-trash-o"></i>Ajouter un panier</a>
 @stop
 
 
 @section('content')
 
-<div class="offset3 span11 flexcontainer">
+<div id="paniers_index" class="offset3 span11 flexcontainer">
 
 	@foreach($items as $item)
 
-		<div class="portrait {{$item->class_actif}}" ondblClick = "javascript:document.location.href='http://lasource/panier/{{ $item->id }}/edit';">
+	<div class="portrait {{$item->class_actif}}" ondblClick = "javascript:document.location.href='http://lasource/panier/{{ $item->id }}/edit';">
 
-			<p class="encadred2">
-				{!! $item->nom !!}<br />
-				{!! $item->nom_court !!}<br />
-			</p>
-				{{ $item->famille }} / {{ $item->type }}<br />
-				{{ $item->idee }}<br />
-				{{ $item->prix_commun }}<br />
-				<p>{{ $item->remarques }}</p>
+		<p class="blanccalque66">{{ $item->type }}</p>
+		<p  class="blanccalque75"><strong>{!! $item->nom_court !!}</strong></p>
+		{{ $item->prix_commun }}
+		<p class="blanccalque50">{!! $item->idee !!}</p>
+		<p>{{ $item->remarques }}</p>
 
-
-		</div>
+	</div>
 
 	@endforeach
 

@@ -24,7 +24,7 @@
 
 	<div class="portrait {{$item->class_actif}}" ondblClick = "javascript:document.location.href='http://lasource/modepaiement/{{ $item->id }}/edit';">
 
-		<p class="encadred2">
+		<p class="blanccalque33">
 			{{ $item->nom }}<br />
 		</p>
 		<p>{{ $item->remarques }}</p>
