@@ -69,12 +69,14 @@
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
-                    @include('layouts.menuRight.dev')
                     @if (Auth::guest())
                     <!-- Authentication Links -->
                     @include('layouts.menuRight.guest')
                     @else
                     @include('layouts.menuRight.auth')
+                        @if (Auth::user()->role->id == 1)
+                        @include('layouts.menuRight.dev')
+                        @endif
                     @endif
                 </ul>
             </div>

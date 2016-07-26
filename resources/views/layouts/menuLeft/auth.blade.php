@@ -4,10 +4,9 @@
 	</a>
 
 	<ul class="dropdown-menu" role="menu">
-		<li><a href="{{ route('dashboard') }}">En cours</a></li>
 		<li><a href="{{ route('livraison.create') }}">Créer</a></li>
-		<li><a href="{{action('LivraisonController@index')}}">Toutes</a></li>
-		<li><a href="{{ url('/logout') }}">Réhabiliter</a></li>
+		<li><a href="{{ route('dashboard') }}">En cours</a></li>
+		<li><a href="{{action('LivraisonController@index')}}">Liste complète</a></li>
 	</ul>
 </li>
 
@@ -22,3 +21,5 @@
 <li>{{Html::linkAction('ClientController@index', 'Les clients')}}</li>
 
 <li>{{Html::linkAction('UserController@index', 'Les users')}}</li>
+
+<li><a href="{{ route('dashboard') }}">Réhabiliter</a></li>
