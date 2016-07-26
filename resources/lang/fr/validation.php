@@ -57,7 +57,7 @@ return [
         'string'  => 'Le champ :attribute doit comporter au moins :min caractères.',
         'array'   => 'Le champ :attribute doit comporter au moins :min items.',
     ],
-    'not_in'               => 'The selected :attribute is invalid.',
+    'not_in'               => 'Cette valeur ne peut être attibuée au champ :attribute.',
     'numeric'              => 'Le champ :attribute doit être un nombre.',
     'present'              => 'Le champ :attribute est requis.',
     'regex'                => 'Le champ :attribute présente un format invalide.',

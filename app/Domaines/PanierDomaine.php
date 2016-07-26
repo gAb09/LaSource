@@ -39,6 +39,8 @@ class PanierDomaine extends Domaine
 		$this->model->prix_commun = $request->prix_commun;
 		$this->model->is_actif = (isset($request->is_actif)?1:0);
 		$this->model->remarques = $request->remarques;
+		$new_rang = $this->model->max('rang')+1;
+		$this->model->rang = ($request->rang)? $request->rang :$new_rang ;
 	}
 
 	public function listPaniers($livraison_id = null)

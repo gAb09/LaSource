@@ -6,7 +6,7 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3>{{ trans('titrepage.panier.edit', ['nom_court' => $item->nom_court]) }}</h3>
+                    <h3>{!! trans('titrepage.panier.edit', ['nom_court' => $item->nom_court, 'type' => $item->type]) !!}</h3>
                 </div>
                 <div class="panel-body">
                     <form class="form-inline" role="form" method="POST" action="{{ route('panier.update', $item->id) }}">

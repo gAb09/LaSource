@@ -1,13 +1,16 @@
-                        <!-- nom -->
-                        <div class="form-group{{ $errors->has('nom') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Nom&nbsp*</label>
+                        <!-- id -->
+                                <input type="text" name="id" value="{{ $item->id or old('id') }}">
+
+                        <!-- type -->
+                        <div class="form-group{{ $errors->has('type') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">Type</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="nom" value="{{ $item->nom or old('nom') }}">
+                                <input type="text" class="form-control" name="type" value="{{ $item->type or old('type') }}">
 
-                                @if ($errors->has('nom'))
+                                @if ($errors->has('type'))
                                 <span class="help-block">
-                                    <strong>{{ $errors->first('nom') }}</strong>
+                                    <strong>{{ $errors->first('type') }}</strong>
                                 </span>
                                 @endif
                             </div>
@@ -28,36 +31,21 @@
                             </div>
                         </div>
 
-                        <!-- famille -->
-                        <div class="form-group{{ $errors->has('famille') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Famille</label>
+
+                        <!-- nom -->
+                        <div class="form-group{{ $errors->has('nom') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">Nom complet&nbsp*</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="famille" value="{{ $item->famille or old('famille') }}">
+                                <textarea rows="3" cols="50" class="" name="nom">{!! $item->nom or old('nom') !!}</textarea>
 
-                                @if ($errors->has('famille'))
+                                @if ($errors->has('nom'))
                                 <span class="help-block">
-                                    <strong>{{ $errors->first('famille') }}</strong>
+                                    <strong>{{ $errors->first('nom') }}</strong>
                                 </span>
                                 @endif
                             </div>
                         </div>
-
-                        <!-- type -->
-                        <div class="form-group{{ $errors->has('type') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Type</label>
-
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" name="type" value="{{ $item->type or old('type') }}">
-
-                                @if ($errors->has('type'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('type') }}</strong>
-                                </span>
-                                @endif
-                            </div>
-                        </div>
-
 
                         <!-- prix_commun -->
                         <div class="form-group{{ $errors->has('prix_commun') ? ' has-error' : '' }}">
@@ -113,6 +101,21 @@
                                 checked="checked" 
                                 @endif
                                 value="{{ $item->is_actif or old('is_actif') }}">
+                            </div>
+                        </div>
+
+                        <!-- rang -->
+                        <div class="form-group{{ $errors->has('rang') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">Rang</label>
+
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="rang" value="{{ $item->rang or old('rang') }}">
+
+                                @if ($errors->has('rang'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('rang') }}</strong>
+                                </span>
+                                @endif
                             </div>
                         </div>
 

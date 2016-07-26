@@ -20,7 +20,7 @@ class PanierController extends Controller
 
     public function index()
     {
-        $items = $this->domaine->all();
+        $items = $this->domaine->all('rang');
         return view('panier.index')->with(compact('items'));
     }
 
