@@ -38,6 +38,7 @@ return [
                 'create'  => 'Création d’un panier',
                 'edit'  => 'Édition du panier <span style="font-style:italic">“:type / :nom_court”</span>',
                 'choixproducteurs'  => 'Désigner un (plusieurs) producteur(s) fournissant le panier : :panier_nomcourt',
+                'trashed'  => 'Réhabilitation des paniers supprimés',
             ],
 
         'livraison' => 

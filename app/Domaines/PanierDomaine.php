@@ -23,7 +23,7 @@ class PanierDomaine extends Domaine
 	}
 
 	public function update($id, $request){
-		$this->model = Panier::where('id', $id)->first();
+		$this->model = Panier::withTrashed()->where('id', $id)->first();
 		$this->handleRequest($request);
 
 		return $this->model->save();
@@ -41,6 +41,8 @@ class PanierDomaine extends Domaine
 		$this->model->remarques = $request->remarques;
 		$new_rang = $this->model->max('rang')+1;
 		$this->model->rang = ($request->rang)? $request->rang :$new_rang ;
+		$this->model->restore();
+
 	}
 
 	public function listPaniers($livraison_id = null)
@@ -93,11 +95,6 @@ class PanierDomaine extends Domaine
 		}
 
 		return $panierschoisis;
-	}
-
-	public function findFirst($colonne, $critere)
-	{
-		return $this->model->where($colonne, $critere)->first();
 	}
 
 

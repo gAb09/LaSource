@@ -32,3 +32,10 @@ function gererVolet(item)
 		$(item).addClass( "col-md-6 footer2 open" );
 	}
 }
+
+function handleIsActifClass()
+{
+	var item = $('#is_actif');
+	console.log(item);
+		$(item).toggleClass('is_not_actif').toggleClass('is_actif');
+}

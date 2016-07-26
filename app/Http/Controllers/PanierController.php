@@ -78,4 +78,12 @@ class PanierController extends Controller
         $this->domaine->PanierSyncProducteurs($panier, $request->input('resultat'));
         return redirect()->back();
     }
+
+
+    public function getDeleted()
+    {
+        $items = $this->domaine->getDeleted();
+        return view('panier.trashed')->with(compact('items'));
+    }
+
 }

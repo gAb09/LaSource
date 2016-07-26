@@ -100,6 +100,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 // PANIER...
+	Route::get('panier/getdeleted', ['as' => 'panier.getdeleted', 'uses' => 'PanierController@getDeleted']);
 	Route::resource('panier', 'PanierController');
 
 

@@ -22,4 +22,13 @@
 
 <li>{{Html::linkAction('UserController@index', 'Les users')}}</li>
 
-<li><a href="{{ route('dashboard') }}">Réhabiliter</a></li>
+<li class="dropdown">
+	<a href="" class="" data-toggle="dropdown" role="button" aria-expanded="false">
+		Réhabiliter <span class="caret"></span>
+	</a>
+
+	<ul class="dropdown-menu" role="menu">
+		<li><a href="{{ route('panier.getdeleted') }}">Paniers</a></li>
+	</ul>
+</li>
+

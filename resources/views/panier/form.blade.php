@@ -1,5 +1,5 @@
                         <!-- id -->
-                                <input type="text" name="id" value="{{ $item->id or old('id') }}">
+                                <input type="hidden" name="id" value="{{ $item->id or old('id') }}">
 
                         <!-- type -->
                         <div class="form-group{{ $errors->has('type') ? ' has-error' : '' }}">
@@ -93,10 +93,10 @@
                         </div>
 
                         <!-- is_actif -->
-                        <div class="form-group">
+                        <div id="is_actif" class="form-group {{$item->class_actif}}">
                             <label class="col-md-4 control-label">Actif</label>
                             <div class="col-md-6">
-                                <input type="checkbox" class="form-control" name="is_actif" 
+                                <input type="checkbox" class="form-control" name="is_actif" onChange="javascript:handleIsActifClass();" 
                                 @if($item->is_actif or old('is_actif'))
                                 checked="checked" 
                                 @endif

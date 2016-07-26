@@ -27,7 +27,7 @@ class Domaine
 
 	public function findFirst($colonne, $critere)
 	{
-		return $this->model->where($colonne, $critere)->first();
+		return $this->model->withTrashed()->where($colonne, $critere)->first();
 	}
 
 
@@ -36,4 +36,10 @@ class Domaine
 		$this->model = $this->model->where('id', $id)->first();
 		return $this->model->delete();
 	}
+
+    public function getDeleted()
+    {
+        return $this->model->onlyTrashed()->get();
+    }
+
 }
