@@ -39,3 +39,34 @@ function handleIsActifClass()
 	console.log(item);
 		$(item).toggleClass('is_not_actif').toggleClass('is_actif');
 }
+
+
+
+
+function setRangs(model, tablo){
+
+// console.log('model : '+model);
+// console.log('tablo : '+tablo);
+
+	var ad = 'setrangs/'+model;
+    $.ajax({
+        url : ad,
+        contentType : 'text/json',
+        type : 'GET',
+        data : {'tablo' : tablo},
+        dataType : 'html',
+        success : function(code_html, data, statut){
+       console.log(code_html);
+       $('#messages').empty().append(code_html);
+       },
+
+        error : function(data, resultat, statut, erreur){
+       console.log(data);
+       console.log(resultat);
+       console.log(statut);
+       console.log(erreur);
+        },
+
+   });
+
+}

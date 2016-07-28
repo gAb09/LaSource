@@ -90,7 +90,7 @@
     {{-- var_dump(Auth::user()->role->id or "rr") --}}
 
     <div class="container-fluid">
-        <div class="col-md-12 messages">
+        <div id="messages" class="col-md-12 messages">
             @if (session('status'))
             <div class="alert alert-danger">
                 {!! session('status') !!}

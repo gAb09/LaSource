@@ -37,9 +37,26 @@ class Domaine
 		return $this->model->delete();
 	}
 
-    public function getDeleted()
-    {
-        return $this->model->onlyTrashed()->get();
-    }
+	public function getDeleted()
+	{
+		return $this->model->onlyTrashed()->get();
+	}
+
+	public function setRangs($request)
+	{
+		$tablo = $request->get('tablo');
+
+		foreach ($tablo as $doublet) {
+			$id = $doublet[0];
+			$rang = $doublet[1];
+
+			if(! $panier = $this->model->find($id)){
+				return '<div class="alert alert-danger">'.trans('message.panier.setRangsFailed').'</div>';
+			}
+			$panier->rang = $rang;
+			$panier->save();
+		}
+		return '<div class="alert alert-success">'.trans('message.panier.setRangsOk').'</div>';
+	}
 
 }

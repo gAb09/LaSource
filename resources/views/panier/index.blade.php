@@ -17,5 +17,11 @@
 
 
 @section('content')
-@include('panier.indexitem')
+@include('panier.indexcontainer')
+@stop
+
+
+@section('script')
+@parent
+<script src="/js/panier.js"></script>
 @stop

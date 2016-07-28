@@ -86,4 +86,9 @@ class PanierController extends Controller
         return view('panier.trashed')->with(compact('items'));
     }
 
+    public function setRangs(Request $request)
+    {
+        return $this->domaine->setRangs($request);
+    }
+
 }

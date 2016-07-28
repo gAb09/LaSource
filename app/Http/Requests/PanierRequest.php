@@ -25,8 +25,8 @@ class PanierRequest extends Request
     {
         return [
         'nom' => 'required',
-        'nom_court' => 'required|alpha_dash',
-        'type' => 'required|alpha_dash',
+        'nom_court' => 'required',
+        'type' => 'required',
         // 'idee' => '',
         'prix_commun' => 'required|not_in:0|numeric',
         'rang' => 'unique:paniers,rang,'.$this->input('id').'id',

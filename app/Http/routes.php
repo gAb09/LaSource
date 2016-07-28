@@ -14,9 +14,10 @@ use Illuminate\Http\Request;
 
 Route::get('livraison/combodate/{valeur}', 'LivraisonController@getComboDate');
 
-Route::get('/', function () {
+Route::any('/', function () {
 	return view('accueil');
 });
+
 
 Route::get('accueil', function () {
 	return view('accueil');
@@ -145,6 +146,7 @@ Route::group(['middleware' => 'auth'], function () {
 // Menus...
 	Route::resource('menus', '\Menus\MenuController');
 
+	Route::any('setrangs/panier', ['as' => 'media.set_rang', 'uses' => 'PanierController@setRangs']);
 
 });
 
