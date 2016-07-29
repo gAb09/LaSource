@@ -35,7 +35,7 @@ function gererVolet(item)
 
 function handleIsActifClass()
 {
-	var item = $('#is_actif');
+	var item = $('.toggle_actif');
 	console.log(item);
 		$(item).toggleClass('is_not_actif').toggleClass('is_actif');
 }

@@ -1,3 +1,17 @@
+@import "variables.less";
+
 #paniers_index .portrait{
+	background-color:@color_panier;
+	border-color:@color_panier;
+
 	max-width: 24%;
+}
+
+
+.toggle_actif.is_actif div{
+	background-color: @color_panier;
+}
+
+.panier{
+	background-color: lighten(@color_panier, 3%);
 }

@@ -37,7 +37,7 @@
                             <label class="col-md-4 control-label">Nom complet&nbsp*</label>
 
                             <div class="col-md-6">
-                                <textarea rows="3" cols="50" class="" name="nom">{!! $item->nom or old('nom') !!}</textarea>
+                                <textarea class="form-control" name="nom">{!! $item->nom or old('nom') !!}</textarea>
 
                                 @if ($errors->has('nom'))
                                 <span class="help-block">
@@ -49,7 +49,7 @@
 
                         <!-- prix_commun -->
                         <div class="form-group{{ $errors->has('prix_commun') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Prix (commun)&nbsp*</label>
+                            <label class="col-md-4 control-label">Prix base&nbsp*</label>
 
                             <div class="col-md-6">
                                 <input type="text" class="form-control" name="prix_commun" value="{{ $item->prix_commun or old('prix_commun') }}">
@@ -67,7 +67,7 @@
                             <label class="col-md-4 control-label">Idée</label>
 
                             <div class="col-md-6">
-                                <textarea rows="5" cols="50" class="" name="idee">{!! $item->idee or old('idee') !!}</textarea>
+                                <textarea class="form-control" style="font-style:italic;height:100px" name="idee">{!! $item->idee or old('idee') !!}</textarea>
 
                                 @if ($errors->has('idee'))
                                 <span class="help-block">
@@ -82,7 +82,7 @@
                             <label class="col-md-4 control-label">Remarques</label>
 
                             <div class="col-md-6">
-                                <input type="textarea" class="form-control" name="remarques" value="{{ $item->remarques or old('remarques') }}">
+                                <input type="textarea" class="form-control" style="font-size:0.8em" name="remarques" value="{{ $item->remarques or old('remarques') }}">
 
                                 @if ($errors->has('remarques'))
                                 <span class="help-block">
@@ -93,10 +93,10 @@
                         </div>
 
                         <!-- is_actif -->
-                        <div id="is_actif" class="form-group {{$item->class_actif}}">
+                        <div id="" class="form-group toggle_actif {{$item->class_actif}}">
                             <label class="col-md-4 control-label">Actif</label>
                             <div class="col-md-6">
-                                <input type="checkbox" class="form-control" name="is_actif" onChange="javascript:handleIsActifClass();" 
+                                <input type="checkbox" class="form-control" style="width:16px" name="is_actif" onChange="javascript:handleIsActifClass();" 
                                 @if($item->is_actif or old('is_actif'))
                                 checked="checked" 
                                 @endif
@@ -105,7 +105,7 @@
                         </div>
 
                         <!-- rang -->
-                        <div class="form-group{{ $errors->has('rang') ? ' has-error' : '' }}">
+                        <div class="hidden form-group {{ $errors->has('rang') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Rang</label>
 
                             <div class="col-md-6">

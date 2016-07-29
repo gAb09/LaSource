@@ -12,7 +12,7 @@
 
 
 @section('topcontent2')
-	<a href="{{ route('relais.create') }}" class="btn-xs btn-primary"> <i class="fa fa-btn fa-trash-o"></i>Ajouter un relais</a>
+	<a href="{{ route('relais.create') }}" class="btn-xs btn-primary"> <i class="fa fa-btn fa-trash-o"></i>Créer un relais</a>
 @stop
 
 
@@ -25,7 +25,7 @@
 
 		<div class="portrait  {{$item->class_actif}}" ondblClick = "javascript:document.location.href='{{ route('relais.edit', $item->id) }}';">
 
-			<p class="blanccalque33">
+			<p class="lighten33">
 				{{ $item->ville }} {{ $item->tel }}<br />
 				{{ $item->retrait }}
 			</p>

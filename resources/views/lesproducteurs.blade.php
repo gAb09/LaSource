@@ -7,7 +7,7 @@
 @section('content')
                     <div class="col-md-3 producteur" style="background-color:#ccc">
                         @foreach ($producteurs as $producteur)
-                        <p class="blanccalque33">
+                        <p class="lighten33">
                             <h4>{{ $producteur->exploitation }}</h4>
                             {{ $producteur->prenom }} {{ $producteur->nom }}
                         </p>

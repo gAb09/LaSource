@@ -106,6 +106,7 @@
     @show
 
     <!-- - - - - - - - - - - - - - - - TOP CONTENT (2 zones) - - - - - - - - - - - - - - -->
+    @hasSection('topcontent1')
     <main class="layout-flexcontent">
         
         <div class="container-fluid">
@@ -118,7 +119,7 @@
                 @yield('topcontent2')
             </div> 
         </div>
-
+@endif
         <!-- - - - - - - - - - - - - - - -  CONTENT () - - - - - - - - - - - - - - -->
         @yield('content')
         

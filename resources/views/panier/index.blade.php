@@ -12,12 +12,17 @@
 
 
 @section('topcontent2')
-<a href="{{ route('panier.create') }}" class="btn-xs btn-primary"> <i class="fa fa-btn fa-trash-o"></i>Ajouter un panier</a>
+<a href="{{ route('panier.create') }}" class="btn-xs btn-primary"> <i class="fa fa-btn fa-trash-o"></i>Créer un panier</a>
 @stop
 
 
 @section('content')
-@include('panier.indexcontainer')
+<div id="paniers_index" class="offset3 span11 flexcontainer">
+
+	@include('panier.indexcontainer')
+
+</div>
+
 @stop
 
 

@@ -9,7 +9,7 @@
                     <h3>{{ trans('titrepage.panier.create') }}</h3>
                 </div>
                 <div class="panel-body">
-                    <form class="form-inline" role="form" method="POST" action="{{ route('panier.store') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('panier.store') }}">
                         {!! csrf_field() !!}
 
                         @include('panier.form')

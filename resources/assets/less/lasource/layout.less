@@ -7,18 +7,13 @@ GLOBAL
 	box-shadow: 0px 0px 16px #aaa;
 }
 
+#ui-datepicker {
+    display:none;
+}
+
 .ui-datepicker {
 	margin-top: -32px;
 	margin-left: -3px;
-}
-
-.prix{
-	width:50px;
-	text-align:right;
-}
-
-.error_txt p{
-	color:@color_error;
 }
 
 
@@ -35,14 +30,20 @@ LAYOUT BASE
 	flex: 1;
 }
 
+/*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+FORMS
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+.panel-heading {
+	padding-top: 1px;
+}
 
 
 
 /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 ERRORS
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-.error_txt {
-	text-color: 30px;
+.error_txt p{
+	color:@color_error;
 }
 
 
@@ -54,24 +55,31 @@ h1.titrepage {
 }
 
 
+/*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+“Couleur blanc” pour effet calque
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+h1.titrepage {
+	font-size: 30px;
+}
 
-.blanccalque25 {
+
+.lighten25 {
 	background-color: rgba(255, 255, 255, 0.25);
 }
 
-.blanccalque33 {
+.lighten33 {
 	background-color: rgba(255, 255, 255, 0.33);
 }
 
-.blanccalque50 {
+.lighten50 {
 	background-color: rgba(255, 255, 255, 0.5);
 }
 
-.blanccalque66 {
+.lighten66 {
 	background-color: rgba(255, 255, 255, 0.66);
 }
 
-.blanccalque75 {
+.lighten75 {
 	background-color: rgba(255, 255, 255, 0.75);
 }
 
@@ -109,27 +117,34 @@ h1.titrepage {
 }
 
 .portrait {
-	background-color: #fed;
+	background-color: @color_tempo;
 	border: solid;
 	border-width: 10px;
-	border-color: Cornsilk;
+	border-color: @color_tempo;
 	margin: 5px;
 	text-align: center;
 	flex-grow: 1;
 }
 
-.portrait .nom {
-	margin-top: -5px;
-}
 
-.is_actif {
-	background-color: Cornsilk;
+.portrait .is_not_actif{
+	background-color: @color_notactif;
+	border-color: @color_notactif;
 }
 
 
-.is_not_actif {
-	background-color: #ffb1cd;
+.toggle_actif.is_not_actif div{
+	background-color: @color_notactif;
 }
+
+.toggle_actif.is_actif label{
+	color: #000;
+}
+
+.toggle_actif.is_not_actif label{
+	color: #BBB;
+}
+
 
 
 

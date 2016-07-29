@@ -15,7 +15,7 @@
 <a href="{{ route('livraison.create') }}" 
 class="btn btn-primary"
 > 
-<i class="fa fa-btn fa-trash-o"></i>Ajouter une livraison
+<i class="fa fa-btn fa-trash-o"></i>Créer une livraison
 </a>
 @stop
 
