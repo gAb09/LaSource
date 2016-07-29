@@ -15,10 +15,10 @@
 <a href="{{ route('livraison.create') }}" 
 class="btn btn-primary"
 > 
-<i class="fa fa-btn fa-trash-o"></i>Ajouter une livraison
+<i class="fa fa-btn fa-trash-o"></i>Créer une livraison
 </a>
 @stop
-            
+
 
 
 @section('message')
@@ -27,36 +27,33 @@ class="btn btn-primary"
 
 
 @section('content')
-	<div class="flexcontainer ligne_livraison">
-
-		<div>
-			Id
-		</div>
-		<div>
+<table class="index_livraisons  col-md-10 col-md-offset-1">
+	<thead>
+		<th style="width:50px">
+			N°
+		</th>
+		<th>
 			Date de clôture des commandes
-		</div>
-		<div>
+		</th>
+		<th>
 			Date limite de paiement
-		</div>
-		<div>
+		</th>
+		<th>
 			Date de livraison
-		</div>
-		<div>
-			
-		</div>
-	</div>
+		</th>
+	</thead>
 
+	<tbody>
 
-<div id="tablebody">
+		@foreach($items as $item)
 
-	@foreach($items as $item)
+		@include('livraison.index_row')
 
-	@include('livraison.index_row')
+		@endforeach
 
-	@endforeach
+	</tbody>
 
-
-</div>
+</table>
 
 
 @stop

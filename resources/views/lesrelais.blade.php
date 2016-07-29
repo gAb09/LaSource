@@ -7,7 +7,7 @@
 @section('content')
                     <div class="col-md-3 relais" style="background-color:#ccc">
                         @foreach ($relaiss as $relais)
-                        <p class="encadred2">
+                        <p class="lighten50">
                             <h4>{{ $relais->ville }}</h4>
                             {{ $relais->retrait }}
                         </p>

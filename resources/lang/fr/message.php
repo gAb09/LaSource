@@ -39,12 +39,14 @@ return [
     ],
 
     'panier' => [
-        'updateOk'      => 'Le panier a bien été modifié.',
-        'updatefailed'  => 'Problème. Le panier n’a pas été mis à jour…',
-        'storeOk'       => 'Le panier a bien été créé.',
-        'storefailed'   => 'Problème. Le panier n’a pas pu être créé…',
-        'deleteOk'      => 'Le panier a bien été supprimé.',
-        'deletefailed'  => 'Problème. Le panier n’a pas pu être supprimé…',
+        'updateOk'          => 'Le panier a bien été modifié.',
+        'updatefailed'      => 'Problème. Le panier n’a pas été mis à jour…',
+        'storeOk'           => 'Le panier a bien été créé.',
+        'storefailed'       => 'Problème. Le panier n’a pas pu être créé…',
+        'deleteOk'          => 'Le panier a bien été supprimé.',
+        'deletefailed'      => 'Problème. Le panier n’a pas pu être supprimé…',
+        'setRangsOk'        => 'L’ordre des paniers a bien été modifié.',
+        'setRangsFailed'    => 'L’ordre des paniers n’a pas pu été modifié.',
     ],
 
     'modepaiement' => [

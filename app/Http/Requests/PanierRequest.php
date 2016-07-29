@@ -24,12 +24,19 @@ class PanierRequest extends Request
     public function rules()
     {
         return [
-        // 'nom' => 'required',
-        // 'nom_court' => 'required|alpha_dash',
-        // 'famille' => 'required|alpha_dash',
-        // 'type' => 'required_with:cp,ville',
+        'nom' => 'required',
+        'nom_court' => 'required',
+        'type' => 'required',
         // 'idee' => '',
-        // 'prix_commun' => 'required|max:20',
+        'prix_commun' => 'required|not_in:0|numeric',
+        'rang' => 'unique:paniers,rang,'.$this->input('id').'id',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+        'rang.unique' => 'Ce rang est déjà pris',
         ];
     }
 }

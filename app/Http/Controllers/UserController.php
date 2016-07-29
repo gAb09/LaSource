@@ -9,6 +9,6 @@ class UserController extends Controller
 {
     public function index()
     {
-    	return 'Est-ce une page nécessaire ??';
+    	return 'Est-ce nécessaire pour le gestionnaire de gérer les users ??';
     }
 }

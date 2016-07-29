@@ -36,8 +36,9 @@ return [
             [
                 'index' => 'Les paniers',
                 'create'  => 'Création d’un panier',
-                'edit'  => 'Édition du panier “:nom_court',
+                'edit'  => 'Édition du panier <span style="font-style:italic">“:type / :nom_court”</span>',
                 'choixproducteurs'  => 'Désigner un (plusieurs) producteur(s) fournissant le panier : :panier_nomcourt',
+                'trashed'  => 'Réhabilitation des paniers supprimés',
             ],
 
         'livraison' => 
@@ -47,6 +48,7 @@ return [
                 'edit'  => 'Édition de la livraison du&nbsp:date_titrepage',
                 'listPaniers'  => 'Choisir un (plusieurs) panier(s) pour la livraison : :date',
                 'editpanier'  => 'Modification du panier :panier',
+                'enCours'  => 'Les livraisons en cours',
             ],
         
 
@@ -61,5 +63,9 @@ return [
             [
                 'index' => 'Les clients',
                 'edit'  => 'Modification de mes coordonnées',
+            ],
+        'dashboard' => 
+            [
+                'main' => 'Tableau de bord',
             ],
     ];

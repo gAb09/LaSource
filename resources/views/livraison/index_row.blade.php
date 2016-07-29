@@ -1,28 +1,28 @@
-<div 
-class="flexcontainer ligne_livraison ombrable"
+<tr 
+class="index_livraison ombrable"
 id="row_{{ $item->id }}" 
 onDblClick="javascript:document.location.href='{{ route('livraison.edit', $item->id) }}' ;"
 >
 
 	<!-- id -->
-	<div>
+	<td>
 		{{ $item->id }}
-	</div>
+	</td>
 
 	<!-- date_cloture -->
-	<div>
+	<td>
 		{{ $item->date_cloture_enclair }}
-	</div>
+	</td>
 
 	<!-- date_paiement -->
-	<div>
+	<td>
 		{{ $item->date_paiement_enclair }}
-	</div>
+	</td>
 
 	<!-- date_livraison -->
-	<div>
+	<td>
 		{{ $item->date_livraison_enclair }}
-	</div>
+	</td>
 
 
-</div>
+</tr>

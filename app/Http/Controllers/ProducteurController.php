@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Domaines\ProducteurDomaine as Domaine;
+use App\Domaines\ProducteurDomaine as Producteur;
 use App\Http\Requests\ProducteurRequest;
 
 use Illuminate\Http\Request;
@@ -12,7 +12,7 @@ class ProducteurController extends Controller
 {
     private $domaine;
     
-    public function __construct(Domaine $domaine)
+    public function __construct(Producteur $domaine)
     {
         $this->domaine = $domaine;
     }

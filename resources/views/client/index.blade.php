@@ -23,7 +23,7 @@
 
 		<div class="portrait {{$item->class_actif}}" ondblClick = "javascript:document.location.href='http://lasource/client/{{ $item->id }}/edit';">
 
-			<p class="encadred2">
+			<p class="lighten50">
 				{{ $item->prenom }} {{ $item->nom }}<br />
 			</p>
 				{{ $item->tel }}<br />

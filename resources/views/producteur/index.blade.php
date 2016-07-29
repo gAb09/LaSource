@@ -12,7 +12,7 @@
 
 
 @section('topcontent2')
-	<a href="{{ route('producteur.create') }}" class="btn-xs btn-primary"> <i class="fa fa-btn fa-trash-o"></i>Ajouter un producteur</a>
+	<a href="{{ route('producteur.create') }}" class="btn-xs btn-primary"> <i class="fa fa-btn fa-trash-o"></i>Créer un producteur</a>
 @stop
 
 
@@ -24,7 +24,7 @@
 
 		<div class="portrait {{$item->class_actif}}" ondblClick = "javascript:document.location.href='http://lasource/producteur/{{ $item->id }}/edit';">
 
-			<p class="encadred2">
+			<p class="lighten33">
 				{{ $item->exploitation }}<br />
 				{{ $item->prenom }} {{ $item->nom }}<br />
 				{{ $item->paniers }}

@@ -12,32 +12,21 @@
 
 
 @section('topcontent2')
-	<a href="{{ route('panier.create') }}" class="btn-xs btn-primary"> <i class="fa fa-btn fa-trash-o"></i>Ajouter un panier</a>
+<a href="{{ route('panier.create') }}" class="btn-xs btn-primary"> <i class="fa fa-btn fa-trash-o"></i>Créer un panier</a>
 @stop
 
 
 @section('content')
+<div id="paniers_index" class="offset3 span11 flexcontainer">
 
-<div class="offset3 span11 flexcontainer">
-
-	@foreach($items as $item)
-
-		<div class="portrait {{$item->class_actif}}" ondblClick = "javascript:document.location.href='http://lasource/panier/{{ $item->id }}/edit';">
-
-			<p class="encadred2">
-				{!! $item->nom !!}<br />
-				{!! $item->nom_court !!}<br />
-			</p>
-				{{ $item->famille }} / {{ $item->type }}<br />
-				{{ $item->idee }}<br />
-				{{ $item->prix_commun }}<br />
-				<p>{{ $item->remarques }}</p>
-
-
-		</div>
-
-	@endforeach
+	@include('panier.indexcontainer')
 
 </div>
 
+@stop
+
+
+@section('script')
+@parent
+<script src="/js/panier.js"></script>
 @stop

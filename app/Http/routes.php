@@ -14,9 +14,10 @@ use Illuminate\Http\Request;
 
 Route::get('livraison/combodate/{valeur}', 'LivraisonController@getComboDate');
 
-Route::get('/', function () {
+Route::any('/', function () {
 	return view('accueil');
 });
+
 
 Route::get('accueil', function () {
 	return view('accueil');
@@ -81,6 +82,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'UserController');
 
 
+// User...
+	Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@Main']);
+
+
 // Client...
 	Route::get('espaceclient', ['as' => 'espaceclient', 'uses' => 'ClientController@espaceclient']);
 
@@ -95,12 +100,12 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('producteur', 'ProducteurController');
 
 
-// Panier...
+// PANIER...
+	Route::get('panier/getdeleted', ['as' => 'panier.getdeleted', 'uses' => 'PanierController@getDeleted']);
 	Route::resource('panier', 'PanierController');
 
 
-// Livraison...
-	Route::resource('livraison', 'LivraisonController');
+// LIVRAISON...
 
 	// Pivot Panier
 	Route::get('livraison/{livraison_id}/listpaniers', 
@@ -125,6 +130,14 @@ Route::group(['middleware' => 'auth'], function () {
 		['as' => 'PanierSyncProducteurs', 'uses' => 'PanierController@syncProducteurs']
 		);
 	
+// DASHBOARD
+	//composerMails
+	Route::get('dashboard/composerMails', 
+		['as' => 'dashboardComposerMails', 'uses' => 'DashboardController@composerMails']
+		);
+
+
+	Route::resource('livraison', 'LivraisonController');
 
 
 // ModePaiement...
@@ -132,6 +145,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 // Menus...
 	Route::resource('menus', '\Menus\MenuController');
+
+	Route::any('setrangs/panier', ['as' => 'media.set_rang', 'uses' => 'PanierController@setRangs']);
 
 });
 

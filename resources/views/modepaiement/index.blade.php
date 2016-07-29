@@ -12,7 +12,7 @@
 
 
 @section('topcontent2')
-<a href="{{ route('modepaiement.create') }}" class="btn-xs btn-primary"> <i class="fa fa-btn fa-trash-o"></i>Ajouter un mode de paiement</a>
+<a href="{{ route('modepaiement.create') }}" class="btn-xs btn-primary"> <i class="fa fa-btn fa-trash-o"></i>Créer un mode de paiement</a>
 @stop
 
 
@@ -24,7 +24,7 @@
 
 	<div class="portrait {{$item->class_actif}}" ondblClick = "javascript:document.location.href='http://lasource/modepaiement/{{ $item->id }}/edit';">
 
-		<p class="encadred2">
+		<p class="lighten33">
 			{{ $item->nom }}<br />
 		</p>
 		<p>{{ $item->remarques }}</p>

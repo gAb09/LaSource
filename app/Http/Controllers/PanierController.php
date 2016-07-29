@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Domaines\PanierDomaine as Domaine;
+use App\Domaines\PanierDomaine as Panier;
 use App\Http\Requests\PanierRequest;
 
 use Illuminate\Http\Request;
@@ -12,7 +12,7 @@ class PanierController extends Controller
 {
     private $domaine;
     
-    public function __construct(Domaine $domaine)
+    public function __construct(Panier $domaine)
     {
         $this->domaine = $domaine;
     }
@@ -20,7 +20,7 @@ class PanierController extends Controller
 
     public function index()
     {
-        $items = $this->domaine->all();
+        $items = $this->domaine->all('rang');
         return view('panier.index')->with(compact('items'));
     }
 
@@ -78,4 +78,17 @@ class PanierController extends Controller
         $this->domaine->PanierSyncProducteurs($panier, $request->input('resultat'));
         return redirect()->back();
     }
+
+
+    public function getDeleted()
+    {
+        $items = $this->domaine->getDeleted();
+        return view('panier.trashed')->with(compact('items'));
+    }
+
+    public function setRangs(Request $request)
+    {
+        return $this->domaine->setRangs($request);
+    }
+
 }

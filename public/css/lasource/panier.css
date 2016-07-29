@@ -1,0 +1,14 @@
+/*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+COULEURS
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+#paniers_index .portrait {
+  background-color: #f7f3e6;
+  border-color: #f7f3e6;
+  max-width: 24%;
+}
+.toggle_actif.is_actif div {
+  background-color: #f7f3e6;
+}
+.panier {
+  background-color: #fbf9f2;
+}
