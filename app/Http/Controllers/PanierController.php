@@ -51,8 +51,14 @@ class PanierController extends Controller
 
     public function update($id, PanierRequest $request)
     {
-        if($this->domaine->update($id, $request)){
-            return redirect()->route('panier.index')->with('success', trans('message.panier.updateOk'));
+        $resultat = ($this->domaine->update($id, $request));
+
+        if($resultat){
+            if (is_string($resultat)) {
+                return redirect()->back()->with('status', $resultat);
+            }else{
+                return redirect()->route('panier.index')->with('success', trans('message.panier.updateOk'));
+            }
         }else{
             return redirect()->back()->with('status', trans('message.panier.updatefailed'));
         }
@@ -61,14 +67,14 @@ class PanierController extends Controller
 
     public function destroy($id)
     {     
-        $controle = \Event::fire(new \App\Events\RetraitPanierEvent($id))[0];
+        $resultat = ($this->domaine->destroy($id));
 
-        if ($controle) {
-            return redirect()->back()->with('status', $controle);
-        }
-
-        if($this->domaine->destroy($id)){
-            return redirect()->route('panier.index')->with('success', trans('message.panier.deleteOk'));
+        if($resultat){
+            if (is_string($resultat)) {
+                return redirect()->back()->with('status', $resultat);
+            }else{
+                return redirect()->route('panier.index')->with('success', trans('message.panier.deleteOk'));
+            }
         }else{
             return redirect()->back()->with('status', trans('message.panier.deletefailed'));
         }

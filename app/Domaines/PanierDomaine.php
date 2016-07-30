@@ -23,6 +23,11 @@ class PanierDomaine extends Domaine
 	}
 
 	public function update($id, $request){
+
+		if ($request->input('is_actif') == 0 and $result = $this->checkIfLivraisonLied($id, 'Désactivation')) {
+			return($result);
+		}
+
 		$this->model = Panier::withTrashed()->where('id', $id)->first();
 		$this->handleRequest($request);
 
@@ -44,6 +49,17 @@ class PanierDomaine extends Domaine
 		$this->model->restore();
 
 	}
+
+	public function destroy($id)
+	{
+		if ($result = $this->checkIfLivraisonLied($id, 'Suppression')) {
+			return($result);
+		}
+
+		$this->model = $this->model->where('id', $id)->first();
+		return $this->model->delete();
+	}
+
 
 	public function listPaniers($livraison_id = null)
 	{
@@ -131,11 +147,19 @@ class PanierDomaine extends Domaine
 	* 
 	* @return collection (vide|renseignée)
 	**/
-	public function checkIfLivraisonLied($panier_id)
+	public function checkIfLivraisonLied($panier_id, $action)
 	{
-		$panier = $this->model->with('livraison')->where('id', $panier_id)->first();
+		$panier = $this->model->withTrashed()->with('livraison')->where('id', $panier_id)->first();
 
-		return $panier->livraison;
+		/* Si il existe au moins une livraison liée */
+		if (!$panier->livraison->isEmpty()) { 
+			$message = "Oups !! $action impossible !<br />";
+			foreach ($panier->livraison as $livraison) {
+				$message .= trans('message.panier.liedToLivraison', ['date' => $livraison->date_livraison_enClair]).'<br />';
+			}
+			return $message;
+		}
+
 	}
 
 

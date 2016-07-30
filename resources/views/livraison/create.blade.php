@@ -12,6 +12,7 @@
 
 @section('topcontent1')
 <h1 class="titrepage">{{ trans('titrepage.livraison.create') }}</h1>
+@parent
 @stop
 
 

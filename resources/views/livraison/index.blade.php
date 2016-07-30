@@ -12,10 +12,8 @@
 
 
 @section('topcontent2')
-<a href="{{ route('livraison.create') }}" 
-class="btn btn-primary"
-> 
-<i class="fa fa-btn fa-trash-o"></i>Créer une livraison
+<a href="{{ route('livraison.create') }}" class="btn btn-primary"> <i class="fa fa-btn fa-trash-o"></i>
+	Créer une livraison
 </a>
 @stop
 
@@ -27,7 +25,7 @@ class="btn btn-primary"
 
 
 @section('content')
-<table class="index_livraisons  col-md-10 col-md-offset-1">
+<table class="index_livraisons  col-md-12">
 	<thead>
 		<th style="width:50px">
 			N°

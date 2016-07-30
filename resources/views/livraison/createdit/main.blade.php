@@ -23,6 +23,10 @@
 
 
 @section('topcontent1')
+@parent
+	<a href="{{ URL::route('livraison.index') }}" class="btn btn-info">
+		<i class="fa fa-btn fa-list-ul"></i>Retour à la liste
+	</a>
 @stop
 
 
@@ -38,11 +42,6 @@
 	@show
 </div>
 
-<div class="container-fluid flexcontainer" style="justify-content:space-around">
-	<a href="{{ URL::route('livraison.index') }}" class="btn btn-info">
-		<i class="fa fa-btn fa-list-ul"></i>Retour à la liste
-	</a>
-</div>
 
 
 @stop

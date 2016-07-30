@@ -19,9 +19,9 @@ class Domaine
 	}
 
 
-	public function allActifs()
+	public function allActifs($order = 'id')
 	{
-		return $this->model->where('is_actif', 1)->get();
+		return $this->model->where('is_actif', 1)->orderBy($order)->get();
 	}
 
 
