@@ -1,10 +1,9 @@
 /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 COULEURS
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-#paniers_index .portrait {
+#paniers_index .portrait.is_actif {
   background-color: #f5f0e2;
   border-color: #f5f0e2;
-  max-width: 24%;
 }
 .toggle_actif.is_actif div {
   background-color: #f5f0e2;
