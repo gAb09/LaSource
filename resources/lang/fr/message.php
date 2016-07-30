@@ -47,6 +47,7 @@ return [
         'deletefailed'      => 'Problème. Le panier n’a pas pu être supprimé…',
         'setRangsOk'        => 'L’ordre des paniers a bien été modifié.',
         'setRangsFailed'    => 'L’ordre des paniers n’a pas pu été modifié.',
+        'liedToLivraison'    => 'Ce panier est proposé dans la livraison du :date',
     ],
 
     'modepaiement' => [

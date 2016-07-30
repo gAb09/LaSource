@@ -125,6 +125,20 @@ class PanierDomaine extends Domaine
 	}
 
 
+
+	/**
+	* Contrôle s'il existe des livraisons liées
+	* 
+	* @return collection (vide|renseignée)
+	**/
+	public function checkIfLivraisonLied($panier_id)
+	{
+		$panier = $this->model->with('livraison')->where('id', $panier_id)->first();
+
+		return $panier->livraison;
+	}
+
+
 }
 
 

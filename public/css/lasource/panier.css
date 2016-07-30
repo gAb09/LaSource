@@ -2,13 +2,13 @@
 COULEURS
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 #paniers_index .portrait {
-  background-color: #f7f3e6;
-  border-color: #f7f3e6;
+  background-color: #f5f0e2;
+  border-color: #f5f0e2;
   max-width: 24%;
 }
 .toggle_actif.is_actif div {
-  background-color: #f7f3e6;
+  background-color: #f5f0e2;
 }
 .panier {
-  background-color: #fbf9f2;
+  background-color: #f9f6ed;
 }

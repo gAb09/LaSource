@@ -29,7 +29,6 @@ class LivraisonController extends Controller
     public function index()
     {
         $items = $this->domaine->index();
-
         return view('livraison.index')->with(compact('items'));
     }
 

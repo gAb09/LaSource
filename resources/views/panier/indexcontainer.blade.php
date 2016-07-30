@@ -7,7 +7,7 @@
  		<p class="lighten50">{!! $item->nom !!}<br />
 		<strong>{{ $item->prix_commun }}</strong>
 		<p><small>{{ $item->remarques }}</small></p>
-		<p class="hidden id">{{ $item->id }}</p>
+		<p class="text id">{{ $item->id }}</p>
 		<p class="hidden rang">rang : {{ $item->rang }}</p>
 
 	</div>

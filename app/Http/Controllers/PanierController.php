@@ -60,7 +60,13 @@ class PanierController extends Controller
 
 
     public function destroy($id)
-    {        
+    {     
+        $controle = \Event::fire(new \App\Events\RetraitPanierEvent($id))[0];
+
+        if ($controle) {
+            return redirect()->back()->with('status', $controle);
+        }
+
         if($this->domaine->destroy($id)){
             return redirect()->route('panier.index')->with('success', trans('message.panier.deleteOk'));
         }else{
