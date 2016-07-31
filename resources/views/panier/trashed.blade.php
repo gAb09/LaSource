@@ -12,12 +12,12 @@
 
 
 @section('topcontent2')
-<p class ="moddemploi">
+<p class ="modemploi">
 Un <strong>double-clic</strong> sur un panier le sortira de la corbeille et permettra sa modification.
 </p>
 @stop
 
 
 @section('content')
-@include('panier.indexcontainer')
+@include('panier.indexcontent')
 @stop

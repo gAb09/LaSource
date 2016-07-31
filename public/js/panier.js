@@ -11,15 +11,17 @@ $("#paniers_index").sortable({
 			pos++;
 			$(this).html('Rang : '+pos);
 
-			// Récupérer les tel_id de chaque éléments "sortable"
-			var tel_id = $(this).siblings('p.id').html();
+			// Récupérer les panier_id de chaque éléments "sortable"
+			var panier_id = $(this).siblings('p.id').html();
 
 			// Ajouter au tableau qui sera envoyé au script php
-			doublet = [tel_id, pos];
+			doublet = [panier_id, pos];
+						console.log('panier_id : '+ panier_id);
+
 			tablo.push(doublet);
 
 		});
-			// console.log('tablo sortie boucle : '+tablo);
+			console.log('tablo sortie boucle : '+tablo);
 		setRangs('panier', tablo);
 
 	}

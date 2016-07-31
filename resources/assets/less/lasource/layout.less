@@ -16,23 +16,56 @@ GLOBAL
 	margin-left: -3px;
 }
 
-.portrait .supp{
-	background-color:white;
-    padding: 3px  0px 3px 5px;
+
+/*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Boutons supp et edite
+*/
+.supp, .edite{
+	background-color: lighten(@color_danger, 30%);
     position: absolute;
     left: 0;
     bottom: 0;
+    width: 25px;
+    height:25px;
+    padding: 3px;
 }
-.portrait .supp:hover{
-	background-color: red;
+
+.edite{
+	background-color: lighten(@color_primary, 30%);
+    left: 30px;
+}
+
+
+
+.supp:hover, .edite:hover{
+	background-color: @color_danger;
+	color: white;
+	cursor: pointer;
+    width: 105px;
+    padding: 0;
+	z-index:1000;
+}
+
+.edite:hover{
+	background-color: @color_primary;
+}
+
+
+
+
+.supp:hover::after, .edite:hover::after{
+	background-color: @color_danger;
+	content: 'Supprimer ?';
+	// padding-right: 7px;
 	color: white;
 }
 
-.portrait .supp:hover::after{
-	content: 'supprimer ce panier ?';
-	padding-right: 7px;
-	color: white;
+
+.edite:hover::after{
+	content: 'Modifier';
+	background-color: @color_primary;
 }
+
 
 
 /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 

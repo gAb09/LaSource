@@ -1,38 +1,9 @@
-
-function getXMLHttpRequest() {
-	var xhr = null;
-
-	if (window.XMLHttpRequest || window.ActiveXObject) {
-		if (window.ActiveXObject) {
-			try {
-				xhr = new ActiveXObject("Msxml2.XMLHTTP");
-			} catch(e) {
-				xhr = new ActiveXObject("Microsoft.XMLHTTP");
-			}
-		} else {
-			xhr = new XMLHttpRequest();
-		}
-	} else {
-		alert("Votre navigateur ne supporte pas l'objet XMLHTTPRequest...");
-		return null;
-	}
-
-	return xhr;
-}
-
-
-
-function gererVolet(item)
-{
-	if (item.className == "col-md-6 footer2 open") {
-		$(item).addClass( "col-md-6 footer2 closed" );
-		// item.className = "col-md-6 footer2 closed";
-	}else{
-		// item.className = "col-md-6 footer2 open";
-		$(item).addClass( "col-md-6 footer2 open" );
-	}
-}
-
+/**
+* Disponible pour tous les models.
+* Change la présentation (CSS) des éléments relatifs à is_actif.
+* 
+* 
+**/
 function handleIsActifClass()
 {
 	var item = $('.toggle_actif');
@@ -43,31 +14,40 @@ function handleIsActifClass()
 
 
 
-
+/**
+* Disponible pour tous les models.
+* Accède à l'API Laravel pour mettre à jour le nouvel ordre des models.
+* Appelé par le script de l'élément draggable qui doit fournir les arguments
+* 
+* @param model : modèle concerné
+* @param tablo : tablo de doublets [model_id, position après drop]
+* 
+* @return string|null : contenu html pour les messages utilisateurs
+**/
 function setRangs(model, tablo){
 
-// console.log('model : '+model);
-// console.log('tablo : '+tablo);
+	/* console.log('model : '+model); */
+	/* console.log('tablo : '+tablo); */
 
-var ad = 'setrangs/'+model;
-$.ajax({
-	url : ad,
-	contentType : 'text/json',
-	type : 'GET',
-	data : {'tablo' : tablo},
-	dataType : 'html',
-	success : function(code_html, data, statut){
-		console.log(code_html);
-		$('#messages').empty().append(code_html);
-	},
+	var ad = 'setrangs/'+model;
+	$.ajax({
+		url : ad,
+		contentType : 'text/json',
+		type : 'GET',
+		data : {'tablo' : tablo},
+		dataType : 'html',
+		success : function(code_html, data, statut){
+			console.log(code_html);
+			$('#messages').empty().append(code_html);
+		},
 
-	error : function(data, resultat, statut, erreur){
-		console.log(data);
-		console.log(resultat);
-		console.log(statut);
-		console.log(erreur);
-	},
+		error : function(data, resultat, statut, erreur){
+			console.log(data);
+			console.log(resultat);
+			console.log(statut);
+			console.log(erreur);
+		},
 
-});
+	});
 
 }

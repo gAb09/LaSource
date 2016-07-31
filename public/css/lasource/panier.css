@@ -5,6 +5,9 @@ COULEURS
   background-color: #f5f0e2;
   border-color: #f5f0e2;
 }
+#paniers_index:hover {
+  cursor: all-scroll;
+}
 .toggle_actif.is_actif div {
   background-color: #f5f0e2;
 }
