@@ -16,6 +16,27 @@ GLOBAL
 	margin-left: -3px;
 }
 
+.portrait .supp{
+	background-color:white;
+    padding: 3px  0px 3px 5px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+.portrait .supp:hover{
+	background-color: red;
+	color: white;
+}
+
+.portrait .supp:hover::after{
+	content: 'supprimer ce panier ?';
+	padding-right: 7px;
+	color: white;
+}
+
+.supp{
+	position: relative;
+}
 
 /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 LAYOUT BASE
