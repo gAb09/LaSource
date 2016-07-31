@@ -18,54 +18,65 @@ GLOBAL
 
 
 /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-Boutons supp et edite
-*/
+Boutons supp et edite */
+
 .supp, .edite{
-	background-color: lighten(@color_danger, 30%);
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 25px;
-    height:25px;
-    padding: 3px;
+	border-radius: 6px;
+	background-color: #FFF;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 25px;
+	height:25px;
+	padding: 3px 3px 3px 4px;
+
+	.etiquette{
+		border-radius: 6px;
+		position:absolute;
+		padding-bottom: 2px;
+		bottom:-25px;
+		left:0;
+		width: 0px;
+		opacity: 0;
+	}
+
+	&:hover{
+		transition: 0.5s;
+		transition-delay: 0.2s;
+		background-color: @color_danger;
+		color: white;
+		cursor: pointer;
+		z-index:1000;
+
+		.etiquette{
+			transition: 0.4s;
+			transition-delay: 0.2s;
+			opacity: 1;
+			display: inline;
+			bottom:24px;
+			left:0;
+			width: 86px;
+			background-color: @color_danger;
+			color: white;
+		}
+	}
 }
+
+
+/* Bouton edite */
 
 .edite{
-	background-color: lighten(@color_primary, 30%);
-    left: 30px;
+	left: 30px;
+
+	&:hover{
+		background-color: @color_primary;
+
+		.etiquette{
+			width: 70px;
+			background-color: @color_primary;
+		}
+	}
 }
-
-
-
-.supp:hover, .edite:hover{
-	background-color: @color_danger;
-	color: white;
-	cursor: pointer;
-    width: 105px;
-    padding: 0;
-	z-index:1000;
-}
-
-.edite:hover{
-	background-color: @color_primary;
-}
-
-
-
-
-.supp:hover::after, .edite:hover::after{
-	background-color: @color_danger;
-	content: 'Supprimer ?';
-	// padding-right: 7px;
-	color: white;
-}
-
-
-.edite:hover::after{
-	content: 'Modifier';
-	background-color: @color_primary;
-}
-
 
 
 /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -165,23 +176,6 @@ h1.titrepage {
 	flex-flow: row wrap;
 	justify-content: flex-start;
 	align-items: stretch;
-}
-
-.portrait {
-	background-color: @color_tempo;
-	border: solid;
-	border-width: 10px;
-	border-color: @color_tempo;
-	margin: 5px;
-	text-align: center;
-	flex-grow: 1;
-	max-width: 24%;
-}
-
-
-.portrait.is_not_actif{
-	background-color: @color_notactif;
-	border-color: @color_notactif;
 }
 
 

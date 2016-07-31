@@ -1,12 +1,13 @@
 @import "variables.less";
 
-#paniers_index .portrait.is_actif{
-	background-color:@color_panier;
-	border-color:@color_panier;
-}
-
-#paniers_index:hover{
-	cursor:all-scroll;
+#paniers_index {
+	&:hover{
+		cursor:all-scroll;
+	}
+	.portrait.is_actif{
+		background-color:@color_panier;
+		border-color:@color_panier;
+	}
 }
 
 
@@ -17,3 +18,4 @@
 .panier{
 	background-color: lighten(@color_panier, 3%);
 }
+

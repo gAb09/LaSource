@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3>{!! trans('titrepage.panier.edit', ['nom_court' => $item->nom_court, 'type' => $item->type]) !!}</h3>
-                    @include('panier.partials.ButtonRetourListe')
+                    @include('panier.button.index', ['etiquette' => 'Retour à la liste'])
                 </div>
                 <div class="panel-body panier">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('panier.update', $item->id) }}">
@@ -26,7 +26,7 @@
                     </form>
                 </div> 
             </div>
-            @include('panier.partials.buttonSupprimer')
+            @include('panier.button.delete')
         </div>
     </div>
 </div>

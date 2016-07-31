@@ -4,5 +4,6 @@
 	<button class="supp">
 		<i class="fa fa-btn fa-trash-o">
 		</i>
+		<div class="etiquette">Supprimer&nbsp;?</div>
 	</button>
 </form>
