@@ -23,7 +23,7 @@
 
 	@foreach($models as $model)
 
-		<div class="portrait  {{$model->class_actif}}" ondblClick = "javascript:document.location.href='{{ route('relais.edit', $model->id) }}';">
+		<div class="fiche  {{$model->class_actif}}" ondblClick = "javascript:document.location.href='{{ route('relais.edit', $model->id) }}';">
 
 			<p class="lighten33">
 				{{ $model->ville }} {{ $model->tel }}<br />

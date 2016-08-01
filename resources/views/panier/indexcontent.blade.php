@@ -1,5 +1,5 @@
 @forelse($models as $model)
-<div style="position:relative" class="portrait {{$model->class_actif}}" ondblClick = "javascript:document.location.href='http://lasource/panier/{{ $model->id }}/edit';">
+<div style="position:relative" class="fiche {{$model->class_actif}}" ondblClick = "javascript:document.location.href='http://lasource/panier/{{ $model->id }}/edit';">
 
 	@include('layouts.button.supp', ['model' => 'panier', 'model_id' => $model->id, 'text_confirm' => trans('message.panier.confirmDelete', ['panier' => "$model->type - $model->nom_court"]) ])
 	@include('layouts.button.edite', ['model' => 'panier', 'model_id' => $model->id])

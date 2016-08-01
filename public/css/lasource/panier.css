@@ -1,12 +1,12 @@
 /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 COULEURS
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-#paniers_index .portrait.is_actif {
-  background-color: #f5f0e2;
-  border-color: #f5f0e2;
-}
 #paniers_index:hover {
   cursor: all-scroll;
+}
+#paniers_index .fiche.is_actif {
+  background-color: #f5f0e2;
+  border-color: #f5f0e2;
 }
 .toggle_actif.is_actif div {
   background-color: #f5f0e2;

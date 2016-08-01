@@ -22,7 +22,7 @@
 
 	@foreach($models as $model)
 
-	<div class="portrait {{$model->class_actif}}" ondblClick = "javascript:document.location.href='http://lasource/modepaiement/{{ $model->id }}/edit';">
+	<div class="fiche {{$model->class_actif}}" ondblClick = "javascript:document.location.href='http://lasource/modepaiement/{{ $model->id }}/edit';">
 
 		<p class="lighten33">
 			{{ $model->nom }}<br />
