@@ -55,8 +55,10 @@ class PanierDomaine extends Domaine
 		if ($result = $this->checkIfLivraisonLied($id, 'Suppression')) {
 			return($result);
 		}
-
+		$personne = array();
 		$this->model = $this->model->where('id', $id)->first();
+		$this->model->producteur()->sync($personne);
+		
 		return $this->model->delete();
 	}
 

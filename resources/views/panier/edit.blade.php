@@ -6,7 +6,7 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3>{!! trans('titrepage.panier.edit', ['nom_court' => $item->nom_court, 'type' => $item->type]) !!}</h3>
+                    <h3>{!! trans('titrepage.panier.edit', ['nom_court' => $item->nom_court, 'type' => $item->type]) !!}{{ $item->id }}</h3>
                     @include('panier.button.index', ['etiquette' => 'Retour à la liste'])
                 </div>
                 <div class="panel-body panier">

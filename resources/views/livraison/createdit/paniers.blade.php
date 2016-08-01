@@ -100,12 +100,12 @@
 	<!-- Button trigger modal -->
 	<div class="boutonspaniers flexcontainer" >
 
-		<button type="submit" class="btn btn-success btn-xs">
-			<i class="fa fa-btn fa-save"></i> <br />Valider ces paniers
-		</button>
-
 		<button type="button" class="btn btn-primary btn-xs" onClick="javascript:listPaniers({{$item->id}})" data-toggle="modal" data-target="#ModallistPaniers">
 			<i class="fa fa-btn fa-shopping-basket"></i> <br />Liste des paniers
+		</button>
+
+		<button type="submit" class="btn btn-success btn-xs">
+			<i class="fa fa-btn fa-save"></i> <br />Valider ces paniers
 		</button>
 
 	</div>

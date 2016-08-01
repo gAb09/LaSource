@@ -48,6 +48,7 @@ return [
         'setRangsOk'        => 'L’ordre des paniers a bien été modifié.',
         'setRangsFailed'    => 'L’ordre des paniers n’a pas pu été modifié.',
         'liedToLivraison'    => 'Ce panier est proposé dans la livraison du :date',
+        'confirmDelete'    => 'Êtes-vous sur de vouloir supprimer le panier :panier ?\nTout lien avec un ou plusieurs producteurs sera supprimé.',
     ],
 
     'modepaiement' => [
