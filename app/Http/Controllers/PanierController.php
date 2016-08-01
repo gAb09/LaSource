@@ -20,15 +20,15 @@ class PanierController extends Controller
 
     public function index()
     {
-        $items = $this->domaine->all('rang');
-        return view('panier.index')->with(compact('items'));
+        $models = $this->domaine->all('rang');
+        return view('panier.index')->with(compact('models'));
     }
 
 
     public function create()
     {
-        $item =  $this->domaine->newModel();
-        return view('panier.create')->with(compact('item'));
+        $model =  $this->domaine->newModel();
+        return view('panier.create')->with(compact('model'));
     }
 
 
@@ -44,8 +44,8 @@ class PanierController extends Controller
 
     public function edit($id)
     {
-    	$item = $this->domaine->findFirst('id', $id);
-    	return view('panier.edit')->with(compact('item'));
+    	$model = $this->domaine->findFirst('id', $id);
+    	return view('panier.edit')->with(compact('model'));
     }
 
 
@@ -94,8 +94,8 @@ class PanierController extends Controller
 
     public function getDeleted()
     {
-        $items = $this->domaine->getDeleted();
-        return view('panier.trashed')->with(compact('items'));
+        $models = $this->domaine->getDeleted();
+        return view('panier.trashed')->with(compact('models'));
     }
 
     public function setRangs(Request $request)

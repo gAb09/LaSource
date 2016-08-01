@@ -1,33 +1,33 @@
-@forelse($items as $item)
-<div style="position:relative" class="portrait {{$item->class_actif}}" ondblClick = "javascript:document.location.href='http://lasource/panier/{{ $item->id }}/edit';">
+@forelse($models as $model)
+<div style="position:relative" class="portrait {{$model->class_actif}}" ondblClick = "javascript:document.location.href='http://lasource/panier/{{ $model->id }}/edit';">
 
-	@include('layouts.button.supp', ['model' => 'panier', 'model_id' => $item->id, 'text_confirm' => trans('message.panier.confirmDelete', ['panier' => "$item->type - $item->nom_court"]) ])
-	@include('layouts.button.edite', ['model' => 'panier', 'model_id' => $item->id])
+	@include('layouts.button.supp', ['model' => 'panier', 'model_id' => $model->id, 'text_confirm' => trans('message.panier.confirmDelete', ['panier' => "$model->type - $model->nom_court"]) ])
+	@include('layouts.button.edite', ['model' => 'panier', 'model_id' => $model->id])
 
-	<p class="lighten66">{{ $item->type }}<br />
-		<strong>{!! $item->nom_court !!}</strong>
+	<p class="lighten66">{{ $model->type }}<br />
+		<strong>{!! $model->nom_court !!}</strong>
 	</p>
 
 	<p class="" style="font-style:italic">
-		{!! $item->idee !!}
+		{!! $model->idee !!}
 	</p>
 
 	<p class="lighten50">
-		{!! $item->nom !!}<br />
+		{!! $model->nom !!}<br />
 	</p>
 
 	<p>
-		<strong>{{ $item->prix_commun }}</strong>
+		<strong>{{ $model->prix_commun }}</strong>
 	</p>
 
 	<p><small>
-		{!! $item->remarques !!}</small>
+		{!! $model->remarques !!}</small>
 	</p>
 
-	<p class="hidden id">{{ $item->id }}</p> {{-- surtout pas de CR dans cette ligne --}}
+	<p class="hidden id">{{ $model->id }}</p> {{-- surtout pas de CR dans cette ligne --}}
 
 	<p class="hidden rang">
-		rang : {{ $item->rang }}
+		rang : {{ $model->rang }}
 	</p>
 	<br /> {{-- pour chasser d'une ligne à cause des boutons --}}
 

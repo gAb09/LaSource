@@ -20,16 +20,16 @@ class RelaisController extends Controller
 
     public function index()
     {
-    	$items = $this->domaine->all();
-    	return view('relais.index')->with(compact('items'));
+    	$models = $this->domaine->all();
+    	return view('relais.index')->with(compact('models'));
     }
 
 
     public function create()
     {
-        $item =  $this->domaine->newModel();
+        $model =  $this->domaine->newModel();
 
-        return view('relais.create')->with(compact('item'));
+        return view('relais.create')->with(compact('model'));
     }
 
 
@@ -45,9 +45,9 @@ class RelaisController extends Controller
 
     public function edit($id)
     {
-    	$item = $this->domaine->findFirst('id', $id);
+    	$model = $this->domaine->findFirst('id', $id);
 
-    	return view('relais.edit')->with(compact('item'));
+    	return view('relais.edit')->with(compact('model'));
     }
 
 

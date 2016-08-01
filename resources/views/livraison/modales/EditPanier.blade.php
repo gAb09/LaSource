@@ -6,7 +6,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">
-          <?php $date = ($item->livraisonEnClair)?'du '.$item->livraisonEnClair:'à venir';?>
+          <?php $date = ($model->livraisonEnClair)?'du '.$model->livraisonEnClair:'à venir';?>
           {!! trans('titrepage.livraison.edit_panier', ['panier' => 'A TRADUIRE']) !!}
         </h4>
       </div>

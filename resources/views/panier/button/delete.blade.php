@@ -1,4 +1,4 @@
-<form class="form-inline" role="form" method="POST" action="{{ route('panier.destroy', $item->id) }}">
+<form class="form-inline" role="form" method="POST" action="{{ route('panier.destroy', $model->id) }}">
 	{!! csrf_field() !!}
 	<input type="hidden" class="form-control" name="_method" value="DELETE">
 

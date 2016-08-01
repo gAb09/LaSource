@@ -10,31 +10,30 @@ use Carbon\Carbon;
 
 class LivraisonDomaine extends Domaine
 {
-	protected $livraison;
+	protected $model;
 
 	public function __construct(){
-		$this->livraison = new Livraison;
+		$this->model = new Livraison;
 	}
 
 	public function index()
 	{
-		$items = $this->livraison->orderBy('id', 'desc')->get();
-		return $items;
+		return $this->model->orderBy('id', 'desc')->get();
 	}
 
 	public function create(){
-		$item =  $this->livraison;
-		$item->clotureEnClair = $item->paiementEnClair= $item->livraisonEnClair = " en création";
+		$model =  $this->model;
+		$model->clotureEnClair = $model->paiementEnClair= $model->livraisonEnClair = " en création";
 
-		return $item;
+		return $model;
 	}
 
 	public function store($request){
 		$this->handleDatas($request);
 
-		$result = $this->livraison->save();
+		$result = $this->model->save();
 		if($result){
-			return $this->livraison->id;
+			return $this->model->id;
 		}else{
 			return $result;
 		}
@@ -42,57 +41,50 @@ class LivraisonDomaine extends Domaine
 
 	public function findFirst($colonne, $critere)
 	{
-		$item = $this->livraison->where($colonne, $critere)->first();
-		return $item;
-
+		return $this->model->where($colonne, $critere)->first();
 	}
 
 
-	public function edit($id){
-		$this->livraison = Livraison::with('Panier')->where('id', $id)->first();
-		
-		// $this->livraison->clotureEnClair = $this->livraison->date_cloture->formatLocalized('%A %e %B %Y');
-		// $this->livraison->paiementEnClair = $this->livraison->date_paiement->formatLocalized('%A %e %B %Y');
-		// $this->livraison->livraisonEnClair = $this->livraison->date_livraison->formatLocalized('%A %e %B %Y');
-
-		return $this->livraison;
+	public function edit($id)
+	{
+		return Livraison::with('Panier')->where('id', $id)->first();
 	}
 
 
 	public function update($id, $request){
 
-		$this->livraison = Livraison::where('id', $id)->first();
+		$this->model = Livraison::where('id', $id)->first();
 		$this->handleDatas($request);
 
-		return $this->livraison->save();
+		return $this->model->save();
 	}
 
 
 	private function handleDatas($request){
-		$this->livraison->date_cloture = $request->date_cloture;
-		$this->livraison->date_paiement = $request->date_paiement;
-		$this->livraison->date_livraison = $request->date_livraison;
-		$this->livraison->remarques = $request->remarques;
-		$this->livraison->is_actif = (isset($request->is_actif)?1:0);
+		$this->model->date_cloture = $request->date_cloture;
+		$this->model->date_paiement = $request->date_paiement;
+		$this->model->date_livraison = $request->date_livraison;
+		$this->model->remarques = $request->remarques;
+		$this->model->is_actif = (isset($request->is_actif)?1:0);
 		
 	}
 
 
-	public function livraisonSyncPaniers($livraison_id, $paniers = array())
+	public function livraisonSyncPaniers($model_id, $paniers = array())
 	{
 		// return 	dd($paniers);
 
 		unset($paniers['_token']);
-		$item = Livraison::find($livraison_id);
+		$model = Livraison::find($model_id);
 		if(empty($paniers)){
-			return $item->panier()->detach();
+			return $model->panier()->detach();
 		}else{
-			return $this->handleLivraisonSyncPaniers($item, $paniers);
+			return $this->handleLivraisonSyncPaniers($model, $paniers);
 		}
 	}
 
 
-	public function handleLivraisonSyncPaniers($item, $paniers)
+	public function handleLivraisonSyncPaniers($model, $paniers)
 	{
 
 		// return dd('handleLivraisonSyncPaniers');
@@ -104,18 +96,18 @@ class LivraisonDomaine extends Domaine
 			foreach ($paniers['panier_id'] as $panier) {
 				$datas[$panier] = [ 'producteur' => $paniers['producteur'][$panier], 'prix_livraison' => $paniers['prix_livraison'][$panier] ];
 			}
-			return $item->panier()->sync($datas);
+			return $model->panier()->sync($datas);
 		}
-		return $item->panier()->sync($paniers['panier_id']);
+		return $model->panier()->sync($paniers['panier_id']);
 	}
 
 
 
 
-	public function detachPanier($livraison, $panier)
+	public function detachPanier($model_id, $panier)
 	{
-		$item = Livraison::find($livraison);
-		$item->panier()->detach($panier);
+		$model = Livraison::find($model_id);
+		$model->panier()->detach($panier);
 	}
 
 

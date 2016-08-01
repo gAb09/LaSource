@@ -83,7 +83,7 @@
 					<input type="text" class="prix"  name="prix_commun[]" value="{{ $panier->prix_commun or old('prix_commun') }}" onClick="javascript:reporterPrixBase(this)">
 				</td>
 				<td style="width:15%">
-					<button type="button" class="btn btn-warning btn-xs" onClick="javascript:document.location.href='{{ route('livraisonDetachPanier', ['livraison' => $item->id, 'panier' => $panier->id]) }}';">
+					<button type="button" class="btn btn-warning btn-xs" onClick="javascript:document.location.href='{{ route('livraisonDetachPanier', ['livraison' => $model->id, 'panier' => $panier->id]) }}';">
 						<i class="fa fa-btn fa-unlink fa-lg"></i>Retirer de cette livraison
 					</button>
 				</td>
@@ -100,7 +100,7 @@
 	<!-- Button trigger modal -->
 	<div class="boutonspaniers flexcontainer" >
 
-		<button type="button" class="btn btn-primary btn-xs" onClick="javascript:listPaniers({{$item->id}})" data-toggle="modal" data-target="#ModallistPaniers">
+		<button type="button" class="btn btn-primary btn-xs" onClick="javascript:listPaniers({{$model->id}})" data-toggle="modal" data-target="#ModallistPaniers">
 			<i class="fa fa-btn fa-shopping-basket"></i> <br />Liste des paniers
 		</button>
 

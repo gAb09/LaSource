@@ -25,36 +25,36 @@ class ClientController extends Controller
 
     public function espaceClient()
     {
-        $item = \Auth::user();
-        $item = $item->load('Client');
+        $model = \Auth::user();
+        $model = $model->load('Client');
 
-        return view('espaceclient')->with(compact('item'));
+        return view('espaceclient')->with(compact('model'));
     }
 
 
     public function index()
     {
-        $items = Client::with('User')->get();
-        return view('client.index')->with(compact('items'));
+        $models = Client::with('User')->get();
+        return view('client.index')->with(compact('models'));
 
     }
 
 
     public function store(ClientRequest $request)
     {
-        $item = new Client;
-        $item->nom = $request->nom;
-        $item->prenom = $request->prenom;
-        $item->ad1 = $request->ad1;
-        $item->ad2 = $request->ad2;
-        $item->cp = $request->cp;
-        $item->ville = $request->ville;
-        $item->tel = $item->cleanTel($request->tel);
-        $item->mobile = $item->cleanTel($request->mobile);
-                // $item->is_actif = (isset($request->is_actif)?1:0); // ToDo ??
-                // $item->email = $request->email; // ToDo
+        $model = new Client;
+        $model->nom = $request->nom;
+        $model->prenom = $request->prenom;
+        $model->ad1 = $request->ad1;
+        $model->ad2 = $request->ad2;
+        $model->cp = $request->cp;
+        $model->ville = $request->ville;
+        $model->tel = $model->cleanTel($request->tel);
+        $model->mobile = $model->cleanTel($request->mobile);
+                // $model->is_actif = (isset($request->is_actif)?1:0); // ToDo ??
+                // $model->email = $request->email; // ToDo
 
-        if($item->save()){
+        if($model->save()){
             return redirect()->route('espaceclient')->with('success', trans('message.client.storeOk'));
         }else{
             return redirect()->back()->with('status', trans('message.client.storefailed'));
@@ -65,27 +65,27 @@ class ClientController extends Controller
 
     public function edit($id)
     {
-        $item = Client::with('user')->where('id', $id)->first();
-        return view('client.edit')->with(compact('item'));
+        $model = Client::with('user')->where('id', $id)->first();
+        return view('client.edit')->with(compact('model'));
     }
 
 
     public function update($id, CoordonneesRequest $request)
     {
-        $item = Client::where('id', $id)->first();
+        $model = Client::where('id', $id)->first();
 
-        $item->nom = $request->nom;
-        $item->prenom = $request->prenom;
-        $item->ad1 = $request->ad1;
-        $item->ad2 = $request->ad2;
-        $item->cp = $request->cp;
-        $item->ville = $request->ville;
-        $item->tel = $item->cleanTel($request->tel);
-        $item->mobile = $item->cleanTel($request->mobile);
-        // $item->is_actif = (isset($request->is_actif)?1:0); // ToDo ??
-        // $item->email = $request->email; // ToDo
+        $model->nom = $request->nom;
+        $model->prenom = $request->prenom;
+        $model->ad1 = $request->ad1;
+        $model->ad2 = $request->ad2;
+        $model->cp = $request->cp;
+        $model->ville = $request->ville;
+        $model->tel = $model->cleanTel($request->tel);
+        $model->mobile = $model->cleanTel($request->mobile);
+        // $model->is_actif = (isset($request->is_actif)?1:0); // ToDo ??
+        // $model->email = $request->email; // ToDo
 
-        if($item->save()){
+        if($model->save()){
             return redirect()->route('espaceclient')->with('success', trans('message.client.updateOk'));
         }else{
             return redirect()->back()->with('status', trans('message.client.updatefailed'));
@@ -94,9 +94,9 @@ class ClientController extends Controller
 
     public function destroy($id)
     {
-        $item = Client::where('id', $id)->first();
+        $model = Client::where('id', $id)->first();
         dd("ToDo : gérer suppression du user associé (id n° $id)"); // ToDo
-        if($item->delete()){
+        if($model->delete()){
             return redirect()->route('client.index')->with('success', trans('message.client.deleteOk'));
         }else{
             return redirect()->back()->with('status', trans('message.client.deletefailed'));

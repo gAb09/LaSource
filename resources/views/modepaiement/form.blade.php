@@ -3,7 +3,7 @@
                             <label class="col-md-4 control-label">Nom&nbsp*</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="nom" value="{{ $item->nom or old('nom') }}">
+                                <input type="text" class="form-control" name="nom" value="{{ $model->nom or old('nom') }}">
 
                                 @if ($errors->has('nom'))
                                 <span class="help-block">
@@ -19,7 +19,7 @@
                             <label class="col-md-4 control-label">Remarques</label>
 
                             <div class="col-md-6">
-                                <input type="textarea" class="form-control" name="remarques" value="{{ $item->remarques or old('remarques') }}">
+                                <input type="textarea" class="form-control" name="remarques" value="{{ $model->remarques or old('remarques') }}">
 
                                 @if ($errors->has('remarques'))
                                 <span class="help-block">
@@ -34,10 +34,10 @@
                             <label class="col-md-4 control-label">Actif</label>
                             <div class="col-md-6">
                                 <input type="checkbox" class="form-control" name="is_actif" 
-                                @if($item->is_actif or old('is_actif'))
+                                @if($model->is_actif or old('is_actif'))
                                 checked="checked" 
                                 @endif
-                                value="{{ $item->is_actif or old('is_actif') }}">
+                                value="{{ $model->is_actif or old('is_actif') }}">
                             </div>
                         </div>
 

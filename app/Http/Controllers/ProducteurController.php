@@ -20,15 +20,15 @@ class ProducteurController extends Controller
 
     public function index()
     {
-        $items = $this->domaine->all();
-        return view('producteur.index')->with(compact('items'));
+        $models = $this->domaine->all();
+        return view('producteur.index')->with(compact('models'));
     }
 
 
     public function create()
     {
-        $item =  $this->domaine->newModel();
-        return view('producteur.create')->with(compact('item'));
+        $model =  $this->domaine->newModel();
+        return view('producteur.create')->with(compact('model'));
     }
 
 
@@ -44,8 +44,8 @@ class ProducteurController extends Controller
 
     public function edit($id)
     {
-    	$item = $this->domaine->findFirst('id', $id);
-    	return view('producteur.edit')->with(compact('item'));
+    	$model = $this->domaine->findFirst('id', $id);
+    	return view('producteur.edit')->with(compact('model'));
     }
 
 

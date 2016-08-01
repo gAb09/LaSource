@@ -9,7 +9,7 @@
                     <h3>{{ trans('titrepage.client.edit') }}</h3>
                 </div>
                 <div class="panel-body">
-                    <form class="form-inline" role="form" method="POST" action="{{ route('client.update', $item->id) }}">
+                    <form class="form-inline" role="form" method="POST" action="{{ route('client.update', $model->id) }}">
                         {!! csrf_field() !!}
                         <input type="hidden" class="form-control" name="_method" value="PUT">
 

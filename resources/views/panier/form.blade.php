@@ -1,12 +1,12 @@
                         <!-- id -->
-                                <input type="hidden" name="id" value="{{ $item->id or old('id') }}">
+                                <input type="hidden" name="id" value="{{ $model->id or old('id') }}">
 
                         <!-- type -->
                         <div class="form-group{{ $errors->has('type') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Type</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="type" value="{{ $item->type or old('type') }}">
+                                <input type="text" class="form-control" name="type" value="{{ $model->type or old('type') }}">
 
                                 @if ($errors->has('type'))
                                 <span class="help-block">
@@ -21,7 +21,7 @@
                             <label class="col-md-4 control-label">Nom court&nbsp*</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="nom_court" value="{{ $item->nom_court or old('nom_court') }}">
+                                <input type="text" class="form-control" name="nom_court" value="{{ $model->nom_court or old('nom_court') }}">
 
                                 @if ($errors->has('nom_court'))
                                 <span class="help-block">
@@ -37,7 +37,7 @@
                             <label class="col-md-4 control-label">Nom complet&nbsp*</label>
 
                             <div class="col-md-6">
-                                <textarea class="form-control" name="nom">{!! $item->nom or old('nom') !!}</textarea>
+                                <textarea class="form-control" name="nom">{!! $model->nom or old('nom') !!}</textarea>
 
                                 @if ($errors->has('nom'))
                                 <span class="help-block">
@@ -52,7 +52,7 @@
                             <label class="col-md-4 control-label">Prix base&nbsp*</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="prix_commun" value="{{ $item->prix_commun or old('prix_commun') }}">
+                                <input type="text" class="form-control" name="prix_commun" value="{{ $model->prix_commun or old('prix_commun') }}">
 
                                 @if ($errors->has('prix_commun'))
                                 <span class="help-block">
@@ -67,7 +67,7 @@
                             <label class="col-md-4 control-label">Idée</label>
 
                             <div class="col-md-6">
-                                <textarea class="form-control" style="font-style:italic;height:100px" name="idee">{!! $item->idee or old('idee') !!}</textarea>
+                                <textarea class="form-control" style="font-style:italic;height:100px" name="idee">{!! $model->idee or old('idee') !!}</textarea>
 
                                 @if ($errors->has('idee'))
                                 <span class="help-block">
@@ -82,7 +82,7 @@
                             <label class="col-md-4 control-label">Remarques</label>
 
                             <div class="col-md-6">
-                                <input type="textarea" class="form-control" style="font-size:0.8em" name="remarques" value="{{ $item->remarques or old('remarques') }}">
+                                <input type="textarea" class="form-control" style="font-size:0.8em" name="remarques" value="{{ $model->remarques or old('remarques') }}">
 
                                 @if ($errors->has('remarques'))
                                 <span class="help-block">
@@ -93,14 +93,14 @@
                         </div>
 
                         <!-- is_actif -->
-                        <div id="" class="form-group toggle_actif {{$item->class_actif}}">
+                        <div id="" class="form-group toggle_actif {{$model->class_actif}}">
                             <label class="col-md-4 control-label">Actif</label>
                             <div class="col-md-6">
                                 <input type="checkbox" class="form-control" style="width:16px" name="is_actif" onChange="javascript:handleIsActifClass();" 
-                                @if($item->is_actif or old('is_actif'))
+                                @if($model->is_actif or old('is_actif'))
                                 checked="checked" 
                                 @endif
-                                value="{{ $item->is_actif or old('is_actif') }}">
+                                value="{{ $model->is_actif or old('is_actif') }}">
                             </div>
                         </div>
 
@@ -109,7 +109,7 @@
                             <label class="col-md-4 control-label">Rang</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="rang" value="{{ $item->rang or old('rang') }}">
+                                <input type="text" class="form-control" name="rang" value="{{ $model->rang or old('rang') }}">
 
                                 @if ($errors->has('rang'))
                                 <span class="help-block">

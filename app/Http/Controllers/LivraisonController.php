@@ -28,17 +28,17 @@ class LivraisonController extends Controller
 
     public function index()
     {
-        $items = $this->domaine->index();
-        return view('livraison.index')->with(compact('items'));
+        $models = $this->domaine->index();
+        return view('livraison.index')->with(compact('models'));
     }
 
 
     public function create()
     {
-        $item = $this->domaine->create();
+        $model = $this->domaine->create();
         $date_titrepage = "En création";
 
-        return view('livraison.create')->with(compact('item', 'date_titrepage'));
+        return view('livraison.create')->with(compact('model', 'date_titrepage'));
     }
 
 
@@ -58,14 +58,14 @@ class LivraisonController extends Controller
 
     public function edit($id)
     {
-    	$item = $this->domaine->edit($id);
+    	$model = $this->domaine->edit($id);
 
-        $date_titrepage = $item->date_livraison_enclair;
+        $date_titrepage = $model->date_livraison_enclair;
 
         $panierschoisis = $this->panier->paniersChoisis($id);
         // dd($panierschoisis);
 
-        return view('livraison.edit')->with(compact('item','date_titrepage', 'paniers', 'panierschoisis' ));
+        return view('livraison.edit')->with(compact('model','date_titrepage', 'paniers', 'panierschoisis' ));
     }
 
 
@@ -103,12 +103,12 @@ class LivraisonController extends Controller
     public function listPaniers($livraison_id)
     {
         // dd('listPaniers');
-        $item = $this->domaine->findFirst('id', $livraison_id);
-        // dd($item);
+        $model = $this->domaine->findFirst('id', $livraison_id);
+        // dd($model);
         $paniers = $this->panier->listPaniers($livraison_id);
-        $titre_page = trans('titrepage.livraison.listPaniers', ['date' => $item->date_livraison_enclair]);
+        $titre_page = trans('titrepage.livraison.listPaniers', ['date' => $model->date_livraison_enclair]);
 
-        return view('livraison.modales.listPaniers')->with(compact('item', 'paniers', 'titre_page'));
+        return view('livraison.modales.listPaniers')->with(compact('model', 'paniers', 'titre_page'));
     }
 
 

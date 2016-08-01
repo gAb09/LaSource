@@ -6,10 +6,10 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3>{{ trans('titrepage.producteur.edit', ['exploitation' => $item->exploitation]) }}</h3>
+                    <h3>{{ trans('titrepage.producteur.edit', ['exploitation' => $model->exploitation]) }}</h3>
                 </div>
                 <div class="panel-body">
-                    <form class="form-inline" role="form" method="POST" action="{{ route('producteur.update', $item->id) }}">
+                    <form class="form-inline" role="form" method="POST" action="{{ route('producteur.update', $model->id) }}">
                         {!! csrf_field() !!}
                         <input type="hidden" class="form-control" name="_method" value="PUT">
 
@@ -24,7 +24,7 @@
                         </div>
                     </form>
 
-                    <form class="form-inline" role="form" method="POST" action="{{ route('producteur.destroy', $item->id) }}">
+                    <form class="form-inline" role="form" method="POST" action="{{ route('producteur.destroy', $model->id) }}">
                         {!! csrf_field() !!}
                         <input type="hidden" class="form-control" name="_method" value="DELETE">
 

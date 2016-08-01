@@ -21,17 +21,17 @@ class ModePaiementController extends Controller
 
     public function index()
     {
-        $items = $this->domaine->index();
+        $models = $this->domaine->index();
 
-        return view('modepaiement.index')->with(compact('items'));
+        return view('modepaiement.index')->with(compact('models'));
     }
 
 
     public function create()
     {
-        $item =  $this->domaine->newModel();
+        $model =  $this->domaine->newModel();
 
-        return view('modepaiement.create')->with(compact('item'));
+        return view('modepaiement.create')->with(compact('model'));
     }
 
 
@@ -49,9 +49,9 @@ class ModePaiementController extends Controller
 
     public function edit($id)
     {
-    	$item = $this->domaine->findFirst('id', $id);
+    	$model = $this->domaine->findFirst('id', $id);
 
-        return view('modepaiement.edit')->with(compact('item'));
+        return view('modepaiement.edit')->with(compact('model'));
     }
 
 

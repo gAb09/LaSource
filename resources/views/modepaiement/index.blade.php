@@ -20,14 +20,14 @@
 
 <div class="offset3 span11 flexcontainer">
 
-	@foreach($items as $item)
+	@foreach($models as $model)
 
-	<div class="portrait {{$item->class_actif}}" ondblClick = "javascript:document.location.href='http://lasource/modepaiement/{{ $item->id }}/edit';">
+	<div class="portrait {{$model->class_actif}}" ondblClick = "javascript:document.location.href='http://lasource/modepaiement/{{ $model->id }}/edit';">
 
 		<p class="lighten33">
-			{{ $item->nom }}<br />
+			{{ $model->nom }}<br />
 		</p>
-		<p>{{ $item->remarques }}</p>
+		<p>{{ $model->remarques }}</p>
 
 
 	</div>

@@ -43,7 +43,7 @@
 
 	<tbody>
 
-		@foreach($items as $item)
+		@foreach($models as $model)
 
 		@include('livraison.index_row')
 

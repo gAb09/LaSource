@@ -1,4 +1,4 @@
-<form id="syncPaniers"  class="form-inline" role="form" method="POST" action="{{ route('livraisonSyncPaniers', [$item->id]) }}">
+<form id="syncPaniers"  class="form-inline" role="form" method="POST" action="{{ route('livraisonSyncPaniers', [$model->id]) }}">
 	{!! csrf_field() !!}
 	@include('livraison.button.PanierSyncProducteurs')
 	<div class="modemploi">

@@ -21,23 +21,23 @@
 
 <div class="offset3 span11 flexcontainer">
 
-	@foreach($items as $item)
+	@foreach($models as $model)
 
-		<div class="portrait  {{$item->class_actif}}" ondblClick = "javascript:document.location.href='{{ route('relais.edit', $item->id) }}';">
+		<div class="portrait  {{$model->class_actif}}" ondblClick = "javascript:document.location.href='{{ route('relais.edit', $model->id) }}';">
 
 			<p class="lighten33">
-				{{ $item->ville }} {{ $item->tel }}<br />
-				{{ $item->retrait }}
+				{{ $model->ville }} {{ $model->tel }}<br />
+				{{ $model->retrait }}
 			</p>
-				{{ $item->nom }}<br />
-				{{ $item->ad1 }}<br />
-				@if($item->ad2)
-				{{ $item->ad2 }}<br />
+				{{ $model->nom }}<br />
+				{{ $model->ad1 }}<br />
+				@if($model->ad2)
+				{{ $model->ad2 }}<br />
 				@endif
-				{{ $item->cp }} {{ $item->ville }}<br />
-				{{ $item->email }}
-				<p>{{ $item->ouvertures }}</p>
-				<p>{{ $item->remarques }}</p>
+				{{ $model->cp }} {{ $model->ville }}<br />
+				{{ $model->email }}
+				<p>{{ $model->ouvertures }}</p>
+				<p>{{ $model->remarques }}</p>
 
 
 		</div>

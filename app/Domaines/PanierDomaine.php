@@ -65,20 +65,20 @@ class PanierDomaine extends Domaine
 
 	public function listPaniers($livraison_id = null)
 	{
-		$items = $this->model->with('Producteur', 'livraison')->where('is_actif', 1)->orderBy('type')->get();
+		$models = $this->model->with('Producteur', 'livraison')->where('is_actif', 1)->orderBy('type')->get();
 
 		/* livraison.create */
 		if ($livraison_id == null) { 
-			return $items;
+			return $models;
 		}
 
 		/* livraison.update */
-		$items->each(function($item) use($livraison_id)
+		$models->each(function($model) use($livraison_id)
 		{
-			$item->nom = str_replace(['<br />', '<br/>'], " - ", $item->nom);
-			$item = $this->preparePaniersForView($item, $livraison_id);
+			$model->nom = str_replace(['<br />', '<br/>'], " - ", $model->nom);
+			$model = $this->preparePaniersForView($model, $livraison_id);
 		});
-		return $items;
+		return $models;
 	}
 
 	public function paniersChoisis($livraison_id = null)
@@ -116,30 +116,30 @@ class PanierDomaine extends Domaine
 	}
 
 
-	public function PanierSyncProducteurs($panier, $producteurs = array())
+	public function PanierSyncProducteurs($panier_id, $producteurs = array())
 	{
-		$item = Panier::find($panier);
+		$model = Panier::find($panier_id);
 		if(is_null($producteurs)){
-			$item->producteur()->detach();
+			$model->producteur()->detach();
 		}else{
-			$item->producteur()->sync($producteurs);
+			$model->producteur()->sync($producteurs);
 		}
 	}
 
-	private function preparePaniersForView($item, $livraison_id)
+	private function preparePaniersForView($model, $livraison_id)
 	{
-		$livraisons = $item->livraison;
+		$livraisons = $model->livraison;
 		if(!empty($livraisons)){
-			$livraisons->each(function($livraison) use($livraison_id, $item)
+			$livraisons->each(function($livraison) use($livraison_id, $model)
 			{
 				if ( $livraison->id == $livraison_id)
 				{
-					$item->lied = "lied";
+					$model->lied = "lied";
 				}
 			});
 		}
 
-		return $item;
+		return $model;
 	}
 
 
