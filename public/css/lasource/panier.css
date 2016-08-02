@@ -12,9 +12,9 @@ COULEURS
   background-color: #f5f0e2;
   border-color: #f5f0e2;
 }
-.toggle_actif.is_actif div {
-  background-color: #f5f0e2;
-}
 .panier {
   background-color: #f9f6ed;
+}
+.panier .toggle_actif.is_actif div {
+  background-color: #f5f0e2;
 }

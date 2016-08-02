@@ -95,7 +95,7 @@ class PanierController extends Controller
     public function getDeleted()
     {
         $models = $this->domaine->getDeleted();
-        return view('panier.trashed')->with(compact('models'));
+        return view('panier.trashed')->with(['models' => $models, 'trashed' => 'trashed']);
     }
 
     public function setRangs(Request $request)

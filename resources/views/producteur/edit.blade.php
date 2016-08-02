@@ -7,11 +7,13 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3>{{ trans('titrepage.producteur.edit', ['exploitation' => $model->exploitation]) }}</h3>
+                    @include('producteur.button.index', ['etiquette' => 'Retour à la liste'])
                 </div>
-                <div class="panel-body">
-                    <form class="form-inline" role="form" method="POST" action="{{ route('producteur.update', $model->id) }}">
+                <div class="panel-body producteur">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('producteur.update', $model->id) }}">
                         {!! csrf_field() !!}
                         <input type="hidden" class="form-control" name="_method" value="PUT">
+                        <p class="rappel_id">Producteur n° {{ $model->id }}</p>
 
                         @include('producteur.form')
 
@@ -23,17 +25,9 @@
                             </div>
                         </div>
                     </form>
-
-                    <form class="form-inline" role="form" method="POST" action="{{ route('producteur.destroy', $model->id) }}">
-                        {!! csrf_field() !!}
-                        <input type="hidden" class="form-control" name="_method" value="DELETE">
-
-                        <button class="btn-xs btn-danger"> <i class="fa fa-btn fa-trash-o"></i>Supprimer ce producteur
-                        </button>
-                    </form>
-
                 </div> 
             </div>
+            @include('producteur.button.delete')
         </div>
     </div>
 </div>

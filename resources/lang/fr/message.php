@@ -18,6 +18,7 @@ return [
         'storefailed'       => 'Problème. Le client n’a pas pu être créé…',
         'deleteOk'           => 'Le client a bien été supprimé.',
         'deletefailed'       => 'Problème. Le client n’a pas pu être supprimé…',
+        'confirmDelete'    => 'Êtes-vous sur de vouloir supprimer le client “:model” ?\nTout lien avec …… sera supprimé.',
     ],
 
     'producteur' => [
@@ -27,6 +28,7 @@ return [
         'storefailed'   => 'Problème. Le producteur n’a pas pu être créé…',
         'deleteOk'      => 'Le producteur a bien été supprimé.',
         'deletefailed'  => 'Problème. Le producteur n’a pas pu être supprimé…',
+        'confirmDelete'    => 'Êtes-vous sur de vouloir supprimer le producteur “:model” ?\nTout lien avec …… sera supprimé.',
     ],
 
     'relais' => [
@@ -36,6 +38,7 @@ return [
         'storefailed'   => 'Problème. Le relais n’a pas pu être créé…',
         'deleteOk'      => 'Le relais a bien été supprimé.',
         'deletefailed'  => 'Problème. Le relais n’a pas pu être supprimé…',
+        'confirmDelete'    => 'Êtes-vous sur de vouloir supprimer le relais “:model” ?\nTout lien avec …… sera supprimé.',
     ],
 
     'panier' => [
@@ -48,7 +51,7 @@ return [
         'setRangsOk'        => 'L’ordre des paniers a bien été modifié.',
         'setRangsFailed'    => 'L’ordre des paniers n’a pas pu été modifié.',
         'liedToLivraison'    => 'Ce panier est proposé dans la livraison du :date',
-        'confirmDelete'    => 'Êtes-vous sur de vouloir supprimer le panier :panier ?\nTout lien avec un ou plusieurs producteurs sera supprimé.',
+        'confirmDelete'    => 'Êtes-vous sur de vouloir supprimer le panier “:model” ?\nTout lien avec un ou plusieurs producteurs sera supprimé.',
     ],
 
     'modepaiement' => [
@@ -58,6 +61,7 @@ return [
         'storefailed'   => 'Problème. Le mode de paiement n’a pas pu être créé…',
         'deleteOk'      => 'Le mode de paiement a bien été supprimé.',
         'deletefailed'  => 'Problème. Le mode de paiement n’a pas pu être supprimé…',
+        'confirmDelete'    => 'Êtes-vous sur de vouloir supprimer le mode de paiement “:model” ?\nTout lien avec …… sera supprimé.',
     ],
 
     'livraison' => [

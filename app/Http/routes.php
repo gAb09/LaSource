@@ -86,23 +86,34 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@Main']);
 
 
-// Client...
+// CLIENT...
+	Route::get('client/getdeleted', ['as' => 'client.getdeleted', 'uses' => 'ClientController@getDeleted']);
 	Route::get('espaceclient', ['as' => 'espaceclient', 'uses' => 'ClientController@espaceclient']);
 
 	Route::resource('client', 'ClientController');
 
 
-// Relais...
+// MODE DE PAIEMENT...
+	Route::get('modepaiement/getdeleted', ['as' => 'modepaiement.getdeleted', 'uses' => 'ModePaiementController@getDeleted']);
+	Route::resource('modepaiement', 'ModePaiementController');
+
+
+
+// RELAIS...
+	Route::get('relais/getdeleted', ['as' => 'relais.getdeleted', 'uses' => 'RelaisController@getDeleted']);
 	Route::resource('relais', 'RelaisController');
 
 
-// Producteur...
+// PRODUCTEUR...
+	Route::get('producteur/getdeleted', ['as' => 'producteur.getdeleted', 'uses' => 'ProducteurController@getDeleted']);
 	Route::resource('producteur', 'ProducteurController');
+	Route::get('setrangs/producteur', ['as' => 'media.set_rang', 'uses' => 'ProducteurController@setRangs']);
 
 
 // PANIER...
 	Route::get('panier/getdeleted', ['as' => 'panier.getdeleted', 'uses' => 'PanierController@getDeleted']);
 	Route::resource('panier', 'PanierController');
+	Route::get('setrangs/panier', ['as' => 'media.set_rang', 'uses' => 'PanierController@setRangs']);
 
 
 // LIVRAISON...
@@ -140,13 +151,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('livraison', 'LivraisonController');
 
 
-// ModePaiement...
-	Route::resource('modepaiement', 'ModePaiementController');
-
 // Menus...
 	Route::resource('menus', '\Menus\MenuController');
-
-	Route::any('setrangs/panier', ['as' => 'media.set_rang', 'uses' => 'PanierController@setRangs']);
 
 });
 

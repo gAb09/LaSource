@@ -63,11 +63,11 @@
                         </div>
 
                         <!-- idee -->
-                        <div class="form-group{{ $errors->has('idee') ? ' has-error' : '' }}">
+                        <div class="form-group {{ $errors->has('idee') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Idée</label>
 
                             <div class="col-md-6">
-                                <textarea class="form-control" style="font-style:italic;height:100px" name="idee">{!! $model->idee or old('idee') !!}</textarea>
+                                <textarea class="form-control idee" name="idee">{!! $model->idee or old('idee') !!}</textarea>
 
                                 @if ($errors->has('idee'))
                                 <span class="help-block">
@@ -82,7 +82,7 @@
                             <label class="col-md-4 control-label">Remarques</label>
 
                             <div class="col-md-6">
-                                <input type="textarea" class="form-control" style="font-size:0.8em" name="remarques" value="{{ $model->remarques or old('remarques') }}">
+                                <textarea class="form-control remarques" name="remarques">{!! $model->remarques or old('remarques') !!}</textarea>
 
                                 @if ($errors->has('remarques'))
                                 <span class="help-block">
@@ -103,19 +103,3 @@
                                 value="{{ $model->is_actif or old('is_actif') }}">
                             </div>
                         </div>
-
-                        <!-- rang -->
-                        <div class="hidden form-group {{ $errors->has('rang') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Rang</label>
-
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" name="rang" value="{{ $model->rang or old('rang') }}">
-
-                                @if ($errors->has('rang'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('rang') }}</strong>
-                                </span>
-                                @endif
-                            </div>
-                        </div>
-

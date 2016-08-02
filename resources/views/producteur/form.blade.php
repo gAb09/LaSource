@@ -1,3 +1,19 @@
+                        <!-- nompourpaniers -->
+                        <div class="form-group{{ $errors->has('nompourpaniers') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">Nom pour Paniers&nbsp*</label>
+
+                            <div class="col-md-6">
+                                <input type="textarea" class="form-control" name="nompourpaniers" value="{{ $model->nompourpaniers or old('nompourpaniers') }}">
+
+                                @if ($errors->has('nompourpaniers'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('nompourpaniers') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+
+
                         <!-- exploitation -->
                         <div class="form-group{{ $errors->has('exploitation') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Exploitation&nbsp*</label>
@@ -154,28 +170,12 @@
                         </div>
 
 
-                        <!-- nompourpaniers -->
-                        <div class="form-group{{ $errors->has('nompourpaniers') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Nom pour Paniers&nbsp*</label>
-
-                            <div class="col-md-6">
-                                <input type="textarea" class="form-control" name="nompourpaniers" value="{{ $model->nompourpaniers or old('nompourpaniers') }}">
-
-                                @if ($errors->has('nompourpaniers'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('nompourpaniers') }}</strong>
-                                </span>
-                                @endif
-                            </div>
-                        </div>
-
-
                         <!-- remarques -->
                         <div class="form-group{{ $errors->has('remarques') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Remarques</label>
 
                             <div class="col-md-6">
-                                <input type="textarea" class="form-control" name="remarques" value="{{ $model->remarques or old('remarques') }}">
+                                <textarea class="form-control remarques" name="remarques">{!! $model->remarques or old('remarques') !!}</textarea>
 
                                 @if ($errors->has('remarques'))
                                 <span class="help-block">
@@ -186,14 +186,13 @@
                         </div>
 
                         <!-- is_actif -->
-                        <div class="form-group">
+                        <div id="" class="form-group toggle_actif {{$model->class_actif}}">
                             <label class="col-md-4 control-label">Actif</label>
                             <div class="col-md-6">
-                                <input type="checkbox" class="form-control" name="is_actif" 
+                                <input type="checkbox" class="form-control" style="width:16px" name="is_actif" onChange="javascript:handleIsActifClass();" 
                                 @if($model->is_actif or old('is_actif'))
                                 checked="checked" 
                                 @endif
                                 value="{{ $model->is_actif or old('is_actif') }}">
                             </div>
                         </div>
-

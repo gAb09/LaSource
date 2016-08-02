@@ -37,7 +37,7 @@
 				{{ $model->cp }} {{ $model->ville }}<br />
 				{{ $model->email }}
 				<p>{{ $model->ouvertures }}</p>
-				<p>{{ $model->remarques }}</p>
+				<p class="remarques">{{ $model->remarques }}</p>
 
 
 		</div>

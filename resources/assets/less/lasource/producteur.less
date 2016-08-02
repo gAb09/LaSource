@@ -1,0 +1,20 @@
+@import "variables.less";
+
+#producteurs_index, #producteurs_trashed {
+	&:hover{
+		cursor:all-scroll;
+	}
+	.fiche.is_actif{
+		background-color:@color_producteur;
+		border-color:@color_producteur;
+	}
+}
+
+
+.producteur{
+	background-color: lighten(@color_producteur, 3%);
+	.toggle_actif.is_actif div{
+		background-color: @color_producteur;
+	}
+}
+

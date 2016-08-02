@@ -7,9 +7,10 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3>{{ trans('titrepage.producteur.create') }}</h3>
+                    @include('producteur.button.index', ['etiquette' => 'Retour à la liste'])
                 </div>
                 <div class="panel-body">
-                    <form class="form-inline" role="form" method="POST" action="{{ route('producteur.store') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('producteur.store') }}">
                         {!! csrf_field() !!}
 
                         @include('producteur.form')

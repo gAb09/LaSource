@@ -155,7 +155,7 @@
                             <label class="col-md-4 control-label">Remarques</label>
 
                             <div class="col-md-6">
-                                <input type="textarea" class="form-control" name="remarques" value="{{ $model->remarques or old('remarques') }}">
+                                <input type="textarea" class="form-control remarques" name="remarques" value="{{ $model->remarques or old('remarques') }}">
 
                                 @if ($errors->has('remarques'))
                                 <span class="help-block">

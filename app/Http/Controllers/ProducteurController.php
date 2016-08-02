@@ -20,7 +20,7 @@ class ProducteurController extends Controller
 
     public function index()
     {
-        $models = $this->domaine->all();
+        $models = $this->domaine->all('rang');
         return view('producteur.index')->with(compact('models'));
     }
 
@@ -67,6 +67,17 @@ class ProducteurController extends Controller
             return redirect()->back()->with('status', trans('message.producteur.deletefailed'));
         }
 
+    }
+
+    public function getDeleted()
+    {
+        $models = $this->domaine->getDeleted();
+        return view('producteur.trashed')->with(['models' => $models, 'trashed' => 'trashed']);
+    }
+
+    public function setRangs(Request $request)
+    {
+        return $this->domaine->setRangs($request);
     }
 
 

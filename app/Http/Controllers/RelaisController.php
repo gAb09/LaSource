@@ -70,5 +70,16 @@ class RelaisController extends Controller
 
     }
 
+    public function getDeleted()
+    {
+        $models = $this->domaine->getDeleted();
+        return view('relais.trashed')->with(compact('models', 'trashed'));
+    }
+
+    public function setRangs(Request $request)
+    {
+        return $this->domaine->setRangs($request);
+    }
+
 
 }

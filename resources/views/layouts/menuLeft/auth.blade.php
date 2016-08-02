@@ -28,7 +28,11 @@
 	</a>
 
 	<ul class="dropdown-menu" role="menu">
-		<li><a href="{{ route('panier.getdeleted') }}">Paniers</a></li>
+		<li><a href="{{ route('panier.getdeleted') }}">Panier</a></li>
+		<li><a href="{{ route('producteur.getdeleted') }}">Producteur</a></li>
+		<li><a href="{{ route('relais.getdeleted') }}">Relais</a></li>
+		<li><a href="{{ route('modepaiement.getdeleted') }}">Mode de Paiement</a></li>
+		<li><a href="{{ route('client.getdeleted') }}">Client</a></li>
 	</ul>
 </li>
 

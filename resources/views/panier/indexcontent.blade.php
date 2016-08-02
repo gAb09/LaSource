@@ -1,7 +1,9 @@
 @forelse($models as $model)
 <div style="position:relative" class="fiche {{$model->class_actif}}" ondblClick = "javascript:document.location.href='http://lasource/panier/{{ $model->id }}/edit';">
 
-	@include('layouts.button.supp', ['model' => 'panier', 'model_id' => $model->id, 'text_confirm' => trans('message.panier.confirmDelete', ['panier' => "$model->type - $model->nom_court"]) ])
+	@if(!isset($trashed))
+	@include('layouts.button.supp', ['model' => 'panier', 'model_id' => $model->id, 'text_confirm' => trans('message.panier.confirmDelete', ['model' => "$model->type - $model->nom_court"]) ])
+	@endif
 	@include('layouts.button.edite', ['model' => 'panier', 'model_id' => $model->id])
 
 	<p class="lighten66">{{ $model->type }}<br />
@@ -20,8 +22,8 @@
 		<strong>{{ $model->prix_commun }}</strong>
 	</p>
 
-	<p><small>
-		{!! $model->remarques !!}</small>
+	<p class="remarques">
+		{!! $model->remarques !!}
 	</p>
 
 	<p class="hidden id">{{ $model->id }}</p> {{-- surtout pas de CR dans cette ligne --}}
@@ -33,8 +35,8 @@
 
 </div>
 @empty 
-<h3>Aucun panier supprimé
-@include('panier.button.index', ['etiquette' => 'Liste des paniers'])
+<h3>Aucun producteur supprimé
+@include('producteur.button.index', ['etiquette' => 'Liste des producteurs'])
 </h3>
 @endforelse
 

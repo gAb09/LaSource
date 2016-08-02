@@ -22,7 +22,7 @@ class ProducteurDomaine extends Domaine
 	}
 
 	public function update($id, $request){
-		$this->model = Producteur::where('id', $id)->first();
+		$this->model = Producteur::withTrashed()->where('id', $id)->first();
 		$this->handleRequest($request);
 
 		return $this->model->save();
@@ -44,7 +44,11 @@ class ProducteurDomaine extends Domaine
 		$this->model->mobile = $request->mobile;
 		$this->model->email = $request->email;
 		$this->model->nompourpaniers = $request->nompourpaniers;
+		$this->model->remarques = $request->remarques;
 		$this->model->is_actif = (isset($request->is_actif)?1:0);
+		$new_rang = $this->model->max('rang')+1;
+		$this->model->rang = ($request->rang)? $request->rang :$new_rang ;
+		$this->model->restore();
 	}
 
 	public function listProducteursForPanier($panier_id)

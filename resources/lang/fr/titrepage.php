@@ -23,6 +23,7 @@ return [
                 'index' => 'Les relais',
                 'create'  => 'Création d’un relais',
                 'edit'  => 'Édition du relais “:nom”',
+                'trashed'  => 'Réhabilitation des relais supprimés',
             ],
 
         'producteur' => 
@@ -30,6 +31,7 @@ return [
                 'index' => 'Les producteurs',
                 'create'  => 'Création d’un producteur',
                 'edit'  => 'Édition du producteur “:exploitation”',
+                'trashed'  => 'Réhabilitation des producteurs supprimés',
             ],
 
         'panier' => 
@@ -57,13 +59,16 @@ return [
                 'index' => 'Les modes de paiement',
                 'create'  => 'Création d’un mode de paiement',
                 'edit'  => 'Édition du mode de paiement “:nom”',
+                'trashed'  => 'Réhabilitation des modes de paiement supprimés',
             ],
 
         'client' => 
             [
                 'index' => 'Les clients',
                 'edit'  => 'Modification de mes coordonnées',
+                'trashed'  => 'Réhabilitation des clients supprimés',
             ],
+
         'dashboard' => 
             [
                 'main' => 'Tableau de bord',

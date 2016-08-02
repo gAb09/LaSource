@@ -2,7 +2,7 @@
         <div class="col-md-4 footer1">
             @section('footer1')
             Association La Source<br />
-            {{$lasource->tel}}<br />
+            {{-- $lasource->tel --}}<br />
             {{Html::linkAction('ContactController@ContactLS', 'Contacter La Source par courriel')}}
             @show
         </div>
