@@ -1,96 +1,83 @@
+@import "variables.less";
+
 /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 Vue index
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 .index_livraisons{
 	border-collapse: collapse;
-	background-color: grey;
+	thead{
+		background-color: @color_livraison_dark;
+		color:@color_livraison;
+	}
+	tbody tr{
+		background-color: @color_livraison;
+		font-size: 0.9em;
+		border-bottom: 1px solid @color_livraison_dark;
+	}
+	th, td{
+		padding: 6px;
+	}
 }
 
-.index_livraisons thead{
-	background-color: DarkGoldenRod;
-	color:SeaShell;
-}
-
-.index_livraisons td{
-	padding: 6px;
-}
-
-.index_livraisons th{
-	padding: 6px;
-}
-
-.index_livraison{
-	background-color: SeaShell;
-	font-size: 0.9em;
-	border-bottom: 1px solid DarkGoldenRod;
-}
-
-.ligne_livraison form{
-	width: 100%;
-}
 
 /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 Vue handle (create & edit)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-.form_dates, .form_paniers, .livraison_footer{
-	background-color:#EEE;
-	text-align: left;
+.form_dates, .form_paniers,{
+	background-color:@color_livraison;
 	margin-top:10px;
 	justify-content:space-around;
 	align-items: center;
 }
 
-.form_dates input{
-	width:250px;
+.form_dates{
+	input{
+		width:250px;
+	}
 }
 
-.livraison_footer{
-	justify-content:center;
+.form_paniers{
+	.panierschoisis{
+		tr{
+			font-size:0.8em;
+			background-color: @color_livraison2;
+			border-style: solid;
+			border-color: @color_livraison_dark;
+			border-width: 1px 0;
+		}
+		td{
+			padding: 0px 10px;
+		}
+		td .nomcourt {
+			font-size: 1.1em;
+			font-weight: bold;
+			width: 150px;
+		}
+		select{
+			margin-top:10px;
+		}
+		.prix{
+			width:50px;
+			text-align:right;
+		}
+	}
 }
 
-.unpanierchoisi{
-	font-size:0.8em;
- 	background-color: #ddd;
-    border-style: solid;
-    border-color: #eee;
-    border-width: 5px;
-}
 
-.unpanierchoisi td{
-	padding: 0px 10px;
-}
 
 .boutonspaniers{
 	flex-flow: column wrap;
 	align-items: center;	
+	button{
+		margin-top: 5px;	
+	}
 }
 
-.boutonspaniers button{
-	margin-top: 5px;	
-}
-
-
-.nomcourt {
-    font-size: 1.1em;
-    font-weight: bold;
-    width: 150px;
-}
-
-/**
-* Prix dans ligne panier d'une livraison
-**/
-.prix{
-	width:50px;
-	text-align:right;
-}
-
+//////////////////////////////////////////////////////////////////////////////////
 
 /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 Vues modales
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-.lied{
-	background-color:#ACEFAC;
-}
 
 
 /* Vue modale (listPaniers)

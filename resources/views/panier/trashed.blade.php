@@ -19,5 +19,7 @@ Un <strong>double-clic</strong> sur un panier le sortira de la corbeille et perm
 
 
 @section('content')
-@include('panier.indexcontent')
+<div id="paniers_trashed" class="offset3 span11 flexcontainer">
+	@include('panier.indexcontent')
+</div>
 @stop

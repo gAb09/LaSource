@@ -33,7 +33,8 @@
 
 </div>
 @empty 
-<h3>Aucun panier supprimé</h3>
+<h3>Aucun panier supprimé
 @include('panier.button.index', ['etiquette' => 'Liste des paniers'])
+</h3>
 @endforelse
 

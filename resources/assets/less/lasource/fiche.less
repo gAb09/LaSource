@@ -17,3 +17,64 @@
 	border-color: @color_notactif;
 }
 
+/*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Boutons supp et edite */
+
+.supp, .edite{
+	border-radius: 6px;
+	background-color: #FFF;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 25px;
+	height:25px;
+	padding: 3px 3px 3px 4px;
+
+	.etiquette{
+		border-radius: 6px;
+		position:absolute;
+		padding-bottom: 2px;
+		bottom:-25px;
+		left:0;
+		width: 0px;
+		opacity: 0;
+	}
+
+	&:hover{
+		transition: 0.5s;
+		transition-delay: 0.2s;
+		background-color: @color_danger;
+		color: white;
+		cursor: pointer;
+		z-index:1000;
+
+		.etiquette{
+			transition: 0.4s;
+			transition-delay: 0.2s;
+			opacity: 1;
+			display: inline;
+			bottom:24px;
+			left:0;
+			width: 86px;
+			background-color: @color_danger;
+			color: white;
+		}
+	}
+}
+
+
+/* Bouton edite */
+
+.edite{
+	left: 30px;
+
+	&:hover{
+		background-color: @color_primary;
+
+		.etiquette{
+			width: 70px;
+			background-color: @color_primary;
+		}
+	}
+}
+

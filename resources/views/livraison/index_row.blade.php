@@ -1,5 +1,5 @@
 <tr 
-class="index_livraison ombrable"
+class="ombrable"
 id="row_{{ $model->id }}" 
 onDblClick="javascript:document.location.href='{{ route('livraison.edit', $model->id) }}' ;"
 >

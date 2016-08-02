@@ -6,14 +6,14 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3>{!! trans('titrepage.panier.edit', ['nom_court' => $model->nom_court, 'type' => $model->type]) !!}{{ $model->id }}</h3>
+                    <h3>{!! trans('titrepage.panier.edit', ['nom_court' => $model->nom_court, 'type' => $model->type]) !!}</h3>
                     @include('panier.button.index', ['etiquette' => 'Retour à la liste'])
                 </div>
                 <div class="panel-body panier">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('panier.update', $model->id) }}">
                         {!! csrf_field() !!}
                         <input type="hidden" class="form-control" name="_method" value="PUT">
-
+                        <p class="rappel_id">Panier n° {{ $model->id }}</p>
                         @include('panier.form')
 
                         <div class="form-group">

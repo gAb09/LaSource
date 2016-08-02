@@ -6,7 +6,7 @@
 		<tbody>
 			@forelse($panierschoisis as $panier)
 
-			<tr class="unpanierchoisi">
+			<tr>
 
 				<td style="width:15%">
 					<!-- Edit -->
