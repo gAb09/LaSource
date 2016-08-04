@@ -4,16 +4,16 @@
 
 		<div class="allowstickyfooter">
 
-			<p class="lighten66">{{ $model->exploitation }}<br />
+			<p class="inset lighten66">{{ $model->exploitation }}<br />
 				{{ $model->prenom }} {{ $model->nom }}
 			</p>
-			<p><strong>{{ $model->nompourproducteurs }}</strong></p>
-			<p class="lighten50">
+			<p><strong>{{ $model->nompourpaniers }}</strong></p>
+			<p class="inset lighten50">
 				{{ $model->tel }}<br />
 				{{ $model->mobile }}<br />
 				{{ $model->ad1 }}<br />
 				@if($model->ad2)
-				{{ $model->ad2 }}
+				{{ $model->ad2 }}<br />
 				@endif
 				{{ $model->cp }} {{ $model->ville }}<br />
 				{{ $model->email }}

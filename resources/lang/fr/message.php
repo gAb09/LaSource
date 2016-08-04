@@ -28,6 +28,8 @@ return [
         'storefailed'   => 'Problème. Le producteur n’a pas pu être créé…',
         'deleteOk'      => 'Le producteur a bien été supprimé.',
         'deletefailed'  => 'Problème. Le producteur n’a pas pu être supprimé…',
+        'setRangsOk'        => 'L’ordre des producteurs a bien été modifié.',
+        'setRangsFailed'    => 'L’ordre des producteurs n’a pas pu été modifié.',
         'confirmDelete'    => 'Êtes-vous sur de vouloir supprimer le producteur “:model” ?\nTout lien avec …… sera supprimé.',
     ],
 
