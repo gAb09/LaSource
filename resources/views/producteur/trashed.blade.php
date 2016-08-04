@@ -19,7 +19,5 @@ Un <strong>double-clic</strong> sur un producteur le sortira de la corbeille et 
 
 
 @section('content')
-<div id="producteurs_trashed" class="offset3 span11 flexcontainer">
 	@include('producteur.indexcontent')
-</div>
 @stop

@@ -34,7 +34,7 @@
     </style>
 </head>
 
-<body id="app-layout" class="layout_flexcontainer">
+<body id="app-layout" class="stickycontainer">
     @section('modal')
     @show
     <nav class="navbar navbar-default navbar-static-top">
@@ -107,7 +107,7 @@
 
     <!-- - - - - - - - - - - - - - - - TOP CONTENT (2 zones) - - - - - - - - - - - - - - -->
     @hasSection('topcontent1')
-    <main class="layout-flexcontent">
+    <main class="allowstickyfooter">
         
         <div class="container-fluid">
 

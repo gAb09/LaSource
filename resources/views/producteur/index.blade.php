@@ -17,9 +17,7 @@
 
 
 @section('content')
-<div id="producteurs_index" class="offset3 span11 flexcontainer">
 	@include('producteur.indexcontent')
-</div>
 @stop
 
 

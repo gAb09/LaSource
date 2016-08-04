@@ -26,7 +26,7 @@ class ProducteurRequest extends Request
         return [
         'exploitation' => 'required',
         'prenom' => 'required|alpha_dash',
-        'nom' => 'required|alpha_dash',
+        'nom' => 'required',
         'ad1' => 'required_with:cp,ville',
         // 'ad2' => 'required_with:ad1,cp,ville',
         'cp' => 'digits:5|required_with:ad1,ad2,ville',
@@ -34,7 +34,7 @@ class ProducteurRequest extends Request
         'tel' => 'required|numeric|digits:10',
         'mobile' => 'numeric|digits:10',
         'email' => 'email|required',
-        'nompourpaniers' => 'required|max:20',
+        'nompourpaniers' => 'required|max:30',
         ];
     }
 }

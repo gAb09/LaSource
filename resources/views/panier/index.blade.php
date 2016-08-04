@@ -17,9 +17,7 @@
 
 
 @section('content')
-<div id="paniers_index" class="offset3 span11 flexcontainer">
 	@include('panier.indexcontent')
-</div>
 @stop
 
 

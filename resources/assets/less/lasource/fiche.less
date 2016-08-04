@@ -1,6 +1,7 @@
 @import "variables.less";
 
-.fiche {
+.fiche.stickycontainer {
+	position: relative;
 	background-color: @color_tempo;
 	border: solid;
 	border-width: 10px;
@@ -9,6 +10,22 @@
 	text-align: center;
 	flex-grow: 1;
 	max-width: 24%;
+	min-height: 100px;
+	.allowstickyfooter{
+	}
+	.footer{
+		display: flex;
+		bottom: 7px;
+		flex-flow: col wrap;
+		justify-content: left;
+		align-items: stretch;
+		height: 15px;
+		// background-color: @color_tempo;
+		button, div{
+			margin:0 8px 0 0;
+			box-shadow: 2px 2px 2px grey;
+		}
+	}
 }
 
 
@@ -23,19 +40,14 @@ Boutons supp et edite */
 .supp, .edite{
 	border-radius: 6px;
 	background-color: #FFF;
-	position: absolute;
-	left: 0;
-	bottom: 0;
+	position: relative;
 	width: 25px;
-	height:25px;
-	padding: 3px 3px 3px 4px;
-
+	height:22px;
+	padding: 4px 1px 3px 5px;
 	.etiquette{
 		border-radius: 6px;
 		position:absolute;
-		padding-bottom: 2px;
-		bottom:-25px;
-		left:0;
+		bottom:0px;
 		width: 0px;
 		opacity: 0;
 	}
@@ -49,11 +61,12 @@ Boutons supp et edite */
 		z-index:1000;
 
 		.etiquette{
+			padding: 0 0 2px 0px;
 			transition: 0.4s;
 			transition-delay: 0.2s;
 			opacity: 1;
-			display: inline;
-			bottom:24px;
+			// display: inline;
+			bottom:20px;
 			left:0;
 			width: 86px;
 			background-color: @color_danger;
@@ -66,7 +79,7 @@ Boutons supp et edite */
 /* Bouton edite */
 
 .edite{
-	left: 30px;
+	// left: 30px;
 
 	&:hover{
 		background-color: @color_primary;
