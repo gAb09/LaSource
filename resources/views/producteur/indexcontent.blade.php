@@ -4,11 +4,11 @@
 
 		<div class="allowstickyfooter">
 
-			<p class="inset lighten66">{{ $model->exploitation }}<br />
+			<p class="lighten66 inset_shadow">{{ $model->exploitation }}<br />
 				{{ $model->prenom }} {{ $model->nom }}
 			</p>
 			<p><strong>{{ $model->nompourpaniers }}</strong></p>
-			<p class="inset lighten50">
+			<p class="lighten50 inset_shadow">
 				{{ $model->tel }}<br />
 				{{ $model->mobile }}<br />
 				{{ $model->ad1 }}<br />
@@ -26,9 +26,6 @@
 			<p class="hidden id">{{ $model->id }}</p> {{-- surtout pas de CR dans cette ligne --}}
 
 			<p class="hidden rang">
-				rang : {{ $model->rang }}
-			</p>
-			<p class="">
 				rang : {{ $model->rang }}
 			</p>
 		</div>

@@ -4,7 +4,7 @@
 
 		<div class="allowstickyfooter">
 
-			<p class="lighten66">{{ $model->type }}<br />
+			<p class="lighten66 inset_shadow">{{ $model->type }}<br />
 				<strong>{!! $model->nom_court !!}</strong>
 			</p>
 
@@ -12,7 +12,7 @@
 				{!! $model->idee !!}
 			</p>
 
-			<p class="lighten50">
+			<p class="lighten50 inset_shadow">
 				{!! $model->nom !!}<br />
 			</p>
 

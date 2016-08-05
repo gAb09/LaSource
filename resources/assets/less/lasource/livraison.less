@@ -21,7 +21,7 @@ Vue index
 
 
 /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-Vue handle (create & edit)
+Vue createdit (create & edit)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 .form_dates, .form_paniers,{
 	background-color:@color_livraison;
@@ -34,13 +34,29 @@ Vue handle (create & edit)
 	input{
 		width:250px;
 	}
+	.datecontainer{
+		display: flex;
+		flex-direction: column;
+	}
+	.ui-datepicker-trigger{
+		background-color: @color_livraison_dark;
+		color: @color_livraison;
+		border-radius: 6px;
+		border-width: 0;
+		// box-shadow: 1px 1px 1px grey;
+	}
 }
+
+
+.form_dates{
+}
+
 
 .form_paniers{
 	.panierschoisis{
 		tr{
 			font-size:0.8em;
-			background-color: @color_livraison2;
+			background-color: @color_panier;
 			border-style: solid;
 			border-color: @color_livraison_dark;
 			border-width: 1px 0;

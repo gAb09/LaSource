@@ -25,7 +25,7 @@
 
 				<!-- nom_court -->
 				<td class="nomcourt" style="width:15%">
-					{!! $panier->nom_court !!}
+					{!! $panier->type !!} / {!! $panier->nom_court !!}
 				</td>
 
 
@@ -38,7 +38,7 @@
 					</span>
 					@endif
 					<!-- affichage -->
-					<select class="producteur" name="producteur[{{ $panier->id }}]">
+					<select name="producteur[{{ $panier->id }}]">
 						@if($panier->prod_value == 0))
 						<option value="0" selected="selected">producteur à déterminer</option>
 						@endif

@@ -4,27 +4,27 @@
 
 <!-- date_cloture -->
 @if ($errors->has('date_cloture'))
-	<div id="div_date_cloture" class="error_txt">
+	<div id="div_date_cloture" class="datecontainer error_txt">
 @else
-	<div id="div_date_cloture">
+	<div id="div_date_cloture" class="datecontainer">
 @endif
 		@include('livraison.partials.date_cloture')
 	</div>
 
 	<!-- date_paiement -->
 @if ($errors->has('date_paiement'))
-	<div id="div_date_paiement" class="error_txt">
+	<div id="div_date_paiement" class="datecontainer error_txt">
 @else
-	<div id="div_date_paiement">
+	<div id="div_date_paiement" class="datecontainer">
 @endif
 		@include('livraison.partials.date_paiement')
 	</div>
 
 	<!-- date_livraison -->
 @if ($errors->has('date_livraison'))
-	<div id="div_date_livraison" class="error_txt">
+	<div id="div_date_livraison" class="datecontainer error_txt">
 @else
-	<div id="div_date_livraison">
+	<div id="div_date_livraison" class="datecontainer">
 @endif
 		@include('livraison.partials.date_livraison')
 	</div>
