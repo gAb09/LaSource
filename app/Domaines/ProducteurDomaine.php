@@ -22,6 +22,11 @@ class ProducteurDomaine extends Domaine
 	}
 
 	public function update($id, $request){
+
+		if ($request->input('is_actif') == 0 and $result = $this->checkIfImpliedInLivraison($id, 'Désactivation')) {
+			return($result);
+		}
+
 		$this->model = Producteur::withTrashed()->where('id', $id)->first();
 		$this->handleRequest($request);
 
@@ -50,6 +55,22 @@ class ProducteurDomaine extends Domaine
 		$this->model->rang = ($request->rang)? $request->rang :$new_rang ;
 		$this->model->restore();
 	}
+
+
+	public function destroy($id)
+	{
+		if ($result = $this->checkIfImpliedInLivraison($id, 'Suppression')) {
+			return($result);
+		}
+		$aucun = array();
+		$this->model = $this->model->where('id', $id)->first();
+		$this->model->panier()->sync($aucun);
+		
+		return $this->model->delete();
+	}
+
+
+
 
 	public function listProducteursForPanier($panier_id)
 	{

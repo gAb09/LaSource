@@ -55,9 +55,9 @@ class PanierDomaine extends Domaine
 		if ($result = $this->checkIfLivraisonLied($id, 'Suppression')) {
 			return($result);
 		}
-		$personne = array();
+		$aucun = array();
 		$this->model = $this->model->where('id', $id)->first();
-		$this->model->producteur()->sync($personne);
+		$this->model->producteur()->sync($aucun);
 		
 		return $this->model->delete();
 	}
@@ -141,29 +141,6 @@ class PanierDomaine extends Domaine
 
 		return $model;
 	}
-
-
-
-	/**
-	* Contrôle s'il existe des livraisons liées
-	* 
-	* @return collection (vide|renseignée)
-	**/
-	public function checkIfLivraisonLied($panier_id, $action)
-	{
-		$panier = $this->model->withTrashed()->with('livraison')->where('id', $panier_id)->first();
-
-		/* Si il existe au moins une livraison liée */
-		if (!$panier->livraison->isEmpty()) { 
-			$message = "Oups !! $action impossible !<br />";
-			foreach ($panier->livraison as $livraison) {
-				$message .= trans('message.panier.liedToLivraison', ['date' => $livraison->date_livraison_enClair]).'<br />';
-			}
-			return $message;
-		}
-
-	}
-
 
 }
 

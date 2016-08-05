@@ -51,8 +51,14 @@ class ProducteurController extends Controller
 
     public function update($id, ProducteurRequest $request)
     {
-        if($this->domaine->update($id, $request)){
-            return redirect()->route('producteur.index')->with('success', trans('message.producteur.updateOk'));
+        $resultat = ($this->domaine->update($id, $request));
+
+        if($resultat){
+            if (is_string($resultat)) {
+                return redirect()->back()->with('status', $resultat);
+            }else{
+                return redirect()->route('producteur.index')->with('success', trans('message.producteur.updateOk'));
+            }
         }else{
             return redirect()->back()->with('status', trans('message.producteur.updatefailed'));
         }
@@ -61,8 +67,14 @@ class ProducteurController extends Controller
 
     public function destroy($id)
     {        
-        if($this->domaine->destroy($id)){
-            return redirect()->route('producteur.index')->with('success', trans('message.producteur.deleteOk'));
+        $resultat = ($this->domaine->destroy($id));
+
+        if($resultat){
+            if (is_string($resultat)) {
+                return redirect()->back()->with('status', $resultat);
+            }else{
+                return redirect()->route('producteur.index')->with('success', trans('message.producteur.deleteOk'));
+            }
         }else{
             return redirect()->back()->with('status', trans('message.producteur.deletefailed'));
         }

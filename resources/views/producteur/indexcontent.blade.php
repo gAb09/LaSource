@@ -32,7 +32,7 @@
 
 		<div class="footer flexcontainer">
 			@if(!isset($trashed))
-			@include('layouts.button.supp', ['model' => 'producteur', 'model_id' => $model->id, 'text_confirm' => trans('message.producteur.confirmDelete', ['model' => "$model->nompourproducteurs"]) ])
+			@include('layouts.button.supp', ['model' => 'producteur', 'model_id' => $model->id, 'text_confirm' => trans('message.producteur.confirmDelete', ['model' => "$model->nompourpaniers"]) ])
 			@endif
 			@include('layouts.button.edite', ['model' => 'producteur', 'model_id' => $model->id])
 		</div>
