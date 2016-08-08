@@ -4,17 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Domaines\ProducteurDomaine as Producteur;
 use App\Http\Requests\ProducteurRequest;
+use App\Http\Controllers\getDeletedTrait;
+use App\Http\Controllers\setRangsTrait;
+
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
 class ProducteurController extends Controller
 {
+    use getDeletedTrait, setRangsTrait;
+
     private $domaine;
+    private $modelName;
     
     public function __construct(Producteur $domaine)
     {
         $this->domaine = $domaine;
+        $this->modelName = 'producteur';
     }
 
 
@@ -80,17 +87,5 @@ class ProducteurController extends Controller
         }
 
     }
-
-    public function getDeleted()
-    {
-        $models = $this->domaine->getDeleted();
-        return view('producteur.trashed')->with(['models' => $models, 'trashed' => 'trashed']);
-    }
-
-    public function setRangs(Request $request)
-    {
-        return $this->domaine->setRangs($request);
-    }
-
 
 }

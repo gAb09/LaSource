@@ -4,17 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Domaines\RelaisDomaine as Domaine;
 use App\Http\Requests\RelaisRequest;
+use App\Http\Controllers\getDeletedTrait;
+use App\Http\Controllers\setRangsTrait;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
 class RelaisController extends Controller
 {
+    use getDeletedTrait, setRangsTrait;
+
     private $domaine;
+    private $modelName;
     
     public function __construct(Domaine $domaine)
     {
         $this->domaine = $domaine;
+        $this->modelName = 'relais';
     }
 
 
@@ -80,18 +86,5 @@ class RelaisController extends Controller
         }
 
     }
-
-
-    public function getDeleted()
-    {
-        $models = $this->domaine->getDeleted();
-        return view('relais.trashed')->with(compact('models', 'trashed'));
-    }
-
-    public function setRangs(Request $request)
-    {
-        return $this->domaine->setRangs($request);
-    }
-
 
 }

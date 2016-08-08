@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Domaines\ModePaiementDomaine as Domaine;
 use App\Http\Requests\ModePaiementRequest;
-use Gab\Helpers\gabHelpers;
+use App\Http\Controllers\getDeletedTrait;
+use App\Http\Controllers\setRangsTrait;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
 class ModePaiementController extends Controller
 {
+    use getDeletedTrait, setRangsTrait;
+
     private $domaine;
     
     public function __construct(Domaine $domaine)
@@ -21,8 +24,7 @@ class ModePaiementController extends Controller
 
     public function index()
     {
-        $models = $this->domaine->index();
-
+        $models = $this->domaine->all('rang');
         return view('modepaiement.index')->with(compact('models'));
     }
 
@@ -30,15 +32,12 @@ class ModePaiementController extends Controller
     public function create()
     {
         $model =  $this->domaine->newModel();
-
         return view('modepaiement.create')->with(compact('model'));
     }
 
 
     public function store(ModePaiementRequest $request)
     {
-                // return dd($request->all());
-
         if($this->domaine->store($request)){
             return redirect()->route('modepaiement.index')->with('success', trans('message.modepaiement.storeOk'));
         }else{
@@ -50,17 +49,20 @@ class ModePaiementController extends Controller
     public function edit($id)
     {
     	$model = $this->domaine->findFirst('id', $id);
-
         return view('modepaiement.edit')->with(compact('model'));
     }
 
 
     public function update($id, ModePaiementRequest $request)
     {
-                // return dd($request->all());
+        $resultat = ($this->domaine->update($id, $request));
 
-        if($this->domaine->update($id, $request)){
-            return redirect()->route('modepaiement.index')->with('success', trans('message.modepaiement.updateOk'));
+        if($resultat){
+            if (is_string($resultat)) {
+                return redirect()->back()->with('status', $resultat);
+            }else{
+                return redirect()->route('modepaiement.index')->with('success', trans('message.modepaiement.updateOk'));
+            }
         }else{
             return redirect()->back()->with('status', trans('message.modepaiement.updatefailed'));
         }
@@ -68,25 +70,19 @@ class ModePaiementController extends Controller
 
 
     public function destroy($id)
-    {        
-        if($this->domaine->destroy($id)){
-            return redirect()->route('modepaiement.index')->with('success', trans('message.modepaiement.deleteOk'));
+    {     
+        $resultat = ($this->domaine->destroy($id));
+
+        if($resultat){
+            if (is_string($resultat)) {
+                return redirect()->back()->with('status', $resultat);
+            }else{
+                return redirect()->route('modepaiement.index')->with('success', trans('message.modepaiement.deleteOk'));
+            }
         }else{
             return redirect()->back()->with('status', trans('message.modepaiement.deletefailed'));
         }
 
     }
-
-    public function getDeleted()
-    {
-        $models = $this->domaine->getDeleted();
-        return view('modepaiement.trashed')->with(compact('models', 'trashed'));
-    }
-
-    public function setRangs(Request $request)
-    {
-        return $this->domaine->setRangs($request);
-    }
-
 
 }

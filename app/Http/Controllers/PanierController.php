@@ -4,17 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Domaines\PanierDomaine as Panier;
 use App\Http\Requests\PanierRequest;
+use App\Http\Controllers\getDeletedTrait;
+use App\Http\Controllers\setRangsTrait;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
 class PanierController extends Controller
 {
+    use getDeletedTrait, setRangsTrait;
+
     private $domaine;
+    private $modelName;
     
     public function __construct(Panier $domaine)
     {
         $this->domaine = $domaine;
+        $this->modelName = 'panier';
     }
 
 
@@ -89,18 +95,6 @@ class PanierController extends Controller
         // dd($request->input('resultat'));
         $this->domaine->PanierSyncProducteurs($panier, $request->input('resultat'));
         return redirect()->back();
-    }
-
-
-    public function getDeleted()
-    {
-        $models = $this->domaine->getDeleted();
-        return view('panier.trashed')->with(['models' => $models, 'trashed' => 'trashed']);
-    }
-
-    public function setRangs(Request $request)
-    {
-        return $this->domaine->setRangs($request);
     }
 
 }
