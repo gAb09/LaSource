@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3>{{ trans('titrepage.panier.create') }}</h3>
-                    @include('panier.button.index', ['etiquette' => 'Retour à la liste'])
+                    @include('shared.button.index', ['modelName' => 'panier', 'buttonEtiquette' => 'Retour à la liste'])
                 </div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('panier.store') }}">

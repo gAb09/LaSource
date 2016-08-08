@@ -40,7 +40,7 @@
 	</div>
 	@empty 
 	<h3>Aucun producteur supprimé
-		@include('producteur.button.index', ['etiquette' => 'Liste des producteurs'])
+		@include('shared.button.index', ['etiquette' => 'Liste des producteurs'])
 	</h3>
 	@endforelse
 

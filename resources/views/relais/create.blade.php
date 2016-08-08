@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3>{{ trans('titrepage.relais.create') }}</h3>
-                    @include('relais.button.index', ['etiquette' => 'Retour à la liste'])
+                    @include('shared.button.index', ['modelName' => 'relais', 'buttonEtiquette' => 'Retour à la liste'])
                 </div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('relais.store') }}">

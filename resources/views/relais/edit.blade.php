@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3>{{ trans('titrepage.relais.edit', ['nom' => $model->nom]) }}</h3>
-                    @include('relais.button.index', ['etiquette' => 'Retour à la liste'])
+                    @include('shared.button.index', ['modelName' => 'relais', 'buttonEtiquette' => 'Retour à la liste'])
                 </div>
                 <div class="panel-body relais">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('relais.update', $model->id) }}">
@@ -27,7 +27,7 @@
                     </form>
                 </div> 
             </div>
-            @include('relais.button.delete')
+            @include('shared.button.delete', ['modelName' => 'relais', 'buttonEtiquette' => 'relais'])
         </div>
     </div>
 </div>

@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3>{{ trans('titrepage.producteur.edit', ['exploitation' => $model->exploitation]) }}</h3>
-                    @include('producteur.button.index', ['etiquette' => 'Retour à la liste'])
+                    @include('shared.button.index', ['modelName' => 'producteur', 'buttonEtiquette' => 'Retour à la liste'])
                 </div>
                 <div class="panel-body producteur">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('producteur.update', $model->id) }}">
@@ -27,7 +27,7 @@
                     </form>
                 </div> 
             </div>
-            @include('producteur.button.delete')
+            @include('shared.button.delete', ['modelName' => 'producteur', 'buttonEtiquette' => 'producteur'])
         </div>
     </div>
 </div>
