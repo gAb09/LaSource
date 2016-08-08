@@ -41,7 +41,7 @@
 	</div>
 	@empty 
 	<h3>Aucun panier supprimé
-		@include('panier.button.index', ['etiquette' => 'Liste des paniers'])
+		@include('shared.button.index', ['modelName' => 'panier', 'buttonEtiquette' => 'Retour à la liste'])
 	</h3>
 	@endforelse
 </div>

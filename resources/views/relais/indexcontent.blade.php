@@ -22,7 +22,7 @@
 				<p>{{ $model->ouvertures }}</p>
 			</p>
 
-				<p class="remarques">{{ $model->remarques }}</p>
+			<p class="remarques">{{ $model->remarques }}</p>
 
 			<p class="hidden id">{{ $model->id }}</p> {{-- surtout pas de CR dans cette ligne --}}
 
@@ -41,7 +41,7 @@
 	</div>
 	@empty 
 	<h3>Aucun relais supprimé
-		@include('shared.button.index', ['etiquette' => 'Liste des relaiss'])
+		@include('shared.button.index', ['modelName' => 'relais', 'buttonEtiquette' => 'Retour à la liste'])
 	</h3>
 	@endforelse
 
