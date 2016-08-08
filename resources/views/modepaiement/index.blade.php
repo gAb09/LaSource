@@ -17,23 +17,11 @@
 
 
 @section('content')
-
-<div class="offset3 span11 flexcontainer">
-
-	@foreach($models as $model)
-
-	<div class="fiche {{$model->class_actif}}" ondblClick = "javascript:document.location.href='http://lasource/modepaiement/{{ $model->id }}/edit';">
-
-		<p class="lighten33">
-			{{ $model->nom }}<br />
-		</p>
-		<p>{{ $model->remarques }}</p>
+	@include('modepaiement.indexcontent')
+@stop
 
 
-	</div>
-
-	@endforeach
-
-</div>
-
+@section('script')
+@parent
+<script src="/js/modepaiement.js"></script>
 @stop

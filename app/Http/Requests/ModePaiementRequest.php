@@ -24,12 +24,7 @@ class ModePaiementRequest extends Request
     public function rules()
     {
         return [
-        // 'nom' => 'required',
-        // 'nom_court' => 'required|alpha_dash',
-        // 'famille' => 'required|alpha_dash',
-        // 'type' => 'required_with:cp,ville',
-        // 'idee' => '',
-        // 'prix_commun' => 'required|max:20',
+        'nom' => 'required',
         ];
     }
 }

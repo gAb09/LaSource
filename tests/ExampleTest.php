@@ -6,6 +6,11 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ExampleTest extends TestCase
 {
+
+    // The base URL to use while testing the application.
+    protected $baseUrl = 'http://localhost';
+
+
     /**
      * A basic functional test example.
      *
@@ -14,6 +19,6 @@ class ExampleTest extends TestCase
     public function testBasicExample()
     {
         $this->visit('/')
-             ->see('Laravel 5');
+        ->see('Laravel 5');
     }
 }

@@ -7,9 +7,10 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3>{{ trans('titrepage.modepaiement.create') }}</h3>
+                    @include('shared.button.index', ['modelName' => 'modepaiement', 'buttonEtiquette' => 'Retour à la liste'])
                 </div>
                 <div class="panel-body">
-                    <form class="form-inline" role="form" method="POST" action="{{ route('modepaiement.store') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('modepaiement.store') }}">
                         {!! csrf_field() !!}
 
                         @include('modepaiement.form')

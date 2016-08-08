@@ -20,13 +20,11 @@ class ModePaiement extends Model
     protected $fillable = [
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-    ];
+
+    public function Livraison()
+    {
+        return $this->belongsToMany('App\Models\Livraison')->withPivot('indisponible', 'motif');
+    }
 
 
 }

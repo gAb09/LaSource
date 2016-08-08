@@ -15,10 +15,12 @@ class ModePaiementController extends Controller
     use getDeletedTrait, setRangsTrait;
 
     private $domaine;
+    private $modelName;
     
     public function __construct(Domaine $domaine)
     {
         $this->domaine = $domaine;
+        $this->modelName = 'modepaiement';
     }
 
 

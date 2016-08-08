@@ -17,7 +17,7 @@ class Domaine
 	public function getModelName()
 	{
 		$name = explode("\\", get_class($this->model));
-		return lcfirst(array_pop($name));
+		return strtolower(array_pop($name));
 	}
 
 
