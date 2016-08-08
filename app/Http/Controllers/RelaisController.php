@@ -28,7 +28,6 @@ class RelaisController extends Controller
     public function create()
     {
         $model =  $this->domaine->newModel();
-
         return view('relais.create')->with(compact('model'));
     }
 
@@ -46,29 +45,42 @@ class RelaisController extends Controller
     public function edit($id)
     {
     	$model = $this->domaine->findFirst('id', $id);
-
     	return view('relais.edit')->with(compact('model'));
     }
 
 
     public function update($id, RelaisRequest $request)
     {
-        if($this->domaine->update($id, $request)){
-            return redirect()->route('relais.index')->with('success', trans('message.relais.updateOk'));
+        $resultat = ($this->domaine->update($id, $request));
+
+        if($resultat){
+            if (is_string($resultat)) {
+                return redirect()->back()->with('status', $resultat);
+            }else{
+                return redirect()->route('relais.index')->with('success', trans('message.relais.updateOk'));
+            }
         }else{
             return redirect()->back()->with('status', trans('message.relais.updatefailed'));
         }
     }
 
+
     public function destroy($id)
-    {        
-        if($this->domaine->destroy($id)){
-            return redirect()->route('relais.index')->with('success', trans('message.relais.deleteOk'));
+    {     
+        $resultat = ($this->domaine->destroy($id));
+
+        if($resultat){
+            if (is_string($resultat)) {
+                return redirect()->back()->with('status', $resultat);
+            }else{
+                return redirect()->route('relais.index')->with('success', trans('message.relais.deleteOk'));
+            }
         }else{
             return redirect()->back()->with('status', trans('message.relais.deletefailed'));
         }
 
     }
+
 
     public function getDeleted()
     {

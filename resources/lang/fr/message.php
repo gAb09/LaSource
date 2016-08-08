@@ -41,6 +41,9 @@ return [
         'storefailed'   => 'Problème. Le relais n’a pas pu être créé…',
         'deleteOk'      => 'Le relais a bien été supprimé.',
         'deletefailed'  => 'Problème. Le relais n’a pas pu être supprimé…',
+        'setRangsOk'        => 'L’ordre des relais a bien été modifié.',
+        'setRangsFailed'    => 'L’ordre des relais n’a pas pu été modifié.',
+        'liedToLivraison'    => 'Ce relais participe à la livraison du :date',
         'confirmDelete'    => 'Êtes-vous sur de vouloir supprimer le relais “:model” ?\nTous les liens éventuels avec …… seront supprimés.',
     ],
 

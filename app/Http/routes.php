@@ -96,12 +96,14 @@ Route::group(['middleware' => 'auth'], function () {
 // MODE DE PAIEMENT...
 	Route::get('modepaiement/getdeleted', ['as' => 'modepaiement.getdeleted', 'uses' => 'ModePaiementController@getDeleted']);
 	Route::resource('modepaiement', 'ModePaiementController');
+	Route::get('setrangs/modepaiement', ['as' => 'media.set_rang', 'uses' => 'ModePaiementController@setRangs']);
 
 
 
 // RELAIS...
 	Route::get('relais/getdeleted', ['as' => 'relais.getdeleted', 'uses' => 'RelaisController@getDeleted']);
 	Route::resource('relais', 'RelaisController');
+	Route::get('setrangs/relais', ['as' => 'media.set_rang', 'uses' => 'RelaisController@setRangs']);
 
 
 // PRODUCTEUR...

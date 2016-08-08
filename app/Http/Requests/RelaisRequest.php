@@ -24,8 +24,8 @@ class RelaisRequest extends Request
     public function rules()
     {
         return [
-        'nom' => 'required|alpha_dash',
-        'retrait' => 'required|alpha_dash',
+        'nom' => 'required',
+        'retrait' => 'required',
         'ad1' => 'required_with:cp,ville',
         'cp' => 'digits:5|required_with:ad1,ad2,ville',
         'ville' => 'required_with:ad1,ad2,cp',

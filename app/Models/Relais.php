@@ -8,5 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Relais extends Model
 {
-    use SoftDeletes, ModelTrait;
+	use SoftDeletes, ModelTrait;
+	public function Livraison()
+	{
+		return $this->belongsToMany('App\Models\Livraison')->withPivot('indisponible', 'motif');
+	}
+
 }
+
