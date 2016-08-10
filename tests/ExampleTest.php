@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class ExampleTest extends TestCase
+class PanierTest extends TestCase
 {
 
     // The base URL to use while testing the application.
@@ -16,9 +16,20 @@ class ExampleTest extends TestCase
      *
      * @return void
      */
-    public function testBasicExample()
+    // public function testBasicExample()
+    // {
+    //     $this->visit('/')
+    //     ->see('Laravel 5');
+    // }
+
+        public function testExample()
     {
-        $this->visit('/')
-        ->see('Laravel 5');
+        $this->assertTrue(true);
     }
+
+        public function testExample2()
+    {
+        $this->assertTrue(false);
+    }
+
 }
