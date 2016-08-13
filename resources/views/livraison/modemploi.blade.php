@@ -1,5 +1,5 @@
 <h4>Créer/modifier une livraison :</h4>
-<ol class="modemploi">
+<ol>
 	<li>Assigner les 3 dates, puis les valider.</li>
 	<li>Ajouter/retirer des paniers grâce à la liste des paniers (&nbsp;<i class="fa fa-btn fa-shopping-basket"></i>) ou individuellement (&nbsp;<i class="fa fa-btn fa-unlink"></i>).</li>
 	<li>Ensuite et pour chaque panier, indiquer le producteur.<br />

@@ -12,11 +12,6 @@ Livraisons en cours
 @stop
 
 
-@section('topcontent2')
-@stop
-
-
-
 @section('message')
 @parent
 @stop

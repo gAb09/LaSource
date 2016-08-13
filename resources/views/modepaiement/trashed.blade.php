@@ -11,7 +11,7 @@
 @stop
 
 
-@section('topcontent2')
+@section('modemploi')
 <p class ="modemploi">
 Un <strong>double-clic</strong> sur un modepaiement le sortira de la corbeille et permettra sa modification.
 </p>

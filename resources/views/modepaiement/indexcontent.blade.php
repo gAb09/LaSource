@@ -29,7 +29,7 @@
 
 	</div>
 	@empty 
-	<h3>Aucun modepaiement supprimé
+	<h3>Aucun mode de paiement supprimé
 		@include('shared.button.index', ['modelName' => 'modepaiement', 'buttonEtiquette' => 'Retour à la liste'])
 	</h3>
 	@endforelse

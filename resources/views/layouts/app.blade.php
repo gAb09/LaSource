@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
 
     <!-- Styles -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{asset('bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
     <link href="{{asset('js/jquery-ui-1.11.4.custom/jquery-ui.min.css')}}" rel="stylesheet">
     <link href="{{asset('js/jquery-ui-1.11.4.custom/jquery-ui.structure.min.css')}}" rel="stylesheet">
@@ -41,6 +41,16 @@
         <div style="width:97%" class="container">
             <div class="navbar-header">
 
+
+                <!-- Trigger modemploi -->
+                @hasSection ('modemploi')
+                <div class="modemploi_exists" onClick="javascript:showModemploi();">
+                    @else
+                <div class="hidden">
+                    @endif
+                    ?
+                </div>
+
                 <!-- Collapsed Hamburger -->
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
                     <span class="sr-only">Toggle Navigation</span>
@@ -49,11 +59,12 @@
                     <span class="icon-bar"></span>
                 </button>
 
+
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
                     Les paniers de La Source<br />
-
                 </a>
+
             </div>
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -74,14 +85,21 @@
                     @include('layouts.menuRight.guest')
                     @else
                     @include('layouts.menuRight.auth')
-                        @if (Auth::user()->role->id == 1)
-                        @include('layouts.menuRight.dev')
-                        @endif
+                    @if (Auth::user()->role->id == 1)
+                    @include('layouts.menuRight.dev')
+                    @endif
                     @endif
                 </ul>
             </div>
         </div>
     </nav>
+
+    <!-- - - - - - - - - - - - - - - - MODEMPLOI - - - - - - - - - - - - - - -->
+    <div id="modemploi" class="modemploi" onClick="javascript:showModemploi();">
+    @section('modemploi')
+    @show
+    </div>
+
 
     <!-- - - - - - - - - - - - - - - - MESSAGES - - - - - - - - - - - - - - -->
     @section('message')
@@ -89,40 +107,37 @@
     {{-- var_dump(\Session::all()) --}}
     {{-- var_dump(Auth::user()->role->id or "rr") --}}
 
-    <div class="container-fluid">
-        <div id="messages" class="col-md-12 messages">
-            @if (session('status'))
-            <div class="alert alert-danger">
-                {!! session('status') !!}
-            </div>
-            @endif
-            @if (session('success'))
-            <div class="alert alert-success">
-                {!! session('success') !!}
-            </div>
-            @endif
+    <div id="messages" class="col-md-6 col-md-offset-3 messages">
+        @if (session('status'))
+        <div class="alert alert-danger">
+            {!! session('status') !!}
         </div>
+        @endif
+        @if (session('success'))
+        <div class="alert alert-success">
+            {!! session('success') !!}
+        </div>
+        @endif
     </div>
     @show
 
-    <!-- - - - - - - - - - - - - - - - TOP CONTENT (2 zones) - - - - - - - - - - - - - - -->
+
+    <!-- - - - - - - - - - - - - - - - TOP CONTENT - - - - - - - - - - - - - - -->
     @hasSection('topcontent1')
     <main class="allowstickyfooter">
-        
+
         <div class="container-fluid">
 
-            <div class="col-md-6 topcontent1">
+            <div class="col-md-12 topcontent1">
                 @yield('topcontent1')
             </div>
 
-            <div class="col-md-6 topcontent2">
-                @yield('topcontent2')
-            </div> 
         </div>
-@endif
-        <!-- - - - - - - - - - - - - - - -  CONTENT () - - - - - - - - - - - - - - -->
-        @yield('content')
+        @endif
         
+    <!-- - - - - - - - - - - - - - - -  CONTENT () - - - - - - - - - - - - - - -->
+    @yield('content')
+
     </main>
 
     @include('layouts.footer')

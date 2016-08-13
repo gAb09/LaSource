@@ -16,10 +16,6 @@
 @stop
 
 
-@section('topcontent2')
-@parent
-@stop
-
 
 @section('createdit')
 

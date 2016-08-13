@@ -8,10 +8,7 @@
 
 @section('topcontent1')
 <h1 class="titrepage">{{ trans('titrepage.modepaiement.index') }}</h1>
-@stop
 
-
-@section('topcontent2')
 <a href="{{ route('modepaiement.create') }}" class="btn-xs btn-primary"> <i class="fa fa-btn fa-trash-o"></i>Créer un mode de paiement</a>
 @stop
 

@@ -81,13 +81,65 @@ FORMS
 MESSAGES
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 .messages{
+	transition: top 5s;
 	text-align: center;
 	position: fixed;
+	top: 0;
+	z-index: 1000;
+	&:hover{
+		transition: top 0.5s;
+		top:-200px;
+	}
 }
+
 
 .error_txt p{
 	color:@color_error;
 }
+
+
+/*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+MODEMPLOI
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+.modemploi{
+	font-size: 0.9em;
+	font-style: italic;
+	background-color: rgba(255, 255, 255, 1);
+	position: fixed;
+	padding: 5px;
+	z-index: 1000;
+	box-shadow: 2px 2px 20px;
+	transition: top 0.5s;
+	top:-300px;
+	.fa{
+		margin-left: 2px;
+		margin-right: 2px;
+		font-size: 0.9em;
+	}
+}
+
+.open{
+	transition: top 0.8s;
+	top: 0;
+}
+
+
+.modemploi_exists{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 30px;
+	height: 50px;
+	background-color: @color_success;
+	text-align: center;
+	color: #FFF;
+	font-size: 2.4em;
+	&:hover{
+	background-color: darken(@color_success, 15%);
+	}
+}
+
+
 
 
 /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -204,18 +256,3 @@ FOOTER
 .relais {
 	font-size: 0.9em;
 }
-
-/*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-DIVERS
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-.modemploi{
-	font-size: 0.9em;
-	font-style: italic;
-}
-
-.modemploi .fa{
-	margin-left: 2px;
-	margin-right: 2px;
-	font-size: 0.9em;
-}
-

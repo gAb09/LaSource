@@ -51,3 +51,20 @@ function setRangs(model, tablo){
 	});
 
 }
+
+
+/**
+* ??????????????????
+* Affiche les mode d'emploi.
+* 
+* 
+**/
+function showModemploi()
+{
+	var item = $('#modemploi');
+	console.log(item);
+
+	$(item).toggleClass('open');
+}
+
+

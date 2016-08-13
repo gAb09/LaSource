@@ -11,8 +11,8 @@
 @stop
 
 
-@section('topcontent2')
-<p class ="modemploi">
+@section('modemploi')
+<p>
 Un <strong>double-clic</strong> sur un producteur le sortira de la corbeille et permettra sa modification.
 </p>
 @stop

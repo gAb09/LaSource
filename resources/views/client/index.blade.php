@@ -11,10 +11,6 @@
 @stop
 
 
-@section('topcontent2')
-@stop
-
-
 @section('content')
 
 <div class="offset3 span11 flexcontainer">

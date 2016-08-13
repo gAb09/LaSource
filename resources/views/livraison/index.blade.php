@@ -8,10 +8,7 @@
 
 @section('topcontent1')
 <h1 class="titrepage">{{ trans('titrepage.livraison.index') }}</h1>
-@stop
 
-
-@section('topcontent2')
 <a href="{{ route('livraison.create') }}" class="btn btn-primary"> <i class="fa fa-btn fa-trash-o"></i>
 	Créer une livraison
 </a>
