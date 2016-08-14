@@ -91,7 +91,7 @@ class OMController extends Controller
 			$model->nom = $old->colis;
 			$model->nom_court = $old->colis_abrev;
 			$model->idee = $old->idee;
-			$model->prix_commun = $old->pu;
+			$model->prix_base = $old->pu;
 			$model->remarques = $old->remarques;
 			$model->is_actif = 1;
 

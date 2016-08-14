@@ -41,7 +41,7 @@ class PanierDomaine extends Domaine
 		$this->model->famille = $request->famille;
 		$this->model->type = $request->type;
 		$this->model->idee = $request->idee;
-		$this->model->prix_commun = $request->prix_commun;
+		$this->model->prix_base = $request->prix_base;
 		$this->model->is_actif = (isset($request->is_actif)?1:0);
 		$this->model->remarques = $request->remarques;
 		$new_rang = $this->model->max('rang')+1;

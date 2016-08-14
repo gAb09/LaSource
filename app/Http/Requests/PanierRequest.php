@@ -28,7 +28,7 @@ class PanierRequest extends Request
         'nom_court' => 'required',
         'type' => 'required',
         // 'idee' => '',
-        'prix_commun' => 'required|not_in:0|numeric',
+        'prix_base' => 'required|not_in:0|numeric',
         'rang' => 'unique:paniers,rang,'.$this->input('id').'id',
         ];
     }

@@ -17,7 +17,7 @@
 			</p>
 
 			<p>
-				<strong>{{ $model->prix_commun }}</strong>
+				<strong>{{ $model->prix_base }}</strong>
 			</p>
 
 			<p class="remarques">

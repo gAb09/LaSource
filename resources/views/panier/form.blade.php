@@ -47,16 +47,16 @@
                             </div>
                         </div>
 
-                        <!-- prix_commun -->
-                        <div class="form-group{{ $errors->has('prix_commun') ? ' has-error' : '' }}">
+                        <!-- prix_base -->
+                        <div class="form-group{{ $errors->has('prix_base') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Prix base&nbsp*</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="prix_commun" value="{{ $model->prix_commun or old('prix_commun') }}">
+                                <input type="text" class="form-control" name="prix_base" value="{{ $model->prix_base or old('prix_base') }}">
 
-                                @if ($errors->has('prix_commun'))
+                                @if ($errors->has('prix_base'))
                                 <span class="help-block">
-                                    <strong>{{ $errors->first('prix_commun') }}</strong>
+                                    <strong>{{ $errors->first('prix_base') }}</strong>
                                 </span>
                                 @endif
                             </div>
