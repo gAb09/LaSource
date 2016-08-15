@@ -41,7 +41,7 @@
 /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 Boutons supp et edite */
 
-.supp, .edite{
+.supp, .edite, .addFermeture{
 	border-radius: 6px;
 	background-color: #FFF;
 	position: relative;
@@ -82,16 +82,25 @@ Boutons supp et edite */
 
 /* Bouton edite */
 
-.edite{
+.edite, .addFermeture{
 	// left: 30px;
 
 	&:hover{
 		background-color: @color_primary;
 
 		.etiquette{
-			width: 70px;
 			background-color: @color_primary;
 		}
 	}
 }
+
+
+.addFermeture{
+	&:hover{
+		.etiquette{
+			width: 150px;
+		}
+	}
+}
+
 

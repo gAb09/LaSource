@@ -9,7 +9,7 @@
 @section('topcontent1')
 <h1 class="titrepage">{{ trans('titrepage.relais.index') }}</h1>
 
-<a href="{{ route('relais.create') }}" class="btn-xs btn-primary"> <i class="fa fa-btn fa-trash-o"></i>Créer un relais</a>
+<a href="{{ route('relais.create') }}" class="btn btn-sm btn-primary"> <i class="fa fa-btn fa-trash-o"></i>Créer un relais</a>
 @stop
 
 

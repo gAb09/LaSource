@@ -36,6 +36,7 @@
 			@include('layouts.button.supp', ['model' => 'relais', 'model_id' => $model->id, 'text_confirm' => trans('message.relais.confirmDelete', ['model' => "$model->nom"]) ])
 			@endif
 			@include('layouts.button.edite', ['model' => 'relais', 'model_id' => $model->id])
+			@include('layouts.button.addFermeture', ['model' => 'relais', 'model_id' => $model->id])
 		</div>
 
 	</div>
