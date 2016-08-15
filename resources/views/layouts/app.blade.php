@@ -8,7 +8,7 @@
     <title>Laravel</title>
 
     <!-- Fonts -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+    <link href="{{asset('font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
 
     <!-- Styles -->
@@ -44,7 +44,7 @@
 
                 <!-- Trigger modemploi -->
                 @hasSection ('modemploi')
-                <div class="modemploi_exists" onClick="javascript:showModemploi();">
+                <div class="modemploi_exists" onMouseOver="javascript:showModemploi();">
                     @else
                 <div class="hidden">
                     @endif
