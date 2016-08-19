@@ -137,6 +137,8 @@
         
     <!-- - - - - - - - - - - - - - - -  CONTENT () - - - - - - - - - - - - - - -->
     @yield('content')
+{{ var_dump(\Session::all()) }}
+{{ var_dump(\Session::get('_previous.url')) }}
 
     </main>
 

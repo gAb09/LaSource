@@ -69,8 +69,14 @@ return [
                 'trashed'  => 'Réhabilitation des clients supprimés',
             ],
 
+        'fermeture' => 
+            [
+                'create' => 'Ajout d’une période de fermeture au :modelName “:nom”',
+            ],
+
         'dashboard' => 
             [
                 'main' => 'Tableau de bord',
             ],
+
     ];

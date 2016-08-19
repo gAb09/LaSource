@@ -21,13 +21,13 @@ class Domaine
 	}
 
 
-	public function all($order = 'id')
+	public function all($order = 'rang')
 	{
 		return $this->model->orderBy($order)->get();
 	}
 
 
-	public function allActifs($order = 'id')
+	public function allActifs($order = 'rang')
 	{
 		return $this->model->where('is_actif', 1)->orderBy($order)->get();
 	}

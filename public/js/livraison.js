@@ -36,11 +36,6 @@ $(function()
     });
 });
 
-function getComboCloture(valeur)
-{
-
-}
-
 
 /*
 | Acquisition du contenu html pour les dates

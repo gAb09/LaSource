@@ -117,6 +117,12 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('panier', 'PanierController');
 
 
+// FERMETURE...
+	Route::get('fermeture/create/{model}/{model_id}', ['as' => 'fermeture.create', 'uses' => 'FermetureController@create']);
+	Route::resource('fermeture', 'FermetureController', ['except' => [
+    'create'
+]]);
+
 // LIVRAISON...
 
 	// Pivot Panier

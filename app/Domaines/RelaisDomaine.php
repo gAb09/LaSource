@@ -13,12 +13,20 @@ class RelaisDomaine extends Domaine
 	public function __construct(){
 		$this->model = new Relais;
 	}
+    	
+
+
+	public function index(){
+		return $models = $this->model->with('fermetures')->get();;
+	}
+
 
 	public function store($request){
 		$this->handleRequest($request);
 
 		return $this->model->save();
 	}
+
 
 	public function update($id, $request){
 		if ($request->input('is_actif') == 0 and $result = $this->checkIfLivraisonLied($id, 'Désactivation')) {

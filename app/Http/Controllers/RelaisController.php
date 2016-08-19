@@ -26,7 +26,7 @@ class RelaisController extends Controller
 
     public function index()
     {
-    	$models = $this->domaine->all();
+    	$models = $this->domaine->index();
     	return view('relais.index')->with(compact('models'));
     }
 

@@ -68,3 +68,8 @@ function showModemploi()
 }
 
 
+function createFermeture(route)
+{
+	console.log(route);
+	document.location.href = route;
+}
