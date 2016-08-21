@@ -50,7 +50,7 @@ class PanierController extends Controller
 
     public function edit($id)
     {
-    	$model = $this->domaine->findFirst('id', $id);
+    	$model = $this->domaine->findFirst($id);
     	return view('panier.edit')->with(compact('model'));
     }
 

@@ -71,7 +71,7 @@ return [
 
         'fermeture' => 
             [
-                'create' => 'Ajout d’une période de fermeture au :modelName “:nom”',
+                'create' => 'Ajout d’une période de fermeture :entity “:nom”',
             ],
 
         'dashboard' => 

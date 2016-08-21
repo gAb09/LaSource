@@ -102,6 +102,7 @@ Route::group(['middleware' => 'auth'], function () {
 // RELAIS...
 	Route::get('relais/getdeleted', ['as' => 'relais.getdeleted', 'uses' => 'RelaisController@getDeleted']);
 	Route::get('setrangs/relais', ['as' => 'media.set_rang', 'uses' => 'RelaisController@setRangs']);
+	Route::get('addFermeture/relais/{id}', ['as' => 'relais.addFermeture', 'uses' => 'RelaisController@addFermeture']);
 	Route::resource('relais', 'RelaisController');
 
 

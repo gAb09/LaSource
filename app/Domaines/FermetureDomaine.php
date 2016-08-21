@@ -20,18 +20,16 @@ class FermetureDomaine extends Domaine
 	}
 
 
-	public function create()
-	{
-		return $this->model;
-	}
-
-
 	public function store($request){
 		// return dd($request);
-		\DB::beginTransaction();
 		$this->handleRequest($request);
-		$this->model->save();
-		return $this->handleRequestAttach($request, $this->model->id);
+		try{
+			$this->model->save();
+		} catch(\Illuminate\Database\QueryException $e){
+			$this->alertOuaibMaistre($e);
+			return false;
+		}
+		return 'ok';
 	}
 
 
@@ -45,47 +43,36 @@ class FermetureDomaine extends Domaine
 
 
 	private function handleRequest($request){
+		$this->model->fermable_id = $request->fermable_id;
+		$this->model->fermable_type = $request->fermable_type;
 		$this->model->date_debut = $request->date_debut;
 		$this->model->date_fin = $request->date_fin;
+		$this->model->cause = $request->cause;
+		$this->model->remarques = $request->remarques;
 	}
 
-
-	private function handleRequestAttach($request, $fermeture_id){
-		$relation = strtolower(explode('\\', $request->fermable_type)[2]);
-		try{
-			$resultat = $this->model->{$relation}()->attach($request->fermable_id, [
-				'cause' => $request->cause,
-				'remarques' => $request->remarques,
-				]);
-		} catch(\Illuminate\Database\QueryException $e){
-			\DB::rollBack();
-			$this->alertOuaibMaistre($e);
-			return false;
-		}
-		\DB::commit();
-		return 'ok';
-	}
 
 
 	public function destroy($id)
 	{
-		if ($result = $this->checkIfImpliedInLivraison($id, 'Suppression')) {
-			return($result);
-		}
 		$aucun = array();
 		$this->model = $this->model->where('id', $id)->first();
 		$this->model->panier()->sync($aucun);
 		
-		return $this->model->delete();
+		return dd($this->model->delete());
 	}
+
+
 
 	public function alertOuaibMaistre($e)
 	{
-		Log::info('Problème d\'attachement d\'une fermeture: '.$e);
-		// Mail::send($vue, ['datas' => $datas], function ($m) use($datas, $param) {
+		$subject = 'Problème d\'attachement d\'une fermeture :';
+		Log::info($subject.$e);
+		// Mail::send('mails.BugReport', ['e' => $e, 'subject' => $subject], function ($m) use($e, $subject) {
 		// 	$m->to = env('MAIL_OM_ADRESS');
-		// 	$m->subject($param['subject']);
+		// 	$m->subject($subject);
 		// });
 
 	}
+
 }

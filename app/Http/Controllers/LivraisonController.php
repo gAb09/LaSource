@@ -103,7 +103,7 @@ class LivraisonController extends Controller
     public function listPaniers($livraison_id)
     {
         // dd('listPaniers');
-        $model = $this->domaine->findFirst('id', $livraison_id);
+        $model = $this->domaine->findFirst($livraison_id, 'id');
         // dd($model);
         $paniers = $this->panier->listPaniers($livraison_id);
         $titre_page = trans('titrepage.livraison.listPaniers', ['date' => $model->date_livraison_enclair]);
@@ -140,7 +140,7 @@ class LivraisonController extends Controller
     **/
     public function listProducteursForPanier($panier_id)
     {
-        $panier = $this->panier->findFirst('id', $panier_id);
+        $panier = $this->panier->findFirst($panier_id, 'id');
         $panier->nom_court = str_replace(['<br />', '<br/>'], " - ", $panier->nom_court);
 
         $producteurs = $this->producteur->listProducteursForPanier($panier_id);

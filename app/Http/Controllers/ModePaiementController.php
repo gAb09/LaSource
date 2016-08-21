@@ -50,7 +50,7 @@ class ModePaiementController extends Controller
 
     public function edit($id)
     {
-    	$model = $this->domaine->findFirst('id', $id);
+    	$model = $this->domaine->findFirst($id);
         return view('modepaiement.edit')->with(compact('model'));
     }
 

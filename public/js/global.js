@@ -68,7 +68,7 @@ function showModemploi()
 }
 
 
-function createFermeture(route)
+function addFermeture(route)
 {
 	console.log(route);
 	document.location.href = route;

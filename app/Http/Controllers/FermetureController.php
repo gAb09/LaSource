@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domaines\FermetureDomaine as Fermeture;
+use App\Domaines\Relais;
 use App\Http\Requests\FermetureRequest;
 
 use Illuminate\Http\Request;
@@ -10,13 +11,12 @@ use Illuminate\Http\Request;
 class FermetureController extends Controller
 {
     private $domaine;
-    private $modelName;
-    private $modelsPath = "App\Models\\";
+    private $entity;
+    private $domainesPath = 'App\\Domaines\\';
     
     public function __construct(Fermeture $domaine)
     {
         $this->domaine = $domaine;
-        $this->modelName = 'fermeture';
     }
 
 
@@ -27,30 +27,32 @@ class FermetureController extends Controller
     }
 
 
-    public function create($fermable_modelName, $fermable_id)
-    {
-        \Session::set('page_depart', \Session::get('_previous.url'));
-        $fermeture =  $this->domaine->create();
-        $fermable_type = $this->modelsPath.ucfirst($fermable_modelName);
-        $fermable_model = new $fermable_type;
-
-        $fermable_nom = $fermable_model->where('id', $fermable_id)->first()->nom;
-        $titre_page = trans('titrepage.fermeture.create', ['modelName' => $fermable_modelName, 'nom' => $fermable_nom]);
-        // return ($fermable_model." : ".$fermable_id);
-
-        return view('fermeture.create')->with(compact('titre_page', 'fermeture', 'fermable_type', 'fermable_id'));
-    }
-
     public function store(Request $request)
     {
         if (!$this->domaine->store($request)) {
             return redirect()->back()->with( 'status', trans('message.fermeture.storefailed').trans('message.bug.transmis') );
         }
-        // dd(\Session::get('page_depart'));
-        $page_depart = \Session::get('page_depart');
-        \Session::forget('page_depart');
-        return redirect($page_depart)->with( 'success', trans('message.fermeture.storeOk') );
+
+        $url_depart_ajout_fermeture = \Session::get('url_depart_ajout_fermeture');
+        \Session::forget('url_depart_ajout_fermeture');
+        return redirect($url_depart_ajout_fermeture)->with( 'success', trans('message.fermeture.storeOk') );
     }
+
+
+
+    public function destroy($id)
+    {     
+        if($this->domaine->destroy($id)){
+            if (is_string($resultat)) {
+                return redirect()->back()->with('status', $resultat);
+            }else{
+                return redirect()->route('modepaiement.index')->with('success', trans('message.modepaiement.deleteOk'));
+            }
+        }else{
+            return redirect()->back()->with('status', trans('message.modepaiement.deletefailed'));
+        }
+    }
+
 
 
 }

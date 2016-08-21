@@ -15,12 +15,12 @@ class RelaisController extends Controller
     use getDeletedTrait, setRangsTrait;
 
     private $domaine;
-    private $modelName;
+    private $entityName;
     
     public function __construct(Domaine $domaine)
     {
         $this->domaine = $domaine;
-        $this->modelName = 'relais';
+        $this->entityName = 'relais';
     }
 
 
@@ -50,7 +50,7 @@ class RelaisController extends Controller
 
     public function edit($id)
     {
-    	$model = $this->domaine->findFirst('id', $id);
+    	$model = $this->domaine->findFirst($id);
     	return view('relais.edit')->with(compact('model'));
     }
 
@@ -85,6 +85,26 @@ class RelaisController extends Controller
             return redirect()->back()->with('status', trans('message.relais.deletefailed'));
         }
 
+    }
+
+
+    public function addFermeture($id, \App\Domaines\FermetureDomaine $fermeture)
+    {     
+        /* Conservation de l'url de la page de départ */
+        \Session::set('url_depart_ajout_fermeture', \Session::get('_previous.url'));
+
+        /* Acquisition d'un modèle de fermeture, même vide, pour renseigner la variable $model du formulaire commun avec l'édition */
+        $model = $fermeture->newModel();
+
+        $fermable_model =  $this->domaine->findFirst($id);
+        $fermable_type = get_class($fermable_model);
+        $fermable_nom = $fermable_model->nom;
+        $fermable_id = $id;
+
+
+        $titre_page = trans('titrepage.fermeture.create', ['entity' => 'au '.$this->entityName, 'nom' => $fermable_nom]);
+
+        return view('fermeture.create')->with(compact('model', 'titre_page', 'fermable_type', 'fermable_id'));
     }
 
 }

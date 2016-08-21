@@ -39,7 +39,7 @@ class LivraisonDomaine extends Domaine
 		}
 	}
 
-	public function findFirst($colonne, $critere)
+	public function findFirst($critere, $colonne = 'id')
 	{
 		return $this->model->where($colonne, $critere)->first();
 	}

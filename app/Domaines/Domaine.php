@@ -8,13 +8,14 @@ class Domaine
 {
 	protected $model;
 
+
 	public function newModel()
 	{
 		return $this->model;
 	}
 
 
-	public function getModelName()
+	public function getSelfModelName()
 	{
 		$name = explode("\\", get_class($this->model));
 		return strtolower(array_pop($name));
@@ -33,7 +34,7 @@ class Domaine
 	}
 
 
-	public function findFirst($colonne, $critere)
+	public function findFirst($critere, $colonne = 'id')
 	{
 		return $this->model->withTrashed()->where($colonne, $critere)->first();
 	}
@@ -52,7 +53,7 @@ class Domaine
 
 	public function setRangs($request)
 	{
-		$model_name = $this->getModelName();
+		$model_name = $this->getSelfModelName();
 		$tablo = $request->get('tablo');
 		foreach ($tablo as $doublet) {
 			$id = $doublet[0];
@@ -74,7 +75,7 @@ class Domaine
 	**/
 	public function checkIfLivraisonLied($model_id, $action)
 	{
-		$model_name = $this->getModelName();
+		$model_name = $this->getSelfModelName();
 
 		$model = $this->model->withTrashed()->with('livraison')->where('id', $model_id)->first();
 
@@ -97,7 +98,7 @@ class Domaine
 	**/
 	public function checkIfImpliedInLivraison($model_id, $action)
 	{
-		$model_name = $this->getModelName();
+		$model_name = $this->getSelfModelName();
 		$occurence = \DB::table('livraison_panier')->where($model_name, $model_id)->get();
 // return dd($occurence);
 

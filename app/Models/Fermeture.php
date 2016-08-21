@@ -15,9 +15,9 @@ class Fermeture extends Model
 
     public $timestamps = false;
 
-    public function relais()
+    public function fermable()
     {
-        return $this->morphedByMany('App\Models\Relais', 'fermable');
+        return $this->morphTo();
     }
 
     public function getDateDebutEnclairAttribute($value)

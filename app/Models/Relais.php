@@ -18,8 +18,7 @@ class Relais extends Model
 
     public function fermetures()
     {
-        return $this->morphToMany('App\Models\Fermeture', 'fermable')->withPivot('cause', 'remarques');
+        return $this->morphMany('App\Models\Fermeture', 'fermable');
     }
 
 }
-

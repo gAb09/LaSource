@@ -51,7 +51,7 @@ class ProducteurController extends Controller
 
     public function edit($id)
     {
-    	$model = $this->domaine->findFirst('id', $id);
+    	$model = $this->domaine->findFirst($id);
     	return view('producteur.edit')->with(compact('model'));
     }
 

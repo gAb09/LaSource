@@ -14,7 +14,7 @@
         <div id="div_date_debut" class="datecontainer">
             <p style="text-align:center"><b>Date de début&nbsp*</b>
     @endif
-            <input type="hidden" id="date_debut" name="date_debut" value="{{ old('date_debut', $fermeture->date_debut) }}">
+            <input type="hidden" id="date_debut" name="date_debut" value="{{ old('date_debut', $model->date_debut) }}">
         </p>
             <input type="text" id="datepicker_debut" name="datepicker_debut" value="{{ old('datepicker_debut', '???') }}">
         </div>
@@ -32,7 +32,7 @@
             <p style="text-align:center"><b>Date de fin&nbsp*</b>
     @endif
         <br />
-            <input type="hidden" id="date_fin" name="date_fin" value="{{ old('date_fin', $fermeture->date_fin) }}">
+            <input type="hidden" id="date_fin" name="date_fin" value="{{ old('date_fin', $model->date_fin) }}">
         </p>
             <input type="text" id="datepicker_fin" name="datepicker_fin" value="">
         </div>
@@ -43,7 +43,7 @@
     <label class="col-md-4 control-label">Cause&nbsp*</label>
 
     <div class="col-md-6">
-        <input type="text" class="form-control" name="cause" value="{{ $fermeture->pivot->cause or old('cause') }}">
+        <input type="text" class="form-control" name="cause" value="{{ $model->cause or old('cause') }}">
 
         @if ($errors->has('cause'))
         <span class="help-block">
@@ -60,7 +60,7 @@
     <label class="col-md-4 control-label">Remarques</label>
 
     <div class="col-md-6">
-        <textarea class="form-control remarques" name="remarques">{!! $fermeture->remarques or old('remarques') !!}</textarea>
+        <textarea class="form-control remarques" name="remarques">{!! $model->remarques or old('remarques') !!}</textarea>
 
         @if ($errors->has('remarques'))
         <span class="help-block">
