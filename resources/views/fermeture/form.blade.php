@@ -1,22 +1,26 @@
 <!-- fermable_type -->
-        <input type="hidden" name="fermable_type" value="{{ $fermable_type or old('fermable_type') }}">
+        <input type="hidden" name="fermable_type" value="{{ $model->fermable_type or old('fermable_type') }}">
 
 <!-- fermable_id -->
-        <input type="hidden" name="fermable_id" value="{{ $fermable_id or old('fermable_id') }}">
+        <input type="hidden" name="fermable_id" value="{{ $model->fermable_id or old('fermable_id') }}">
+
+<!-- fermable_nom -->
+        <input type="hidden" name="fermable_nom" value="{{ $model->fermable_nom or old('fermable_nom') }}">
 
 
 <!-- date_debut -->
     @if ($errors->has('date_debut'))
         <div id="div_date_debut" class="datecontainer error_txt">
-            <p style="text-align:center">
+            <p>
                 <b>{{ $errors->first('date_debut') }}</b>
     @else
         <div id="div_date_debut" class="datecontainer">
-            <p style="text-align:center"><b>Date de début&nbsp*</b>
+            <p style=""><b>Date de début&nbsp*</b>
     @endif
-            <input type="hidden" id="date_debut" name="date_debut" value="{{ old('date_debut', $model->date_debut) }}">
+                <br /><span id="date_debut_enclair" >{{ $model->date_debut_enclair }}</span><br />
         </p>
-            <input type="text" id="datepicker_debut" name="datepicker_debut" value="{{ old('datepicker_debut', '???') }}">
+            <input type="hidden" id="date_debut" name="date_debut" value="{{ old('date_debut', $model->date_debut) }}">
+            <input type="hidden" id="datepicker_debut" name="datepicker_debut" value="{{ old('datepicker_debut', $model->date_debut_enclair) }}">
         </div>
 
 
@@ -25,16 +29,16 @@
 <!-- date_fin -->
     @if ($errors->has('date_fin'))
         <div id="div_date_fin" class="datecontainer error_txt">
-            <p style="text-align:center">
+            <p>
                 <b>{{ $errors->first('date_fin') }}</b>
     @else
         <div id="div_date_fin" class="datecontainer">
-            <p style="text-align:center"><b>Date de fin&nbsp*</b>
+            <p style=""><b>Date de fin&nbsp*</b>
     @endif
-        <br />
-            <input type="hidden" id="date_fin" name="date_fin" value="{{ old('date_fin', $model->date_fin) }}">
+                <br /><span id="date_fin_enclair" >{{ $model->date_fin_enclair }}</span>
         </p>
-            <input type="text" id="datepicker_fin" name="datepicker_fin" value="">
+            <input type="hidden" id="date_fin" name="date_fin" value="{{ old('date_fin', $model->date_fin) }}">
+            <input type="hidden" id="datepicker_fin" name="datepicker_fin" value="{{ old('datepicker_fin', $model->date_fin_enclair) }}">
         </div>
 
 
@@ -73,4 +77,11 @@
 @section('script')
 @parent
 <script src="/js/fermeture.js"></script>
+
+<script type="text/javascript">
+$('#date_debut_enclair').empty().append($('#datepicker_debut').val());
+$('#date_fin_enclair').empty().append($('#datepicker_fin').val());
+
+</script>
+
 @stop

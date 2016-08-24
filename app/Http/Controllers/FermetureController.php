@@ -38,6 +38,30 @@ class FermetureController extends Controller
         return redirect($url_depart_ajout_fermeture)->with( 'success', trans('message.fermeture.storeOk') );
     }
 
+    public function edit($id)
+    {
+        /* Conservation de l'url de la page de départ */
+        \Session::set('url_depart_ajout_fermeture', \Session::get('_previous.url'));
+
+        $model = $this->domaine->edit($id);
+        $titre_page = trans('titrepage.fermeture.edit', ['nom' => $model->fermable_nom]);
+
+        // return dd($model);
+        return view('fermeture.edit')->with(compact('model', 'titre_page'));
+    }
+
+
+    public function update($id, FermetureRequest $request)
+    {
+        if($this->domaine->update($id, $request)){
+            $url_depart_ajout_fermeture = \Session::get('url_depart_ajout_fermeture');
+            \Session::forget('url_depart_ajout_fermeture');
+            return redirect()->back()->with( 'success', trans('message.fermeture.updateOk') );
+        }else{
+            return redirect()->back()->with('status', trans('message.fermeture.updatefailed'));
+        }
+    }
+
 
 
     public function destroy($id)
@@ -52,7 +76,5 @@ class FermetureController extends Controller
             return redirect()->back()->with('status', trans('message.modepaiement.deletefailed'));
         }
     }
-
-
 
 }

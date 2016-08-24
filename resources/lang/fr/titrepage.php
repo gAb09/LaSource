@@ -72,6 +72,7 @@ return [
         'fermeture' => 
             [
                 'create' => 'Ajout d’une période de fermeture :entity “:nom”',
+                'edit' => 'Modification d’une période de fermeture associée à <br />“:nom”',
             ],
 
         'dashboard' => 

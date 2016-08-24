@@ -148,9 +148,9 @@ class LivraisonController extends Controller
         return view('livraison.modales.listProducteursForPanier')->with(compact('panier_id', 'producteurs', 'titre_page'));
     }
 
-    public function getComboDate($valeur)
+    public function getComboDatesLivraison($valeur)
     {
-        $data = $this->domaine->getComboDate($valeur);
+        $data = $this->domaine->getComboDatesLivraison($valeur);
         return response()->json($data);
     }
 

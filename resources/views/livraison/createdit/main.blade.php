@@ -52,15 +52,15 @@
 
 <script type="text/javascript">
 
-getComboDate('date_cloture', "{{ old('date_cloture', $model->date_cloture) }}");
+getComboDatesLivraison('date_cloture', "{{ old('date_cloture', $model->date_cloture) }}");
 
 var paie = "{{ old('date_paiement', $model->date_paiement) }}";
 paie = paie.split(" ")[0];
-getComboDate('date_paiement', paie);
+getComboDatesLivraison('date_paiement', paie);
 
 var liv = "{{ old('date_livraison', $model->date_livraison) }}";
 liv = liv.split(" ")[0];
-getComboDate('date_livraison', liv);
+getComboDatesLivraison('date_livraison', liv);
 
 </script>
 @stop

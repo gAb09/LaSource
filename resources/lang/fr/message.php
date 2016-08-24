@@ -87,6 +87,10 @@ return [
     'fermeture' => [
     'storeOk'       => 'La période de fermeture a bien été créée.',
     'storefailed'   => 'Problème. La période de fermeture n’a pas pu être créée…',
+    'updateOk'      => 'La période de fermeture a bien été modifiée.',
+    'updatefailed'  => 'Problème. La période de fermeture n’a pas pu être mise à jour…',
+    'deleteOk'      => 'La période de fermeture a bien été supprimée.',
+    'deletefailed'  => 'Problème. La période de fermeture n’a pas pu être supprimée…',
     ],
 
     'user' => [

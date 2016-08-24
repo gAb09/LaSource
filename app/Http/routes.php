@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('livraison/combodate/{valeur}', 'LivraisonController@getComboDate');
 
 Route::any('/', function () {
 	return view('accueil');
@@ -125,6 +124,7 @@ Route::group(['middleware' => 'auth'], function () {
 ]]);
 
 // LIVRAISON...
+	Route::get('livraison/combodate/{valeur}', 'LivraisonController@getComboDatesLivraison');
 
 	// Pivot Panier
 	Route::get('livraison/{livraison_id}/listpaniers', 

@@ -8,6 +8,7 @@ $(function()
         altFormat: "yy-mm-dd",
         showOn: "button",
         buttonText: "Choisir une date de début",
+        onClose: function(valeur, dp) {$('#date_debut_enclair').empty().append($('#datepicker_debut').val());},
     });
 });
 
@@ -20,44 +21,7 @@ $(function()
         altFormat: "yy-m-d",
         showOn: "button",
         buttonText: "Choisir une date de fin",
-        onClose: function(valeur, dp) {var nom = 'date_fin'; getComboDate(nom, valeur);},
+        onClose: function(valeur, dp) {$('#date_fin_enclair').empty().append($('#datepicker_fin').val());},
     });
 });
-
-
-/*
-| Acquisition du contenu html pour les dates
-|
-*/
-function getComboDate(nom, valeur)
-{
-    valeur = valeur.split(" ")[0];
-    if (valeur === '') {valeur = 0;}
-
-    var ad = 'http://lasource/livraison/combodate/'+valeur;
-    var span_enclair = '#'+nom+'_enclair';
-    var span_delai = '#'+nom+'_delai';
-    var input_date = '#'+nom;
-    $.ajax({
-        url : ad,
-        type : 'GET',
-        dataType : 'json',
-        success : function(data, statut){
-            $(span_enclair).empty().append(data['enclair']);
-            $(span_delai).empty().append(data['delai']);
-            $(input_date).empty().append(data['valeur']);
-        },
-
-        error : function(resultat, statut, erreur){
-            alert(resultat);
-            alert(statut);
-            alert(erreur);
-        },
-
-        complete : function(resultat, statut){
-
-        }
-    });
-}
-
 

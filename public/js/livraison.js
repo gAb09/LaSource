@@ -6,7 +6,7 @@ $(function()
         altFormat: "yy-m-d",
         showOn: "button",
         buttonText: "Choisir",
-        onClose: function(valeur, dp) {var nom = 'date_cloture'; getComboDate(nom, valeur);},
+        onClose: function(valeur, dp) {var nom = 'date_cloture'; getComboDatesLivraison(nom, valeur);},
     });
 });
 
@@ -19,7 +19,7 @@ $(function()
         altFormat: "yy-m-d",
         showOn: "button",
         buttonText: "Choisir",
-        onClose: function(valeur, dp) {var nom = 'date_paiement'; getComboDate(nom, valeur);},
+        onClose: function(valeur, dp) {var nom = 'date_paiement'; getComboDatesLivraison(nom, valeur);},
     });
 });
 
@@ -32,7 +32,7 @@ $(function()
         altFormat: "yy-m-d",
         showOn: "button",
         buttonText: "Choisir",
-        onClose: function(valeur, dp) {var nom = 'date_livraison'; getComboDate(nom, valeur);},
+        onClose: function(valeur, dp) {var nom = 'date_livraison'; getComboDatesLivraison(nom, valeur);},
     });
 });
 
@@ -41,7 +41,7 @@ $(function()
 | Acquisition du contenu html pour les dates
 |
 */
-function getComboDate(nom, valeur)
+function getComboDatesLivraison(nom, valeur)
 {
     valeur = valeur.split(" ")[0];
     if (valeur === '') {valeur = 0;}

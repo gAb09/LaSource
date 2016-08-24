@@ -113,7 +113,7 @@ class LivraisonDomaine extends Domaine
 
 
 
-	public function getComboDate($valeur)
+	public function getComboDatesLivraison($valeur)
 	{
 		if ($valeur == 0) {
 			$datas['date'] = '';

@@ -4,6 +4,7 @@ namespace App\Domaines;
 
 use App\Models\Fermeture;
 use App\Domaines\Domaine;
+use Carbon\Carbon;
 
 use Log;
 use Mail;
@@ -33,9 +34,15 @@ class FermetureDomaine extends Domaine
 	}
 
 
+	public function edit($id)
+	{
+		return Fermeture::with('fermable')->where('id', $id)->first();
+	}
+
+
+
 	public function update($id, $request){
-		return dd($request);
-		$this->model = Fermeture::withTrashed()->where('id', $id)->first();
+		$this->model = Fermeture::where('id', $id)->first();
 		$this->handleRequest($request);
 
 		return $this->model->save();
@@ -45,6 +52,7 @@ class FermetureDomaine extends Domaine
 	private function handleRequest($request){
 		$this->model->fermable_id = $request->fermable_id;
 		$this->model->fermable_type = $request->fermable_type;
+		$this->model->fermable_nom = $request->fermable_nom;
 		$this->model->date_debut = $request->date_debut;
 		$this->model->date_fin = $request->date_fin;
 		$this->model->cause = $request->cause;
@@ -74,5 +82,6 @@ class FermetureDomaine extends Domaine
 		// });
 
 	}
+
 
 }

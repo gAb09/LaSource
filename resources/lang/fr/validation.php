@@ -15,12 +15,12 @@ return [
 
     'accepted'             => 'Le champ :attribute n’est pas accepté.',
     'active_url'           => ':attribute nest pas une URL valide.',
-    'after'                => 'Le champ :attribute doit être une date postérieure à : :date.',
+    'after'                => ':attribute doit être postérieure à :date.',
     'alpha'                => 'Le champ :attribute ne doit contenir que des lettres.',
     'alpha_dash'           => 'Le champ :attribute ne doit contenir que des lettres, chiffres, et tirets.',
     'alpha_num'            => 'Le champ :attribute ne doit contenir que des lettres et des chiffres.',
     'array'                => 'Le champ :attribute doit être un tableau.',
-    'before'               => 'Le champ :attribute doit être une date antérieure à : :date.',
+    'before'               => ':attribute doit être antérieure à :date.',
     'between'              => [
         'numeric' => 'Le champ :attribute doit être compris entre :min et :max.',
         'file'    => 'Le champ :attribute doit être compris entre :min et :max kilobytes.',
@@ -122,6 +122,8 @@ return [
     'email' => 'Courriel',
     'nompourpaniers' => 'Nom pour Paniers',
     'today' => 'aujourd’hui',
+    'date_debut' => 'Date de début',
+    'date_fin' => 'Date de fin',
     ],
 
 ];
