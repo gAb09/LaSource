@@ -45,11 +45,11 @@ class LivraisonRequest extends Request
     public function messages()
     {
         return [
-        'date_cloture.after' => "La date de clôture est dans moins de $this->margeCloture jours.",
-        'date_cloture.before' => 'La date de cloture doit être plus proche que celle de paiement.',
-        'date_paiement.before' => 'La date de paiement doit être plus proche que celle de livraison.',
-        'date_paiement.after' => "La date de paiement est dans moins de $this->margePaiement jours.",
-        'date_livraison.after' => "La date de livraison est dans moins de $this->margeLivraison jours.",
+        'date_cloture.after' => "Date de clôture.<br />La date choisie est dans moins de $this->margeCloture jours.",
+        'date_paiement.after' => "Date de paiement.<br />La date choisie est dans moins de $this->margePaiement jours.",
+        'date_livraison.after' => "Date de livraison.<br />La date choisie est dans moins de $this->margeLivraison jours.",
+        'date_cloture.before' => 'Date de clôture.<br />Doit être antérieure à celle de paiement.',
+        'date_paiement.before' => 'Date de paiement.<br />Doit être antérieure à celle de livraison.',
         ];
     }
 }
