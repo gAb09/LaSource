@@ -1,6 +1,6 @@
     @if ($errors->has('date_cloture'))
     <p style="text-align:center">
-        <b>{{ $errors->first('date_cloture') }}</b>
+        <b>{!! $errors->first('date_cloture') !!}</b>
     @else
 <p style="text-align:center"><b>Date de clôture</b>
 	@endif
