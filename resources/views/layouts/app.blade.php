@@ -104,7 +104,7 @@
     <!-- - - - - - - - - - - - - - - - MESSAGES - - - - - - - - - - - - - - -->
     @section('message')
 
-    {{ var_dump(\Session::all()) }}
+    {{-- var_dump(\Session::all()) --}}
     {{-- var_dump(Auth::user()->role->id or "rr") --}}
 
     <div id="messages" class="col-md-6 col-md-offset-3 messages">

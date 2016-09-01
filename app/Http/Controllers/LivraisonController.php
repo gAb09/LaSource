@@ -38,7 +38,7 @@ class LivraisonController extends Controller
         $model = $this->domaine->create();
         $date_titrepage = "En création";
 
-        return view('livraison.create')->with(compact('model', 'date_titrepage'));
+        return view('livraison.createdit.create')->with(compact('model', 'date_titrepage'));
     }
 
 
@@ -65,7 +65,7 @@ class LivraisonController extends Controller
         $panierschoisis = $this->panier->paniersChoisis($id);
         // dd($panierschoisis);
 
-        return view('livraison.edit')->with(compact('model','date_titrepage', 'paniers', 'panierschoisis' ));
+        return view('livraison.createdit.edit')->with(compact('model','date_titrepage', 'paniers', 'panierschoisis' ));
     }
 
 
