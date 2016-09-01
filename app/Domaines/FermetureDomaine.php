@@ -63,18 +63,19 @@ class FermetureDomaine extends Domaine
 
 	public function destroy($id)
 	{
-		$aucun = array();
-		$this->model = $this->model->where('id', $id)->first();
-		$this->model->panier()->sync($aucun);
+		// $aucun = array();
+		// $this->model = $this->model->findFirst($id);
+		// $this->model->panier()->sync($aucun);
 		
-		return dd($this->model->delete());
+		// return dd($this->model->delete());
+		return false;
 	}
 
 
 
 	public function alertOuaibMaistre($e)
 	{
-		$subject = 'Problème d\'attachement d\'une fermeture :';
+		$subject = 'Problème lors de l\'attachement d\'une fermeture :';
 		Log::info($subject.$e);
 		// Mail::send('mails.BugReport', ['e' => $e, 'subject' => $subject], function ($m) use($e, $subject) {
 		// 	$m->to = env('MAIL_OM_ADRESS');

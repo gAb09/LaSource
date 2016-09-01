@@ -5,15 +5,19 @@ namespace App\Http\Controllers;
 use App\Domaines\FermetureDomaine as Fermeture;
 use App\Domaines\Relais;
 use App\Http\Requests\FermetureRequest;
+use App\Http\Controllers\acceptFermetureTrait;
 
 use Illuminate\Http\Request;
 
 class FermetureController extends Controller
 {
+    use acceptFermetureTrait;
+
     private $domaine;
     private $entity;
     private $domainesPath = 'App\\Domaines\\';
-    
+
+
     public function __construct(Fermeture $domaine)
     {
         $this->domaine = $domaine;
@@ -27,39 +31,35 @@ class FermetureController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(FermetureRequest $request)
     {
-        if (!$this->domaine->store($request)) {
-            return redirect()->back()->with( 'status', trans('message.fermeture.storefailed').trans('message.bug.transmis') );
+        if ($this->domaine->store($request)) {
+            $url_depart = $this->getUrlDepart();
+            return redirect($url_depart)->with( 'success', trans('message.fermeture.storeOk') );
         }
-
-        $url_depart_ajout_fermeture = \Session::get('url_depart_ajout_fermeture');
-        \Session::forget('url_depart_ajout_fermeture');
-        return redirect($url_depart_ajout_fermeture)->with( 'success', trans('message.fermeture.storeOk') );
+        return redirect()->back()->with( 'status', trans('message.fermeture.storefailed').trans('message.bug.transmis') );
     }
+
+
 
     public function edit($id)
     {
-        /* Conservation de l'url de la page de départ */
-        \Session::set('url_depart_ajout_fermeture', \Session::get('_previous.url'));
-
         $model = $this->domaine->edit($id);
+        $this->keepUrlDepart();
         $titre_page = trans('titrepage.fermeture.edit', ['nom' => $model->fermable_nom]);
 
-        // return dd($model);
         return view('fermeture.edit')->with(compact('model', 'titre_page'));
     }
+
 
 
     public function update($id, FermetureRequest $request)
     {
         if($this->domaine->update($id, $request)){
-            $url_depart_ajout_fermeture = \Session::get('url_depart_ajout_fermeture');
-            \Session::forget('url_depart_ajout_fermeture');
-            return redirect()->back()->with( 'success', trans('message.fermeture.updateOk') );
-        }else{
-            return redirect()->back()->with('status', trans('message.fermeture.updatefailed'));
+            $url_depart = $this->getUrlDepart();
+            return redirect($url_depart)->with( 'success', trans('message.fermeture.updateOk') );
         }
+        return redirect()->back()->with( 'status', trans('message.fermeture.updatefailed').trans('message.bug.transmis') );
     }
 
 
@@ -67,13 +67,24 @@ class FermetureController extends Controller
     public function destroy($id)
     {     
         if($this->domaine->destroy($id)){
-            if (is_string($resultat)) {
-                return redirect()->back()->with('status', $resultat);
-            }else{
-                return redirect()->route('modepaiement.index')->with('success', trans('message.modepaiement.deleteOk'));
-            }
+            $url_depart = $this->getUrlDepart();
+            return redirect($url_depart)->with( 'success', trans('message.fermeture.deleteOk') );
+        }
+        return redirect()->back()->with('status', trans('message.fermeture.deletefailed'));
+    }
+
+
+    /**
+    * Récupération de l'url de la page de départ et effacement en session.
+    * 
+    **/
+    private function getUrlDepart(){
+        if (\Session::has('url_depart_ajout_fermeture')) {
+            $url = \Session::get('url_depart_ajout_fermeture');
+            \Session::forget('url_depart_ajout_fermeture');
+            return $url;
         }else{
-            return redirect()->back()->with('status', trans('message.modepaiement.deletefailed'));
+            return \Session::get('_previous.url');
         }
     }
 

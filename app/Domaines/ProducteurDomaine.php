@@ -23,8 +23,8 @@ class ProducteurDomaine extends Domaine
 
 	public function update($id, $request){
 
-		if ($request->input('is_actif') == 0 and $result = $this->checkIfImpliedInLivraison($id, 'Désactivation')) {
-			return($result);
+		if ($request->input('is_actif') == 0 and $message = $this->checkIfImpliedInLivraison($id, 'Désactivation')) {
+			return($message);
 		}
 
 		$this->model = Producteur::withTrashed()->where('id', $id)->first();
@@ -59,8 +59,8 @@ class ProducteurDomaine extends Domaine
 
 	public function destroy($id)
 	{
-		if ($result = $this->checkIfImpliedInLivraison($id, 'Suppression')) {
-			return($result);
+		if ($message = $this->checkIfImpliedInLivraison($id, 'Suppression')) {
+			return($message);
 		}
 		$aucun = array();
 		$this->model = $this->model->where('id', $id)->first();

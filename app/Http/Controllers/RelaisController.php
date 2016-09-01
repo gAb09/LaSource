@@ -6,14 +6,14 @@ use App\Domaines\RelaisDomaine as Domaine;
 use App\Http\Requests\RelaisRequest;
 use App\Http\Controllers\getDeletedTrait;
 use App\Http\Controllers\setRangsTrait;
-use App\Http\Controllers\addFermetureTrait;
+use App\Http\Controllers\acceptFermetureTrait;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
 class RelaisController extends Controller
 {
-    use getDeletedTrait, setRangsTrait, addFermetureTrait;
+    use getDeletedTrait, setRangsTrait, acceptFermetureTrait;
 
     private $domaine;
     private $entityName;

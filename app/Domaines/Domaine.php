@@ -71,39 +71,38 @@ class Domaine
 	/**
 	* Contrôle s'il existe des livraisons liées
 	* 
-	* @return collection (vide|renseignée)
+	* @return false|string
 	**/
-	public function checkIfLivraisonLied($model_id, $action)
+	public function checkIfLivraisonAttached($model_id, $action)
 	{
-		$model_name = $this->getSelfModelName();
-
 		$model = $this->model->withTrashed()->with('livraison')->where('id', $model_id)->first();
 
 		/* Si il existe au moins une livraison liée */
 		if (!$model->livraison->isEmpty()) { 
+			$model_name = $this->getSelfModelName();
 			$message = "Oups !! $action impossible !<br />";
 			foreach ($model->livraison as $livraison) {
 				$message .= trans("message.$model_name.liedToLivraison", ['date' => $livraison->date_livraison_enClair]).'<br />';
 			}
 			return $message;
 		}
-
+		return false;
 	}
 
 
 	/**
 	* Contrôle si le modèle est impliqué dans une livraison (contenu dans le pivot livraison/panier)
 	* 
-	* @return collection (vide|renseignée)
+	* @return false|string
 	**/
 	public function checkIfImpliedInLivraison($model_id, $action)
 	{
-		$model_name = $this->getSelfModelName();
 		$occurence = \DB::table('livraison_panier')->where($model_name, $model_id)->get();
 // return dd($occurence);
 
 		/* Si il existe au moins une livraison liée */
 		if (!empty($occurence)) {
+			$model_name = $this->getSelfModelName();
 			$message = "Oups !! $action impossible !<br />";
 			foreach ($occurence as $pivot) {
 			$livraison = Livraison::where('id', $pivot->livraison_id)->first();
@@ -111,7 +110,7 @@ class Domaine
 			}
 			return $message;
 		}
-
+		return false;
 	}
 
 }

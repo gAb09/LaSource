@@ -22,8 +22,8 @@ class ModePaiementDomaine extends Domaine
 
 	public function update($id, $request){
 
-		if ($request->input('is_actif') == 0 and $result = $this->checkIfLivraisonLied($id, 'Désactivation')) {
-			return($result);
+		if ($request->input('is_actif') == 0 and $message = $this->checkIfLivraisonAttached($id, 'Désactivation')) {
+			return($message);
 		}
 
 		$this->model = ModePaiement::withTrashed()->where('id', $id)->first();
@@ -43,8 +43,8 @@ class ModePaiementDomaine extends Domaine
 
 	public function destroy($id)
 	{
-		if ($result = $this->checkIfLivraisonLied($id, 'Suppression')) {
-			return($result);
+		if ($message = $this->checkIfLivraisonAttached($id, 'Suppression')) {
+			return($message);
 		}
 		$aucun = array();
 		$this->model = $this->model->where('id', $id)->first();

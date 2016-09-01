@@ -91,6 +91,7 @@ return [
     'updatefailed'  => 'Problème. La période de fermeture n’a pas pu être mise à jour…',
     'deleteOk'      => 'La période de fermeture a bien été supprimée.',
     'deletefailed'  => 'Problème. La période de fermeture n’a pas pu être supprimée…',
+    'confirmDelete' => 'Êtes-vous sur de vouloir supprimer la période de fermeture ?',
     ],
 
     'user' => [
