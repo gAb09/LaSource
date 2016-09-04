@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Domaines\LivraisonDomaine as Livraison;
 use App\Domaines\PanierDomaine as Panier;
 use App\Domaines\ProducteurDomaine as Producteur;
+use App\Domaines\RelaisDomaine as Relaiss;
 use App\Http\Requests\LivraisonRequest;
 use App\Http\Requests\PanierForLivraisonRequest;
+use App\Http\Requests\RelaissForLivraisonRequest;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -17,12 +19,14 @@ class LivraisonController extends Controller
     protected $domaine;
     protected $panier;
     protected $producteur;
+    protected $relaiss;
     
-    public function __construct(livraison $domaine, Panier $panier, Producteur $producteur)
+    public function __construct(livraison $domaine, Panier $panier, Producteur $producteur, Relaiss $relaiss)
     {
         $this->domaine = $domaine;
         $this->panier = $panier;
         $this->producteur = $producteur;
+        $this->relaiss = $relaiss;
     }
 
 
@@ -65,7 +69,10 @@ class LivraisonController extends Controller
         $panierschoisis = $this->panier->paniersChoisis($id);
         // dd($panierschoisis);
 
-        return view('livraison.createdit.edit')->with(compact('model','date_titrepage', 'paniers', 'panierschoisis' ));
+        $relaiss = $this->relaiss->ListForLivraisonEdit($id);
+        // dd($relaiss);
+
+        return view('livraison.createdit.edit')->with(compact('model','date_titrepage', 'paniers', 'panierschoisis', 'relaiss' ));
     }
 
 
@@ -93,6 +100,13 @@ class LivraisonController extends Controller
     }
 
 
+    public function getComboDatesLivraison($valeur)
+    {
+        $data = $this->domaine->getComboDatesLivraison($valeur);
+        return response()->json($data);
+    }
+
+
     /**
     * Obtention des infos pour constituer la liste des paniers liés à cette livraison.
     * ToDo : Méthode de ce controleur où de PanierController ? Ou encore ProducteurController ?
@@ -102,9 +116,8 @@ class LivraisonController extends Controller
     **/
     public function listPaniers($livraison_id)
     {
-        // dd('listPaniers');
         $model = $this->domaine->findFirst($livraison_id, 'id');
-        // dd($model);
+
         $paniers = $this->panier->listPaniers($livraison_id);
         $titre_page = trans('titrepage.livraison.listPaniers', ['date' => $model->date_livraison_enclair]);
 
@@ -114,12 +127,11 @@ class LivraisonController extends Controller
 
     public function syncPaniers($livraison_id, PanierForLivraisonRequest $request)
     {
-        // dd($request->all());
-        $result = $this->domaine->livraisonSyncPaniers($livraison_id, $request->except('_token'));
+        $result = $this->domaine->SyncPaniers($livraison_id, $request->except('_token'));
         if (!empty($result)) {
-            return redirect()->back()->with('success', trans('message.livraison.syncOk', ['result' => var_dump($result)]));
+            return redirect()->back()->with('success', trans('message.livraison.syncPaniersOk', ['result' => var_dump($result)]));
         }else{
-            return redirect()->back()->with('status', trans('message.livraison.syncfailed'));
+            return redirect()->back()->with('status', trans('message.livraison.syncPaniersfailed'));
         }
         
     }
@@ -148,10 +160,18 @@ class LivraisonController extends Controller
         return view('livraison.modales.listProducteursForPanier')->with(compact('panier_id', 'producteurs', 'titre_page'));
     }
 
-    public function getComboDatesLivraison($valeur)
+    public function syncRelaiss($livraison_id, Request $request)
     {
-        $data = $this->domaine->getComboDatesLivraison($valeur);
-        return response()->json($data);
+        var_dump($request->get('is_retired'));
+
+        $result = $this->domaine->SyncRelaiss($livraison_id, $request->except('_token'));
+        if (!empty($result)) {
+            return redirect()->back()->with('success', trans('message.livraison.syncOk', ['result' => var_dump($result)]));
+        }else{
+            return redirect()->back()->with('status', trans('message.livraison.syncfailed'));
+        }
+        
     }
+
 
 }

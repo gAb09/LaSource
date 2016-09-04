@@ -1,4 +1,4 @@
-	<h4 class="">Les paniers</h4>
+	<h4 class="SsTitre">Les paniers</h4>
 
 
 
@@ -83,7 +83,7 @@
 					<input type="text" class="prix"  name="prix_base[]" value="{{ $panier->prix_base or old('prix_base') }}" onClick="javascript:reporterPrixBase(this)">
 				</td>
 				<td style="width:15%">
-					<button type="button" class="btn btn-warning btn-xs" onClick="javascript:document.location.href='{{ route('livraisonDetachPanier', ['livraison' => $model->id, 'panier' => $panier->id]) }}';">
+					<button type="button" class="btn btn-primary btn-xs" onClick="javascript:document.location.href='{{ route('livraisonDetachPanier', ['livraison' => $model->id, 'panier' => $panier->id]) }}';">
 						<i class="fa fa-btn fa-unlink fa-lg"></i>Retirer de cette livraison
 					</button>
 				</td>

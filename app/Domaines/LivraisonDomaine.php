@@ -70,7 +70,7 @@ class LivraisonDomaine extends Domaine
 	}
 
 
-	public function livraisonSyncPaniers($model_id, $paniers = array())
+	public function SyncPaniers($model_id, $paniers = array())
 	{
 		// return 	dd($paniers);
 
@@ -79,15 +79,15 @@ class LivraisonDomaine extends Domaine
 		if(empty($paniers)){
 			return $model->panier()->detach();
 		}else{
-			return $this->handleLivraisonSyncPaniers($model, $paniers);
+			return $this->prepareSyncPaniers($model, $paniers);
 		}
 	}
 
 
-	public function handleLivraisonSyncPaniers($model, $paniers)
+	public function prepareSyncPaniers($model, $paniers)
 	{
 
-		// return dd('handleLivraisonSyncPaniers');
+		// return dd('prepareSyncPaniers');
 		// dd($paniers);
 		$datas = array();
 		$nombre = count($paniers['panier_id'])-1;
@@ -101,6 +101,33 @@ class LivraisonDomaine extends Domaine
 		return $model->panier()->sync($paniers['panier_id']);
 	}
 
+
+
+	public function SyncRelaiss($model_id, $datas = array())
+	{
+		// dd($datas['is_lied']);
+		unset($datas['_token']);
+		$model = Livraison::find($model_id);
+		if(empty($datas['is_retired'])){
+			$result = $model->relais()->detach();
+		}else{
+			$sync = $this->prepareSyncRelaiss($model, $datas);
+			$result = $model->relais()->sync($sync);
+		}
+			// return dd($sync);
+		return $result;
+	}
+			
+
+
+	public function prepareSyncRelaiss($model, $datas)
+	{
+		$sync = array();
+		foreach ($datas['is_retired'] as $key => $value) {
+			$sync[$key] = ['is_retired' => $value];
+		}
+		return $sync;
+	}
 
 
 
@@ -152,7 +179,6 @@ class LivraisonDomaine extends Domaine
 	**/
 	public function getDelaiExplicite($delai)
 	{
-		// var_dump("delai : $delai");
 		$chiffre = abs($delai);
 
 		if ($delai == 0) {

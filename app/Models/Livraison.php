@@ -22,10 +22,18 @@ class Livraison extends Model
 
     protected $appends = array('class_actif');
 
+
     public function Panier()
     {
         return $this->belongsToMany('App\Models\Panier')->withPivot('producteur', 'prix_livraison');
     }
+
+
+    public function Relais()
+    {
+        return $this->belongsToMany('App\Models\Relais')->withPivot('is_retired', 'motif');
+    }
+
 
     public function getDateClotureEnclairAttribute($value)
     {

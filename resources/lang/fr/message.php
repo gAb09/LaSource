@@ -80,8 +80,10 @@ return [
     'storefailed'   => 'Problème. La livraison n’a pas pu être créée…',
     'deleteOk'      => 'La livraison a bien été supprimée.',
     'deletefailed'  => 'Problème. La livraison n’a pas pu être supprimée…',
-    'syncOk'        => 'Les paniers ont bien été actualisés :result.',
-    'syncfailed'    => 'Problème. La livraison n’a pas pu être actualisée',
+    'syncPaniersOk'        => 'Les paniers ont bien été actualisés :result.',
+    'syncPaniersfailed'    => 'Problème. Les paniers de cette livraison n’ont pus être actualisés',
+    'syncRelaissOk'        => 'Les relais ont bien été actualisés :result.',
+    'syncRelaissfailed'    => 'Problème. Les relais de cette livraison n’ont pus être actualisés',
     ],
 
     'fermeture' => [

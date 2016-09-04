@@ -4,16 +4,19 @@ namespace App\Domaines;
 
 use App\Models\Relais;
 use App\Domaines\Domaine;
+// use App\Domaines\LivraisonDomaine;
 
 
 class RelaisDomaine extends Domaine
 {
 	protected $model;
+	protected $livraisonD;
 
-	public function __construct(){
+	public function __construct(LivraisonDomaine $livraisonD){
 		$this->model = new Relais;
+		$this->livraisonD = $livraisonD;
 	}
-    	
+
 
 
 	public function index(){
@@ -65,6 +68,79 @@ class RelaisDomaine extends Domaine
 		$this->model = $this->model->where('id', $id)->first();
 		
 		return $this->model->delete();
+	}
+
+	public function ListForLivraisonEdit($livraison_id){
+		$items = $this->model->with(['fermetures' => function ($query) {
+			$query->oldest('date_debut');
+		}], 'livraison')
+		->where('is_actif', 1)
+		->orderBy('rang')->get();
+
+		$this->livconcerned = $this->livraisonD->findFirst($livraison_id);
+
+		$items = $items->each(function ($item) {
+			if (!$item->fermetures->isEmpty()) {
+				foreach ($item->fermetures as $key => $fermeture) {
+					$item = $this->checkAllDates($item, $key, $fermeture);
+					$item = $this->checkDateLivraison($item, $key, $fermeture);
+				}
+			}
+
+			$item = $this->checkLiedWIthThisLivraison($item);
+		});
+		return $items;
+	}
+
+
+	private function checkDateLivraison($item, $key, $fermeture){
+		if ($this->livconcerned->date_livraison->between($fermeture->date_debut, $fermeture->date_fin)) {
+			$item->fermetures[$key]->statut = 'IndispoPourLivraison';
+			$item->statut = 'IndispoPourLivraison';
+		}
+		return $item;
+	}
+
+
+	private function checkAllDates($item, $key, $fermeture){
+		if ($fermeture->date_debut->between($this->livconcerned->date_cloture, $this->livconcerned->date_livraison)
+			or
+			$fermeture->date_fin->between($this->livconcerned->date_cloture, $this->livconcerned->date_livraison))
+		{
+			$item->fermetures[$key]->statut = 'IndispoGlobal';
+			$item->statut = 'IndispoGlobal';
+		}
+		return $item;
+	}
+
+
+	private function checkLiedWIthThisLivraison($item){
+		if ($item->livraison->isEmpty()){
+			$item->is_lied = 0;
+			return $item;
+		}
+
+		if ($item->statut == 'IndispoPourLivraison') {
+			$item->is_lied = 0;
+			return $item;
+		}
+
+		foreach ($item->livraison as $livraison) {
+			if ($this->livconcerned->id == $livraison->id) {
+				if ($livraison->pivot->is_retired == 1) {
+					$item->is_lied = 0;
+					return $item;
+				}else{
+					$item->is_lied = 1;
+					return $item;
+				}
+			// }else{
+			// 	return $item;
+			}
+		}
+
+		$item->is_lied = 6;
+		return $item;
 	}
 
 }

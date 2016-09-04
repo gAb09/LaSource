@@ -38,4 +38,15 @@
 	</div>
 </form>
 
+<!-- Les relais -->
+<form class="form-inline" role="form" method="POST" action="{{ route('livraisonSyncRelaiss', [$model->id]) }}">
+	{!! csrf_field() !!}
+	<input type="hidden" class="form-control" name="_method" value="PUT">
+
+	<div class="col-md-12 flexcontainer form_relaiss">
+		@include('livraison.createdit.relais')
+	</div>
+</form>
+
+
 @stop

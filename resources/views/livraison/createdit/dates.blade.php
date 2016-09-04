@@ -1,5 +1,5 @@
 <div>
-	<h4 class="col-md-12">Les dates</h4><br />
+	<h4>Les dates</h4>
 </div>
 
 <!-- date_cloture -->

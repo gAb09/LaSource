@@ -23,11 +23,13 @@ Vue index
 /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 Vue createdit (create & edit)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-.form_dates, .form_paniers,{
+.form_dates, .form_paniers, .form_relaiss{
 	background-color:@color_livraison;
 	margin-top:10px;
-	justify-content:space-around;
+	justify-content:space-between;
 	align-items: center;
+	box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
+	// border: 1px solid @color_livraison_dark;
 }
 
 .form_dates{
@@ -73,8 +75,6 @@ Vue createdit (create & edit)
 	}
 }
 
-
-
 .boutonspaniers{
 	flex-flow: column wrap;
 	align-items: center;	
@@ -82,6 +82,87 @@ Vue createdit (create & edit)
 		margin-top: 5px;	
 	}
 }
+
+
+.form_relaiss{
+	.relaiscontainer.IndispoGlobal{
+		// background-color: rgba(230, 240, 250, 0.3);
+		// border: 1px solid @color_warning;
+		p{
+			// color: @color_txt_indisponible;
+		}
+	}
+	.relaiscontainer.IndispoPourLivraison{
+		// background-color: rgba(230, 240, 250, 0.3);
+		// border: 1px solid @color_danger;
+		p{
+			// color: @color_txt_indisponible;
+		}
+	}
+	.relaiscontainer{
+		padding: 5px;
+		align-self: start;
+		box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+		display: flex;
+		flex-direction: column;
+		background-color: @color_relais;
+		text-align: center;
+		min-width: 13%;
+		max-width: 15%;
+		p{
+			line-height: 1.3em;
+			font-size: 0.8em;
+			.gras{
+				font-size: 1.1em;
+				font-weight: bold;
+				line-height: 1.3em;
+			}
+			.ville{
+				text-transform: uppercase;			
+			}
+		}
+		p.indispo{
+			color: @color_txt_indisponible;
+
+		}
+		p.IndispoPourLivraison{
+			font-size: 0.9em;
+			color: @color_danger;
+			.premiere::before{
+				content: "Problème pour la livraison";
+				display: block;
+			}
+		}
+		p.IndispoPourLivraison::after{
+			content: "(Nota : ce relais refusera d’être associé tant que le problème de date subsistera)";
+			display: block;
+			font-size: 0.8em;
+			line-height: 1em;
+			margin-top: 5px;
+		}
+		p.IndispoGlobal{
+			font-size: 0.9em;
+			color: darken(@color_warning, 10%);
+			.premiere::before{
+				content: "Attention !!";
+				display: block;
+			}
+		}
+		#flagLied{
+			background-color: @color_danger;
+			color: #fff;
+			font-size: 0.75em;
+			font-weight: 400;
+			height: 20px;
+			margin: 0;
+			padding: 0 5px;
+		}
+		#flagLied.LiedWIthThisLivraison{
+			background-color: @color_success;
+		}
+	}
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////
 

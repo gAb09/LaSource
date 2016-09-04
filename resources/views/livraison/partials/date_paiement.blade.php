@@ -2,7 +2,7 @@
     <p style="text-align:center">
         <b>{!! $errors->first('date_paiement') !!}</b>
     @else
-<p style="text-align:center"><b>Date de paiement</b>
+<p style="text-align:center"><b>Date limite de paiement</b>
 	@endif
 	<br />
 	<span id="date_paiement_enclair" >{{ $model->date_paiement_enclair }}</span><br />
