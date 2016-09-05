@@ -24,7 +24,7 @@
 
 <li class="dropdown">
 	<a href="" class="" data-toggle="dropdown" role="button" aria-expanded="false">
-		Réhabiliter <span class="caret"></span>
+		Restaurer <span class="caret"></span>
 	</a>
 
 	<ul class="dropdown-menu" role="menu">
