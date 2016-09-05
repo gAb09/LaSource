@@ -7,7 +7,7 @@ use App\Models\ModelTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Fermeture extends Model
+class Indisponibilite extends Model
 {
 	use ModelTrait;
 
@@ -15,7 +15,7 @@ class Fermeture extends Model
 
     public $timestamps = false;
 
-    public function fermable()
+    public function indisponible()
     {
         return $this->morphTo();
     }

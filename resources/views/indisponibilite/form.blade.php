@@ -1,11 +1,11 @@
-<!-- fermable_type -->
-        <input type="hidden" name="fermable_type" value="{{ $model->fermable_type or old('fermable_type') }}">
+<!-- indisponible_type -->
+        <input type="hidden" name="indisponible_type" value="{{ $model->indisponible_type or old('indisponible_type') }}">
 
-<!-- fermable_id -->
-        <input type="hidden" name="fermable_id" value="{{ $model->fermable_id or old('fermable_id') }}">
+<!-- indisponible_id -->
+        <input type="hidden" name="indisponible_id" value="{{ $model->indisponible_id or old('indisponible_id') }}">
 
-<!-- fermable_nom -->
-        <input type="hidden" name="fermable_nom" value="{{ $model->fermable_nom or old('fermable_nom') }}">
+<!-- indisponible_nom -->
+        <input type="hidden" name="indisponible_nom" value="{{ $model->indisponible_nom or old('indisponible_nom') }}">
 
 
 <!-- date_debut -->
@@ -76,7 +76,7 @@
 
 @section('script')
 @parent
-<script src="/js/fermeture.js"></script>
+<script src="/js/indisponibilite.js"></script>
 
 <script type="text/javascript">
 $('#date_debut_enclair').empty().append($('#datepicker_debut').val());

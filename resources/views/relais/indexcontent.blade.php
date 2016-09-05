@@ -31,21 +31,21 @@
 			</p>
 		</div>
 
-		@if(!$model->fermetures->isEmpty())
-		<div class="lighten66 inset_shadow fermetures">
-			@foreach($model->fermetures as $fermeture)
-				Fermeture pour cause de 
-				<strong>{{ $fermeture->cause }}</strong>
-				<br />du {{ $fermeture->date_debut_enclair }}
+		@if(!$model->indisponibilites->isEmpty())
+		<div class="lighten66 inset_shadow indisponibilites">
+			@foreach($model->indisponibilites as $indisponibilite)
+				Indisponible pour cause de 
+				<strong>{{ $indisponibilite->cause }}</strong>
+				<br />du {{ $indisponibilite->date_debut_enclair }}
 				<br />au 
-				{{ $fermeture->date_fin_enclair }}
+				{{ $indisponibilite->date_fin_enclair }}
 				<br />
 				<p class="remarques">
-					{{ $fermeture->remarques }}
+					{{ $indisponibilite->remarques }}
 				</p>
 				<p>
-					@include('layouts.button.edite', ['model' => 'fermeture', 'model_id' => $fermeture->id])
-					@include('layouts.button.supp', ['model' => 'fermeture', 'model_id' => $fermeture->id, 'text_confirm' => trans('message.fermeture.confirmDelete', ['model' => ""]) ])
+					@include('layouts.button.edite', ['model' => 'indisponibilite', 'model_id' => $indisponibilite->id])
+					@include('layouts.button.supp', ['model' => 'indisponibilite', 'model_id' => $indisponibilite->id, 'text_confirm' => trans('message.indisponibilite.confirmDelete', ['model' => ""]) ])
 				</p>
 			@endforeach
 		</div>
@@ -56,7 +56,7 @@
 			@include('layouts.button.supp', ['model' => 'relais', 'model_id' => $model->id, 'text_confirm' => trans('message.relais.confirmDelete', ['model' => "$model->nom"]) ])
 			@endif
 			@include('layouts.button.edite', ['model' => 'relais', 'model_id' => $model->id])
-			@include('layouts.button.addFermeture', ['model' => 'relais', 'model_id' => $model->id])
+			@include('layouts.button.addIndisponibilite', ['model' => 'relais', 'model_id' => $model->id])
 		</div>
 		
 	</div>

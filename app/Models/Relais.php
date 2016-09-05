@@ -16,9 +16,9 @@ class Relais extends Model
 	}
 
 
-    public function fermetures()
+    public function indisponibilites()
     {
-        return $this->morphMany('App\Models\Fermeture', 'fermable');
+        return $this->morphMany('App\Models\Indisponibilite', 'indisponible');
     }
 
 }

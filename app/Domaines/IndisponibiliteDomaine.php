@@ -2,7 +2,7 @@
 
 namespace App\Domaines;
 
-use App\Models\Fermeture;
+use App\Models\Indisponibilite;
 use App\Domaines\Domaine;
 use Carbon\Carbon;
 
@@ -10,14 +10,14 @@ use Log;
 use Mail;
 
 
-class FermetureDomaine extends Domaine
+class IndisponibiliteDomaine extends Domaine
 {
 	protected $model;
 	protected $titre_page;
 
 
 	public function __construct(){
-		$this->model = new Fermeture;
+		$this->model = new Indisponibilite;
 	}
 
 
@@ -36,13 +36,13 @@ class FermetureDomaine extends Domaine
 
 	public function edit($id)
 	{
-		return Fermeture::with('fermable')->where('id', $id)->first();
+		return Indisponibilite::with('indisponible')->where('id', $id)->first();
 	}
 
 
 
 	public function update($id, $request){
-		$this->model = Fermeture::where('id', $id)->first();
+		$this->model = Indisponibilite::where('id', $id)->first();
 		$this->handleRequest($request);
 
 		return $this->model->save();
@@ -50,9 +50,9 @@ class FermetureDomaine extends Domaine
 
 
 	private function handleRequest($request){
-		$this->model->fermable_id = $request->fermable_id;
-		$this->model->fermable_type = $request->fermable_type;
-		$this->model->fermable_nom = $request->fermable_nom;
+		$this->model->indisponible_id = $request->indisponible_id;
+		$this->model->indisponible_type = $request->indisponible_type;
+		$this->model->indisponible_nom = $request->indisponible_nom;
 		$this->model->date_debut = $request->date_debut;
 		$this->model->date_fin = $request->date_fin;
 		$this->model->cause = $request->cause;
@@ -75,7 +75,7 @@ class FermetureDomaine extends Domaine
 
 	public function alertOuaibMaistre($e)
 	{
-		$subject = 'Problème lors de l\'attachement d\'une fermeture :';
+		$subject = 'Problème lors de l\'attachement d\'une indisponibilité :';
 		Log::info($subject.$e);
 		// Mail::send('mails.BugReport', ['e' => $e, 'subject' => $subject], function ($m) use($e, $subject) {
 		// 	$m->to = env('MAIL_OM_ADRESS');

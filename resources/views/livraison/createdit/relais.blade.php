@@ -25,11 +25,11 @@
 		{{ $relais->tel }}<br/>
 		{{ $relais->email }}
 	</p>
-	@forelse($relais->fermetures as $fermeture)
-		<p class="indispo {{$fermeture->statut}}">
+	@forelse($relais->indisponibilites as $indisponibilite)
+		<p class="indispo {{$indisponibilite->statut}}">
 			<span class="premiere gras">Indisponible pour cause de</span><br/>
-			<span class="gras">{{ $fermeture->cause }}</span><br/>
-			du {{ $fermeture->date_debut_enclair }}<br />au {{ $fermeture->date_fin_enclair }}
+			<span class="gras">{{ $indisponibilite->cause }}</span><br/>
+			du {{ $indisponibilite->date_debut_enclair }}<br />au {{ $indisponibilite->date_fin_enclair }}
 		</p>
 	@empty
 	@endforelse

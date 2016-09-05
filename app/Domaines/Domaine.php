@@ -97,12 +97,12 @@ class Domaine
 	**/
 	public function checkIfImpliedInLivraison($model_id, $action)
 	{
+		$model_name = $this->getSelfModelName();
 		$occurence = \DB::table('livraison_panier')->where($model_name, $model_id)->get();
 // return dd($occurence);
 
 		/* Si il existe au moins une livraison liée */
 		if (!empty($occurence)) {
-			$model_name = $this->getSelfModelName();
 			$message = "Oups !! $action impossible !<br />";
 			foreach ($occurence as $pivot) {
 			$livraison = Livraison::where('id', $pivot->livraison_id)->first();

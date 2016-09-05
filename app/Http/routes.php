@@ -101,7 +101,7 @@ Route::group(['middleware' => 'auth'], function () {
 // RELAIS...
 	Route::get('relais/getdeleted', ['as' => 'relais.getdeleted', 'uses' => 'RelaisController@getDeleted']);
 	Route::get('setrangs/relais', ['as' => 'media.set_rang', 'uses' => 'RelaisController@setRangs']);
-	Route::get('addFermeture/relais/{id}', ['as' => 'relais.addFermeture', 'uses' => 'RelaisController@addFermeture']);
+	Route::get('addIndisponibilite/relais/{id}', ['as' => 'relais.addIndisponibilite', 'uses' => 'RelaisController@addIndisponibilite']);
 	Route::resource('relais', 'RelaisController');
 
 
@@ -118,8 +118,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 // FERMETURE...
-	Route::get('fermeture/create/{model}/{model_id}', ['as' => 'fermeture.create', 'uses' => 'FermetureController@create']);
-	Route::resource('fermeture', 'FermetureController', ['except' => [
+	Route::get('indisponibilite/create/{model}/{model_id}', ['as' => 'indisponibilite.create', 'uses' => 'IndisponibiliteController@create']);
+	Route::resource('indisponibilite', 'IndisponibiliteController', ['except' => [
     'create'
 ]]);
 

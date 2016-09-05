@@ -20,7 +20,7 @@ class RelaisDomaine extends Domaine
 
 
 	public function index(){
-		return $models = $this->model->with('fermetures')->get();;
+		return $models = $this->model->with('indisponibilites')->get();;
 	}
 
 
@@ -71,7 +71,7 @@ class RelaisDomaine extends Domaine
 	}
 
 	public function ListForLivraisonEdit($livraison_id){
-		$items = $this->model->with(['fermetures' => function ($query) {
+		$items = $this->model->with(['indisponibilites' => function ($query) {
 			$query->oldest('date_debut');
 		}], 'livraison')
 		->where('is_actif', 1)
@@ -80,10 +80,10 @@ class RelaisDomaine extends Domaine
 		$this->livconcerned = $this->livraisonD->findFirst($livraison_id);
 
 		$items = $items->each(function ($item) {
-			if (!$item->fermetures->isEmpty()) {
-				foreach ($item->fermetures as $key => $fermeture) {
-					$item = $this->checkAllDates($item, $key, $fermeture);
-					$item = $this->checkDateLivraison($item, $key, $fermeture);
+			if (!$item->indisponibilites->isEmpty()) {
+				foreach ($item->indisponibilites as $key => $indisponibilite) {
+					$item = $this->checkAllDates($item, $key, $indisponibilite);
+					$item = $this->checkDateLivraison($item, $key, $indisponibilite);
 				}
 			}
 
@@ -93,21 +93,21 @@ class RelaisDomaine extends Domaine
 	}
 
 
-	private function checkDateLivraison($item, $key, $fermeture){
-		if ($this->livconcerned->date_livraison->between($fermeture->date_debut, $fermeture->date_fin)) {
-			$item->fermetures[$key]->statut = 'IndispoPourLivraison';
+	private function checkDateLivraison($item, $key, $indisponibilite){
+		if ($this->livconcerned->date_livraison->between($indisponibilite->date_debut, $indisponibilite->date_fin)) {
+			$item->indisponibilites[$key]->statut = 'IndispoPourLivraison';
 			$item->statut = 'IndispoPourLivraison';
 		}
 		return $item;
 	}
 
 
-	private function checkAllDates($item, $key, $fermeture){
-		if ($fermeture->date_debut->between($this->livconcerned->date_cloture, $this->livconcerned->date_livraison)
+	private function checkAllDates($item, $key, $indisponibilite){
+		if ($indisponibilite->date_debut->between($this->livconcerned->date_cloture, $this->livconcerned->date_livraison)
 			or
-			$fermeture->date_fin->between($this->livconcerned->date_cloture, $this->livconcerned->date_livraison))
+			$indisponibilite->date_fin->between($this->livconcerned->date_cloture, $this->livconcerned->date_livraison))
 		{
-			$item->fermetures[$key]->statut = 'IndispoGlobal';
+			$item->indisponibilites[$key]->statut = 'IndispoGlobal';
 			$item->statut = 'IndispoGlobal';
 		}
 		return $item;

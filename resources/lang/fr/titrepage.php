@@ -69,10 +69,10 @@ return [
                 'trashed'  => 'Réhabilitation des clients supprimés',
             ],
 
-        'fermeture' => 
+        'indisponibilite' => 
             [
-                'create' => 'Ajout d’une période de fermeture :entity “:nom”',
-                'edit' => 'Modification d’une période de fermeture associée à <br />“:nom”',
+                'create' => 'Ajout d’une période d’indisponibilité :entity “:nom”',
+                'edit' => 'Modification d’une période d’indisponibilité associée à <br />“:nom”',
             ],
 
         'dashboard' => 

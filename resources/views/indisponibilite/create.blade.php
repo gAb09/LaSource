@@ -10,10 +10,10 @@
                     @include('layouts.button.previous_url', ['buttonEtiquette' => 'Retour page précédente'])
                 </div>
                 <div class="panel-body">
-                    <form class="form-horizontal form_fermeture" role="form" method="POST" action="{{ route('fermeture.store') }}">
+                    <form class="form-horizontal form_indisponibilite" role="form" method="POST" action="{{ route('indisponibilite.store') }}">
                         {!! csrf_field() !!}
 
-                        @include('fermeture.form')
+                        @include('indisponibilite.form')
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">

@@ -86,14 +86,14 @@ return [
     'syncRelaissfailed'    => 'Problème. Les relais de cette livraison n’ont pus être actualisés',
     ],
 
-    'fermeture' => [
-    'storeOk'       => 'La période de fermeture a bien été créée.',
-    'storefailed'   => 'Problème. La période de fermeture n’a pas pu être créée…',
-    'updateOk'      => 'La période de fermeture a bien été modifiée.',
-    'updatefailed'  => 'Problème. La période de fermeture n’a pas pu être mise à jour…',
-    'deleteOk'      => 'La période de fermeture a bien été supprimée.',
-    'deletefailed'  => 'Problème. La période de fermeture n’a pas pu être supprimée…',
-    'confirmDelete' => 'Êtes-vous sur de vouloir supprimer la période de fermeture ?',
+    'indisponibilite' => [
+    'storeOk'       => 'La période d’indisponibilité a bien été créée.',
+    'storefailed'   => 'Problème. La période d’indisponibilité n’a pas pu être créée…',
+    'updateOk'      => 'La période d’indisponibilité a bien été modifiée.',
+    'updatefailed'  => 'Problème. La période d’indisponibilité n’a pas pu être mise à jour…',
+    'deleteOk'      => 'La période d’indisponibilité a bien été supprimée.',
+    'deletefailed'  => 'Problème. La période d’indisponibilité n’a pas pu être supprimée…',
+    'confirmDelete' => 'Êtes-vous sur de vouloir supprimer la période d’indisponibilité ?',
     ],
 
     'user' => [

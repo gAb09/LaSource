@@ -25,7 +25,7 @@ class ProducteurRequest extends Request
     {
         return [
         'exploitation' => 'required',
-        'prenom' => 'required|alpha_dash',
+        'prenom' => 'required',
         'nom' => 'required',
         'ad1' => 'required_with:cp,ville',
         // 'ad2' => 'required_with:ad1,cp,ville',
