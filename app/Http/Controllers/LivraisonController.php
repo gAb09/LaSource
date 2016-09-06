@@ -162,7 +162,7 @@ class LivraisonController extends Controller
 
     public function syncRelaiss($livraison_id, Request $request)
     {
-        var_dump($request->get('is_retired'));
+        // dd($request->get('is_retired'));
 
         $result = $this->domaine->SyncRelaiss($livraison_id, $request->except('_token'));
         if (!empty($result)) {

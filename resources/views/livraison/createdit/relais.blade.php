@@ -3,10 +3,9 @@
 </div>
 
 @forelse($relaiss as $relais)
-
 <div class="relaiscontainer {{$relais->statut}}">
 		<div style="margin-bottom:5px;">
-			<input id="input_{{ $relais->id }}" type="hidden" name="is_retired[{{ $relais->id }}]" value="">
+			<input id="input_{{ $relais->id }}" type="text" name="is_retired[{{ $relais->id }}]" value="{{$relais->is_retired}}">
 		
 			<!-- Si relais disponible pour cette date de livraison et non retiré -->
 			@if($relais->is_lied == 1) 

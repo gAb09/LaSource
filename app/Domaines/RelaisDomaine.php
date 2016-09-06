@@ -129,9 +129,11 @@ class RelaisDomaine extends Domaine
 			if ($this->livconcerned->id == $livraison->id) {
 				if ($livraison->pivot->is_retired == 1) {
 					$item->is_lied = 0;
+					$item->is_retired = 1;
 					return $item;
 				}else{
 					$item->is_lied = 1;
+					$item->is_retired = 0;
 					return $item;
 				}
 			// }else{
