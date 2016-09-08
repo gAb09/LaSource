@@ -13,23 +13,16 @@ use App\Http\Requests;
 
 class RelaisController extends Controller
 {
-    use getDeletedTrait, setRangsTrait, acceptIndisponibiliteTrait;
+    use getDeletedTrait, acceptIndisponibiliteTrait;
 
-    private $domaine;
-    private $entityName;
-    
-    public function __construct(Domaine $domaine)
+
+    public function __construct(Domaine $domaine, Request $request)
     {
         $this->domaine = $domaine;
-        $this->entityName = 'relais';
+        $this->request = $request;
+        $this->domaine_name = $this->domaine->getDomaineName();
     }
 
-
-    public function index()
-    {
-    	$models = $this->domaine->index();
-    	return view('relais.index')->with(compact('models'));
-    }
 
 
     public function create()

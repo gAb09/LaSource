@@ -8,7 +8,29 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesResources;
 
+use App\Http\Requests;
+use Illuminate\Http\Request;
+
 class Controller extends BaseController
 {
-    use AuthorizesRequests, AuthorizesResources, DispatchesJobs, ValidatesRequests;
+	use AuthorizesRequests, AuthorizesResources, DispatchesJobs, ValidatesRequests;
+
+    protected $domaine;
+
+
+    public function index()
+    {
+    	$critere_tri = (null !== $this->request->get('critere_tri'))? $this->request->get('critere_tri') : 'rang';
+    	$sens_tri = (null !== $this->request->get('sens_tri'))? $this->request->get('sens_tri') : 'asc';
+
+        $models = $this->domaine->all($critere_tri, $sens_tri);
+        return view($this->domaine_name.'.index')->with(compact('models'));
+    }
+
+
+
+    public function setRangs(Request $request)
+    {
+        return $this->domaine->setRangs($request);
+    }
 }

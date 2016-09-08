@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Domaines\PanierDomaine as Panier;
+use App\Domaines\PanierDomaine as Domaine;
 use App\Http\Requests\PanierRequest;
 use App\Http\Controllers\getDeletedTrait;
 use App\Http\Controllers\setRangsTrait;
@@ -12,23 +12,16 @@ use App\Http\Requests;
 
 class PanierController extends Controller
 {
-    use getDeletedTrait, setRangsTrait;
+    use getDeletedTrait;
 
-    private $domaine;
-    private $modelName;
     
-    public function __construct(Panier $domaine)
+    public function __construct(Domaine $domaine, Request $request)
     {
         $this->domaine = $domaine;
-        $this->modelName = 'panier';
+        $this->request = $request;
+        $this->domaine_name = $this->domaine->getDomaineName();
     }
 
-
-    public function index()
-    {
-        $models = $this->domaine->all('rang');
-        return view('panier.index')->with(compact('models'));
-    }
 
 
     public function create()

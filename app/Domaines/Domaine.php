@@ -15,7 +15,7 @@ class Domaine
 	}
 
 
-	public function getSelfModelName()
+	public function getDomaineName()
 	{
 		$name = explode("\\", get_class($this->model));
 		return strtolower(array_pop($name));
@@ -53,7 +53,7 @@ class Domaine
 
 	public function setRangs($request)
 	{
-		$model_name = $this->getSelfModelName();
+		$model_name = $this->getDomaineName();
 		$tablo = $request->get('tablo');
 		foreach ($tablo as $doublet) {
 			$id = $doublet[0];
@@ -79,7 +79,7 @@ class Domaine
 
 		/* Si il existe au moins une livraison liée */
 		if (!$model->livraison->isEmpty()) { 
-			$model_name = $this->getSelfModelName();
+			$model_name = $this->getDomaineName();
 			$message = "Oups !! $action impossible !<br />";
 			foreach ($model->livraison as $livraison) {
 				$message .= trans("message.$model_name.liedToLivraison", ['date' => $livraison->date_livraison_enClair]).'<br />';
@@ -97,7 +97,7 @@ class Domaine
 	**/
 	public function checkIfImpliedInLivraison($model_id, $action)
 	{
-		$model_name = $this->getSelfModelName();
+		$model_name = $this->getDomaineName();
 		$occurence = \DB::table('livraison_panier')->where($model_name, $model_id)->get();
 // return dd($occurence);
 

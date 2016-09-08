@@ -12,22 +12,14 @@ use App\Http\Requests;
 
 class ModePaiementController extends Controller
 {
-    use getDeletedTrait, setRangsTrait;
+    use getDeletedTrait;
 
-    private $domaine;
-    private $modelName;
     
-    public function __construct(Domaine $domaine)
+    public function __construct(Domaine $domaine, Request $request)
     {
         $this->domaine = $domaine;
-        $this->modelName = 'modepaiement';
-    }
-
-
-    public function index()
-    {
-        $models = $this->domaine->all('rang');
-        return view('modepaiement.index')->with(compact('models'));
+        $this->request = $request;
+        $this->domaine_name = $this->domaine->getDomaineName();
     }
 
 
@@ -86,5 +78,4 @@ class ModePaiementController extends Controller
         }
 
     }
-
 }

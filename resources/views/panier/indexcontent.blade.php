@@ -26,7 +26,7 @@
 
 			<p class="hidden id">{{ $model->id }}</p> {{-- surtout pas de CR dans cette ligne --}}
 
-			<p class=" rang">
+			<p class="hidden rang">
 				rang : {{ $model->rang }}
 			</p>
 		</div>

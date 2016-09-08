@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Domaines\LivraisonDomaine as Livraison;
+use App\Domaines\LivraisonDomaine;
 use App\Domaines\PanierDomaine as Panier;
 use App\Domaines\ProducteurDomaine as Producteur;
 use App\Domaines\RelaisDomaine as Relaiss;
@@ -21,16 +21,18 @@ class LivraisonController extends Controller
     protected $producteur;
     protected $relaiss;
     
-    public function __construct(livraison $domaine, Panier $panier, Producteur $producteur, Relaiss $relaiss)
+    public function __construct(LivraisonDomaine $domaine, Panier $panier, Producteur $producteur, Relaiss $relaiss)
     {
         $this->domaine = $domaine;
         $this->panier = $panier;
         $this->producteur = $producteur;
         $this->relaiss = $relaiss;
+        $this->domaine_name = $this->domaine->getDomaineName();
+
     }
 
 
-    public function index()
+    public function index($critere_tri = 'rang', $sens_tri = "asc")
     {
         $models = $this->domaine->index();
         return view('livraison.index')->with(compact('models'));
