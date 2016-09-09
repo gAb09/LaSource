@@ -23,7 +23,7 @@ class ProducteurDomaine extends Domaine
 
 	public function update($id, $request){
 
-		if ($request->input('is_actif') == 0 and $message = $this->checkIfImpliedInLivraison($id, 'Désactivation')) {
+		if ($request->input('is_actived') == 0 and $message = $this->checkIfImpliedInLivraison($id, 'Désactivation')) {
 			return($message);
 		}
 
@@ -50,7 +50,7 @@ class ProducteurDomaine extends Domaine
 		$this->model->email = $request->email;
 		$this->model->nompourpaniers = $request->nompourpaniers;
 		$this->model->remarques = $request->remarques;
-		$this->model->is_actif = (isset($request->is_actif)?1:0);
+		$this->model->is_actived = (isset($request->is_actived)?1:0);
 		$new_rang = $this->model->max('rang')+1;
 		$this->model->rang = ($request->rang)? $request->rang :$new_rang ;
 		$this->model->restore();
@@ -74,7 +74,7 @@ class ProducteurDomaine extends Domaine
 
 	public function listProducteursForPanier($panier_id)
 	{
-		$collection = $this->model->with('Panier')->where('is_actif', 1)->orderBy('nompourpaniers')->get();
+		$collection = $this->model->with('Panier')->where('is_actived', 1)->orderBy('nompourpaniers')->get();
 
 		$collection->each(function($model) use($panier_id)
 		{

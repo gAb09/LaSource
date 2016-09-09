@@ -22,7 +22,7 @@ class ModePaiementDomaine extends Domaine
 
 	public function update($id, $request){
 
-		if ($request->input('is_actif') == 0 and $message = $this->checkIfLivraisonAttached($id, 'Désactivation')) {
+		if ($request->input('is_actived') == 0 and $message = $this->checkIfLivraisonAttached($id, 'Désactivation')) {
 			return($message);
 		}
 
@@ -34,7 +34,7 @@ class ModePaiementDomaine extends Domaine
 
 	private function handleRequest($request){
 		$this->model->nom = $request->nom;
-		$this->model->is_actif = (isset($request->is_actif)?1:0);
+		$this->model->is_actived = (isset($request->is_actived)?1:0);
 		$this->model->remarques = $request->remarques;
 		$new_rang = $this->model->max('rang')+1;
 		$this->model->rang = ($request->rang)? $request->rang :$new_rang ;

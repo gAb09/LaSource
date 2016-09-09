@@ -1,6 +1,6 @@
 /**
 * Disponible pour tous les models.
-* Change la présentation (CSS) des éléments relatifs à is_actif.
+* Change la présentation (CSS) des éléments relatifs à is_actived.
 * 
 * 
 **/
@@ -9,7 +9,7 @@ function handleIsActifClass()
 	var item = $('.toggle_actif');
 	console.log(item);
 
-	$(item).toggleClass('is_not_actif').toggleClass('is_actif');
+	$(item).toggleClass('is_not_actived').toggleClass('is_actived');
 }
 
 

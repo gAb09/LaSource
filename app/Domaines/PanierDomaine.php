@@ -24,7 +24,7 @@ class PanierDomaine extends Domaine
 
 	public function update($id, $request){
 
-		if ($request->input('is_actif') == 0 and $message = $this->checkIfLivraisonAttached($id, 'Désactivation')) {
+		if ($request->input('is_actived') == 0 and $message = $this->checkIfLivraisonAttached($id, 'Désactivation')) {
 			return($message);
 		}
 
@@ -42,7 +42,7 @@ class PanierDomaine extends Domaine
 		$this->model->type = $request->type;
 		$this->model->idee = $request->idee;
 		$this->model->prix_base = $request->prix_base;
-		$this->model->is_actif = (isset($request->is_actif)?1:0);
+		$this->model->is_actived = (isset($request->is_actived)?1:0);
 		$this->model->remarques = $request->remarques;
 		$new_rang = $this->model->max('rang')+1;
 		$this->model->rang = ($request->rang)? $request->rang :$new_rang ;
@@ -65,7 +65,7 @@ class PanierDomaine extends Domaine
 
 	public function listPaniers($livraison_id = null)
 	{
-		$models = $this->model->with('Producteur', 'livraison')->where('is_actif', 1)->orderBy('type')->get();
+		$models = $this->model->with('Producteur', 'livraison')->where('is_actived', 1)->orderBy('type')->get();
 
 		/* livraison.create */
 		if ($livraison_id == null) { 
@@ -86,7 +86,7 @@ class PanierDomaine extends Domaine
 
 		$panierschoisis = Panier::whereHas('livraison', function ($query) use($livraison_id){
 			$query->where('livraison_id', $livraison_id);
-		})->with('producteur')->where('is_actif', 1)->get();
+		})->with('producteur')->where('is_actived', 1)->get();
 
 		foreach ($panierschoisis as $panier) {
 			$producteur = $panier->livraison->find($livraison_id)->pivot->producteur;

@@ -35,9 +35,9 @@ trait ModelTrait
 
     public function getClassActifAttribute($value)
     {
-        if ($this->is_actif == 1) {
-            return 'is_actif';
+        if ($this->is_actived == 1) {
+            return 'is_actived';
         }
-        return 'is_not_actif';
+        return 'is_not_actived';
     }
 }

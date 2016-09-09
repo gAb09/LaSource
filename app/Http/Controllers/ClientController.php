@@ -51,7 +51,7 @@ class ClientController extends Controller
         $model->ville = $request->ville;
         $model->tel = $model->cleanTel($request->tel);
         $model->mobile = $model->cleanTel($request->mobile);
-                // $model->is_actif = (isset($request->is_actif)?1:0); // ToDo ??
+                // $model->is_actived = (isset($request->is_actived)?1:0); // ToDo ??
                 // $model->email = $request->email; // ToDo
 
         if($model->save()){
@@ -82,7 +82,7 @@ class ClientController extends Controller
         $model->ville = $request->ville;
         $model->tel = $model->cleanTel($request->tel);
         $model->mobile = $model->cleanTel($request->mobile);
-        // $model->is_actif = (isset($request->is_actif)?1:0); // ToDo ??
+        // $model->is_actived = (isset($request->is_actived)?1:0); // ToDo ??
         // $model->email = $request->email; // ToDo
 
         if($model->save()){

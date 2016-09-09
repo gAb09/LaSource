@@ -30,7 +30,7 @@ class Domaine
 
 	public function allActifs($order = 'rang')
 	{
-		return $this->model->where('is_actif', 1)->orderBy($order)->get();
+		return $this->model->where('is_actived', 1)->orderBy($order)->get();
 	}
 
 

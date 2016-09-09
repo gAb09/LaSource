@@ -7,14 +7,14 @@ COULEURS
 #paniers_trashed:hover {
   cursor: all-scroll;
 }
-#paniers_index .fiche.is_actif,
-#paniers_trashed .fiche.is_actif {
+#paniers_index .fiche.is_actived,
+#paniers_trashed .fiche.is_actived {
   background-color: #f5f0e2;
   border-color: #f5f0e2;
 }
 .panier {
   background-color: #f9f6ed;
 }
-.panier .toggle_actif.is_actif div {
+.panier .toggle_actif.is_actived div {
   background-color: #f5f0e2;
 }

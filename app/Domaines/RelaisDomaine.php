@@ -31,7 +31,7 @@ class RelaisDomaine extends Domaine
 
 
 	public function update($id, $request){
-		if ($request->input('is_actif') == 0 and $message = $this->checkIfLivraisonAttached($id, 'Désactivation')) {
+		if ($request->input('is_actived') == 0 and $message = $this->checkIfLivraisonAttached($id, 'Désactivation')) {
 			return($message);
 		}
 
@@ -52,7 +52,7 @@ class RelaisDomaine extends Domaine
 		$this->model->email = $request->email;
 		$this->model->ouvertures = $request->ouvertures;
 		$this->model->remarques = $request->remarques;
-		$this->model->is_actif = (isset($request->is_actif)?1:0);
+		$this->model->is_actived = (isset($request->is_actived)?1:0);
 		$new_rang = $this->model->max('rang')+1;
 		$this->model->rang = ($request->rang)? $request->rang :$new_rang ;
 		$this->model->restore();
@@ -73,7 +73,7 @@ class RelaisDomaine extends Domaine
 		$items = $this->model->with(['indisponibilites' => function ($query) {
 			$query->oldest('date_debut');
 		}], 'livraison')
-		->where('is_actif', 1)
+		->where('is_actived', 1)
 		->orderBy('rang')->get();
 
 		$this->livconcerned = $this->livraisonD->findFirst($livraison_id);

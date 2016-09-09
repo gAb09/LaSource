@@ -65,7 +65,7 @@ class LivraisonDomaine extends Domaine
 		$this->model->date_paiement = $request->date_paiement;
 		$this->model->date_livraison = $request->date_livraison;
 		$this->model->remarques = $request->remarques;
-		$this->model->is_actif = (isset($request->is_actif)?1:0);
+		$this->model->is_actived = (isset($request->is_actived)?1:0);
 		
 	}
 

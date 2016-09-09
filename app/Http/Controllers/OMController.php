@@ -37,7 +37,7 @@ class OMController extends Controller
 			$model->email = $old->mail;
 			$model->retrait = $old->horaires;
 			$model->ouvertures = $old->remarques;
-			$model->is_actif = 1;
+			$model->is_actived = 1;
 
 			$model->save();
 		}
@@ -70,7 +70,7 @@ class OMController extends Controller
 					$model->email = $old->mail;
 				}
 				$model->nompourpaniers = $old->paniers;
-				$model->is_actif = 1;
+				$model->is_actived = 1;
 
 				$model->save();
 			}
@@ -93,7 +93,7 @@ class OMController extends Controller
 			$model->idee = $old->idee;
 			$model->prix_base = $old->pu;
 			$model->remarques = $old->remarques;
-			$model->is_actif = 1;
+			$model->is_actived = 1;
 
 			$model->save();
 		}
@@ -114,7 +114,7 @@ class OMController extends Controller
 			$model->created_at = null;
 			$model->updated_at = null;
 			$model->deleted_at = null;
-			$model->is_actif = 1;
+			$model->is_actived = 1;
 			$model->remarques = '';
 
 			$model->save();
