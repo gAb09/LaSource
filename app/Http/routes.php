@@ -101,7 +101,7 @@ Route::group(['middleware' => 'auth'], function () {
 // RELAIS...
 	Route::get('relais/getdeleted', ['as' => 'relais.getdeleted', 'uses' => 'RelaisController@getDeleted']);
 	Route::get('setrangs/relais', ['as' => 'media.set_rang', 'uses' => 'RelaisController@setRangs']);
-	Route::get('addIndisponibilite/relais/{id}', ['as' => 'relais.addIndisponibilite', 'uses' => 'RelaisController@addIndisponibilite']);
+	// Route::get('addIndisponibilite/relais/{id}', ['as' => 'relais.addIndisponibilite', 'uses' => 'RelaisController@addIndisponibilite']);
 	Route::resource('relais', 'RelaisController');
 
 
@@ -117,8 +117,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('panier', 'PanierController');
 
 
-// FERMETURE...
-	Route::get('indisponibilite/create/{model}/{model_id}', ['as' => 'indisponibilite.create', 'uses' => 'IndisponibiliteController@create']);
+// INDISPONIBILITE...
+	Route::get('addIndisponibilite/{model}/{id}', ['as' => 'addIndisponibilite', 'uses' => 'IndisponibiliteController@addIndisponibilite']);
+
+	// Route::get('indisponibilite/create/{model}/{model_id}', ['as' => 'indisponibilite.create', 'uses' => 'IndisponibiliteController@create']);
 	Route::resource('indisponibilite', 'IndisponibiliteController', ['except' => [
     'create'
 ]]);

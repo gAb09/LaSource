@@ -5,15 +5,13 @@ namespace App\Http\Controllers;
 use App\Domaines\RelaisDomaine as Domaine;
 use App\Http\Requests\RelaisRequest;
 use App\Http\Controllers\getDeletedTrait;
-use App\Http\Controllers\setRangsTrait;
-use App\Http\Controllers\acceptIndisponibiliteTrait;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
 class RelaisController extends Controller
 {
-    use getDeletedTrait, acceptIndisponibiliteTrait;
+    use getDeletedTrait;
 
 
     public function __construct(Domaine $domaine, Request $request)

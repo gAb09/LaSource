@@ -4,7 +4,6 @@ namespace App\Domaines;
 
 use App\Models\Relais;
 use App\Domaines\Domaine;
-// use App\Domaines\LivraisonDomaine;
 
 
 class RelaisDomaine extends Domaine

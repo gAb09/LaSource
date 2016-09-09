@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Domaines\IndisponibiliteDomaine as Indisponibilite;
-use App\Domaines\Relais;
 use App\Http\Requests\IndisponibiliteRequest;
-use App\Http\Controllers\acceptIndisponibiliteTrait;
+use App\Domaines\IndisponibiliteDomaine as Indisponibilite;
 
 use Illuminate\Http\Request;
 
 class IndisponibiliteController extends Controller
 {
-    use acceptIndisponibiliteTrait;
 
-    private $domaine;
+    protected $domaine;
     private $entity;
     private $domainesPath = 'App\\Domaines\\';
 
@@ -31,6 +28,19 @@ class IndisponibiliteController extends Controller
     }
 
 
+    public function addIndisponibilite($indisponible_classe, $indisponible_id)
+    {     
+        $this->domaine->keepUrlDepart();
+
+        $model = $this->domaine->addIndisponibilite($indisponible_classe, $indisponible_id);
+
+        $titre_page = trans('titrepage.indisponibilite.create', ['entity' => 'au '.$indisponible_classe, 'nom' => $model->indisponible_nom]);
+
+        return view('indisponibilite.create')->with(compact('model', 'titre_page'));
+    }
+
+
+
     public function store(IndisponibiliteRequest $request)
     {
         if ($this->domaine->store($request)) {
@@ -45,7 +55,7 @@ class IndisponibiliteController extends Controller
     public function edit($id)
     {
         $model = $this->domaine->edit($id);
-        $this->keepUrlDepart();
+        $this->domaine->keepUrlDepart();
         $titre_page = trans('titrepage.indisponibilite.edit', ['nom' => $model->indisponible_nom]);
 
         return view('indisponibilite.edit')->with(compact('model', 'titre_page'));
@@ -82,10 +92,10 @@ class IndisponibiliteController extends Controller
         if (\Session::has('url_depart_ajout_indisponibilite')) {
             $url = \Session::get('url_depart_ajout_indisponibilite');
             \Session::forget('url_depart_ajout_indisponibilite');
-            return $url;
         }else{
-            return \Session::get('_previous.url');
+            $url = \Session::get('_previous.url');
         }
+        return $url;
     }
 
 }

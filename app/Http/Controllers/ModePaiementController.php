@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Domaines\ModePaiementDomaine as Domaine;
 use App\Http\Requests\ModePaiementRequest;
 use App\Http\Controllers\getDeletedTrait;
-use App\Http\Controllers\setRangsTrait;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;

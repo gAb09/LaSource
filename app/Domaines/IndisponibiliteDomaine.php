@@ -22,7 +22,6 @@ class IndisponibiliteDomaine extends Domaine
 
 
 	public function store($request){
-		// return dd($request);
 		$this->handleRequest($request);
 		try{
 			$this->model->save();
@@ -83,6 +82,54 @@ class IndisponibiliteDomaine extends Domaine
 		// });
 
 	}
+
+
+    public function addIndisponibilite($indisponible_classe, $indisponible_id)
+    {     
+        $this->keepUrlDepart();
+
+        /* Acquisition d'un modèle d’indisponibilité, même vide, pour renseigner la variable $model du formulaire commun avec l'édition */
+        $indispo = $this->newModel();
+
+        $indispo->indisponible_type = 'App\Models\\'.$indisponible_classe;
+        $indisponible_model = new $indispo->indisponible_type;
+        $indisponible_model = $indisponible_model->where('id', $indisponible_id)->first();
+        $indispo->indisponible_nom = $indisponible_model->nom;
+        $indispo->indisponible_id = $indisponible_id;
+        return $indispo;
+
+    }
+
+
+
+    public function detachIndisponibilite($indisponible_id, Indisponibilite $indisponibilite, $forcage = false)
+    {     
+        $this->keepUrlDepart();
+
+        /* Contrôle si le modèle indisponible est directement lié à une livraison */
+        /* Contrôle si le modèle indisponible est indirectement lié à une livraison (via données dans la table pivot livraison-panier */
+
+        $indisponible_model = $this->domaine->findFirst($indisponible_id);
+        $model->indisponible_type = get_class($indisponible_model);
+        $model->indisponible_nom = $indisponible_model->nom;
+        $model->indisponible_id = $indisponible_id;
+
+
+        $titre_page = trans('titrepage.indisponibilite.create', ['entity' => 'au '.$this->entityName, 'nom' => $model->indisponible_nom]);
+
+        return view('indisponibilite.create')->with(compact('model', 'titre_page'));
+    }
+
+    /**
+    * Conservation de l'url de la page de départ.
+    * 
+    **/
+    public function keepUrlDepart(){
+        if (!\Session::has('url_depart_ajout_indisponibilite')) {
+            \Session::set('url_depart_ajout_indisponibilite', \Session::get('_previous.url'));
+        }
+    }
+
 
 
 }

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Domaines\PanierDomaine as Domaine;
 use App\Http\Requests\PanierRequest;
 use App\Http\Controllers\getDeletedTrait;
-use App\Http\Controllers\setRangsTrait;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;

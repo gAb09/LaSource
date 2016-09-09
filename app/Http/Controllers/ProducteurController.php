@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Domaines\ProducteurDomaine as Domaine;
 use App\Http\Requests\ProducteurRequest;
 use App\Http\Controllers\getDeletedTrait;
-use App\Http\Controllers\setRangsTrait;
 
 
 use Illuminate\Http\Request;
