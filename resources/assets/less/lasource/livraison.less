@@ -45,6 +45,10 @@ Vue createdit (create & edit)
 		background-color: @color_livraison_dark;
 		color: @color_livraison;
 	}
+	.ui-datepicker-trigger:hover{
+		background-color: darken(@color_livraison_dark, 11%);
+		color:#ffee80;
+	}
 }
 
 
@@ -148,17 +152,25 @@ Vue createdit (create & edit)
 				display: block;
 			}
 		}
-		#flagLied{
-			background-color: @color_danger;
-			color: #fff;
-			font-size: 0.75em;
-			font-weight: 400;
-			height: 20px;
-			margin: 0;
-			padding: 0 5px;
-		}
-		#flagLied.LiedWIthThisLivraison{
-			background-color: @color_success;
+		.liaison{
+			#flagLied, #flagLied.LiedWIthThisLivraison, .toggle{
+				color: #fff;
+				font-size: 0.75em;
+				font-weight: 400;
+				width: auto;
+				height: 20px;
+				margin: 0;
+				padding: 0 5px;
+				text-align: center;
+			}
+			#flagLied{
+				color: @color_danger;
+			}
+			#flagLied.LiedWIthThisLivraison{
+				color: @color_success;
+			}
+			.toggle{
+			}
 		}
 	}
 }
