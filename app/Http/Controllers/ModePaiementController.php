@@ -48,33 +48,23 @@ class ModePaiementController extends Controller
 
     public function update($id, ModePaiementRequest $request)
     {
-        $resultat = ($this->domaine->update($id, $request));
-
-        if($resultat){
-            if (is_string($resultat)) {
-                return redirect()->back()->with('status', $resultat);
-            }else{
-                return redirect()->route('modepaiement.index')->with('success', trans('message.modepaiement.updateOk'));
-            }
+        if($this->domaine->update($id, $request)){
+            return redirect()->route('modepaiement.index')->with('success', trans('message.modepaiement.updateOk'));
         }else{
-            return redirect()->back()->with('status', trans('message.modepaiement.updatefailed'));
+            $message = $this->domaine->getMessageLiaisonDirecteWithLivraison('Désactivation');
+            return redirect()->back()->with('status', $message);
         }
     }
 
 
     public function destroy($id)
-    {     
-        $resultat = ($this->domaine->destroy($id));
-
-        if($resultat){
-            if (is_string($resultat)) {
-                return redirect()->back()->with('status', $resultat);
-            }else{
-                return redirect()->route('modepaiement.index')->with('success', trans('message.modepaiement.deleteOk'));
-            }
+    {
+        if($this->domaine->destroy($id)){
+            return redirect()->route('modepaiement.index')->with('success', trans('message.modepaiement.deleteOk'));
         }else{
-            return redirect()->back()->with('status', trans('message.modepaiement.deletefailed'));
+            $message = $this->domaine->getMessageLiaisonDirecteWithLivraison('Suppression');
+            return redirect()->back()->with('status', $message);
         }
-
     }
+
 }

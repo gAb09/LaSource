@@ -22,6 +22,7 @@ class Livraison extends Model
 
     protected $appends = array('class_actif');
 
+    private $state = "L_EXISTANTE";
 
     public function Panier()
     {
@@ -31,7 +32,7 @@ class Livraison extends Model
 
     public function Relais()
     {
-        return $this->belongsToMany('App\Models\Relais')->withPivot('is_retired', 'motif');
+        return $this->belongsToMany('App\Models\Relais')->withPivot('motif');
     }
 
 
@@ -89,7 +90,35 @@ class Livraison extends Model
     public function getLivraisonDelaiExpliciteAttribute($value)
     {
         $value = $this->date_livraison_delai;
-        $value = 'toto';
+        return $value;
+    }
+
+    public function checkIfOkForOuverture()
+    {
+        if ($this->date_cloture) {
+            return true;
+        }
+    }
+
+    public function getStateAttribute($value)
+    {
+        $value = "L_EXISTANTE";
+
+        if ($this->checkIfOkForOuverture()) {
+            $value = "L_OUVERTE";
+        }
+
+        if ($this->date_cloture->diffInDays(Carbon::now(), false) > 0) {
+            $value = "L_CLOTURED";
+        }
+
+        if ($this->date_livraison->diffInDays(Carbon::now(), false) > 0) {
+            $value = 'L_ARCHIVABLE';
+        }
+
+        if ($this->is_archived) {
+            $value = 'L_ARCHIVED';
+        }
         return $value;
     }
 

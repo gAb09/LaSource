@@ -47,36 +47,26 @@ class PanierController extends Controller
     }
 
 
+
     public function update($id, PanierRequest $request)
     {
-        $resultat = ($this->domaine->update($id, $request));
-
-        if($resultat){
-            if (is_string($resultat)) {
-                return redirect()->back()->with('status', $resultat);
-            }else{
-                return redirect()->route('panier.index')->with('success', trans('message.panier.updateOk'));
-            }
+        if($this->domaine->update($id, $request)){
+            return redirect()->route('panier.index')->with('success', trans('message.panier.updateOk'));
         }else{
-            return redirect()->back()->with('status', trans('message.panier.updatefailed'));
+            $message = $this->domaine->getMessageLiaisonDirecteWithLivraison('Désactivation');
+            return redirect()->back()->with('status', $message);
         }
     }
 
 
     public function destroy($id)
     {     
-        $resultat = ($this->domaine->destroy($id));
-
-        if($resultat){
-            if (is_string($resultat)) {
-                return redirect()->back()->with('status', $resultat);
-            }else{
-                return redirect()->route('panier.index')->with('success', trans('message.panier.deleteOk'));
-            }
+        if($this->domaine->destroy($id)){
+            return redirect()->route('panier.index')->with('success', trans('message.panier.deleteOk'));
         }else{
-            return redirect()->back()->with('status', trans('message.panier.deletefailed'));
+            $message = $this->domaine->getMessageLiaisonDirecteWithLivraison('Suppression');
+            return redirect()->back()->with('status', $message);
         }
-
     }
 
 

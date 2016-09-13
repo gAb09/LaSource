@@ -105,10 +105,10 @@ class LivraisonDomaine extends Domaine
 
 	public function SyncRelaiss($model_id, $datas = array())
 	{
-		// dd($datas['is_lied']);
 		unset($datas['_token']);
+
 		$model = Livraison::find($model_id);
-		if(empty($datas['is_retired'])){
+		if(empty($datas['is_lied'])){
 			$result = $model->relais()->detach();
 		}else{
 			$sync = $this->prepareSyncRelaiss($model, $datas);
@@ -117,15 +117,18 @@ class LivraisonDomaine extends Domaine
 			// return dd($sync);
 		return $result;
 	}
-			
+
 
 
 	public function prepareSyncRelaiss($model, $datas)
 	{
 		$sync = array();
-		foreach ($datas['is_retired'] as $key => $value) {
-			$sync[$key] = ['is_retired' => $value];
+		foreach ($datas['is_lied'] as $model_id => $is_lied) {
+			if ($is_lied == 1) {
+				$sync[] = $model_id;
+			}
 		}
+		// return dd($sync);
 		return $sync;
 	}
 

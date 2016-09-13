@@ -24,5 +24,15 @@ onDblClick="javascript:document.location.href='{{ route('livraison.edit', $model
 		{{ $model->date_livraison_enclair }}
 	</td>
 
+	<!-- state -->
+	<td class="{{$model->state}}">
+		@if($model->state == 'L_ARCHIVABLE')
+			<button class="btn btn-info btn-xs">Archiver
+			</button>
+		@else
+			{{ trans('constante.'.$model->state) }}
+		@endif
+	</td>
+
 
 </tr>

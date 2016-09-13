@@ -69,25 +69,41 @@ class Domaine
 	}
 
 	/**
-	* Contrôle s'il existe des livraisons liées
+	* Pour une entité liée aux livraisons via une table pivot,
+	* contrôle de l'existence d'une liaison pour ce modèle.
 	* 
-	* @return false|string
+	* @return boolean
 	**/
-	public function checkIfLivraisonAttached($model_id, $action)
+	public function checkIfLiaisonDirecteWithLivraison($model_id)
 	{
-		$model = $this->model->withTrashed()->with('livraison')->where('id', $model_id)->first();
+		$this->model = $this->model->withTrashed()->with('livraison')->where('id', $model_id)->first();
+		/* Si il existe au moins une livraison non archivée liée */
+		if ($this->model->livraison->isEmpty()) {
+			return false;
+		}else{
+			return true;
+		}
+	}
 
-		/* Si il existe au moins une livraison liée */
-		if (!$model->livraison->isEmpty()) { 
-			$model_name = $this->getDomaineName();
-			$message = "Oups !! $action impossible !<br />";
-			foreach ($model->livraison as $livraison) {
+
+
+	/**
+	* Construction du mesage précisant la ou les liaisons..
+	* 
+	* @return string
+	**/
+	public function getMessageLiaisonDirecteWithLivraison($action)
+	{
+		$model_name = $this->getDomaineName();
+		$message = "Oups !! $action impossible !<br />";
+		foreach ($this->model->livraison as $livraison) {
+			if(!$livraison->is_archived){
 				$message .= trans("message.$model_name.liedToLivraison", ['date' => $livraison->date_livraison_enClair]).'<br />';
 			}
-			return $message;
 		}
-		return false;
+		return $message;
 	}
+
 
 
 	/**
@@ -105,7 +121,7 @@ class Domaine
 		if (!empty($occurence)) {
 			$message = "Oups !! $action impossible !<br />";
 			foreach ($occurence as $pivot) {
-			$livraison = Livraison::where('id', $pivot->livraison_id)->first();
+				$livraison = Livraison::where('id', $pivot->livraison_id)->first();
 				$message .= trans("message.$model_name.liedToLivraison", ['date' => $livraison->date_livraison_enClair]).'<br />';
 			}
 			return $message;

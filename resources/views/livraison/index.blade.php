@@ -36,6 +36,9 @@
 		<th>
 			Date de livraison
 		</th>
+		<th>
+			Statut
+		</th>
 	</thead>
 
 	<tbody>

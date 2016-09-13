@@ -61,7 +61,7 @@ function getComboDatesLivraison(nom, valeur)
         },
 
         error : function(resultat, statut, erreur){
-            alert(resultat);
+            // alert(resultat);
             alert(statut);
             alert(erreur);
         },
@@ -227,4 +227,27 @@ $(function()
         detectChangementDatasPaniers();
     });
 });
+
+function attachRelais(relais_id, indispoLivraison)
+{
+    var target = document.getElementById('input_'+relais_id);
+    var indispoPourLivraison = document.getElementsByName('IndispoPourLivraison_'+relais_id)[0];
+        console.log(indispoPourLivraison);
+    if(indispoPourLivraison){
+        alert('Attention ! Ce relais ne peut pas tre lié à cause de son indisponibilité à la date de livraison');
+        
+    }else{
+        target.value=1;
+        console.log(target.id+' : '+target.value);
+        document.getElementsByName('relaisForm')[0].submit()
+    }
+
+}
+
+function detachRelais(relais_id)
+{
+    var target = document.getElementById('input_'+relais_id);
+    target.value=0;
+    console.log(target.id+' : '+target.value);
+}
 

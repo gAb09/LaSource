@@ -164,13 +164,13 @@ class LivraisonController extends Controller
 
     public function syncRelaiss($livraison_id, Request $request)
     {
-        // dd($request->get('is_retired'));
+        // dd($request->is_lied);
 
         $result = $this->domaine->SyncRelaiss($livraison_id, $request->except('_token'));
         if (!empty($result)) {
-            return redirect()->back()->with('success', trans('message.livraison.syncOk', ['result' => var_dump($result)]));
+            return redirect()->back()->with('success', trans('message.livraison.syncRelaissOk', ['result' => var_dump($result)]));
         }else{
-            return redirect()->back()->with('status', trans('message.livraison.syncfailed'));
+            return redirect()->back()->with('status', trans('message.livraison.syncRelaissfailed'));
         }
         
     }

@@ -20,10 +20,17 @@ class ModePaiementDomaine extends Domaine
 		return $this->model->save();
 	}
 
+
+
+	/**
+	* Update
+	* 
+	* @return boolean
+	**/
 	public function update($id, $request){
 
-		if ($request->input('is_actived') == 0 and $message = $this->checkIfLivraisonAttached($id, 'Désactivation')) {
-			return($message);
+		if ($request->input('is_actived') == 0 and $this->checkIfLiaisonDirecteWithLivraison($id)) {
+			return false;
 		}
 
 		$this->model = ModePaiement::withTrashed()->where('id', $id)->first();
@@ -43,7 +50,7 @@ class ModePaiementDomaine extends Domaine
 
 	public function destroy($id)
 	{
-		if ($message = $this->checkIfLivraisonAttached($id, 'Suppression')) {
+		if ($message = $this->checkIfLiaisonDirecteWithLivraison($id, 'Suppression')) {
 			return($message);
 		}
 		$aucun = array();

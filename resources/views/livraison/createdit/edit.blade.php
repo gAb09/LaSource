@@ -39,7 +39,7 @@
 </form>
 
 <!-- Les relais -->
-<form class="form-inline" role="form" method="POST" action="{{ route('livraisonSyncRelaiss', [$model->id]) }}">
+<form name="relaisForm" class="form-inline" role="form" method="POST" action="{{ route('livraisonSyncRelaiss', [$model->id]) }}">
 	{!! csrf_field() !!}
 	<input type="hidden" class="form-control" name="_method" value="PUT">
 

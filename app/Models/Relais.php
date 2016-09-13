@@ -12,7 +12,7 @@ class Relais extends Model
 
 	public function Livraison()
 	{
-		return $this->belongsToMany('App\Models\Livraison')->withPivot('is_retired', 'motif');
+		return $this->belongsToMany('App\Models\Livraison')->withPivot('motif');
 	}
 
 
@@ -20,5 +20,6 @@ class Relais extends Model
     {
         return $this->morphMany('App\Models\Indisponibilite', 'indisponible');
     }
+
 
 }
