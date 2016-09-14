@@ -53,7 +53,7 @@ class PanierController extends Controller
         if($this->domaine->update($id, $request)){
             return redirect()->route('panier.index')->with('success', trans('message.panier.updateOk'));
         }else{
-            $message = $this->domaine->getMessageLiaisonDirecteWithLivraison('Désactivation');
+            $message = $this->domaine->getErrorMessage();
             return redirect()->back()->with('status', $message);
         }
     }
@@ -64,7 +64,7 @@ class PanierController extends Controller
         if($this->domaine->destroy($id)){
             return redirect()->route('panier.index')->with('success', trans('message.panier.deleteOk'));
         }else{
-            $message = $this->domaine->getMessageLiaisonDirecteWithLivraison('Suppression');
+            $message = $this->domaine->getErrorMessage();
             return redirect()->back()->with('status', $message);
         }
     }

@@ -52,7 +52,7 @@ class RelaisController extends Controller
         if($this->domaine->update($id, $request)){
             return redirect()->route('relais.index')->with('success', trans('message.relais.updateOk'));
         }else{
-            $message = $this->domaine->getMessageLiaisonDirecteWithLivraison('Désactivation');
+            $message = $this->domaine->getErrorMessage();
             return redirect()->back()->with('status', $message);
         }
     }
@@ -64,7 +64,7 @@ class RelaisController extends Controller
         if($this->domaine->destroy($id)){
             return redirect()->route('relais.index')->with('success', trans('message.relais.deleteOk'));
         }else{
-            $message = $this->domaine->getMessageLiaisonDirecteWithLivraison('Suppression');
+            $message = $this->domaine->getErrorMessage();
             return redirect()->back()->with('status', $message);
         }
     }

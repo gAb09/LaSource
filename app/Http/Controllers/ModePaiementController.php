@@ -51,7 +51,7 @@ class ModePaiementController extends Controller
         if($this->domaine->update($id, $request)){
             return redirect()->route('modepaiement.index')->with('success', trans('message.modepaiement.updateOk'));
         }else{
-            $message = $this->domaine->getMessageLiaisonDirecteWithLivraison('Désactivation');
+            $message = $this->domaine->getErrorMessage();
             return redirect()->back()->with('status', $message);
         }
     }
@@ -62,7 +62,7 @@ class ModePaiementController extends Controller
         if($this->domaine->destroy($id)){
             return redirect()->route('modepaiement.index')->with('success', trans('message.modepaiement.deleteOk'));
         }else{
-            $message = $this->domaine->getMessageLiaisonDirecteWithLivraison('Suppression');
+            $message = $this->domaine->getErrorMessage();
             return redirect()->back()->with('status', $message);
         }
     }

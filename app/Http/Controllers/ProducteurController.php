@@ -40,7 +40,7 @@ class ProducteurController extends Controller
         }
     }
 
-
+ 
     public function edit($id)
     {
     	$model = $this->domaine->findFirst($id);
@@ -48,36 +48,27 @@ class ProducteurController extends Controller
     }
 
 
+
     public function update($id, ProducteurRequest $request)
     {
-        $resultat = ($this->domaine->update($id, $request));
-
-        if($resultat){
-            if (is_string($resultat)) {
-                return redirect()->back()->with('status', $resultat);
-            }else{
-                return redirect()->route('producteur.index')->with('success', trans('message.producteur.updateOk'));
-            }
+        if($this->domaine->update($id, $request)){
+            return redirect()->route('producteur.index')->with('success', trans('message.producteur.updateOk'));
         }else{
-            return redirect()->back()->with('status', trans('message.producteur.updatefailed'));
+            $message = $this->domaine->getErrorMessage();
+            return redirect()->back()->with('status', $message);
         }
     }
 
 
+
     public function destroy($id)
     {        
-        $resultat = ($this->domaine->destroy($id));
-
-        if($resultat){
-            if (is_string($resultat)) {
-                return redirect()->back()->with('status', $resultat);
-            }else{
-                return redirect()->route('producteur.index')->with('success', trans('message.producteur.deleteOk'));
-            }
+        if($this->domaine->destroy($id)){
+            return redirect()->route('producteur.index')->with('success', trans('message.producteur.deleteOk'));
         }else{
-            return redirect()->back()->with('status', trans('message.producteur.deletefailed'));
+            $message = $this->domaine->getErrorMessage();
+            return redirect()->back()->with('status', $message);
         }
-
     }
 
 }

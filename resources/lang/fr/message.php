@@ -84,6 +84,8 @@ return [
     'syncPaniersfailed'    => 'Problème. Les paniers de cette livraison n’ont pus être actualisés',
     'syncRelaissOk'        => 'Les relais ont bien été actualisés :result.',
     'syncRelaissfailed'    => 'Problème. Les relais de cette livraison n’ont pus être actualisés',
+    'archivageOk'        => 'La livraison a bien été archivée.',
+    'archivagefailed'    => 'Problème. La livraison n’a pas pu être archivée…',
     ],
 
     'indisponibilite' => [

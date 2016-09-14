@@ -145,6 +145,10 @@ Route::group(['middleware' => 'auth'], function () {
 		['as' => 'livraisonSyncRelaiss', 'uses' => 'LivraisonController@syncRelaiss']
 		);
 
+	Route::patch('livraison/archive/{id}', 
+		['as' => 'livraison.archive', 'uses' => 'LivraisonController@archive']
+		);
+
 
 // Pivot Panier / Producteur...
 	Route::get('livraison/panier/{panier_id}/listProducteurs', 

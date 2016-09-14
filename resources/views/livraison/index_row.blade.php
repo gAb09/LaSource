@@ -27,8 +27,13 @@ onDblClick="javascript:document.location.href='{{ route('livraison.edit', $model
 	<!-- state -->
 	<td class="{{$model->state}}">
 		@if($model->state == 'L_ARCHIVABLE')
-			<button class="btn btn-info btn-xs">Archiver
+		<form method="POST" name="livraison_archive" action="{{ URL::route('livraison.archive', $model->id) }}">
+                        {!! csrf_field() !!}
+                        <input type="hidden" class="form-control" name="_method" value="PATCH">
+			<button class="btn btn-info btn-xs">
+				                                    <i class="fa fa-btn fa-archive"></i>Archiver
 			</button>
+		</form>
 		@else
 			{{ trans('constante.'.$model->state) }}
 		@endif

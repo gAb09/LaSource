@@ -12,6 +12,8 @@ class LivraisonDomaine extends Domaine
 {
 	protected $model;
 
+	private $error_message;
+
 	public function __construct(){
 		$this->model = new Livraison;
 	}
@@ -208,5 +210,47 @@ class LivraisonDomaine extends Domaine
 		return $delai_explicite;
 	}
 
+    /**
+    * Archivage d'une livraison
+    *
+    * @param integer  /  id de la livraison
+    * @return boolean
+    **/
+    public function archive($id)
+    {
+    	$this->model = $this->model->findOrFail($id);
 
+    	if ($this->controleArchivage($this->model)) {
+    		$this->model->is_archived = 1;
+    		return $this->model->save();
+    	}
+
+    	return true;
+    }
+
+
+    /**
+    * Controle avant archivage d'une livraison ////////////////////// ToDo
+    *
+    * @param  Model  / Livraison
+    * @return boolean
+    **/
+    public function controleArchivage($model)
+    {
+    	$this->error_message = trans('message.livraison.archivagefailed');
+    	return true;
+    }
+
+
+
+    /**
+    * Retourne le message d'erreur courant
+    *
+    * @param  Model  / Livraison
+    * @return boolean
+    **/
+    public function getErrorMessage()
+    {
+    	return $this->error_message;
+    }
 }
