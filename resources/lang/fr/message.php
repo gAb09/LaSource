@@ -45,6 +45,8 @@ return [
     'setRangsFailed'    => 'L’ordre des relais n’a pas pu été modifié.',
     'liedToLivraison'    => 'Ce relais participe à la livraison du :date',
     'confirmDelete'    => 'Êtes-vous sur de vouloir supprimer le relais “:model” ?\nTous les liens éventuels avec …… seront supprimés.',
+    'reattachOk'    => 'Le relais vient d’être lié à nouveau.',
+    'reattachFailed'    => 'Problème. Le relais n’a pas pu être lié…',
     ],
 
     'panier' => [
@@ -106,4 +108,4 @@ return [
     'bug' => [
     'transmis'     => '<br />Le Ouaibmaistre vient d’en être informé et va répondre à ce problème dès que possible',
     ],
-];
+    ];

@@ -33,4 +33,20 @@ class Controller extends BaseController
     {
         return $this->domaine->setRangs($request);
     }
+
+    /**
+    * Récupération de l'url de la page de départ et effacement en session.
+    * 
+    **/
+    protected function getUrlDepart(){
+        if (\Session::has('url_depart_ajout_indisponibilite')) {
+            $url = \Session::get('url_depart_ajout_indisponibilite');
+            \Session::forget('url_depart_ajout_indisponibilite');
+        }else{
+            $url = \Session::get('_previous.url');
+        }
+        return $url;
+    }
+
+
 }

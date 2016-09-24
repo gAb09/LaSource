@@ -17,6 +17,12 @@ class Domaine
 	}
 
 
+	public function getCurrentModel()
+	{
+		return $this->model;
+	}
+
+
 	public function getDomaineName()
 	{
 		$name = explode("\\", get_class($this->model));
@@ -30,7 +36,7 @@ class Domaine
 	}
 
 
-	public function allActifs($order = 'rang')
+	public function allActived($order = 'rang')
 	{
 		return $this->model->where('is_actived', 1)->orderBy($order)->get();
 	}

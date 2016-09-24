@@ -74,28 +74,35 @@ class IndisponibiliteController extends Controller
 
 
 
+    public function beforeDestroy($id)
+    {
+        $implied_livraisons = $this->domaine->getImpliedLivraisons($id);
+        // return dd($implied_livraisons);
+        if (!$implied_livraisons->isEmpty()) {
+            $relais = $this->domaine->getLiedRelais();
+            $titre_page = "Traitement des livraisons ouvertes pour lesquelles le relais “$relais->nom” est redevenu disponible";
+
+            if($this->domaine->destroy($id)){
+                \Session::flash('success', trans('message.indisponibilite.deleteOk'));
+            }else{
+                \Session::flash('status', trans('message.indisponibilite.deletefailed'));
+            }
+
+            return view('relais.reattach')->with(['livraisons' => $implied_livraisons])->with(compact('titre_page', 'relais'));
+        }else{
+                    // return $this->destroy($id);
+        }
+    }
+
     public function destroy($id)
     {     
         if($this->domaine->destroy($id)){
             $url_depart = $this->getUrlDepart();
             return redirect($url_depart)->with( 'success', trans('message.indisponibilite.deleteOk') );
-        }
-        return redirect()->back()->with('status', trans('message.indisponibilite.deletefailed'));
-    }
-
-
-    /**
-    * Récupération de l'url de la page de départ et effacement en session.
-    * 
-    **/
-    private function getUrlDepart(){
-        if (\Session::has('url_depart_ajout_indisponibilite')) {
-            $url = \Session::get('url_depart_ajout_indisponibilite');
-            \Session::forget('url_depart_ajout_indisponibilite');
         }else{
-            $url = \Session::get('_previous.url');
+            return redirect()->back()->with('status', trans('message.indisponibilite.deletefailed'));
         }
-        return $url;
     }
+
 
 }

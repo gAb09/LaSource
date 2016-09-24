@@ -140,4 +140,17 @@ class RelaisDomaine extends Domaine
 		return $item;
 	}
 
+
+	public function ReattachToLivraisons($id, $request)
+	{
+		$relais = $this->findFirst($id);
+		if (!empty($request->get('livraison_id'))) {
+			foreach ($request->get('livraison_id') as $key => $livraison) {
+				$livraisonsToReattach[] = $livraison;
+				var_dump($livraisonsToReattach);
+			}
+		}
+		return $relais->livraison()->sync($livraisonsToReattach, false);
+	}
+
 }
