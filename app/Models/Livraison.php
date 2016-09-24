@@ -20,7 +20,7 @@ class Livraison extends Model
      */
     protected $dates = ['deleted_at', 'date_paiement', 'date_cloture', 'date_livraison'];
 
-    protected $appends = array('class_actif');
+    protected $appends = array('class_actived', 'state');
 
     private $state = "L_EXISTANTE";
 

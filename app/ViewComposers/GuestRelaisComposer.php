@@ -37,7 +37,7 @@ class GuestRelaisComposer
      */
     public function compose(View $view)
     {
-        $relaiss = $this->domaine->allActifs('ville');
+        $relaiss = $this->domaine->allActived('ville');
         $view->with(compact('relaiss'));
     }
 }

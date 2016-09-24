@@ -17,7 +17,7 @@ class Panier extends Model
      */
     protected $dates = ['deleted_at'];
 
-    protected $appends = array('class_actif');
+    protected $appends = array('class_actived');
 
     public function Producteur()
     {

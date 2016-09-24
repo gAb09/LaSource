@@ -4,9 +4,9 @@
 * 
 * 
 **/
-function handleIsActifClass()
+function handleIsActivedClass()
 {
-	var item = $('.toggle_actif');
+	var item = $('.toggle_actived');
 	console.log(item);
 
 	$(item).toggleClass('is_not_actived').toggleClass('is_actived');
@@ -25,7 +25,7 @@ function handleIsActifClass()
 * @return string|null : contenu html pour les messages utilisateurs
 **/
 function setRangs(model, tablo){
-
+// console.timeStamp();
 	/* console.log('model : '+model); */
 	/* console.log('tablo : '+tablo); */
 

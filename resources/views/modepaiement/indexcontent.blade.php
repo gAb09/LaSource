@@ -1,6 +1,6 @@
 <div id="modepaiements_index" class="offset3 span11 flexcontainer">
 	@forelse($models as $model)
-	<div class="fiche stickycontainer {{$model->class_actif}}" ondblClick = "javascript:document.location.href='http://lasource/modepaiement/{{ $model->id }}/edit';">
+	<div class="fiche stickycontainer {{$model->class_actived}}" ondblClick = "javascript:document.location.href='http://lasource/modepaiement/{{ $model->id }}/edit';">
 
 		<div class="allowstickyfooter">
 

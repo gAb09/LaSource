@@ -36,7 +36,7 @@ class GuestProducteurComposer
      */
     public function compose(View $view)
     {
-        $producteurs = $this->domaine->allActifs('exploitation');
+        $producteurs = $this->domaine->allActived('exploitation');
         $view->with(compact('producteurs'));
     }
 }

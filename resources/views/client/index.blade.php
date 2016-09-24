@@ -17,7 +17,7 @@
 
 	@foreach($models as $model)
 
-		<div class="fiche {{$model->class_actif}}" ondblClick = "javascript:document.location.href='http://lasource/client/{{ $model->id }}/edit';">
+		<div class="fiche {{$model->class_actived}}" ondblClick = "javascript:document.location.href='http://lasource/client/{{ $model->id }}/edit';">
 
 			<p class="lighten50">
 				{{ $model->prenom }} {{ $model->nom }}<br />

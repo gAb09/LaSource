@@ -186,10 +186,10 @@
                         </div>
 
                         <!-- is_actived -->
-                        <div id="" class="form-group toggle_actif {{$model->class_actif}}">
-                            <label class="col-md-4 control-label">Actif</label>
+                        <div id="" class="form-group toggle_actived {{$model->class_actived}}">
+                            <label class="col-md-4 control-label">Activé</label>
                             <div class="col-md-6">
-                                <input type="checkbox" class="form-control" style="width:16px" name="is_actived" onChange="javascript:handleIsActifClass();" 
+                                <input type="checkbox" class="form-control" style="width:16px" name="is_actived" onChange="javascript:handleIsActivedClass();" 
                                 @if($model->is_actived or old('is_actived'))
                                 checked="checked" 
                                 @endif

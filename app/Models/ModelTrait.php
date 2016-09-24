@@ -33,7 +33,7 @@ trait ModelTrait
     }
 
 
-    public function getClassActifAttribute($value)
+    public function getClassActivedAttribute($value)
     {
         if ($this->is_actived == 1) {
             return 'is_actived';

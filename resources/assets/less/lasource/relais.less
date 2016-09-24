@@ -9,15 +9,24 @@
 		border-color:@color_relais;
 	}
 	.indisponibilites{
-		background-color: lighten(@color_notactif, 40%);
+		background-color: lighten(@color_notactived, 40%);
 	}
 }
 
 
 .relais{
 	background-color: lighten(@color_relais, 3%);
-	.toggle_actif.is_actived div{
+	.toggle_actived.is_actived div{
 		background-color: @color_relais;
 	}
 }
 
+.relais_redispo {
+	span{
+		font-size: 1.2em;
+	}
+	input{
+		height: 13px;
+		margin-top: -5px;
+	}
+}
