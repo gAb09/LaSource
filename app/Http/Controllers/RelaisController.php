@@ -69,13 +69,4 @@ class RelaisController extends Controller
         }
     }
 
-    public function ReattachToLivraisons($id, Request $request)
-    {
-        if($this->domaine->ReattachToLivraisons($id, $request)){
-            // envoyer mail aux clients // ToDo
-            return redirect()->route('relais.index')->with('success', trans('message.relais.reattachOk'));
-        }else{
-            return redirect()->back()->with('status', trans('message.indisponibilite.reattachFailed'));
-        }
-    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\IndisponibiliteRequest;
 use App\Domaines\IndisponibiliteDomaine as Indisponibilite;
+use App\Exceptions\IndispoControleLivraisonException;
 
 use Illuminate\Http\Request;
 
@@ -24,17 +25,26 @@ class IndisponibiliteController extends Controller
     public function index()
     {
         $models = $this->domaine->all('date_debut');
+        return dd($models->all());
         return view('indisponibilite.index')->with(compact('models'));
     }
 
 
-    public function addIndisponibilite($indisponible_classe, $indisponible_id)
+    /**
+    * Supplante la fonction create.
+    * 
+    * @param string $indisponible_type
+    * @param integer $indisponible_id
+    * 
+    * @return View
+    **/
+    public function addIndisponibilite($indisponible_type, $indisponible_id)
     {     
         $this->domaine->keepUrlDepart();
 
-        $model = $this->domaine->addIndisponibilite($indisponible_classe, $indisponible_id);
+        $model = $this->domaine->addIndisponibilite($indisponible_type, $indisponible_id);
 
-        $titre_page = trans('titrepage.indisponibilite.create', ['entity' => 'au '.$indisponible_classe, 'nom' => $model->indisponible_nom]);
+        $titre_page = $this->domaine->getTitrePage();
 
         return view('indisponibilite.create')->with(compact('model', 'titre_page'));
     }
@@ -43,11 +53,34 @@ class IndisponibiliteController extends Controller
 
     public function store(IndisponibiliteRequest $request)
     {
-        if ($this->domaine->store($request)) {
+        $this->domaine->keepIndispo();
+
+        /* store failed */
+        if (!$this->domaine->store($request)) {
+            return redirect()->back()->with( 'status', $this->domaine->getMessage() );
+
+            /* des livraisons sont restreintes */
+        }elseif ( 
+           $this->domaine->checkIfLivraisonsRestricted($request->get('date_debut'), $request->get('date_fin')) 
+           ) {
+
+            try{
+                $datas = $this->domaine->handleLivraisonAffected();
+            } catch (IndispoControleLivraisonException $e){
+                return redirect()->back()->with('status', $e->getMessage());
+            }
+
+            \Session::flash('success', $this->domaine->getMessage());
+            return view('livraison.handleIndisponibilityChange')
+            ->with(compact('datas'))
+            ->with( 'titre_page', $this->domaine->getTitrePage() )
+            ;
+
+            /* Aucune livraison concernée */
+        }else{
             $url_depart = $this->getUrlDepart();
-            return redirect($url_depart)->with( 'success', trans('message.indisponibilite.storeOk') );
+            return redirect($url_depart)->with( 'success', $this->domaine->getMessage() );
         }
-        return redirect()->back()->with( 'status', trans('message.indisponibilite.storefailed').trans('message.bug.transmis') );
     }
 
 
@@ -74,35 +107,63 @@ class IndisponibiliteController extends Controller
 
 
 
-    public function beforeDestroy($id)
-    {
-        $implied_livraisons = $this->domaine->getImpliedLivraisons($id);
-        // return dd($implied_livraisons);
-        if (!$implied_livraisons->isEmpty()) {
-            $relais = $this->domaine->getLiedRelais();
-            $titre_page = "Traitement des livraisons ouvertes pour lesquelles le relais “$relais->nom” est redevenu disponible";
+    /**
+    * Avant de supprimer une indisponibilité, il faut s'enquérir des conséquences possibles sur les livraisons.
+    *
+    * @param integer $indispo_id
+    * @return Redirection
+    **/
+    public function destroy($indispo_id)
+    {     
+        $indisponibilite = $this->domaine->findFirstWithoutTrashed($indispo_id);
 
-            if($this->domaine->destroy($id)){
-                \Session::flash('success', trans('message.indisponibilite.deleteOk'));
-            }else{
-                \Session::flash('status', trans('message.indisponibilite.deletefailed'));
+        $this->domaine->keepUrlDepart();
+        $this->domaine->keepIndispo();
+
+        /* destroy failed */
+        if(!$this->domaine->destroy($indispo_id)){
+            return redirect()->back()->with('status', trans('message.indisponibilite.deletefailed'));
+
+            /* des livraisons sont étendues */
+        }elseif ( 
+           $this->domaine->checkIfLivraisonsExtended($indisponibilite->date_debut, $indisponibilite->date_fin) 
+           ) {
+
+            try{
+                $datas = $this->domaine->handleLivraisonAffected();
+            } catch (IndispoControleLivraisonException $e){
+                return redirect()->back()->with('status', $e->getMessage());
             }
 
-            return view('relais.reattach')->with(['livraisons' => $implied_livraisons])->with(compact('titre_page', 'relais'));
-        }else{
-                    // return $this->destroy($id);
-        }
-    }
+            \Session::flash('success', $this->domaine->getMessage());
+            return view('livraison.handleIndisponibilityChange')
+            ->with(compact('datas'))
+            ->with( 'titre_page', $this->domaine->getTitrePage() )
+            ;
 
-    public function destroy($id)
-    {     
-        if($this->domaine->destroy($id)){
+            /* Aucune livraison concernée, destroy simple */
+        }else{
             $url_depart = $this->getUrlDepart();
-            return redirect($url_depart)->with( 'success', trans('message.indisponibilite.deleteOk') );
-        }else{
-            return redirect()->back()->with('status', trans('message.indisponibilite.deletefailed'));
+            return redirect($url_depart)->with( 'success', $this->domaine->getMessage() );
         }
     }
 
 
+
+    public function handleLivraisonChanges(Request $request)
+    {
+        $livraisons = array();
+        foreach ($request->get('livraison_id') as $key => $value) {
+            if ($value == 'attach') {
+                $livraisons['toattach'][] = $key;
+            }
+            if ($value == 'detach') {
+                $livraisons['todetach'][] = $key;
+            }
+            if ($value == 'reported') {
+                $livraisons['toreport'][] = $key;
+            }
+        }
+        return dd($livraisons);
+    }
 }

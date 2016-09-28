@@ -101,8 +101,6 @@ Route::group(['middleware' => 'auth'], function () {
 // RELAIS...
 	Route::get('relais/getdeleted', ['as' => 'relais.getdeleted', 'uses' => 'RelaisController@getDeleted']);
 	Route::get('setrangs/relais', ['as' => 'media.set_rang', 'uses' => 'RelaisController@setRangs']);
-	Route::put('relais/reattach/{id}', ['as' => 'relais.reattach', 'uses' => 'RelaisController@ReattachToLivraisons']);
-	// Route::get('addIndisponibilite/relais/{id}', ['as' => 'relais.addIndisponibilite', 'uses' => 'RelaisController@addIndisponibilite']);
 	Route::resource('relais', 'RelaisController');
 
 
@@ -119,10 +117,15 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 // INDISPONIBILITE...
-	Route::get('addIndisponibilite/{model}/{id}', ['as' => 'addIndisponibilite', 'uses' => 'IndisponibiliteController@addIndisponibilite']);
+	Route::get('addIndisponibilite/{indisponible_type}/{indisponible_id}', ['as' => 'addIndisponibilite', 'uses' => 'IndisponibiliteController@addIndisponibilite']);
 	Route::resource('indisponibilite', 'IndisponibiliteController', ['except' => [
 		'create'
 		]]);
+
+	Route::put('indisponibilité/handleLivraisonChanges/{indisponible_id}', 
+		['as' => 'indisponibilité.handleLivraisonChanges', 'uses' => 'IndisponibiliteController@handleLivraisonChanges']
+		);
+
 
 // LIVRAISON...
 	Route::get('livraison/combodate/{valeur}', 'LivraisonController@getComboDatesLivraison');

@@ -91,13 +91,14 @@ return [
     ],
 
     'indisponibilite' => [
-    'storeOk'       => 'La période d’indisponibilité a bien été créée.',
-    'storefailed'   => 'Problème. La période d’indisponibilité n’a pas pu être créée…',
-    'updateOk'      => 'La période d’indisponibilité a bien été modifiée.',
-    'updatefailed'  => 'Problème. La période d’indisponibilité n’a pas pu être mise à jour…',
-    'deleteOk'      => 'La période d’indisponibilité a bien été supprimée.',
-    'deletefailed'  => 'Problème. La période d’indisponibilité n’a pas pu être supprimée…',
-    'confirmDelete' => 'Êtes-vous sur de vouloir supprimer la période d’indisponibilité ?',
+    'storeOk'           => 'La période d’indisponibilité a bien été créée.',
+    'storefailed'       => 'Problème. La période d’indisponibilité n’a pas pu être créée…',
+    'updateOk'          => 'La période d’indisponibilité a bien été modifiée.',
+    'updatefailed'      => 'Problème. La période d’indisponibilité n’a pas pu être mise à jour…',
+    'deleteOk'          => 'La période d’indisponibilité a bien été supprimée.',
+    'deletefailed'      => 'Problème. La période d’indisponibilité n’a pas pu être supprimée…',
+    'confirmDelete'     => 'Êtes-vous sur de vouloir supprimer la période d’indisponibilité ?',
+    'controleFailed'    => 'Problème. La période d’indisponibilité n’a pas pu être traitée…<br />car les contrôles avant traitement n\'ont pas pu être effectués correctement.',
     ],
 
     'user' => [

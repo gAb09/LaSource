@@ -11,7 +11,7 @@ class Domaine
 	private $error_message;
 
 
-	public function newModel()
+	public function newModel() // ToDo ajouter if(!isset($this->model)) {$this->model = new Static} ??
 	{
 		return $this->model;
 	}
@@ -45,6 +45,12 @@ class Domaine
 	public function findFirst($critere, $colonne = 'id')
 	{
 		return $this->model->withTrashed()->where($colonne, $critere)->first();
+	}
+
+
+	public function findFirstWithoutTrashed($critere, $colonne = 'id')
+	{
+		return $this->model->where($colonne, $critere)->first();
 	}
 
 
