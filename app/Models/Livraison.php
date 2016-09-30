@@ -24,6 +24,10 @@ class Livraison extends Model
 
     private $state = "L_EXISTANTE";
 
+    protected $guarded = [];
+
+
+
     public function Panier()
     {
         return $this->belongsToMany('App\Models\Panier')->withPivot('producteur', 'prix_livraison');
