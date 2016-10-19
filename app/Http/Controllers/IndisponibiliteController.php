@@ -40,7 +40,7 @@ class IndisponibiliteController extends Controller
     **/
     public function addIndisponibilite($indisponible_type, $indisponible_id)
     {     
-        $this->domaine->keepUrlDepart();
+        $this->keepUrlInitiale();
 
         $model = $this->domaine->addIndisponibilite($indisponible_type, $indisponible_id);
 
@@ -53,16 +53,14 @@ class IndisponibiliteController extends Controller
 
     public function store(IndisponibiliteRequest $request)
     {
-        $this->domaine->keepIndispo();
-
         /* store failed */
         if (!$this->domaine->store($request)) {
             return redirect()->back()->with( 'status', $this->domaine->getMessage() );
 
             /* des livraisons sont restreintes */
         }elseif ( 
-           $this->domaine->checkIfLivraisonsRestricted($request->get('date_debut'), $request->get('date_fin')) 
-           ) {
+         $this->domaine->checkIfLivraisonsRestricted($request->get('date_debut'), $request->get('date_fin')) 
+         ) {
 
             try{
                 $datas = $this->domaine->handleLivraisonAffected();
@@ -71,14 +69,14 @@ class IndisponibiliteController extends Controller
             }
 
             \Session::flash('success', $this->domaine->getMessage());
-            return view('livraison.handleIndisponibilityChange')
+            return view('livraison.handleIndisponibilitiesChanges')
             ->with(compact('datas'))
             ->with( 'titre_page', $this->domaine->getTitrePage() )
             ;
 
             /* Aucune livraison concernée */
         }else{
-            $url_depart = $this->getUrlDepart();
+            $url_depart = $this->getUrlInitiale();
             return redirect($url_depart)->with( 'success', $this->domaine->getMessage() );
         }
     }
@@ -88,7 +86,7 @@ class IndisponibiliteController extends Controller
     public function edit($id)
     {
         $model = $this->domaine->edit($id);
-        $this->domaine->keepUrlDepart();
+        $this->keepUrlInitiale();
         $titre_page = trans('titrepage.indisponibilite.edit', ['nom' => $model->indisponible_nom]);
 
         return view('indisponibilite.edit')->with(compact('model', 'titre_page'));
@@ -99,7 +97,7 @@ class IndisponibiliteController extends Controller
     public function update($id, IndisponibiliteRequest $request)
     {
         if($this->domaine->update($id, $request)){
-            $url_depart = $this->getUrlDepart();
+            $url_depart = $this->getUrlInitiale();
             return redirect($url_depart)->with( 'success', trans('message.indisponibilite.updateOk') );
         }
         return redirect()->back()->with( 'status', trans('message.indisponibilite.updatefailed').trans('message.bug.transmis') );
@@ -108,62 +106,47 @@ class IndisponibiliteController extends Controller
 
 
     /**
-    * Avant de supprimer une indisponibilité, il faut s'enquérir des conséquences possibles sur les livraisons.
+    * Avant de supprimer une indisponibilité, il faudra s'enquérir des conséquences possibles sur les livraisons.
+    * C'est le domaine qui va gérer cela
     *
-    * @param integer $indispo_id
+    * @param integer $indisponibilite_id
     * @return Redirection
     **/
-    public function destroy($indispo_id)
-    {     
-        $indisponibilite = $this->domaine->findFirstWithoutTrashed($indispo_id);
-
-        $this->domaine->keepUrlDepart();
-        $this->domaine->keepIndispo();
-
-        /* destroy failed */
-        if(!$this->domaine->destroy($indispo_id)){
-            return redirect()->back()->with('status', trans('message.indisponibilite.deletefailed'));
-
-            /* des livraisons sont étendues */
-        }elseif ( 
-           $this->domaine->checkIfLivraisonsExtended($indisponibilite->date_debut, $indisponibilite->date_fin) 
-           ) {
-
-            try{
-                $datas = $this->domaine->handleLivraisonAffected();
-            } catch (IndispoControleLivraisonException $e){
-                return redirect()->back()->with('status', $e->getMessage());
-            }
-
-            \Session::flash('success', $this->domaine->getMessage());
-            return view('livraison.handleIndisponibilityChange')
-            ->with(compact('datas'))
-            ->with( 'titre_page', $this->domaine->getTitrePage() )
-            ;
-
-            /* Aucune livraison concernée, destroy simple */
-        }else{
-            $url_depart = $this->getUrlDepart();
-            return redirect($url_depart)->with( 'success', $this->domaine->getMessage() );
-        }
-    }
-
-
-
-    public function handleLivraisonChanges(Request $request)
+    public function destroy($id, Request $request)
     {
-        $livraisons = array();
-        foreach ($request->get('livraison_id') as $key => $value) {
-            if ($value == 'attach') {
-                $livraisons['toattach'][] = $key;
-            }
-            if ($value == 'detach') {
-                $livraisons['todetach'][] = $key;
-            }
-            if ($value == 'reported') {
-                $livraisons['toreport'][] = $key;
-            }
+        if ($this->domaine->beforeDestroy($id)) {
+            /* Conservation de la page initiale */
+            $this->keepUrlInitiale();
+
+            return  view('livraison.handleIndisponibilitiesChanges')
+            ->with([
+                'titre_page' => $this->domaine->getTitrePage(), 
+                'restricted_livraisons' => $this->domaine->getRestrictedLivraisons(), 
+                'extended_livraisons' => $this->domaine->getExtendedLivraisons(), 
+                // 'urlInitiale' => $this->getUrlInitiale(),
+                'action_for_view' => $this->domaine->getActionNameForView(),
+                'indisponible' => $this->domaine->getIndisponibleLied(),
+                ]);
         }
-        return dd($livraisons);
+
+        if($this->domaine->destroy($id)){
+            return redirect()->back()->with( 'success', $this->domaine->getMessage() );
+        }else{
+            return redirect()->back()->with('status', $this->domaine->getMessage() );
+        }
     }
+
+
+    /**
+    * Annulation de l'action sur une indisponibilité.
+    *
+    * @return Redirection
+    **/
+    public function annulationIndisponibilityChanges()
+    {
+        return redirect($this->getUrlInitiale())->with( 'success', trans('message.indisponibilite.actionCancelled') );
+    }
+
+
+
 }

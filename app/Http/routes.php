@@ -122,8 +122,8 @@ Route::group(['middleware' => 'auth'], function () {
 		'create'
 		]]);
 
-	Route::put('indisponibilité/handleLivraisonChanges/{indisponible_id}', 
-		['as' => 'indisponibilité.handleLivraisonChanges', 'uses' => 'IndisponibiliteController@handleLivraisonChanges']
+	Route::get('annulationIndisponibilityChanges', 
+		['as' => 'annulationIndisponibilityChanges', 'uses' => 'IndisponibiliteController@annulationIndisponibilityChanges']
 		);
 
 
@@ -152,7 +152,7 @@ Route::group(['middleware' => 'auth'], function () {
 		);
 
 
-// Pivot Panier / Producteur...
+	// Pivot Panier / Producteur...
 	Route::get('livraison/panier/{panier_id}/listProducteurs', 
 		['as' => 'listProducteursForPanier', 'uses' => 'LivraisonController@listProducteursForPanier']
 		);
@@ -160,6 +160,13 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('panier/{panier_id}/syncProducteurs', 
 		['as' => 'PanierSyncProducteurs', 'uses' => 'PanierController@syncProducteurs']
 		);
+
+	// Indisponibilité...
+	Route::put('livraison/handleIndisponibilitiesChanges/{indisponible_id}', 
+		['as' => 'livraison.handleIndisponibilitiesChanges', 'uses' => 'LivraisonController@handleIndisponibilitiesChanges']
+		);
+
+
 	
 // DASHBOARD
 	//composerMails

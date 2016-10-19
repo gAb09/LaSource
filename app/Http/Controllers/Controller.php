@@ -34,18 +34,25 @@ class Controller extends BaseController
         return $this->domaine->setRangs($request);
     }
 
+
     /**
-    * Récupération de l'url de la page de départ et effacement en session.
+    * Conservation de l'url initiale.
     * 
     **/
-    protected function getUrlDepart(){
-        if (\Session::has('url_depart_ajout_indisponibilite')) {
-            $url = \Session::get('url_depart_ajout_indisponibilite');
-            \Session::forget('url_depart_ajout_indisponibilite');
-        }else{
-            $url = \Session::get('_previous.url');
+    public function keepUrlInitiale(){
+        if (!\Session::has('url_initiale')) {
+            \Session::set('url_initiale', \Session::get('_previous.url'));
         }
-        return $url;
+    }
+
+
+
+    /**
+    * Récupération de l'url initiale et effacement en session.
+    * 
+    **/
+    protected function getUrlInitiale(){
+        return \Session::get('url_initiale', \Session::get('_previous.url'));
     }
 
 

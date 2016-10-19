@@ -177,6 +177,31 @@ class LivraisonController extends Controller
 
 
     /**
+    * ??????????????????
+    *
+    * @param .??????????????
+    * @return ?????????????
+    **/
+    public function handleIndisponibilitiesChanges(Request $request)
+    {
+        $livraisons = array();
+        foreach ($request->get('livraison_id') as $key => $value) {
+            if ($value == 'attach') {
+                $livraisons['toattach'][] = $key;
+            }
+            if ($value == 'detach') {
+                $livraisons['todetach'][] = $key;
+            }
+            if ($value == 'reported') {
+                $livraisons['toreport'][] = $key;
+            }
+        }
+        return dd($livraisons);
+    }
+
+
+
+    /**
     * Archivage d'une livraison
     *
     * @param integer  /  id de la livraison

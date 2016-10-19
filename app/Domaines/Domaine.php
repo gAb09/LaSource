@@ -11,16 +11,31 @@ class Domaine
 	private $error_message;
 
 
+
 	public function newModel() // ToDo ajouter if(!isset($this->model)) {$this->model = new Static} ??
 	{
 		return $this->model;
 	}
 
 
+
 	public function getCurrentModel()
 	{
 		return $this->model;
 	}
+
+
+
+	/**
+	* Accesseur pour le dernier message d'erreur
+	* 
+	* @return string
+	**/
+	public function getErrorMessage()
+	{
+		return $this->error_message;
+	}
+
 
 
 	public function getDomaineName()
@@ -158,14 +173,21 @@ class Domaine
 	}
 
 
+
 	/**
-	* Accesseur pour le dernier message d'erreur
+	* Conservation des données de l'action initiale,
+	* lorsqu'il y aura redirection ou requête supplémentaire avant d'effectuer cette action.
 	* 
 	* @return string
 	**/
-	public function getErrorMessage()
+	public function keepActionInitialeContext($action, $model_id, $request = null)
 	{
-		return $this->error_message;
+		\Session::set('ActionInitialeContext.action', $action);
+		\Session::set('ActionInitialeContext.model_id', $model_id);
+		if (!is_null($request)) {
+			\Session::set('ActionInitialeContext.request', $request->all());
+		}
+		// return dd(\Session::get('ActionInitialeContext'));
 	}
 
 }

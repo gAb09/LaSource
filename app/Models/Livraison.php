@@ -97,6 +97,14 @@ class Livraison extends Model
         return $value;
     }
 
+
+    /**
+     * Non implémentée.
+     * Prévoit la possibilté de fixer des conditions avant qu'une livraison créée puisse être ouverte,
+     * (par exemple qu'un nombre minimum de commandes soit atteint).
+     *
+     * @var array
+     */
     public function checkIfOkForOuverture()
     {
         if ($this->date_cloture) {

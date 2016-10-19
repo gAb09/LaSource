@@ -8,6 +8,7 @@ use App\Models\Livraison;
 use Carbon\Carbon;
 use App\Exceptions\IndispoControleLivraisonException;
 
+use Illuminate\Http\Request;
 use Log;
 use Mail;
 
@@ -18,12 +19,13 @@ class IndisponibiliteDomaine extends Domaine
     protected $titre_page;
     protected $message;
     protected $restricted_livraisons;
-    protected $expanded_livraisons;
+    protected $extended_livraisons;
+    protected $action_name_for_view;
 
-
-    public function __construct(){
-      $this->model = new Indisponibilite;
-  }
+    public function __construct(Request $request){
+        $this->model = new Indisponibilite;
+        $this->request = $request;
+    }
 
 
     /**
@@ -47,12 +49,54 @@ class IndisponibiliteDomaine extends Domaine
 
 
     /**
+    * Accesseur nom de l'action en clair pour affichage dans la vue.
+    * 
+    * @return string
+    **/
+    public function getActionNameForView(){
+        return $this->action_name_for_view;
+    }
+
+
+    /**
+    * Accesseur pour la collection des livraisons resreintes.
+    * 
+    * @return colection
+    **/
+    public function getRestrictedLivraisons(){
+        return $this->restricted_livraisons;
+    }
+
+
+    /**
+    * Accesseur pour la collection des livraisons étendues.
+    * 
+    * @return colection
+    **/
+    public function getExtendedLivraisons(){
+        return $this->extended_livraisons;
+    }
+
+
+    /**
     * Accesseur message.
     * 
     * @return string
     **/
-    public function gecurrentModel(){
+    public function getCurrentModel(){
         return $this->model;
+    }
+
+
+    /**
+    * ToDo.
+    * 
+    * @return string
+    **/
+    public function completeCurrentModelWithIndisponible($id, $type = 'App\Models\Relais'){
+        $this->model = $this->model->load(['indisponible' => function ($query) use ($type){
+            $query->where('indisponible_type', $type);
+        }]);
     }
 
 
@@ -67,8 +111,6 @@ class IndisponibiliteDomaine extends Domaine
     **/
     public function addIndisponibilite($indisponible_type, $indisponible_id)
     {     
-        $this->keepUrlDepart();
-
         /* Renseignement partiel de l'instance courante 
         afin de pouvoir assigner la variable $model 
         du formulaire commun avec l'édition */
@@ -96,7 +138,7 @@ class IndisponibiliteDomaine extends Domaine
       $this->handleRequest($request);
 
       try{
-         $this->model->save();
+       $this->model->save();
 		} catch(\Illuminate\Database\QueryException $e){ // ToDo revoir si gestion erreur ok
             $this->message = trans('message.indisponibilite.storefailed').trans('message.bug.transmis');
             $this->alertOuaibMaistre($e);
@@ -110,51 +152,91 @@ class IndisponibiliteDomaine extends Domaine
 
     public function edit($id)
     {
-      return Indisponibilite::with('indisponible')->where('id', $id)->first();
-  }
+        return Indisponibilite::with('indisponible')->where('id', $id)->first();
+    }
 
 
 
 
-  public function update($id, $request){
-      $this->model = Indisponibilite::where('id', $id)->first();
-      $this->handleRequest($request);
+    public function update($id, $request){
+        $this->model = Indisponibilite::where('id', $id)->first();
+        $this->handleRequest($request);
 
-      return $this->model->save();
-  }
-
-
-
-  private function handleRequest($request){
-      $this->model->indisponible_id = $request->indisponible_id;
-      $this->model->indisponible_type = $request->indisponible_type;
-      $this->model->indisponible_nom = $request->indisponible_nom;
-      $this->model->date_debut = $request->date_debut;
-      $this->model->date_fin = $request->date_fin;
-      $this->model->cause = $request->cause;
-      $this->model->remarques = $request->remarques;
-  }
+        return $this->model->save();
+    }
 
 
 
-  public function destroy($id)
-  {
-      $this->model = $this->model->find($id);
-      $this->message = trans('message.indisponibilite.deleteOk');
+    private function handleRequest($request){
+        $this->model->indisponible_id = $request->indisponible_id;
+        $this->model->indisponible_type = $request->indisponible_type;
+        $this->model->indisponible_nom = $request->indisponible_nom;
+        $this->model->date_debut = $request->date_debut;
+        $this->model->date_fin = $request->date_fin;
+        $this->model->cause = $request->cause;
+        $this->model->remarques = $request->remarques;
+    }
 
-      return $this->model->delete();
-  }
 
+
+    public function beforeDestroy($id)
+    {
+        $this->model = $this->model->find($id);
+
+        /* Y-a-til des livraisons concernées ? */
+        if($this->hasLivraisonsConcerned('destroy')){
+
+            /* Il y a des livraisons concernées, alors on redirige vers le formulaire pour les traiter */
+            /* Auparavant on conserve les datas utiles à l'action intiale en session */
+            $this->keepActionInitialeContext(__FUNCTION__, $id);
+
+            $this->composeDatasForFormLivraisonHandling('la suppression');
+
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
+    public function destroy($id)
+    {
+        $this->model = $this->model->find($id);
+
+        if(1==1){
+            // if($this->model->delete()){
+            $this->message = trans('message.indisponibilite.deleteOk');
+            return true;
+        }else{
+            $this->message = trans('message.indisponibilite.deletefailed');
+            return false;
+        }
+    }
 
 
     /**
-    * Conservation de l'instance de l'indisponibilité courante en session.
-    * Précaution pour le cas où le gestionnaire opterait pour un traitement manuel.
+    * Recherche de livraisons OUVERTES qui se trouvent étendues ou restreintes.
+    * Le cas échéant, constitution des listes de ces livraisons
     * 
+    * @param string - action courante
+    * 
+    * @return boolean
     **/
-    public function keepIndispo(){
-        \Session::set('CurrentIndispo', $this->model);
+    public function hasLivraisonsConcerned($action)
+    {
+        // return dd($action);
+        // return dd($this->request);
+
+        switch ($action) {
+            case 'destroy':
+            if ($this->hasLivraisonsExtended()) {
+                return true;
+            }
+            return dd('hasLivraisonsConcerned, defaut');  // ToDo lancer exception
+            break;
+        }
     }
+
 
 
 
@@ -167,55 +249,70 @@ class IndisponibiliteDomaine extends Domaine
     * 
     * @return boolean
     **/
-    public function checkIfLivraisonsRestricted($date_debut, $date_fin)
+    public function hasLivraisonsRestricted()
     {
-        $collection = Livraison::whereBetween('date_livraison', [$date_debut, $date_fin])->get();
-        $this->restricted_livraisons = $collection->filter(function ($value, $key) {
-         // var_dump("livraison n°$value->id : $value->state");
-            return $value->state == 'L_OUVERTE';
-        });
-        return true;
+        $collection = $this->listLivraisonsConcerned($__debut, $__fin);
+        if ($collection->isEmpty()) {
+            return false;
+        }else{
+            $this->restricted_livraisons = $collection;
+            return true;
+        }
     }
 
 
 
     /**
     * Recherche d'éventuelles livraisons dont la date de livraison est comprise entre les ANCIENNES dates de début et de fin de l'indisponibilité.
-    * S'il y en a, stockage de la collection de livraisons dans la propriété $expanded_livraisons.
+    * S'il y en a, stockage de la collection de livraisons dans la propriété $extended_livraisons.
     * 
     * @param Carbon date debut
     * @param Carbon date fin
     * 
     * @return boolean
     **/
-    public function checkIfLivraisonsExtended($date_debut, $date_fin)
+    public function hasLivraisonsExtended()
+    {
+        $collection = $this->getLivraisonsConcerned($this->model->date_debut, $this->model->date_fin);
+        if ($collection->isEmpty()) {
+            return false;
+        }else{
+            $this->extended_livraisons = $collection;
+            return true;
+        }
+    }
+
+
+
+    /**
+    * Recherche de livraisons OUVERTES dont la date de livraison se situe entre les dates fournies en argument.
+    * 
+    * @param Carbon date debut
+    * @param Carbon date fin
+    * 
+    * @return collection de Model\Livraison
+    **/
+    public function getLivraisonsConcerned($date_debut, $date_fin)
     {
         $collection = Livraison::whereBetween('date_livraison', [$date_debut, $date_fin])->get();
-        $this->expanded_livraisons = $collection->filter(function ($value, $key) {
+        $new_collection = $collection->filter(function ($value, $key) {
          // var_dump("livraison n°$value->id : $value->state");
             return $value->state == 'L_OUVERTE';
         });
-        return true;
+        return $new_collection;
     }
 
 
-
-    public function handleLivraisonAffected()
+    /**
+    * Appel du formulaire de traitement des livraisons concernées.
+    *
+    * @return View
+    **/
+    public function composeDatasForFormLivraisonHandling($action_name_for_view)
     {
-        $this->titre_page = 'Traitement des livraisons ouvertes concernées par le changement de disponibilité de “'.$this->model->indisponible_nom.'”.';
-
-        $datas = array();
-        $datas['restricted_livraisons'] = $this->restricted_livraisons;
-        $datas['expanded_livraisons'] = $this->expanded_livraisons;
-        $datas['indisponible'] = $this->getIndisponibleLied();
-
-
-        // return dd($datas);
-        return $datas;
-        // throw new IndispoControleLivraisonException('test');
+            $this->action_name_for_view = $action_name_for_view;
+            $this->titre_page = 'Traitement des livraisons ouvertes concernées par '.$this->titre_page .= $this->action_name_for_view.' de l’indisponibilité de “'.$this->model->indisponible_nom.'”.';
     }
-
-
 
 
     /**
@@ -224,9 +321,9 @@ class IndisponibiliteDomaine extends Domaine
     * @return string
     **/
     public function getIndisponibleLied(){
-        $instance = $this->model->load('indisponible')->indisponible;
-        return $instance;
+        return $this->model->indisponible;
     }
+
 
 
 
@@ -241,20 +338,5 @@ class IndisponibiliteDomaine extends Domaine
 		// 	$m->subject($subject);
 		// });
     }
-
-
-    /* - - - - - - - - - - - - - A passer dans controller::class - - - - - - - - - - - - - - - - - */
-
-    /**
-    * Conservation de l'url de la page de départ.
-    * 
-    **/
-    public function keepUrlDepart(){
-        if (!\Session::has('url_depart_ajout_indisponibilite')) {
-            \Session::set('url_depart_ajout_indisponibilite', \Session::get('_previous.url'));
-        }
-    }
-
-
 
 }
