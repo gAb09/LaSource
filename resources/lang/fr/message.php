@@ -99,6 +99,7 @@ return [
     'deletefailed'      => 'Problème. La période d’indisponibilité n’a pas pu être supprimée…',
     'confirmDelete'     => 'Êtes-vous sur de vouloir supprimer la période d’indisponibilité ?',
     'controleFailed'    => 'Problème. La période d’indisponibilité n’a pas pu être traitée…<br />car les contrôles avant traitement n\'ont pas pu être effectués correctement.',
+    'actionCancelled'    => 'Annulation bien prise en compte.<br />Aucune modification n’a été apportée ni à l’indisponibilité ni aux livraisons liées',
     ],
 
     'user' => [
