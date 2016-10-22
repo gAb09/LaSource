@@ -14,7 +14,8 @@
         "laravel/framework": "5.2.29",
         "gab09/helpers": "1.*",
         "gab09/menus": "1.*",
-        "laravelcollective/html": "5.2.4"
+        "laravelcollective/html": "5.2.4",
+        "barryvdh/laravel-debugbar": "^2.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
