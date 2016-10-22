@@ -15,12 +15,30 @@ use Mail;
 
 class IndisponibiliteDomaine extends Domaine
 {
+
+    /**
+    * Le modèle courant. Nouveau modèle vide créé à la construction, peut être assigné par la suite.
+    **/
 	protected $model;
+
+
+    /**
+    * Le titre de la prochaine page à afficher.
+    * Dispose d'un accesseur à l'attention des controleurs
+    **/
     protected $titre_page;
+
+
+    /**
+    * Le message utilisateur de la prochaine page à afficher.
+    * Dispose d'un accesseur à l'attention des controleurs
+    **/
     protected $message;
     protected $restricted_livraisons;
     protected $extended_livraisons;
     protected $action_name_for_view;
+    protected $request;
+
 
     public function __construct(Request $request){
         $this->model = new Indisponibilite;
@@ -29,22 +47,12 @@ class IndisponibiliteDomaine extends Domaine
 
 
     /**
-    * Accesseur titre_page.
+    * Accesseur de $titre_page.
     * 
     * @return string
     **/
     public function getTitrePage(){
         return $this->titre_page;
-    }
-
-
-    /**
-    * Accesseur message.
-    * 
-    * @return string
-    **/
-    public function getMessage(){
-        return $this->message;
     }
 
 
@@ -111,21 +119,21 @@ class IndisponibiliteDomaine extends Domaine
     **/
     public function addIndisponibilite($indisponible_type, $indisponible_id)
     {     
-        /* Renseignement partiel de l'instance courante 
-        afin de pouvoir assigner la variable $model 
-        du formulaire commun avec l'édition */
-        $this->model->indisponible_type = 'App\Models\\'.$indisponible_type; // champ indisponible_type en bdd
-        $this->model->indisponible_id = $indisponible_id;  // champ indisponible_id en bdd
+            /* Renseignement partiel de l'instance courante 
+            afin de pouvoir assigner la variable $model 
+            du formulaire commun avec l'édition */
+            $this->model->indisponible_type = 'App\Models\\'.$indisponible_type; // champ indisponible_type en bdd
+            $this->model->indisponible_id = $indisponible_id;  // champ indisponible_id en bdd
 
-        $indisponible_model = new $this->model->indisponible_type;
-        $indisponible_model = $indisponible_model->where('id', $indisponible_id)->first();
-        $this->model->indisponible_nom = $indisponible_model->nom;    // champ indisponible_nom en bdd
+            $indisponible_model = new $this->model->indisponible_type;
+            $indisponible_model = $indisponible_model->where('id', $indisponible_id)->first();
+            $this->model->indisponible_nom = $indisponible_model->nom;    // champ indisponible_nom en bdd
 
-        $this->titre_page = 
-        trans('titrepage.indisponibilite.create', ['entity' => 'au '.$indisponible_type, 'nom' => $this->model->indisponible_nom]);
+            $this->titre_page = 
+            trans('titrepage.indisponibilite.create', ['entity' => 'au '.$indisponible_type, 'nom' => $this->model->indisponible_nom]);
 
-        return $this->model;
-    }
+            return $this->model;
+        }
 
 
 
@@ -138,7 +146,7 @@ class IndisponibiliteDomaine extends Domaine
       $this->handleRequest($request);
 
       try{
-       $this->model->save();
+         $this->model->save();
 		} catch(\Illuminate\Database\QueryException $e){ // ToDo revoir si gestion erreur ok
             $this->message = trans('message.indisponibilite.storefailed').trans('message.bug.transmis');
             $this->alertOuaibMaistre($e);
@@ -187,8 +195,9 @@ class IndisponibiliteDomaine extends Domaine
         if($this->hasLivraisonsConcerned('destroy')){
 
             /* Il y a des livraisons concernées, alors on redirige vers le formulaire pour les traiter */
-            /* Auparavant on conserve les datas utiles à l'action intiale en session */
-            $this->keepActionInitialeContext(__FUNCTION__, $id);
+            /* Auparavant on conserve la requête SQL */
+            $initial_request = \DB::delete('delete from `indisponibilites` where `id` = '.$id);
+            $this->keepInitialRequest($initial_request);
 
             $this->composeDatasForFormLivraisonHandling('la suppression');
 
@@ -203,8 +212,8 @@ class IndisponibiliteDomaine extends Domaine
     {
         $this->model = $this->model->find($id);
 
-        if(1==1){
-            // if($this->model->delete()){
+        // if(1==1){
+        if($this->model->delete()){
             $this->message = trans('message.indisponibilite.deleteOk');
             return true;
         }else{
@@ -225,12 +234,13 @@ class IndisponibiliteDomaine extends Domaine
     public function hasLivraisonsConcerned($action)
     {
         // return dd($action);
-        // return dd($this->request);
 
         switch ($action) {
             case 'destroy':
             if ($this->hasLivraisonsExtended()) {
                 return true;
+            }else{
+                return false;
             }
             return dd('hasLivraisonsConcerned, defaut');  // ToDo lancer exception
             break;
@@ -251,7 +261,8 @@ class IndisponibiliteDomaine extends Domaine
     **/
     public function hasLivraisonsRestricted()
     {
-        $collection = $this->listLivraisonsConcerned($__debut, $__fin);
+
+        $collection = $this->getLivraisonsConcerned($__debut, $__fin);
         if ($collection->isEmpty()) {
             return false;
         }else{
@@ -274,6 +285,7 @@ class IndisponibiliteDomaine extends Domaine
     public function hasLivraisonsExtended()
     {
         $collection = $this->getLivraisonsConcerned($this->model->date_debut, $this->model->date_fin);
+
         if ($collection->isEmpty()) {
             return false;
         }else{
@@ -295,8 +307,8 @@ class IndisponibiliteDomaine extends Domaine
     public function getLivraisonsConcerned($date_debut, $date_fin)
     {
         $collection = Livraison::whereBetween('date_livraison', [$date_debut, $date_fin])->get();
+
         $new_collection = $collection->filter(function ($value, $key) {
-         // var_dump("livraison n°$value->id : $value->state");
             return $value->state == 'L_OUVERTE';
         });
         return $new_collection;
@@ -310,8 +322,8 @@ class IndisponibiliteDomaine extends Domaine
     **/
     public function composeDatasForFormLivraisonHandling($action_name_for_view)
     {
-            $this->action_name_for_view = $action_name_for_view;
-            $this->titre_page = 'Traitement des livraisons ouvertes concernées par '.$this->titre_page .= $this->action_name_for_view.' de l’indisponibilité de “'.$this->model->indisponible_nom.'”.';
+        $this->action_name_for_view = $action_name_for_view;
+        $this->titre_page = 'Traitement des livraisons ouvertes concernées par '.$this->titre_page .= $this->action_name_for_view.' de l’indisponibilité de “'.$this->model->indisponible_nom.'”.';
     }
 
 

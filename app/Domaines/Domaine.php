@@ -38,6 +38,16 @@ class Domaine
 
 
 
+    /**
+    * Accesseur message.
+    * 
+    * @return string
+    **/
+    public function getMessage(){
+        return $this->message;
+    }
+
+
 	public function getDomaineName()
 	{
 		$name = explode("\\", get_class($this->model));
@@ -175,19 +185,14 @@ class Domaine
 
 
 	/**
-	* Conservation des données de l'action initiale,
-	* lorsqu'il y aura redirection ou requête supplémentaire avant d'effectuer cette action.
+	* Conservation de la requête de l'action initiale,
+	* pour l'ajouter dans la transaction avec les requêtes de traitement des livraisons.
 	* 
 	* @return string
 	**/
-	public function keepActionInitialeContext($action, $model_id, $request = null)
+	public function keepInitialRequest($initial_request)
 	{
-		\Session::set('ActionInitialeContext.action', $action);
-		\Session::set('ActionInitialeContext.model_id', $model_id);
-		if (!is_null($request)) {
-			\Session::set('ActionInitialeContext.request', $request->all());
-		}
-		// return dd(\Session::get('ActionInitialeContext'));
+		\Session::set('initialRequest', $action);
 	}
 
 }

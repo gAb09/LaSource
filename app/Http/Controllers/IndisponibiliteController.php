@@ -59,7 +59,7 @@ class IndisponibiliteController extends Controller
 
             /* des livraisons sont restreintes */
         }elseif ( 
-         $this->domaine->checkIfLivraisonsRestricted($request->get('date_debut'), $request->get('date_fin')) 
+         $this->domaine->hasLivraisonsRestricted($request->get('date_debut'), $request->get('date_fin')) 
          ) {
 
             try{
@@ -125,7 +125,7 @@ class IndisponibiliteController extends Controller
                 'extended_livraisons' => $this->domaine->getExtendedLivraisons(), 
                 // 'urlInitiale' => $this->getUrlInitiale(),
                 'action_for_view' => $this->domaine->getActionNameForView(),
-                'indisponible' => $this->domaine->getIndisponibleLied(),
+                'relais' => $this->domaine->getIndisponibleLied(),
                 ]);
         }
 

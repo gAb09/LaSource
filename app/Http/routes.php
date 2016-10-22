@@ -103,6 +103,12 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('setrangs/relais', ['as' => 'media.set_rang', 'uses' => 'RelaisController@setRangs']);
 	Route::resource('relais', 'RelaisController');
 
+	// Indisponibilité...
+	Route::put('relais/handleIndisponibilitiesChanges/{indisponible_id}', 
+		['as' => 'relais.handleIndisponibilitiesChanges', 'uses' => 'RelaisController@handleIndisponibilitiesChanges']
+		);
+
+
 
 // PRODUCTEUR...
 	Route::get('producteur/getdeleted', ['as' => 'producteur.getdeleted', 'uses' => 'ProducteurController@getDeleted']);
@@ -159,11 +165,6 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::post('panier/{panier_id}/syncProducteurs', 
 		['as' => 'PanierSyncProducteurs', 'uses' => 'PanierController@syncProducteurs']
-		);
-
-	// Indisponibilité...
-	Route::put('livraison/handleIndisponibilitiesChanges/{indisponible_id}', 
-		['as' => 'livraison.handleIndisponibilitiesChanges', 'uses' => 'LivraisonController@handleIndisponibilitiesChanges']
 		);
 
 

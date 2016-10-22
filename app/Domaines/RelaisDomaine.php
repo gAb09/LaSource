@@ -141,16 +141,16 @@ class RelaisDomaine extends Domaine
 	}
 
 
-	public function ReattachToLivraisons($id, $request)
+	public function attachToLivraisons($relais_id, $livraison_id)
 	{
-		$relais = $this->findFirst($id);
-		if (!empty($request->get('livraison_id'))) {
-			foreach ($request->get('livraison_id') as $key => $livraison) {
-				$livraisonsToReattach[] = $livraison;
-				var_dump($livraisonsToReattach);
-			}
-		}
-		return $relais->livraison()->sync($livraisonsToReattach, false);
+		$relais = $this->findFirst($relais_id);
+		return $relais->livraison()->attach($livraison_id);
+	}
+
+	public function detachFromLivraisons($relais_id, $livraison_id)
+	{
+		$relais = $this->findFirst($relais_id);
+		return $relais->livraison()->attach($livraison_id);
 	}
 
 }
