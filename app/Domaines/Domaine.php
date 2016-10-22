@@ -6,35 +6,46 @@ use App\Models\Livraison;
 
 class Domaine
 {
+    /**
+    * Le modèle courant. Nouveau modèle vide créé à la construction, peut être assigné par la suite.
+    **/
 	protected $model;
 
-	private $error_message;
+
+    /**
+    * Le titre de la prochaine page à afficher.
+    * Dispose d'un accesseur à l'attention des controleurs
+    **/
+    protected $titre_page;
+
+
+    /**
+    * Le message utilisateur de la prochaine page à afficher.
+    * Dispose d'un accesseur à l'attention des controleurs
+    **/
+    protected $message;
 
 
 
-	public function newModel() // ToDo ajouter if(!isset($this->model)) {$this->model = new Static} ??
-	{
-		return $this->model;
-	}
+
+    /**
+    * Accesseur model.
+    * 
+    * @return string
+    **/
+    public function getCurrentModel(){  // ToDo ajouter if(!isset($this->model)) {$this->model = new Static} ??
+        return $this->model;
+    }
 
 
-
-	public function getCurrentModel()
-	{
-		return $this->model;
-	}
-
-
-
-	/**
-	* Accesseur pour le dernier message d'erreur
-	* 
-	* @return string
-	**/
-	public function getErrorMessage()
-	{
-		return $this->error_message;
-	}
+    /**
+    * Accesseur de $titre_page.
+    * 
+    * @return string
+    **/
+    public function getTitrePage(){
+        return $this->titre_page;
+    }
 
 
 
@@ -48,11 +59,13 @@ class Domaine
     }
 
 
+
 	public function getDomaineName()
 	{
 		$name = explode("\\", get_class($this->model));
 		return strtolower(array_pop($name));
 	}
+
 
 
 	public function all($order = 'rang')
@@ -118,7 +131,7 @@ class Domaine
 		$this->model = $this->model->withTrashed()->with('livraison')->where('id', $model_id)->first();
 		/* Si il existe au moins une livraison non archivée liée */
 		if (!$this->model->livraison->isEmpty()) {
-			$this->error_message = $this->setMessageLiaisonDirecteWithLivraison($action);
+			$this->message = $this->setMessageLiaisonDirecteWithLivraison($action);
 			return true;
 		}else{
 			return false;
@@ -158,7 +171,7 @@ class Domaine
 		// return dd($occurence);
 
 		if (!empty($occurence)) {
-			$this->error_message = $this->setMessageLiaisonIndirecteWithLivraison($action, $occurence);
+			$this->message = $this->setMessageLiaisonIndirecteWithLivraison($action, $occurence);
 			return true;
 		}else{
 			return false;

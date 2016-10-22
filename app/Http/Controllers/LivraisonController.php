@@ -188,7 +188,7 @@ class LivraisonController extends Controller
         if ($this->domaine->archive($id)) {
             return redirect()->back()->with('success', trans('message.livraison.archivageOk'));
         }else{
-            $message = $this->domaine->getErrorMessage();
+            $message = $this->domaine->getMessage();
             return redirect()->back()->with('status', $message);
         }
     }

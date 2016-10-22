@@ -16,43 +16,14 @@ use Mail;
 class IndisponibiliteDomaine extends Domaine
 {
 
-    /**
-    * Le modèle courant. Nouveau modèle vide créé à la construction, peut être assigné par la suite.
-    **/
-	protected $model;
-
-
-    /**
-    * Le titre de la prochaine page à afficher.
-    * Dispose d'un accesseur à l'attention des controleurs
-    **/
-    protected $titre_page;
-
-
-    /**
-    * Le message utilisateur de la prochaine page à afficher.
-    * Dispose d'un accesseur à l'attention des controleurs
-    **/
-    protected $message;
     protected $restricted_livraisons;
     protected $extended_livraisons;
     protected $action_name_for_view;
     protected $request;
 
 
-    public function __construct(Request $request){
+    public function __construct(){
         $this->model = new Indisponibilite;
-        $this->request = $request;
-    }
-
-
-    /**
-    * Accesseur de $titre_page.
-    * 
-    * @return string
-    **/
-    public function getTitrePage(){
-        return $this->titre_page;
     }
 
 
@@ -83,16 +54,6 @@ class IndisponibiliteDomaine extends Domaine
     **/
     public function getExtendedLivraisons(){
         return $this->extended_livraisons;
-    }
-
-
-    /**
-    * Accesseur message.
-    * 
-    * @return string
-    **/
-    public function getCurrentModel(){
-        return $this->model;
     }
 
 

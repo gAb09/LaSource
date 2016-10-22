@@ -14,17 +14,16 @@ class ModePaiementController extends Controller
     use getDeletedTrait;
 
     
-    public function __construct(Domaine $domaine, Request $request)
+    public function __construct(Domaine $domaine)
     {
         $this->domaine = $domaine;
-        $this->request = $request;
         $this->domaine_name = $this->domaine->getDomaineName();
     }
 
 
     public function create()
     {
-        $model =  $this->domaine->newModel();
+        $model =  $this->domaine->getCurrentModel();
         return view('modepaiement.create')->with(compact('model'));
     }
 
@@ -51,7 +50,7 @@ class ModePaiementController extends Controller
         if($this->domaine->update($id, $request)){
             return redirect()->route('modepaiement.index')->with('success', trans('message.modepaiement.updateOk'));
         }else{
-            $message = $this->domaine->getErrorMessage();
+            $message = $this->domaine->getMessage();
             return redirect()->back()->with('status', $message);
         }
     }
@@ -62,7 +61,7 @@ class ModePaiementController extends Controller
         if($this->domaine->destroy($id)){
             return redirect()->route('modepaiement.index')->with('success', trans('message.modepaiement.deleteOk'));
         }else{
-            $message = $this->domaine->getErrorMessage();
+            $message = $this->domaine->getMessage();
             return redirect()->back()->with('status', $message);
         }
     }

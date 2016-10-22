@@ -27,7 +27,7 @@ class RelaisController extends Controller
 
     public function create()
     {
-        $model =  $this->domaine->newModel();
+        $model =  $this->domaine->getCurrentModel();
         return view('relais.create')->with(compact('model'));
     }
 

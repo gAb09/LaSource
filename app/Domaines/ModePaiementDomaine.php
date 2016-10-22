@@ -8,11 +8,12 @@ use App\Domaines\Domaine;
 
 class ModePaiementDomaine extends Domaine
 {
-	protected $model;
-
 	public function __construct(){
 		$this->model = new ModePaiement;
 	}
+
+
+
 
 	public function store($request){
 		$this->handleRequest($request);

@@ -9,9 +9,6 @@ use Illuminate\Http\Request;
 
 class PanierDomaine extends Domaine
 {
-	protected $model;
-
-
 	public function __construct(){
 		$this->model = new Panier;
 	}

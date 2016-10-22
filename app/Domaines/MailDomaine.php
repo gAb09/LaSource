@@ -8,8 +8,6 @@ use App\Domaines\Domaine;
 
 class MailDomaine extends Domaine
 {
-	protected $model;
-
 	public function __construct(){
 		$this->model = "MODEL";
 	}

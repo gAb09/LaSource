@@ -26,7 +26,7 @@ class ProducteurController extends Controller
 
     public function create()
     {
-        $model =  $this->domaine->newModel();
+        $model =  $this->domaine->getCurrentModel();
         return view('producteur.create')->with(compact('model'));
     }
 
@@ -54,7 +54,7 @@ class ProducteurController extends Controller
         if($this->domaine->update($id, $request)){
             return redirect()->route('producteur.index')->with('success', trans('message.producteur.updateOk'));
         }else{
-            $message = $this->domaine->getErrorMessage();
+            $message = $this->domaine->getMessage();
             return redirect()->back()->with('status', $message);
         }
     }
@@ -66,7 +66,7 @@ class ProducteurController extends Controller
         if($this->domaine->destroy($id)){
             return redirect()->route('producteur.index')->with('success', trans('message.producteur.deleteOk'));
         }else{
-            $message = $this->domaine->getErrorMessage();
+            $message = $this->domaine->getMessage();
             return redirect()->back()->with('status', $message);
         }
     }

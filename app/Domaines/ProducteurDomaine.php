@@ -8,9 +8,6 @@ use App\Domaines\Domaine;
 
 class ProducteurDomaine extends Domaine
 {
-	protected $model;
-	protected $titre_page;
-
 	public function __construct(){
 		$this->model = new Producteur;
 	}

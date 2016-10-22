@@ -10,10 +10,6 @@ use Carbon\Carbon;
 
 class LivraisonDomaine extends Domaine
 {
-	protected $model;
-
-	private $error_message;
-
 	public function __construct(){
 		$this->model = new Livraison;
 	}
@@ -237,20 +233,8 @@ class LivraisonDomaine extends Domaine
     **/
     public function controleArchivage($model)
     {
-    	$this->error_message = trans('message.livraison.archivagefailed');
+    	$this->message = trans('message.livraison.archivagefailed');
     	return true;
     }
 
-
-
-    /**
-    * Retourne le message d'erreur courant
-    *
-    * @param  Model  / Livraison
-    * @return boolean
-    **/
-    public function getErrorMessage()
-    {
-    	return $this->error_message;
-    }
 }
