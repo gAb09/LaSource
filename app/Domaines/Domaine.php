@@ -82,12 +82,6 @@ class Domaine
 
 	public function findFirst($critere, $colonne = 'id')
 	{
-		return $this->model->withTrashed()->where($colonne, $critere)->first();
-	}
-
-
-	public function findFirstWithoutTrashed($critere, $colonne = 'id')
-	{
 		return $this->model->where($colonne, $critere)->first();
 	}
 
