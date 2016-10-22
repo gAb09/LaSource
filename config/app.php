@@ -164,7 +164,8 @@ return [
         Gab\Helpers\GabHelpersServiceProvider::class,
         Menus\MenusServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
-    ],
+        Barryvdh\Debugbar\ServiceProvider::class,
+        ],
 
     /*
     |--------------------------------------------------------------------------
