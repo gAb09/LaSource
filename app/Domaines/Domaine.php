@@ -191,15 +191,4 @@ class Domaine
 
 
 
-	/**
-	* Conservation de la requête de l'action initiale,
-	* pour l'ajouter dans la transaction avec les requêtes de traitement des livraisons.
-	* 
-	* @return string
-	**/
-	public function keepInitialRequest($initial_request)
-	{
-		\Session::set('initialRequest', $action);
-	}
-
 }

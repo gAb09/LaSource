@@ -19,7 +19,6 @@ class IndisponibiliteDomaine extends Domaine
     protected $restricted_livraisons;
     protected $extended_livraisons;
     protected $action_name_for_view;
-    protected $request;
 
 
     public function __construct(){
@@ -148,24 +147,20 @@ class IndisponibiliteDomaine extends Domaine
 
 
 
+    /**
+    * Il y a des livraisons concernées, 
+    * alors on prépare les données pour le formulaire de traitement de celles-ci,
+    * et aussi la requête sql à fournir ultérieurement pour la transaction.
+    **/
     public function beforeDestroy($id)
     {
-        $this->model = $this->model->find($id);
+            $initial_request = 'delete from `indisponibilites` where `id` = '.$id;
+            $success_message = trans('message.indisponibilite.deleteOk');
+            $this->keepInitialContext($initial_request, $success_message);
 
-        /* Y-a-til des livraisons concernées ? */
-        if($this->hasLivraisonsConcerned('destroy')){
-
-            /* Il y a des livraisons concernées, alors on redirige vers le formulaire pour les traiter */
-            /* Auparavant on conserve la requête SQL */
-            $initial_request = \DB::delete('delete from `indisponibilites` where `id` = '.$id);
-            $this->keepInitialRequest($initial_request);
-
-            $this->composeDatasForFormLivraisonHandling('la suppression');
-
-            return true;
-        }else{
-            return false;
-        }
+            $this->action_name_for_view = 'la suppression';
+            $this->titre_page = trans("titrepage.livraison.handleIndisponibilities", 
+                ['action' => $this->action_name_for_view, 'indisponisable' => $this->model->indisponible_nom]);
     }
 
 
@@ -173,13 +168,14 @@ class IndisponibiliteDomaine extends Domaine
     {
         $this->model = $this->model->find($id);
 
-        // if(1==1){
         if($this->model->delete()){
             $this->message = trans('message.indisponibilite.deleteOk');
+            return dd($this->message);//CTRL
             return true;
         }else{
             $this->message = trans('message.indisponibilite.deletefailed');
-            return false;
+            return dd($this->message);//CTRL
+            return true;
         }
     }
 
@@ -192,17 +188,35 @@ class IndisponibiliteDomaine extends Domaine
     * 
     * @return boolean
     **/
-    public function hasLivraisonsConcerned($action)
+    public function hasLivraisonsConcerned($action, $id, $request = null)
     {
-        // return dd($action);
+        $this->model = $this->model->find($id);
 
         switch ($action) {
             case 'destroy':
             if ($this->hasLivraisonsExtended()) {
+                $this->beforeDestroy($id);
                 return true;
             }else{
                 return false;
             }
+            
+            case 'create':
+            if ($this->hasLivraisonsRestricted()) {
+                $this->beforeCreate($id, $request);
+                return true;
+            }else{
+                return false;
+            }
+            
+            case 'update':
+            if ($this->hasLivraisonsExtended() or $this->hasLivraisonsRestricted()) {
+                $this->beforeUpdate($id, $request);
+                return true;
+            }else{
+                return false;
+            }
+            
             return dd('hasLivraisonsConcerned, defaut');  // ToDo lancer exception
             break;
         }
@@ -276,17 +290,6 @@ class IndisponibiliteDomaine extends Domaine
     }
 
 
-    /**
-    * Appel du formulaire de traitement des livraisons concernées.
-    *
-    * @return View
-    **/
-    public function composeDatasForFormLivraisonHandling($action_name_for_view)
-    {
-        $this->action_name_for_view = $action_name_for_view;
-        $this->titre_page = 'Traitement des livraisons ouvertes concernées par '.$this->titre_page .= $this->action_name_for_view.' de l’indisponibilité de “'.$this->model->indisponible_nom.'”.';
-    }
-
 
     /**
     * getter indisponible lié.
@@ -297,6 +300,18 @@ class IndisponibiliteDomaine extends Domaine
         return $this->model->indisponible;
     }
 
+
+    /**
+    * Conservation de la requête de l'action initiale,
+    * pour l'ajouter dans la transaction avec les requêtes de traitement des livraisons.
+    * 
+    * @return string
+    **/
+    public function keepInitialContext($initial_request, $success_message)
+    {
+        \Session::set('initialContext.request', $initial_request);
+        \Session::set('initialContext.success_message', $success_message);
+    }
 
 
 

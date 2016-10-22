@@ -95,16 +95,17 @@ class RelaisController extends Controller
             }
         }
 
-        $action = \Session::get('ActionInitialeContext.action');
-        $id = \Session::get('ActionInitialeContext.model_id');
-        $request = \Session::get('ActionInitialeContext.request');
+        $request = \Session::get('initialContext.request');
+        $success_message = \Session::get('initialContext.success_message');
 
-        if ($this->indisponibilite->{$action}($id)) {
+        if ( \DB::statement($request) ) {
             \DB::commit();
-            return dd($this->indisponibilite->getMessage());
+            $message = $success_message.'<br />Les modifications éventuelles demandées ont été apportées aux livraisons.';
+            return redirect($this->getUrlInitiale())->with('success', $message);
         }else{
             \DB::rollBack();
-            return dd($this->indisponibilite->getMessage());
+            $message = 'Un problème est survenu aucune modifications n’ont été apportées, ni à l’indisponibilité, ni aux livraisons.<br />Veuillez réessayer et contacter le Ouaibmestre si l’erreur persiste';
+            return redirect($this->getUrlInitiale())->with('status', $mesage);
         }
     }
 

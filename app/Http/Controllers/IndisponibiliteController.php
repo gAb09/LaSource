@@ -112,9 +112,9 @@ class IndisponibiliteController extends Controller
     * @param integer $indisponibilite_id
     * @return Redirection
     **/
-    public function destroy($id, Request $request)
+    public function destroy($id)
     {
-        if ($this->domaine->beforeDestroy($id)) {
+        if ($this->domaine->hasLivraisonsConcerned('destroy', $id)) {
             /* Conservation de la page initiale */
             $this->keepUrlInitiale();
 
@@ -123,7 +123,6 @@ class IndisponibiliteController extends Controller
                 'titre_page' => $this->domaine->getTitrePage(), 
                 'restricted_livraisons' => $this->domaine->getRestrictedLivraisons(), 
                 'extended_livraisons' => $this->domaine->getExtendedLivraisons(), 
-                // 'urlInitiale' => $this->getUrlInitiale(),
                 'action_for_view' => $this->domaine->getActionNameForView(),
                 'relais' => $this->domaine->getIndisponibleLied(),
                 ]);
