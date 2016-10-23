@@ -33,16 +33,16 @@ class IndisponibiliteController extends Controller
     /**
     * Supplante la fonction create.
     * 
-    * @param string $indisponible_type
-    * @param integer $indisponible_id
+    * @param string $indisponisable_type
+    * @param integer $indisponisable_id
     * 
     * @return View
     **/
-    public function addIndisponibilite($indisponible_type, $indisponible_id)
+    public function addIndisponibilite($indisponisable_type, $indisponisable_id)
     {     
         $this->keepUrlInitiale();
 
-        $model = $this->domaine->addIndisponibilite($indisponible_type, $indisponible_id);
+        $model = $this->domaine->addIndisponibilite($indisponisable_type, $indisponisable_id);
 
         $titre_page = $this->domaine->getTitrePage();
 
@@ -56,14 +56,14 @@ class IndisponibiliteController extends Controller
         if ($this->domaine->hasLivraisonsConcerned('store', '', $request)) {
             /* Conservation de la page initiale */
             $this->keepUrlInitiale();
-// return dd($this->domaine->getIndisponibleLied($request));
+// return dd($this->domaine->getIndisponisableLied($request));
             return  view('livraison.handleIndisponibilitiesChanges')
             ->with([
                 'titre_page' => $this->domaine->getTitrePage(), 
                 'restricted_livraisons' => $this->domaine->getRestrictedLivraisons(), 
                 'extended_livraisons' => $this->domaine->getExtendedLivraisons(), 
                 'action_for_view' => $this->domaine->getActionNameForView(),
-                'relais' => $this->domaine->getIndisponibleLied($request),
+                'relais' => $this->domaine->getIndisponisableLied($request),
                 ]);
         }
 
@@ -80,7 +80,7 @@ class IndisponibiliteController extends Controller
     {
         $model = $this->domaine->edit($id);
         $this->keepUrlInitiale();
-        $titre_page = trans('titrepage.indisponibilite.edit', ['nom' => $model->indisponible_nom]);
+        $titre_page = trans('titrepage.indisponibilite.edit', ['nom' => $model->indisponisable_nom]);
 
         return view('indisponibilite.edit')->with(compact('model', 'titre_page'));
     }
@@ -117,7 +117,7 @@ class IndisponibiliteController extends Controller
                 'restricted_livraisons' => $this->domaine->getRestrictedLivraisons(), 
                 'extended_livraisons' => $this->domaine->getExtendedLivraisons(), 
                 'action_for_view' => $this->domaine->getActionNameForView(),
-                'relais' => $this->domaine->getIndisponibleLied(),
+                'relais' => $this->domaine->getIndisponisableLied(),
                 ]);
         }
 

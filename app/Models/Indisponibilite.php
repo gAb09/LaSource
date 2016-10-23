@@ -15,7 +15,7 @@ class Indisponibilite extends Model
 
     public $timestamps = false;
 
-    public function indisponible()
+    public function indisponisable()
     {
         return $this->morphTo();
     }

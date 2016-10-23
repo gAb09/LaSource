@@ -12,11 +12,11 @@ class CreateIndisponibilitesTable extends Migration
      */
     public function up()
     {
-        Schema::connection('testingOk')->create('indisponibiltes', function (Blueprint $table) {
+        Schema::connection('testingOk')->create('indisponibilites', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('indisponible_id')->unsigned();
-            $table->string('indisponible_type', 40);
-            $table->string('indisponible_nom', 50);
+            $table->integer('indisponisable_id')->unsigned();
+            $table->string('indisponisable_type', 40);
+            $table->string('indisponisable_nom', 50);
             $table->timestamp('date_debut')->default('0000-00-00 00:00:00');
             $table->timestamp('date_fin')->default('0000-00-00 00:00:00');
             $table->string('cause', 25);
@@ -31,6 +31,6 @@ class CreateIndisponibilitesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('indisponibiltes');
+        Schema::drop('indisponibilites');
     }
 }

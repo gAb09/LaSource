@@ -23,7 +23,7 @@ class ModePaiement extends Model
 
     public function Livraison()
     {
-        return $this->belongsToMany('App\Models\Livraison')->withPivot('indisponible', 'motif');
+        return $this->belongsToMany('App\Models\Livraison')->withPivot('motif');
     }
 
 

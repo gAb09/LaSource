@@ -104,7 +104,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('relais', 'RelaisController');
 
 	// Indisponibilité...
-	Route::put('relais/handleIndisponibilitiesChanges/{indisponible_id}', 
+	Route::put('relais/handleIndisponibilitiesChanges/{indisponisable_id}', 
 		['as' => 'relais.handleIndisponibilitiesChanges', 'uses' => 'RelaisController@handleIndisponibilitiesChanges']
 		);
 
@@ -123,7 +123,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 // INDISPONIBILITE...
-	Route::get('addIndisponibilite/{indisponible_type}/{indisponible_id}', ['as' => 'addIndisponibilite', 'uses' => 'IndisponibiliteController@addIndisponibilite']);
+	Route::get('addIndisponibilite/{indisponisable_type}/{indisponisable_id}', ['as' => 'addIndisponibilite', 'uses' => 'IndisponibiliteController@addIndisponibilite']);
 	Route::resource('indisponibilite', 'IndisponibiliteController', ['except' => [
 		'create'
 		]]);

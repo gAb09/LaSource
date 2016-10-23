@@ -18,7 +18,7 @@ class Relais extends Model
 
     public function indisponibilites()
     {
-        return $this->morphMany('App\Models\Indisponibilite', 'indisponible');
+        return $this->morphMany('App\Models\Indisponibilite', 'indisponisable');
     }
 
 

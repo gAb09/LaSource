@@ -1,11 +1,11 @@
-<!-- indisponible_type -->
-        <input type="hidden" name="indisponible_type" value="{{ $model->indisponible_type or old('indisponible_type') }}">
+<!-- indisponisable_type -->
+        <input type="hidden" name="indisponisable_type" value="{{ $model->indisponisable_type or old('indisponisable_type') }}">
 
-<!-- indisponible_id -->
-        <input type="hidden" name="indisponible_id" value="{{ $model->indisponible_id or old('indisponible_id') }}">
+<!-- indisponisable_id -->
+        <input type="hidden" name="indisponisable_id" value="{{ $model->indisponisable_id or old('indisponisable_id') }}">
 
-<!-- indisponible_nom -->
-        <input type="hidden" name="indisponible_nom" value="{{ $model->indisponible_nom or old('indisponible_nom') }}">
+<!-- indisponisable_nom -->
+        <input type="hidden" name="indisponisable_nom" value="{{ $model->indisponisable_nom or old('indisponisable_nom') }}">
 
 
 <!-- date_debut -->
