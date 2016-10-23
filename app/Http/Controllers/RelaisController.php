@@ -81,6 +81,7 @@ class RelaisController extends Controller
     **/
     public function handleIndisponibilitiesChanges($relais_id, Request $request)
     {
+        // return dd($request->all());
         \DB::beginTransaction();
 
         foreach ($request->get('livraison_id') as $livraison_id => $action) {

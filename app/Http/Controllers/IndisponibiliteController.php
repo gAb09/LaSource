@@ -53,31 +53,24 @@ class IndisponibiliteController extends Controller
 
     public function store(IndisponibiliteRequest $request)
     {
-        /* store failed */
-        if (!$this->domaine->store($request)) {
-            return redirect()->back()->with( 'status', $this->domaine->getMessage() );
+        if ($this->domaine->hasLivraisonsConcerned('store', '', $request)) {
+            /* Conservation de la page initiale */
+            $this->keepUrlInitiale();
+// return dd($this->domaine->getIndisponibleLied($request));
+            return  view('livraison.handleIndisponibilitiesChanges')
+            ->with([
+                'titre_page' => $this->domaine->getTitrePage(), 
+                'restricted_livraisons' => $this->domaine->getRestrictedLivraisons(), 
+                'extended_livraisons' => $this->domaine->getExtendedLivraisons(), 
+                'action_for_view' => $this->domaine->getActionNameForView(),
+                'relais' => $this->domaine->getIndisponibleLied($request),
+                ]);
+        }
 
-            /* des livraisons sont restreintes */
-        }elseif ( 
-         $this->domaine->hasLivraisonsRestricted($request->get('date_debut'), $request->get('date_fin')) 
-         ) {
-
-            try{
-                $datas = $this->domaine->handleLivraisonAffected();
-            } catch (IndispoControleLivraisonException $e){
-                return redirect()->back()->with('status', $e->getMessage());
-            }
-
-            \Session::flash('success', $this->domaine->getMessage());
-            return view('livraison.handleIndisponibilitiesChanges')
-            ->with(compact('datas'))
-            ->with( 'titre_page', $this->domaine->getTitrePage() )
-            ;
-
-            /* Aucune livraison concernée */
+        if ($this->domaine->store($request)) {
+            return redirect($this->getUrlInitiale())->with( 'success', $this->domaine->getMessage() );
         }else{
-            $url_depart = $this->getUrlInitiale();
-            return redirect($url_depart)->with( 'success', $this->domaine->getMessage() );
+            return redirect($this->getUrlInitiale())->with( 'success', $this->domaine->getMessage() );
         }
     }
 

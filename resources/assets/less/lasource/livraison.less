@@ -130,8 +130,12 @@ Vue createdit (create & edit)
 		}
 		p.indispo{
 			color: @color_txt_indisponible;
-
+			.premiere::before{
+				content: "Pour info";
+				display: block;
+			}
 		}
+
 		p.IndispoPourLivraison{
 			font-size: 0.9em;
 			color: @color_danger;

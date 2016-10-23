@@ -143,14 +143,17 @@ class RelaisDomaine extends Domaine
 
 	public function attachToLivraisons($relais_id, $livraison_id)
 	{
+		if(!\DB::table('livraison_relais')->whereRelaisId($relais_id)->whereLivraisonId($livraison_id)->count() > 0)
+		{
 		$relais = $this->findFirst($relais_id);
 		return $relais->livraison()->attach($livraison_id);
+		}
 	}
 
 	public function detachFromLivraisons($relais_id, $livraison_id)
 	{
 		$relais = $this->findFirst($relais_id);
-		return $relais->livraison()->attach($livraison_id);
+		return $relais->livraison()->detach($livraison_id);
 	}
 
 }
