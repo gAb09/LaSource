@@ -152,27 +152,31 @@ public function edit($id)
     **/
     public function beforeUpdate($id, $request)
     {
-        $this->extractDoublons();
-        $initial_request = "UPDATE indisponibilites SET date_debut = '";
-        $initial_request .= $request->get('date_debut');
-        $initial_request .= "', date_fin = '";
-        $initial_request .= $request->get('date_fin');
-        $initial_request .= "', cause = '";
-        $initial_request .= $request->get('cause');
-        $initial_request .= "', remarques = '";
-        $initial_request .= $request->get('remarques');
-        $initial_request .= "' WHERE id = ".$id;
+        if ($this->alwaysConcernedAfterExtractDoublons()){
 
+            $initial_request = "UPDATE indisponibilites SET date_debut = '";
+            $initial_request .= $request->get('date_debut');
+            $initial_request .= "', date_fin = '";
+            $initial_request .= $request->get('date_fin');
+            $initial_request .= "', cause = '";
+            $initial_request .= $request->get('cause');
+            $initial_request .= "', remarques = '";
+            $initial_request .= $request->get('remarques');
+            $initial_request .= "' WHERE id = ".$id;
 
-        $success_message = trans('message.indisponibilite.updateOk');
-        $action = 'update';
-        $this->keepInitialContext($initial_request, $success_message, $action);
+            $success_message = trans('message.indisponibilite.updateOk');
+            $action = 'update';
+            $this->keepInitialContext($initial_request, $success_message, $action);
 
-        $this->action_name_for_view = 'la modification';
-        $this->titre_page = trans("titrepage.livraison.handleIndisponibilities", 
-            ['action' => $this->action_name_for_view, 'indisponisable' => $request->get('indisponisable_nom')]);
+            $this->action_name_for_view = 'la modification';
+            $this->titre_page = trans("titrepage.livraison.handleIndisponibilities", 
+                ['action' => $this->action_name_for_view, 'indisponisable' => $request->get('indisponisable_nom')]);
+
+            return true;
+        }else{
+            return false;
+        }
     }
-
 
 
     public function update($id, $request){
@@ -262,15 +266,9 @@ public function edit($id)
 
             case 'update':
             $this->model = $this->model->find($id);
-            if (!$this->hasLivraisonsExtended()){
-                return false;
-            }
-            if (!$this->hasLivraisonsRestricted($request)){
-                return false;
-            }
-
-            $this->beforeUpdate($id, $request);
-            return true;
+            $this->hasLivraisonsExtended();
+            $this->hasLivraisonsRestricted($request);
+            return $this->beforeUpdate($id, $request);
 
             default:
             return dd('hasLivraisonsConcerned, defaut');  // ToDo lancer exception
@@ -331,19 +329,25 @@ public function edit($id)
     * @param ???????
     * 
     **/
-    public function extractDoublons()
+    public function alwaysConcernedAfterExtractDoublons()
     {
         $extended = $this->extended_livraisons;
         $restricted = $this->restricted_livraisons;
 
         if (!is_null($extended)) {
-           $this->restricted_livraisons = $this->restricted_livraisons->diff($extended);
-       }
+            $this->restricted_livraisons = $this->restricted_livraisons->diff($extended);
+        }
 
         if (!is_null($restricted)) {
-           $this->extended_livraisons = $this->extended_livraisons->diff($restricted);
-       }
-   }
+            $this->extended_livraisons = $this->extended_livraisons->diff($restricted);
+        }
+
+        if ($this->extended_livraisons->isEmpty() and $this->extended_livraisons->isEmpty()) {
+            return false;
+        }else{
+            return true;
+        }
+    }
 
 
 

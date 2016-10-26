@@ -168,6 +168,7 @@ class RelaisDomaine extends Domaine
         $action = \Session::get('initialContext.action');
 
  // var_dump($action);
+ // var_dump($request);
  // var_dump(\DB::{$action}($request));
  // var_dump(\DB::statement($request));
  //        return dd('rer');
