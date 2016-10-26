@@ -6,13 +6,14 @@ use App\Domaines\RelaisDomaine as Domaine;
 use App\Domaines\IndisponibiliteDomaine as Indisponibilite;
 use App\Http\Requests\RelaisRequest;
 use App\Http\Controllers\getDeletedTrait;
+use App\Http\Controllers\handleIndisponibilitiesChangesTrait;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
 class RelaisController extends Controller
 {
-    use getDeletedTrait;
+    use getDeletedTrait, handleIndisponibilitiesChangesTrait;
 
 
     public function __construct(Domaine $domaine, Request $request, Indisponibilite $indisponibilite)
@@ -70,46 +71,5 @@ class RelaisController extends Controller
             return redirect()->back()->with('status', $message);
         }
     }
-
-
-
-    /**
-    * Traitement du formulaire de gestion des livraisons concernées.
-    *
-    * @param .??????????????
-    * @return ?????????????
-    **/
-    public function handleIndisponibilitiesChanges($relais_id, Request $request)
-    {
-        // return dd($request->all());
-        \DB::beginTransaction();
-
-        foreach ($request->get('livraison_id') as $livraison_id => $action) {
-            if ($action == 'attach') {
-                $this->domaine->attachToLivraisons($relais_id, $livraison_id);
-            }
-            if ($action == 'detach') {
-                $this->domaine->detachFromLivraisons($relais_id, $livraison_id);
-            }
-            if ($action == 'reported') {
-
-            }
-        }
-
-        $request = \Session::get('initialContext.request');
-        $success_message = \Session::get('initialContext.success_message');
-
-        if ( \DB::statement($request) ) {
-            \DB::commit();
-            $message = $success_message.'<br />Les modifications éventuelles demandées ont été apportées aux livraisons.';
-            return redirect($this->getUrlInitiale())->with('success', $message);
-        }else{
-            \DB::rollBack();
-            $message = 'Un problème est survenu aucune modifications n’ont été apportées, ni à l’indisponibilité, ni aux livraisons.<br />Veuillez réessayer et contacter le Ouaibmestre si l’erreur persiste';
-            return redirect($this->getUrlInitiale())->with('status', $mesage);
-        }
-    }
-
-
 
 }

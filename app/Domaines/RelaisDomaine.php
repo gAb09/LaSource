@@ -141,6 +141,49 @@ class RelaisDomaine extends Domaine
 	}
 
 
+    /**
+    * Post-traitement du formulaire de gestion des livraisons concernées.
+    *
+    * @param integer $indisponisable_id, Request $request
+    * @return boolean
+    **/
+    public function handleIndisponibilitiesChanges($indisponisable_id, $request)
+    {
+        \DB::beginTransaction();
+
+        foreach ($request->get('livraison_id') as $livraison_id => $action) {
+            if ($action == 'attach') {
+                $this->attachToLivraisons($indisponisable_id, $livraison_id);
+            }
+            if ($action == 'detach') {
+                $this->detachFromLivraisons($indisponisable_id, $livraison_id);
+            }
+            if ($action == 'reported') {
+
+            }
+        }
+
+        $request = \Session::get('initialContext.request');
+        $success_message = \Session::get('initialContext.success_message');
+        $action = \Session::get('initialContext.action');
+
+ // var_dump($action);
+ // var_dump(\DB::{$action}($request));
+ // var_dump(\DB::statement($request));
+ //        return dd('rer');
+
+        if ( \DB::{$action}($request) === 0 or  \DB::{$action}($request) === false) {
+            \DB::rollBack();
+            $this->message = trans('message.livraison.handleConcernedfailed');
+            return false;
+        }else{
+            \DB::commit();
+            $this->message = $success_message.trans('message.livraison.handleConcernedOk');
+            return true;
+        }
+    }
+
+
 	public function attachToLivraisons($relais_id, $livraison_id)
 	{
 		if(!\DB::table('livraison_relais')->whereRelaisId($relais_id)->whereLivraisonId($livraison_id)->count() > 0)

@@ -88,6 +88,8 @@ return [
     'syncRelaissfailed'    => 'Problème. Les relais de cette livraison n’ont pus être actualisés',
     'archivageOk'        => 'La livraison a bien été archivée.',
     'archivagefailed'    => 'Problème. La livraison n’a pas pu être archivée…',
+    'handleConcernedOk'        => '<br />Les modifications éventuelles demandées ont été apportées aux livraisons.',
+    'handleConcernedfailed'    => 'Un problème est survenu aucune modifications n’ont été apportées, ni à l’indisponibilité, ni aux livraisons.<br />Veuillez réessayer et contacter le Ouaibmaistre si l’erreur persiste',
     ],
 
     'indisponibilite' => [

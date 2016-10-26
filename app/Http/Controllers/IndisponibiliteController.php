@@ -89,11 +89,26 @@ class IndisponibiliteController extends Controller
 
     public function update($id, IndisponibiliteRequest $request)
     {
-        if($this->domaine->update($id, $request)){
-            $url_depart = $this->getUrlInitiale();
-            return redirect($url_depart)->with( 'success', trans('message.indisponibilite.updateOk') );
+        if ($this->domaine->hasLivraisonsConcerned('update', $id, $request)) {
+
+            /* Conservation de la page initiale */
+            $this->keepUrlInitiale();
+
+            return  view('livraison.handleIndisponibilitiesChanges')
+            ->with([
+                'titre_page' => $this->domaine->getTitrePage(), 
+                'restricted_livraisons' => $this->domaine->getRestrictedLivraisons(), 
+                'extended_livraisons' => $this->domaine->getExtendedLivraisons(), 
+                'action_for_view' => $this->domaine->getActionNameForView(),
+                'relais' => $this->domaine->getIndisponisableLied($request),
+                ]);
         }
-        return redirect()->back()->with( 'status', trans('message.indisponibilite.updatefailed').trans('message.bug.transmis') );
+
+        if($this->domaine->update($id, $request)){
+            return redirect($this->getUrlInitiale())->with( 'success', $this->domaine->getMessage() );
+        }else{
+            return redirect($this->getUrlInitiale())->with( 'success', $this->domaine->getMessage() );
+        }
     }
 
 

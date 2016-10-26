@@ -33,8 +33,8 @@
 	<input type="hidden" name="_method" value="PUT">
 
 	<!-- livraisons restreintes -->
-	@if(!is_null($restricted_livraisons))
-		<h3>Livraisons qui se voient restreintes</h3>
+	@if(!$restricted_livraisons->isEmpty())
+		<h3>Livraisons qui ne disposeraient plus de “{{$relais->nom}}”</h3>
 
 		@foreach($restricted_livraisons as $livraison)
 			<hr />
@@ -69,7 +69,7 @@
 
 
 <!-- livraisons étendues -->
-	@if(!is_null($extended_livraisons))
+	@if(!$extended_livraisons->isEmpty())
 		<h3>Livraisons qui pourraient disposer à nouveau de “{{$relais->nom}}”</h3>
 
 		@foreach($extended_livraisons as $livraison)

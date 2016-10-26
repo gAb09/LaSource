@@ -27,7 +27,6 @@ class IndisponibiliteDomaine extends Domaine
         $this->relaisD = $relaisD;
     }
 
-
     /**
     * Accesseur nom de l'action en clair pour affichage dans la vue.
     * 
@@ -81,21 +80,21 @@ class IndisponibiliteDomaine extends Domaine
     **/
     public function addIndisponibilite($indisponisable_type, $indisponisable_id)
     {     
-            /* Renseignement partiel de l'instance courante 
-            afin de pouvoir assigner la variable $model 
-            du formulaire commun avec l'édition */
-            $this->model->indisponisable_type = 'App\Models\\'.$indisponisable_type; // champ indisponisable_type en bdd
-            $this->model->indisponisable_id = $indisponisable_id;  // champ indisponisable_id en bdd
+    /* Renseignement partiel de l'instance courante 
+    afin de pouvoir assigner la variable $model 
+    du formulaire commun avec l'édition */
+    $this->model->indisponisable_type = 'App\Models\\'.$indisponisable_type; // champ indisponisable_type en bdd
+    $this->model->indisponisable_id = $indisponisable_id;  // champ indisponisable_id en bdd
 
-            $indisponisable_model = new $this->model->indisponisable_type;
-            $indisponisable_model = $indisponisable_model->where('id', $indisponisable_id)->first();
-            $this->model->indisponisable_nom = $indisponisable_model->nom;    // champ indisponisable_nom en bdd
+    $indisponisable_model = new $this->model->indisponisable_type;
+    $indisponisable_model = $indisponisable_model->where('id', $indisponisable_id)->first();
+    $this->model->indisponisable_nom = $indisponisable_model->nom;    // champ indisponisable_nom en bdd
 
-            $this->titre_page = 
-            trans('titrepage.indisponibilite.create', ['entity' => 'au '.$indisponisable_type, 'nom' => $this->model->indisponisable_nom]);
+    $this->titre_page = 
+    trans('titrepage.indisponibilite.create', ['entity' => 'au '.$indisponisable_type, 'nom' => $this->model->indisponisable_nom]);
 
-            return $this->model;
-        }
+    return $this->model;
+}
 
 
 
@@ -105,18 +104,18 @@ class IndisponibiliteDomaine extends Domaine
     * @return boolean
     **/
     public function store($request){
-      $this->handleRequest($request);
+        $this->handleRequest($request);
 
-      try{
-         $this->model->save();
-		} catch(\Illuminate\Database\QueryException $e){ // ToDo revoir si gestion erreur ok
-            $this->message = trans('message.indisponibilite.storefailed').trans('message.bug.transmis');
-            $this->alertOuaibMaistre($e);
-            return false;
-        }
-        $this->message = trans('message.indisponibilite.storeOk');
-        return true;
+        try{
+            $this->model->save();
+    } catch(\Illuminate\Database\QueryException $e){ // ToDo revoir si gestion erreur ok
+        $this->message = trans('message.indisponibilite.storefailed').trans('message.bug.transmis');
+        $this->alertOuaibMaistre($e);
+        return false;
     }
+    $this->message = trans('message.indisponibilite.storeOk');
+    return true;
+}
 
 
     /**
@@ -124,32 +123,62 @@ class IndisponibiliteDomaine extends Domaine
     * alors on prépare les données pour le formulaire de traitement de celles-ci,
     * et aussi la requête sql à fournir ultérieurement pour la transaction.
     **/
-    public function beforeStore($request)
+    public function beforeStore($request){
+        $initial_request = "INSERT INTO indisponibilites (indisponisable_type, indisponisable_id, indisponisable_nom, date_debut, date_fin, cause, remarques) VALUES (";
+            $initial_request .= "'".addslashes($request->get('indisponisable_type'))."', '".$request->get('indisponisable_id')."', '".$request->get('indisponisable_nom')."', '".$request->get('date_debut')."', '".$request->get('date_fin')."', '".$request->get('cause')."', '".$request->get('remarques')."')";
+
+$success_message = trans('message.indisponibilite.storeOk');
+$action = 'insert';
+$this->keepInitialContext($initial_request, $success_message, $action);
+
+$this->action_name_for_view = 'la création';
+$this->titre_page = trans("titrepage.livraison.handleIndisponibilities", 
+    ['action' => $this->action_name_for_view, 'indisponisable' => $request->get('indisponisable_nom')]);
+}
+
+
+
+public function edit($id)
+{
+    return Indisponibilite::with('indisponisable')->where('id', $id)->first();
+}
+
+
+
+    /**
+    * Il y a des livraisons concernées, 
+    * alors on prépare les données pour le formulaire de traitement de celles-ci,
+    * et aussi la requête sql à fournir ultérieurement pour la transaction.
+    **/
+    public function beforeUpdate($id, $request)
     {
-       $initial_request = "INSERT INTO indisponibilites (indisponisable_type, indisponisable_id, indisponisable_nom, date_debut, date_fin, cause, remarques) VALUES (";
-        $initial_request .= "'".addslashes($request->get('indisponisable_type'))."', '".$request->get('indisponisable_id')."', '".$request->get('indisponisable_nom')."', '".$request->get('date_debut')."', '".$request->get('date_fin')."', '".$request->get('cause')."', '".$request->get('remarques')."')";
+        $this->extractDoublons();
+        $initial_request = "UPDATE indisponibilites SET date_debut = '";
+        $initial_request .= $request->get('date_debut');
+        $initial_request .= "', date_fin = '";
+        $initial_request .= $request->get('date_fin');
+        $initial_request .= "', cause = '";
+        $initial_request .= $request->get('cause');
+        $initial_request .= "', remarques = '";
+        $initial_request .= $request->get('remarques');
+        $initial_request .= "' WHERE id = ".$id;
 
-            $success_message = trans('message.indisponibilite.storeOk');
-            $this->keepInitialContext($initial_request, $success_message);
 
-            $this->action_name_for_view = 'la création';
-            $this->titre_page = trans("titrepage.livraison.handleIndisponibilities", 
-                ['action' => $this->action_name_for_view, 'indisponisable' => $request->get('indisponisable_nom')]);
+        $success_message = trans('message.indisponibilite.updateOk');
+        $action = 'update';
+        $this->keepInitialContext($initial_request, $success_message, $action);
+
+        $this->action_name_for_view = 'la modification';
+        $this->titre_page = trans("titrepage.livraison.handleIndisponibilities", 
+            ['action' => $this->action_name_for_view, 'indisponisable' => $request->get('indisponisable_nom')]);
     }
-
-
-
-    public function edit($id)
-    {
-        return Indisponibilite::with('indisponisable')->where('id', $id)->first();
-    }
-
 
 
 
     public function update($id, $request){
         $this->model = Indisponibilite::where('id', $id)->first();
         $this->handleRequest($request);
+        $this->message = trans('message.indisponibilite.updateOk');
 
         return $this->model->save();
     }
@@ -175,13 +204,14 @@ class IndisponibiliteDomaine extends Domaine
     **/
     public function beforeDestroy($id)
     {
-            $initial_request = 'delete from `indisponibilites` where `id` = '.$id;
-            $success_message = trans('message.indisponibilite.deleteOk');
-            $this->keepInitialContext($initial_request, $success_message);
+        $initial_request = 'delete from `indisponibilites` where `id` = '.$id;
+        $success_message = trans('message.indisponibilite.deleteOk');
+        $action = 'delete';
+        $this->keepInitialContext($initial_request, $success_message, $action);
 
-            $this->action_name_for_view = 'la suppression';
-            $this->titre_page = trans("titrepage.livraison.handleIndisponibilities", 
-                ['action' => $this->action_name_for_view, 'indisponisable' => $this->model->indisponisable_nom]);
+        $this->action_name_for_view = 'la suppression';
+        $this->titre_page = trans("titrepage.livraison.handleIndisponibilities", 
+            ['action' => $this->action_name_for_view, 'indisponisable' => $this->model->indisponisable_nom]);
     }
 
 
@@ -191,11 +221,11 @@ class IndisponibiliteDomaine extends Domaine
 
         if($this->model->delete()){
             $this->message = trans('message.indisponibilite.deleteOk');
-            // return dd($this->message);//CTRL
+
             return true;
         }else{
             $this->message = trans('message.indisponibilite.deletefailed');
-            // return dd($this->message);//CTRL
+
             return true;
         }
     }
@@ -211,6 +241,7 @@ class IndisponibiliteDomaine extends Domaine
     **/
     public function hasLivraisonsConcerned($action, $id, $request = null)
     {
+    // return dd($action);
         switch ($action) {
             case 'destroy':
             $this->model = $this->model->find($id);
@@ -220,7 +251,7 @@ class IndisponibiliteDomaine extends Domaine
             }else{
                 return false;
             }
-            
+
             case 'store':
             if ($this->hasLivraisonsRestricted($request)) {
                 $this->beforeStore($request);
@@ -228,21 +259,23 @@ class IndisponibiliteDomaine extends Domaine
             }else{
                 return false;
             }
-            
+
             case 'update':
-            if ($this->hasLivraisonsExtended() or $this->hasLivraisonsRestricted()) {
-                $this->beforeUpdate($id, $request);
-                return true;
-            }else{
+            $this->model = $this->model->find($id);
+            if (!$this->hasLivraisonsExtended()){
                 return false;
             }
-            
+            if (!$this->hasLivraisonsRestricted($request)){
+                return false;
+            }
+
+            $this->beforeUpdate($id, $request);
+            return true;
+
+            default:
             return dd('hasLivraisonsConcerned, defaut');  // ToDo lancer exception
-            break;
         }
     }
-
-
 
 
     /**
@@ -257,12 +290,13 @@ class IndisponibiliteDomaine extends Domaine
     public function hasLivraisonsRestricted($request)
     {
         $collection = $this->getLivraisonsConcerned($request->get('date_debut'), $request->get('date_fin'));
+
         if ($collection->isEmpty()) {
             return false;
-        }else{
-            $this->restricted_livraisons = $collection;
-            return true;
         }
+
+        $this->restricted_livraisons = $collection;
+        return true;
     }
 
 
@@ -278,15 +312,38 @@ class IndisponibiliteDomaine extends Domaine
     **/
     public function hasLivraisonsExtended()
     {
-        $collection = $this->getLivraisonsConcerned($this->model->date_debut, $this->model->date_fin);
+    // var_dump('hasLivraisonsExtended');
+        $collection = $this->getLivraisonsConcerned($this->model->getOriginal()['date_debut'], $this->model->getOriginal()['date_fin']);
 
         if ($collection->isEmpty()) {
             return false;
-        }else{
-            $this->extended_livraisons = $collection;
-            return true;
         }
+
+        $this->extended_livraisons = $collection;
+        return true;
     }
+
+    /**
+    * Suppression des possibles doublons de livraisons
+    * livraison(s) dèjà concernée(s) avant update et toujours concernée(s) après)
+    * 
+    * @param ???????
+    * @param ???????
+    * 
+    **/
+    public function extractDoublons()
+    {
+        $extended = $this->extended_livraisons;
+        $restricted = $this->restricted_livraisons;
+
+        if (!is_null($extended)) {
+           $this->restricted_livraisons = $this->restricted_livraisons->diff($extended);
+       }
+
+        if (!is_null($restricted)) {
+           $this->extended_livraisons = $this->extended_livraisons->diff($restricted);
+       }
+   }
 
 
 
@@ -316,18 +373,19 @@ class IndisponibiliteDomaine extends Domaine
     * @return string
     **/
     public function getIndisponisableLied($request = null){
-        if ($this->model->id) { // Destroy et update
-        return $this->model->indisponisable;
-        }else{
-            $id = $request->get('indisponisable_id');
-            $type = $request->get('indisponisable_type');
-            $type = explode("\\", $type);
-            $type = strtolower(array_pop($type));
-            $type = $type.'D';
-            $indisponisable = $this->{$type}->findFirst($id);
-        return $indisponisable;
+        if ($this->model->id)
+            { /* Destroy et update */
+                return $this->model->indisponisable;
+            }else{
+                $id = $request->get('indisponisable_id');
+                $type = $request->get('indisponisable_type');
+                $type = explode("\\", $type);
+                $type = strtolower(array_pop($type));
+                $type = $type.'D';
+                $indisponisable = $this->{$type}->findFirst($id);
+                return $indisponisable;
+            }
         }
-    }
 
 
 
@@ -337,10 +395,11 @@ class IndisponibiliteDomaine extends Domaine
     * 
     * @return string
     **/
-    public function keepInitialContext($initial_request, $success_message)
+    public function keepInitialContext($initial_request, $success_message, $action)
     {
         \Session::set('initialContext.request', $initial_request);
         \Session::set('initialContext.success_message', $success_message);
+        \Session::set('initialContext.action', $action);
     }
 
 
@@ -349,12 +408,11 @@ class IndisponibiliteDomaine extends Domaine
 
     public function alertOuaibMaistre($e)
     {
-    	$subject = 'Problème lors de l\'attachement d\'une indisponibilité :';
-    	Log::info($subject.$e);
-		// Mail::send('mails.BugReport', ['e' => $e, 'subject' => $subject], function ($m) use($e, $subject) {
-		// 	$m->to = env('MAIL_OM_ADRESS');
-		// 	$m->subject($subject);
-		// });
+        $subject = 'Problème lors de l\'attachement d\'une indisponibilité :';
+        Log::info($subject.$e);
+    // Mail::send('mails.BugReport', ['e' => $e, 'subject' => $subject], function ($m) use($e, $subject) {
+    // 	$m->to = env('MAIL_OM_ADRESS');
+    // 	$m->subject($subject);
+    // });
     }
-
 }
