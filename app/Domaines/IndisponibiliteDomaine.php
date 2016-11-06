@@ -4,7 +4,6 @@ namespace App\Domaines;
 
 use App\Models\Indisponibilite;
 use App\Domaines\Domaine;
-use App\Domaines\RelaisDomaine as relaisD;
 use App\Models\Livraison;
 use Carbon\Carbon;
 use App\Exceptions\IndispoControleLivraisonException;
@@ -19,21 +18,14 @@ class IndisponibiliteDomaine extends Domaine
 
     protected $restricted_livraisons;
     protected $extended_livraisons;
-    protected $action_name_for_view;
+    public $indisponisable_lied;
+    public $action_name_for_view;
 
 
-    public function __construct(relaisD $relaisD){
+    public function __construct(){
+        $this->restricted_livraisons = collect([]);
+        $this->extended_livraisons = collect([]);
         $this->model = new Indisponibilite;
-        $this->relaisD = $relaisD;
-    }
-
-    /**
-    * Accesseur nom de l'action en clair pour affichage dans la vue.
-    * 
-    * @return string
-    **/
-    public function getActionNameForView(){
-        return $this->action_name_for_view;
     }
 
 
@@ -57,18 +49,6 @@ class IndisponibiliteDomaine extends Domaine
     }
 
 
-    /**
-    * ToDo.
-    * 
-    * @return string
-    **/
-    public function completeCurrentModelWithIndisponisable($id, $type = 'App\Models\Relais'){
-        $this->model = $this->model->load(['indisponisable' => function ($query) use ($type){
-            $query->where('indisponisable_type', $type);
-        }]);
-    }
-
-
 
     /**
     * Supplante la fonction create.
@@ -78,23 +58,22 @@ class IndisponibiliteDomaine extends Domaine
     * 
     * @return App\Models\Indisponibilité
     **/
-    public function addIndisponibilite($indisponisable_type, $indisponisable_id)
-    {     
-    /* Renseignement partiel de l'instance courante 
-    afin de pouvoir assigner la variable $model 
-    du formulaire commun avec l'édition */
-    $this->model->indisponisable_type = 'App\Models\\'.$indisponisable_type; // champ indisponisable_type en bdd
-    $this->model->indisponisable_id = $indisponisable_id;  // champ indisponisable_id en bdd
+    public function addIndisponibilite($indisponisable_type, $indisponisable_id){     
+        /* Renseignement partiel de l'instance courante 
+        afin de pouvoir assigner la variable $model 
+        du formulaire commun avec l'édition */
+        $this->model->indisponisable_type = 'App\Models\\'.$indisponisable_type; // champ indisponisable_type en bdd
+        $this->model->indisponisable_id = $indisponisable_id;  // champ indisponisable_id en bdd
 
-    $indisponisable_model = new $this->model->indisponisable_type;
-    $indisponisable_model = $indisponisable_model->where('id', $indisponisable_id)->first();
-    $this->model->indisponisable_nom = $indisponisable_model->nom;    // champ indisponisable_nom en bdd
+        $indisponisable_model = new $this->model->indisponisable_type;
+        $indisponisable_model = $indisponisable_model->where('id', $indisponisable_id)->first();
+        $this->model->indisponisable_nom = $indisponisable_model->nom;    // champ indisponisable_nom en bdd
 
-    $this->titre_page = 
-    trans('titrepage.indisponibilite.create', ['entity' => 'au '.$indisponisable_type, 'nom' => $this->model->indisponisable_nom]);
+        $this->titre_page = 
+        trans('titrepage.indisponibilite.create', ['entity' => 'au '.$indisponisable_type, 'nom' => $this->model->indisponisable_nom]);
 
-    return $this->model;
-}
+        return $this->model;
+    }
 
 
 
@@ -108,14 +87,14 @@ class IndisponibiliteDomaine extends Domaine
 
         try{
             $this->model->save();
-    } catch(\Illuminate\Database\QueryException $e){ // ToDo revoir si gestion erreur ok
-        $this->message = trans('message.indisponibilite.storefailed').trans('message.bug.transmis');
-        $this->alertOuaibMaistre($e);
-        return false;
+            } catch(\Illuminate\Database\QueryException $e){ // ToDo revoir si gestion erreur ok
+                $this->message = trans('message.indisponibilite.storefailed').trans('message.bug.transmis');
+                $this->alertOuaibMaistre($e);
+                return false;
+            }
+            $this->message = trans('message.indisponibilite.storeOk');
+            return true;
     }
-    $this->message = trans('message.indisponibilite.storeOk');
-    return true;
-}
 
 
     /**
@@ -124,24 +103,38 @@ class IndisponibiliteDomaine extends Domaine
     * et aussi la requête sql à fournir ultérieurement pour la transaction.
     **/
     public function beforeStore($request){
-        $initial_request = "INSERT INTO indisponibilites (indisponisable_type, indisponisable_id, indisponisable_nom, date_debut, date_fin, cause, remarques) VALUES (";
-            $initial_request .= "'".addslashes($request->get('indisponisable_type'))."', '".$request->get('indisponisable_id')."', '".$request->get('indisponisable_nom')."', '".$request->get('date_debut')."', '".$request->get('date_fin')."', '".$request->get('cause')."', '".$request->get('remarques')."')";
+        $request_SQL = "INSERT INTO indisponibilites ";
+        $request_SQL .= "(indisponisable_type, indisponisable_id, indisponisable_nom, date_debut, date_fin, cause, remarques)";
+        $request_SQL .= " VALUES ('";
+        $request_SQL .= addslashes($request->get('indisponisable_type'));
+        $request_SQL .= "', '";
+        $request_SQL .= $request->get('indisponisable_id');
+        $request_SQL .= "', '";
+        $request_SQL .= $request->get('indisponisable_nom');
+        $request_SQL .= "', '".$request->get('date_debut');
+        $request_SQL .= "', '";
+        $request_SQL .= $request->get('date_fin');
+        $request_SQL .= "', '";
+        $request_SQL .= $request->get('cause');
+        $request_SQL .= "', '";
+        $request_SQL .= $request->get('remarques');
+        $request_SQL .= "')";
 
-$success_message = trans('message.indisponibilite.storeOk');
-$action = 'insert';
-$this->keepInitialContext($initial_request, $success_message, $action);
+        $success_message = trans('message.indisponibilite.storeOk');
+        $instruction_SQL = 'insert';
+        $this->keepInitialContext($request_SQL, $success_message, $instruction_SQL);
 
-$this->action_name_for_view = 'la création';
-$this->titre_page = trans("titrepage.livraison.handleIndisponibilities", 
-    ['action' => $this->action_name_for_view, 'indisponisable' => $request->get('indisponisable_nom')]);
-}
+        $this->action_name_for_view = 'la création';
+        $this->titre_page = trans("titrepage.livraison.handleIndisponibilities", 
+            ['action' => $this->action_name_for_view, 'indisponisable' => $request->get('indisponisable_nom')]);
+    }
 
 
 
-public function edit($id)
-{
-    return Indisponibilite::with('indisponisable')->where('id', $id)->first();
-}
+    public function edit($id)
+    {
+        return Indisponibilite::with('indisponisable')->where('id', $id)->first();
+    }
 
 
 
@@ -152,21 +145,21 @@ public function edit($id)
     **/
     public function beforeUpdate($id, $request)
     {
-        if ($this->alwaysConcernedAfterExtractDoublons()){
+        if ($this->hasConcernedLivraisonsAfterDoublonsExtraction()){
 
-            $initial_request = "UPDATE indisponibilites SET date_debut = '";
-            $initial_request .= $request->get('date_debut');
-            $initial_request .= "', date_fin = '";
-            $initial_request .= $request->get('date_fin');
-            $initial_request .= "', cause = '";
-            $initial_request .= $request->get('cause');
-            $initial_request .= "', remarques = '";
-            $initial_request .= $request->get('remarques');
-            $initial_request .= "' WHERE id = ".$id;
+            $request_SQL = "UPDATE indisponibilites SET date_debut = '";
+            $request_SQL .= $request->get('date_debut');
+            $request_SQL .= "', date_fin = '";
+            $request_SQL .= $request->get('date_fin');
+            $request_SQL .= "', cause = '";
+            $request_SQL .= $request->get('cause');
+            $request_SQL .= "', remarques = '";
+            $request_SQL .= $request->get('remarques');
+            $request_SQL .= "' WHERE id = ".$id;
 
             $success_message = trans('message.indisponibilite.updateOk');
-            $action = 'update';
-            $this->keepInitialContext($initial_request, $success_message, $action);
+            $instruction_SQL = 'update';
+            $this->keepInitialContext($request_SQL, $success_message, $instruction_SQL);
 
             $this->action_name_for_view = 'la modification';
             $this->titre_page = trans("titrepage.livraison.handleIndisponibilities", 
@@ -206,12 +199,12 @@ public function edit($id)
     * alors on prépare les données pour le formulaire de traitement de celles-ci,
     * et aussi la requête sql à fournir ultérieurement pour la transaction.
     **/
-    public function beforeDestroy($id)
+    public function beforeDelete($id)
     {
-        $initial_request = 'delete from `indisponibilites` where `id` = '.$id;
+        $request_SQL = 'delete from `indisponibilites` where `id` = '.$id;
         $success_message = trans('message.indisponibilite.deleteOk');
-        $action = 'delete';
-        $this->keepInitialContext($initial_request, $success_message, $action);
+        $instruction_SQL = 'delete';
+        $this->keepInitialContext($request_SQL, $success_message, $instruction_SQL);
 
         $this->action_name_for_view = 'la suppression';
         $this->titre_page = trans("titrepage.livraison.handleIndisponibilities", 
@@ -225,11 +218,9 @@ public function edit($id)
 
         if($this->model->delete()){
             $this->message = trans('message.indisponibilite.deleteOk');
-
             return true;
         }else{
             $this->message = trans('message.indisponibilite.deletefailed');
-
             return true;
         }
     }
@@ -243,35 +234,51 @@ public function edit($id)
     * 
     * @return boolean
     **/
-    public function hasLivraisonsConcerned($action, $id, $request = null)
+    public function hasConcernedLivraisons($request, $id = null)
     {
-    // return dd($action);
-        switch ($action) {
-            case 'destroy':
-            $this->model = $this->model->find($id);
-            if ($this->hasLivraisonsExtended()) {
-                $this->beforeDestroy($id);
+        $method = (!is_null($request->get('_method'))) ? strtolower($request->get('_method')): 'store';
+        $date_debut = $request->get('date_debut');
+        $date_fin = $request->get('date_fin');
+        if(!is_null($id)){
+            $this->model = $this->model->with('indisponisable')->find($id);
+        }
+
+        switch ($method) {
+            case 'delete':
+            $this->setExtendedLivraisons($this->model->date_debut, $this->model->date_fin);
+
+            if(!$this->extended_livraisons->isEmpty()){
+                $this->setIndisponisableLied();
+                $this->beforeDelete($id);
                 return true;
             }else{
                 return false;
             }
 
             case 'store':
-            if ($this->hasLivraisonsRestricted($request)) {
+            $this->setRestrictedLivraisons($request->get('date_debut'), $request->get('date_fin'));
+
+            if(!$this->restricted_livraisons->isEmpty()){
+                $this->setIndisponisableLied($request);
                 $this->beforeStore($request);
                 return true;
             }else{
                 return false;
             }
 
-            case 'update':
-            $this->model = $this->model->find($id);
-            $this->hasLivraisonsExtended();
-            $this->hasLivraisonsRestricted($request);
-            return $this->beforeUpdate($id, $request);
+            case 'put':
+            $this->setExtendedLivraisons($this->model->date_debut, $this->model->date_fin);
+            $this->setRestrictedLivraisons($request->get('date_debut'), $request->get('date_fin'));
+
+            if(!$this->extended_livraisons->isEmpty() or !$this->restricted_livraisons->isEmpty()){
+                $this->setIndisponisableLied();
+                return $this->beforeUpdate($id, $request);
+            }else{
+                return false;
+            }
 
             default:
-            return dd('hasLivraisonsConcerned, defaut');  // ToDo lancer exception
+            return dd('hasConcernedLivraisons, defaut');  // ToDo lancer exception
         }
     }
 
@@ -285,16 +292,9 @@ public function edit($id)
     * 
     * @return boolean
     **/
-    public function hasLivraisonsRestricted($request)
+    public function setRestrictedLivraisons($date_debut, $date_fin)
     {
-        $collection = $this->getLivraisonsConcerned($request->get('date_debut'), $request->get('date_fin'));
-
-        if ($collection->isEmpty()) {
-            return false;
-        }
-
-        $this->restricted_livraisons = $collection;
-        return true;
+        $this->restricted_livraisons = $this->getConcernedLivraisons($date_debut, $date_fin);
     }
 
 
@@ -308,28 +308,22 @@ public function edit($id)
     * 
     * @return boolean
     **/
-    public function hasLivraisonsExtended()
+    public function setExtendedLivraisons($date_debut, $date_fin)
     {
-    // var_dump('hasLivraisonsExtended');
-        $collection = $this->getLivraisonsConcerned($this->model->getOriginal()['date_debut'], $this->model->getOriginal()['date_fin']);
-
-        if ($collection->isEmpty()) {
-            return false;
-        }
-
-        $this->extended_livraisons = $collection;
-        return true;
+        $this->extended_livraisons = $this->getConcernedLivraisons($date_debut, $date_fin);;
     }
+
+
 
     /**
     * Suppression des possibles doublons de livraisons
-    * livraison(s) dèjà concernée(s) avant update et toujours concernée(s) après)
+    * livraison(s) dèjà concernée(s) avant update et toujours concernée(s) après.
     * 
     * @param ???????
     * @param ???????
     * 
     **/
-    public function alwaysConcernedAfterExtractDoublons()
+    public function hasConcernedLivraisonsAfterDoublonsExtraction()
     {
         $extended = $this->extended_livraisons;
         $restricted = $this->restricted_livraisons;
@@ -359,7 +353,7 @@ public function edit($id)
     * 
     * @return collection de Model\Livraison
     **/
-    public function getLivraisonsConcerned($date_debut, $date_fin)
+    public function getConcernedLivraisons($date_debut, $date_fin)
     {
         $collection = Livraison::whereBetween('date_livraison', [$date_debut, $date_fin])->get();
 
@@ -376,34 +370,36 @@ public function edit($id)
     * 
     * @return string
     **/
-    public function getIndisponisableLied($request = null){
-        if ($this->model->id)
-            { /* Destroy et update */
-                return $this->model->indisponisable;
-            }else{
-                $id = $request->get('indisponisable_id');
-                $type = $request->get('indisponisable_type');
-                $type = explode("\\", $type);
-                $type = strtolower(array_pop($type));
-                $type = $type.'D';
-                $indisponisable = $this->{$type}->findFirst($id);
-                return $indisponisable;
-            }
+    public function setIndisponisableLied($request = null){
+        if (is_null($request))
+        {
+            $this->indisponisable_lied = $this->model->indisponisable;
+        }else{
+            $id = $request->get('indisponisable_id');
+            $type = $request->get('indisponisable_type');
+            $type = explode("\\", $type);
+            $type = array_pop($type);
+            $type = '\\App\\Domaines\\'.$type.'Domaine';
+            $indisponisable = new $type;
+            $this->indisponisable_lied = $indisponisable->findFirst($id);
         }
+    }
 
 
 
     /**
-    * Conservation de la requête de l'action initiale,
-    * pour l'ajouter dans la transaction avec les requêtes de traitement des livraisons.
+    * Conservation du contexte initial :
+    * – la requête pour l'ajouter dans la transaction aux requêtes de traitement des livraisons.
+    * – l'instruction sql pour l'ajouter dans la transaction aux requêtes de traitement des livraisons.
+    * – la requête pour l'ajouter dans la transaction aux requêtes de traitement des livraisons.
     * 
     * @return string
     **/
-    public function keepInitialContext($initial_request, $success_message, $action)
+    public function keepInitialContext($request_SQL, $success_message, $instruction_SQL)
     {
-        \Session::set('initialContext.request', $initial_request);
+        \Session::set('initialContext.request', $request_SQL);
         \Session::set('initialContext.success_message', $success_message);
-        \Session::set('initialContext.action', $action);
+        \Session::set('initialContext.instruction', $instruction_SQL);
     }
 
 
@@ -415,8 +411,8 @@ public function edit($id)
         $subject = 'Problème lors de l\'attachement d\'une indisponibilité :';
         Log::info($subject.$e);
     // Mail::send('mails.BugReport', ['e' => $e, 'subject' => $subject], function ($m) use($e, $subject) {
-    // 	$m->to = env('MAIL_OM_ADRESS');
-    // 	$m->subject($subject);
+    //  $m->to = env('MAIL_OM_ADRESS');
+    //  $m->subject($subject);
     // });
     }
 }

@@ -1,6 +1,6 @@
 <form action="{{ route($model.'.destroy', [$model_id]) }}" method="post" onsubmit="return confirm('{{ $text_confirm }}');">
 	{!! csrf_field() !!}
-	<input type="text" class="hidden" name="_method" value="delete">
+	<input type="text" class="hidden" name="_method" value="DELETE">
 	<button class="btn supp">
 		<i class="fa fa-btn fa-trash-o">
 		</i>

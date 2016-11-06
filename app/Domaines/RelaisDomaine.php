@@ -9,12 +9,10 @@ use App\Domaines\Domaine;
 class RelaisDomaine extends Domaine
 {
 	protected $model;
-	protected $livraisonD;
 	protected $liv_concerned;
 
-	public function __construct(LivraisonDomaine $livraisonD){
+	public function __construct(){
 		$this->model = new Relais;
-		$this->livraisonD = $livraisonD;
 	}
 
 
@@ -77,7 +75,8 @@ class RelaisDomaine extends Domaine
 		->where('is_actived', 1)
 		->orderBy('rang')->get();
 
-		$this->liv_concerned = $this->livraisonD->findFirst($livraison_id);
+		$livraisonD = new \App\Domaines\LivraisonDomaine;
+		$this->liv_concerned = $livraisonD->findFirst($livraison_id);
 
 		$items = $items->each(function ($item) {
 			if (!$item->indisponibilites->isEmpty()) {
@@ -165,15 +164,10 @@ class RelaisDomaine extends Domaine
 
         $request = \Session::get('initialContext.request');
         $success_message = \Session::get('initialContext.success_message');
-        $action = \Session::get('initialContext.action');
+        $instruction_SQL = \Session::get('initialContext.instruction');
 
- // var_dump($action);
- // var_dump($request);
- // var_dump(\DB::{$action}($request));
- // var_dump(\DB::statement($request));
- //        return dd('rer');
 
-        if ( \DB::{$action}($request) === 0 or  \DB::{$action}($request) === false) {
+        if ( \DB::{$instruction_SQL}($request) === 0 or  \DB::{$instruction_SQL}($request) === false) {
             \DB::rollBack();
             $this->message = trans('message.livraison.handleConcernedfailed');
             return false;
@@ -185,19 +179,19 @@ class RelaisDomaine extends Domaine
     }
 
 
-	public function attachToLivraisons($relais_id, $livraison_id)
-	{
-		if(!\DB::table('livraison_relais')->whereRelaisId($relais_id)->whereLivraisonId($livraison_id)->count() > 0)
-		{
-		$relais = $this->findFirst($relais_id);
-		return $relais->livraison()->attach($livraison_id);
-		}
-	}
+    public function attachToLivraisons($relais_id, $livraison_id)
+    {
+    	if(!\DB::table('livraison_relais')->whereRelaisId($relais_id)->whereLivraisonId($livraison_id)->count() > 0)
+    	{
+    		$relais = $this->findFirst($relais_id);
+    		return $relais->livraison()->attach($livraison_id);
+    	}
+    }
 
-	public function detachFromLivraisons($relais_id, $livraison_id)
-	{
-		$relais = $this->findFirst($relais_id);
-		return $relais->livraison()->detach($livraison_id);
-	}
+    public function detachFromLivraisons($relais_id, $livraison_id)
+    {
+    	$relais = $this->findFirst($relais_id);
+    	return $relais->livraison()->detach($livraison_id);
+    }
 
 }

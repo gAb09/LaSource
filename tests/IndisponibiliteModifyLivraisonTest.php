@@ -5,6 +5,8 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 use App\Models\Livraison;
 use App\Domaines\IndisponibiliteDomaine as IndispoD;
+use App\Domaines\RelaisDomaine as relaisD;
+use App\Domaines\LivraisonDomaine;
 use Carbon\Carbon;
 
 class IndisponibiliteModifyLivraisonTest extends TestCase
@@ -19,16 +21,18 @@ class IndisponibiliteModifyLivraisonTest extends TestCase
     protected function setUp()
     {
         Parent::setUp();
-        $this->indispoD = new IndispoD;
+        $livraisonD = new LivraisonDomaine;
+        $relaisD = new relaisD($livraisonD);
+        $this->indispoD = new IndispoD($relaisD);
     }
 
 
-    public function testCheckIfLivraisonsExtended()
+    public function testHasLivraisonsExtended()
     {
         $date_debut = Carbon::now();
         $date_fin = $date_debut->addDays(30);
 
-        $resultat = $this->indispoD->checkIfLivraisonsExtended($date_debut, $date_fin);
+        $resultat = $this->indispoD->hasLivraisonsExtended($date_debut, $date_fin);
 
         $this->assertFalse($resultat);
 
@@ -39,19 +43,18 @@ class IndisponibiliteModifyLivraisonTest extends TestCase
             'is_actived' => 1,
             ]);
 
-        $resultat = $this->indispoD->checkIfLivraisonsExtended($date_debut, $date_fin);
+        $resultat = $this->indispoD->hasLivraisonsExtended($date_debut, $date_fin);
 
         $this->assertTrue($resultat);
 
 
     }
 
-    public function testCheckIfLivraisonsRestricted()
+    public function testHasLivraisonsRestricted()
     {
         $date_debut = Carbon::now();
         $date_fin = $date_debut->addDays(30);
-
-        $resultat = $this->indispoD->checkIfLivraisonsRestricted($date_debut, $date_fin);
+        $resultat = $this->indispoD->hasLivraisonsRestricted($date_debut, $date_fin);
 
         $this->assertFalse($resultat);
 
@@ -62,7 +65,7 @@ class IndisponibiliteModifyLivraisonTest extends TestCase
             'is_actived' => 1,
             ]);
 
-        $resultat = $this->indispoD->checkIfLivraisonsRestricted($date_debut, $date_fin);
+        $resultat = $this->indispoD->hasLivraisonsRestricted($date_debut, $date_fin);
 
         $this->assertTrue($resultat);
 

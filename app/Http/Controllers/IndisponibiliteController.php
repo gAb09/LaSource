@@ -53,19 +53,10 @@ class IndisponibiliteController extends Controller
 
     public function store(IndisponibiliteRequest $request)
     {
-        if ($this->domaine->hasLivraisonsConcerned('store', '', $request)) {
-            /* Conservation de la page initiale */
-            $this->keepUrlInitiale();
-// return dd($this->domaine->getIndisponisableLied($request));
-            return  view('livraison.handleIndisponibilitiesChanges')
-            ->with([
-                'titre_page' => $this->domaine->getTitrePage(), 
-                'restricted_livraisons' => $this->domaine->getRestrictedLivraisons(), 
-                'extended_livraisons' => $this->domaine->getExtendedLivraisons(), 
-                'action_for_view' => $this->domaine->getActionNameForView(),
-                'relais' => $this->domaine->getIndisponisableLied($request),
-                ]);
+        if ($this->domaine->hasConcernedLivraisons($request)) {
+            return $this->callFormLivraisonsConcernedHandling($request);
         }
+
 
         if ($this->domaine->store($request)) {
             return redirect($this->getUrlInitiale())->with( 'success', $this->domaine->getMessage() );
@@ -89,20 +80,10 @@ class IndisponibiliteController extends Controller
 
     public function update($id, IndisponibiliteRequest $request)
     {
-        if ($this->domaine->hasLivraisonsConcerned('update', $id, $request)) {
-
-            /* Conservation de la page initiale */
-            $this->keepUrlInitiale();
-
-            return  view('livraison.handleIndisponibilitiesChanges')
-            ->with([
-                'titre_page' => $this->domaine->getTitrePage(), 
-                'restricted_livraisons' => $this->domaine->getRestrictedLivraisons(), 
-                'extended_livraisons' => $this->domaine->getExtendedLivraisons(), 
-                'action_for_view' => $this->domaine->getActionNameForView(),
-                'relais' => $this->domaine->getIndisponisableLied($request),
-                ]);
+        if ($this->domaine->hasConcernedLivraisons($request, $id)) {
+            return $this->callFormLivraisonsConcernedHandling($request);
         }
+
 
         if($this->domaine->update($id, $request)){
             return redirect($this->getUrlInitiale())->with( 'success', $this->domaine->getMessage() );
@@ -120,20 +101,10 @@ class IndisponibiliteController extends Controller
     * @param integer $indisponibilite_id
     * @return Redirection
     **/
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        if ($this->domaine->hasLivraisonsConcerned('destroy', $id)) {
-            /* Conservation de la page initiale */
-            $this->keepUrlInitiale();
-
-            return  view('livraison.handleIndisponibilitiesChanges')
-            ->with([
-                'titre_page' => $this->domaine->getTitrePage(), 
-                'restricted_livraisons' => $this->domaine->getRestrictedLivraisons(), 
-                'extended_livraisons' => $this->domaine->getExtendedLivraisons(), 
-                'action_for_view' => $this->domaine->getActionNameForView(),
-                'relais' => $this->domaine->getIndisponisableLied(),
-                ]);
+        if ($this->domaine->hasConcernedLivraisons($request, $id)) {
+            return $this->callFormLivraisonsConcernedHandling($request);
         }
 
         if($this->domaine->destroy($id)){
@@ -141,6 +112,27 @@ class IndisponibiliteController extends Controller
         }else{
             return redirect()->back()->with('status', $this->domaine->getMessage() );
         }
+    }
+
+
+    /**
+    * Appel du formulaire de traitement des livraisons concernées.
+    *
+    * @return Redirection
+    **/
+    public function callFormLivraisonsConcernedHandling($request)
+    {
+        /* Conservation de la page initiale */
+        $this->keepUrlInitiale();
+
+        return  view('livraison.handleIndisponibilitiesChanges')
+        ->with([
+            'titre_page' => $this->domaine->getTitrePage(), 
+            'restricted_livraisons' => $this->domaine->getRestrictedLivraisons(), 
+            'extended_livraisons' => $this->domaine->getExtendedLivraisons(), 
+            'action_for_view' => $this->domaine->action_name_for_view,
+            'indisponisable' => $this->domaine->indisponisable_lied,
+            ]);
     }
 
 

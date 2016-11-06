@@ -14,6 +14,7 @@ trait handleIndisponibilitiesChangesTrait
     **/
     public function handleIndisponibilitiesChanges($indisponisable_id, Request $request)
     {
+        return dd($request->get('livraison_id'));
     	if ($this->domaine->handleIndisponibilitiesChanges($indisponisable_id, $request)) {
     		return redirect($this->getUrlInitiale())->with('success', $this->domaine->getMessage());
     	}else{
