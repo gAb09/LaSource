@@ -148,6 +148,11 @@ class RelaisDomaine extends Domaine
     **/
     public function handleIndisponibilitiesChanges($indisponisable_id, $request)
     {
+        $sql_request = \Session::get('initialContext.request');
+        $success_message = \Session::get('initialContext.success_message');
+        $instruction_SQL = \Session::get('initialContext.instruction');
+        $original_model = \Session::get('initialContext.original_model');
+
         \DB::beginTransaction();
 
         foreach ($request->get('livraison_id') as $livraison_id => $action) {
@@ -158,16 +163,21 @@ class RelaisDomaine extends Domaine
                 $this->detachFromLivraisons($indisponisable_id, $livraison_id);
             }
             if ($action == 'reported') {
-
+            	$reported = new \App\Models\IndisponibiliteReported;
+            	$reported->livraison_id = $livraison_id;
+            	$reported->indisponibilite_id = $original_model['id'];
+            	$reported->prev_date_debut = $original_model['date_debut'];
+            	$reported->prev_date_fin = $original_model['date_fin'];
+            	$reported->prev_cause = $original_model['cause'];
+            	$reported->prev_remarques = $original_model['remarques'];
+            	// return dd($reported);//CTRL
+            	$reported->save();
             }
         }
 
-        $request = \Session::get('initialContext.request');
-        $success_message = \Session::get('initialContext.success_message');
-        $instruction_SQL = \Session::get('initialContext.instruction');
 
 
-        if ( \DB::{$instruction_SQL}($request) === 0 or  \DB::{$instruction_SQL}($request) === false) {
+        if ( \DB::{$instruction_SQL}($sql_request) === 0 or  \DB::{$instruction_SQL}($sql_request) === false) {
             \DB::rollBack();
             $this->message = trans('message.livraison.handleConcernedfailed');
             return false;

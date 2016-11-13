@@ -9,12 +9,13 @@ trait handleIndisponibilitiesChangesTrait
     /**
     * Post-traitement du formulaire de gestion des livraisons concernées.
     *
-    * @param integer $indisponisable_id, Request $request
+    * @param integer $indisponisable_id
+    * @param Illuminate\Http\Request $request
     * @return Redirect
     **/
     public function handleIndisponibilitiesChanges($indisponisable_id, Request $request)
     {
-        return dd($request->get('livraison_id'));
+        // return dd($request->get('livraison_id'));//CTRL
     	if ($this->domaine->handleIndisponibilitiesChanges($indisponisable_id, $request)) {
     		return redirect($this->getUrlInitiale())->with('success', $this->domaine->getMessage());
     	}else{

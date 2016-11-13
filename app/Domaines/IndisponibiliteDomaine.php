@@ -122,7 +122,9 @@ class IndisponibiliteDomaine extends Domaine
 
         $success_message = trans('message.indisponibilite.storeOk');
         $instruction_SQL = 'insert';
-        $this->keepInitialContext($request_SQL, $success_message, $instruction_SQL);
+        $original_model = $this->model->getOriginal();
+
+        $this->keepInitialContext($request_SQL, $success_message, $instruction_SQL, $original_model);
 
         $this->action_name_for_view = 'la création';
         $this->titre_page = trans("titrepage.livraison.handleIndisponibilities", 
@@ -159,7 +161,9 @@ class IndisponibiliteDomaine extends Domaine
 
             $success_message = trans('message.indisponibilite.updateOk');
             $instruction_SQL = 'update';
-            $this->keepInitialContext($request_SQL, $success_message, $instruction_SQL);
+            $original_model = $this->model->getOriginal();
+
+            $this->keepInitialContext($request_SQL, $success_message, $instruction_SQL, $original_model);
 
             $this->action_name_for_view = 'la modification';
             $this->titre_page = trans("titrepage.livraison.handleIndisponibilities", 
@@ -204,7 +208,9 @@ class IndisponibiliteDomaine extends Domaine
         $request_SQL = 'delete from `indisponibilites` where `id` = '.$id;
         $success_message = trans('message.indisponibilite.deleteOk');
         $instruction_SQL = 'delete';
-        $this->keepInitialContext($request_SQL, $success_message, $instruction_SQL);
+        $original_model = $this->model->getOriginal();
+
+        $this->keepInitialContext($request_SQL, $success_message, $instruction_SQL, $original_model);
 
         $this->action_name_for_view = 'la suppression';
         $this->titre_page = trans("titrepage.livraison.handleIndisponibilities", 
@@ -355,7 +361,7 @@ class IndisponibiliteDomaine extends Domaine
     **/
     public function getConcernedLivraisons($date_debut, $date_fin)
     {
-        $collection = Livraison::whereBetween('date_livraison', [$date_debut, $date_fin])->get();
+        $collection = Livraison::whereBetween('date_livraison', [$date_debut, $date_fin])->orderBy('date_livraison')->get();
 
         $new_collection = $collection->filter(function ($value, $key) {
             return $value->state == 'L_OUVERTE';
@@ -395,11 +401,12 @@ class IndisponibiliteDomaine extends Domaine
     * 
     * @return string
     **/
-    public function keepInitialContext($request_SQL, $success_message, $instruction_SQL)
+    public function keepInitialContext($request_SQL, $success_message, $instruction_SQL, $original_model)
     {
         \Session::set('initialContext.request', $request_SQL);
         \Session::set('initialContext.success_message', $success_message);
         \Session::set('initialContext.instruction', $instruction_SQL);
+        \Session::set('initialContext.original_model', $original_model);
     }
 
 

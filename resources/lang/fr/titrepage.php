@@ -51,7 +51,7 @@ return [
                 'listPaniers'  => 'Choisir un (plusieurs) panier(s) pour la livraison : :date',
                 'editpanier'  => 'Modification du panier :panier',
                 'enCours'  => 'Les livraisons en cours',
-                'handleIndisponibilities'  => 'Traitement des livraisons ouvertes concernées par :action d’une indisponibilité pour “:indisponisable”.',
+                'handleIndisponibilities'  => ':action de l’indisponibilité de “:indisponisable” peut avoir des répercussions sur certaines livraisons ouvertes :',
             ],
         
 

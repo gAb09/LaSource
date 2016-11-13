@@ -7,7 +7,7 @@
 
 
 @section('topcontent1')
-<h1 class="titrepage titresmaller">{{ $titre_page }}</h1>
+<h1 class="titrepage titresmaller">{{ ucfirst($titre_page) }}</h1>
 @stop
 
 
@@ -42,25 +42,25 @@
 				<p>
 					Livraison du {{ $livraison->date_livraison_enClair }} {{ $livraison->id }}<br />
 					<span>
-						Clôture des commandes dans <strong>{{ $livraison->date_cloture_delai }} jours</strong> : {{ $livraison->date_cloture_enClair }}<br />
+						Pour info la clôture des commandes est fixée au {{ $livraison->date_cloture_enClair }}, donc dans <strong>{{ $livraison->date_cloture_delai }} jours</strong><br />
 					</span>
 				</p>
 				<div class="radio" style="display:inherit;">
 					<label>
 						<input type="radio" name="livraison_id[{{ $livraison->id }}]" value="nochange" checked>
-						Laisser la livraison telle quelle
+						Laisser cette livraison telle quelle
 					</label>
 				</div>
 				<div class="radio" style="display:inherit;">
 					<label>
 						<input type="radio" name="livraison_id[{{ $livraison->id }}]" value="detach">
-						Détacher automatiquement “{{ $indisponisable->nom }}” 
+						Détacher automatiquement “{{ $indisponisable->nom }} de cette livraison”. Un mail prévenant les clients et les différents acteurs concernés sera automatiquement préparé.
 					</label>
 				</div>
 				<div class="radio" style="display:inherit;">
 					<label>
 						<input type="radio" name="livraison_id[{{ $livraison->id }}]" value="reported">
-						Mémoriser pour traitement manuel ultérieur
+						Enregistrer les éléments en vue d’un traitement ultérieur de cette livraison. Ce traitement pourra être effectué depuis le tableau de bord.
 					</label>
 				</div>
 			</div>
@@ -76,27 +76,27 @@
 			<hr />
 			<div class="livraison">
 				<p>
-					Livraison du {{ $livraison->date_livraison_enClair }}  {{ $livraison->id }}<br />
+					Livraison du {{ $livraison->date_livraison_enClair }}  ({{ $livraison->id }})<br />
 					<span>
-						Clôture des commandes dans <strong>{{ $livraison->date_cloture_delai }} jours</strong> : {{ $livraison->date_cloture_enClair }}
+						Pour info la clôture des commandes est fixée au {{ $livraison->date_cloture_enClair }}, donc dans <strong>{{ $livraison->date_cloture_delai }} jours</strong><br />
 					</span>
 				</p>
 				<div class="radio" style="display:inherit;">
 					<label>
 						<input type="radio" name="livraison_id[{{ $livraison->id }}]" value="nochange" checked>
-						Laisser la livraison telle quelle.
+						Laisser cette livraison telle quelle.
 					</label>
 				</div>
 				<div class="radio" style="display:inherit;">
 					<label>
 						<input type="radio" name="livraison_id[{{ $livraison->id }}]" value="attach">
-						Associer à nouveau “{{ $indisponisable->nom }}”. Un mail sera automatiquement préparé.
+						Associer à nouveau “{{ $indisponisable->nom }}” à cette livraison. Un mail prévenant les clients et les différents acteurs concernés sera automatiquement préparé.
 					</label>
 				</div>
 				<div class="radio" style="display:inherit;">
 					<label>
 						<input type="radio" name="livraison_id[{{ $livraison->id }}]" value="reported">
-						Enregistrer les éléments en vue d’un traitement ultérieur de cette livraison.
+						Enregistrer les éléments en vue d’un traitement ultérieur de cette livraison. Ce traitement pourra être effectué depuis le tableau de bord.
 					</label>
 				</div>
 			</div>
