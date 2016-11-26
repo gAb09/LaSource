@@ -60,6 +60,11 @@ class Domaine
 
 
 
+    /**
+    * Obtention du nom du model courant en minuscules.
+    * 
+    * @return string
+    **/
 	public function getDomaineName()
 	{
 		$name = explode("\\", get_class($this->model));
@@ -74,10 +79,12 @@ class Domaine
 	}
 
 
+
 	public function allActived($order = 'rang')
 	{
 		return $this->model->where('is_actived', 1)->orderBy($order)->get();
 	}
+
 
 
 	public function findFirst($critere, $colonne = 'id')
@@ -86,17 +93,33 @@ class Domaine
 	}
 
 
+
 	public function destroy($id)
 	{
 		$this->model = $this->model->where('id', $id)->first();
 		return $this->model->delete();
 	}
 
+
+	/**
+	* Obtention des models soft deleted seulement.
+	*
+	* @return collection of current models
+	**/
 	public function getDeleted()
 	{
 		return $this->model->onlyTrashed()->get();
 	}
 
+
+
+	/**
+	* Persistence du rang du model courant après glisser-déposer dans la vue.
+	*
+	* @param Request
+	*
+	* @return string (message d'échec ou de réussite)
+	**/
 	public function setRangs($request)
 	{
 		$model_name = $this->getDomaineName();
@@ -114,6 +137,7 @@ class Domaine
 		return '<div class="alert alert-success">'.trans("message.$model_name.setRangsOk").'</div>';
 	}
 
+
 	/**
 	* Pour une entité liée aux livraisons via une table pivot,
 	* contrôle de l'existence d'une liaison pour ce modèle.
@@ -125,7 +149,7 @@ class Domaine
 		$this->model = $this->model->withTrashed()->with('livraison')->where('id', $model_id)->first();
 		/* Si il existe au moins une livraison non archivée liée */
 		if (!$this->model->livraison->isEmpty()) {
-			$this->message = $this->setMessageLiaisonDirecteWithLivraison($action);
+			$this->setMessageLiaisonDirecteWithLivraison($action);
 			return true;
 		}else{
 			return false;
@@ -135,9 +159,9 @@ class Domaine
 
 
 	/**
-	* Construction du mesage précisant la ou les liaisons directes..
+	* Construction du mesage précisant la ou les liaisons directes.
 	* 
-	* @return string
+	* @param string $action
 	**/
 	public function setMessageLiaisonDirecteWithLivraison($action)
 	{
@@ -148,7 +172,7 @@ class Domaine
 				$message .= trans("message.$model_name.liedToLivraison", ['date' => $livraison->date_livraison_enClair]).'<br />';
 			}
 		}
-		return $message;
+		$this->message = $message;
 	}
 
 
@@ -174,7 +198,7 @@ class Domaine
 
 
 	/**
-	* Construction du mesage précisant la ou les liaisons indirectes..
+	* Construction du message précisant la ou les liaisons indirectes..
 	* 
 	* @return string
 	**/
@@ -187,6 +211,78 @@ class Domaine
 			$message .= trans("message.$model_name.liedToLivraison", ['date' => $livraison->date_livraison_enClair]).'<br />';
 		}
 		return $message;
+	}
+
+
+	public function ListForLivraisonEdit($livraison_id){
+		$items = $this->model->with(['indisponibilites' => function ($query) {
+			$query->oldest('date_debut');
+		}, 'livraison'])
+		->where('is_actived', 1)
+		->orderBy('rang')->get();
+
+		$livraisonD = new \App\Domaines\LivraisonDomaine;
+		$this->liv_concerned = $livraisonD->findFirst($livraison_id);
+
+		$items = $items->each(function ($item) {
+			if (!$item->indisponibilites->isEmpty()) {
+				foreach ($item->indisponibilites as $key => $indisponibilite) {
+					$item = $this->setIfIndispoForAllDates($item, $key, $indisponibilite);
+					$item = $this->setIfIndispoForDateLivraison($item, $key, $indisponibilite);
+				}
+			}
+
+			$item = $this->setIsLiedWithLivraison($item);
+		});
+		return $items;
+	}
+
+
+	public function setIfIndispoForDateLivraison($item, $key, $indisponibilite){
+		if ($this->liv_concerned->date_livraison->between($indisponibilite->date_debut, $indisponibilite->date_fin)) {
+			$item->indisponibilites[$key]->statut = 'IndispoPourLivraison';
+			$item->statut = 'IndispoPourLivraison';
+		}
+		return $item;
+	}
+
+
+	private function setIfIndispoForAllDates($item, $key, $indisponibilite){
+		if ($indisponibilite->date_debut->between($this->liv_concerned->date_cloture, $this->liv_concerned->date_livraison)
+			or
+			$indisponibilite->date_fin->between($this->liv_concerned->date_cloture, $this->liv_concerned->date_livraison))
+		{
+			$item->indisponibilites[$key]->statut = 'IndispoGlobal';
+			$item->statut = 'IndispoGlobal';
+		}
+		return $item;
+	}
+
+
+	private function setIsLiedWithLivraison($item){
+		if ($item->livraison->isEmpty()){
+			$item->is_lied = 0;
+			$item->liaison = 'empty';
+			return $item;
+		}
+
+		if ($item->statut == 'IndispoPourLivraison') {
+			$item->is_lied = 0;
+			$item->liaison = 'IndispoPourLivraison';
+			return $item;
+		}
+
+		foreach ($item->livraison as $livraison) {
+			if ($this->liv_concerned->id == $livraison->id) {
+				$item->is_lied = 1;
+				$item->liaison = 'lié';
+				return $item;
+			}else{
+				$item->is_lied = 0;
+				$item->liaison = 'non lié';
+			}
+		}
+		return $item;
 	}
 
 

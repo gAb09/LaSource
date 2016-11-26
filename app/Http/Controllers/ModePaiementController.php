@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domaines\ModePaiementDomaine as Domaine;
+use App\Domaines\IndisponibiliteDomaine as Indisponibilite;
 use App\Http\Requests\ModePaiementRequest;
 use App\Http\Controllers\getDeletedTrait;
 
@@ -11,12 +12,12 @@ use App\Http\Requests;
 
 class ModePaiementController extends Controller
 {
-    use getDeletedTrait;
-
     
-    public function __construct(Domaine $domaine)
+    public function __construct(Domaine $domaine, Request $request, Indisponibilite $indisponibilite)
     {
         $this->domaine = $domaine;
+        $this->request = $request;
+        $this->indisponibilite = $indisponibilite;
         $this->domaine_name = $this->domaine->getDomaineName();
     }
 

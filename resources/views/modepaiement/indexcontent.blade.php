@@ -20,6 +20,7 @@
 			</p>
 		</div>
 
+
 		<div class="footer flexcontainer">
 			@if(!isset($trashed))
 			@include('layouts.button.supp', ['model' => 'modepaiement', 'model_id' => $model->id, 'text_confirm' => trans('message.modepaiement.confirmDelete', ['model' => "$model->nom"]) ])

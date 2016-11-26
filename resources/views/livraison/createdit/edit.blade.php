@@ -48,5 +48,15 @@
 	</div>
 </form>
 
+<!-- Les modes de paiement -->
+<form name="paiementForm" class="form-inline" role="form" method="POST" action="{{ route('livraisonSyncModespaiements', [$model->id]) }}">
+	{!! csrf_field() !!}
+	<input type="hidden" class="form-control" name="_method" value="PUT">
+
+	<div class="col-md-12 flexcontainer form_modepaiements">
+		@include('livraison.createdit.modepaiements')
+	</div>
+</form>
+
 
 @stop

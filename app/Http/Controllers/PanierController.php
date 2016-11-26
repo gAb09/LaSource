@@ -11,8 +11,6 @@ use App\Http\Requests;
 
 class PanierController extends Controller
 {
-    use getDeletedTrait;
-
     
     public function __construct(Domaine $domaine, Request $request)
     {

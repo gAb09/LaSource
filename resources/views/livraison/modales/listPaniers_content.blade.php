@@ -1,7 +1,7 @@
 <form id="syncPaniers"  class="form-inline" role="form" method="POST" action="{{ route('livraisonSyncPaniers', [$model->id]) }}">
 	{!! csrf_field() !!}
 	@include('livraison.button.PanierSyncProducteurs')
-	<div class="modemploi">
+	<div class="modemploi modal-modemploi">
 		Les paniers liés à cette livraison sont surlignés en vert. Un clic sur sa ligne ajoute/retire un panier.
 	</div>
 	@foreach($paniers as $panier)

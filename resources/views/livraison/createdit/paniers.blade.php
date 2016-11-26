@@ -2,9 +2,9 @@
 
 
 
-	<table class="panierschoisis col-md-9">
+	<table class="paniers_lied col-md-9">
 		<tbody>
-			@forelse($panierschoisis as $panier)
+			@forelse($paniers_lied as $panier)
 
 			<tr>
 
@@ -39,12 +39,12 @@
 					@endif
 					<!-- affichage -->
 					<select name="producteur[{{ $panier->id }}]">
-						@if($panier->prod_value == 0))
+						@if($panier->producteur_id == 0))
 						<option value="0" selected="selected">producteur à déterminer</option>
 						@endif
 						@forelse($panier->producteur as $producteur)
 
-						@if($panier->prod_value == $producteur->id)
+						@if($panier->producteur_id == $producteur->id)
 						<option value="{!! $producteur->id !!}" selected="selected">{!! $producteur->nompourpaniers !!}</option>
 
 						@else
@@ -74,7 +74,7 @@
 					@endif
 					<!-- affichage -->
 					Prix livraison &nbsp;
-					<input type="text" class="prix prixlivraison" style="width:40px" name="prix_livraison[{{ $panier->id}}]" value="{{ $panier->liv_value }}">
+					<input type="text" class="prix prixlivraison" style="width:40px" name="prix_livraison[{{ $panier->id}}]" value="{{ $panier->prix_livraison }}">
 				</td>
 
 				<!-- prix commun-->

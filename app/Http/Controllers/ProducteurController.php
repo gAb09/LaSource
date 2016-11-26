@@ -12,8 +12,6 @@ use App\Http\Requests;
 
 class ProducteurController extends Controller
 {
-    use getDeletedTrait;
-
     
     public function __construct(Domaine $domaine, Request $request)
     {

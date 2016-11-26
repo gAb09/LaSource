@@ -22,7 +22,7 @@ class Livraison extends Model
 
     protected $appends = array('class_actived', 'state');
 
-    private $state = "L_EXISTANTE";
+    private $state = "L_CREATED";
 
     protected $guarded = [];
 
@@ -37,6 +37,12 @@ class Livraison extends Model
     public function Relais()
     {
         return $this->belongsToMany('App\Models\Relais')->withPivot('motif');
+    }
+
+
+    public function Modepaiements()
+    {
+        return $this->belongsToMany('App\Models\ModePaiement')->withPivot('motif');
     }
 
 
@@ -114,7 +120,7 @@ class Livraison extends Model
 
     public function getStateAttribute($value)
     {
-        $value = "L_EXISTANTE";
+        $value = "L_CREATED";
 
         if ($this->checkIfOkForOuverture()) {
             $value = "L_OUVERTE";

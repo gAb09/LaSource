@@ -13,7 +13,7 @@ use App\Http\Requests;
 
 class RelaisController extends Controller
 {
-    use getDeletedTrait, handleIndisponibilitiesChangesTrait;
+    use handleIndisponibilitiesChangesTrait;
 
 
     public function __construct(Domaine $domaine, Request $request, Indisponibilite $indisponibilite)
