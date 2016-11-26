@@ -1,29 +1,40 @@
 <div>
-	<h4 class="SsTitre">Les relais</h4>
+	<h4 class="SsTitre">Les modes de paiement</h4>
 </div>
 
-@forelse($relaiss as $relais)
-	<div class="relaiscontainer {{$relais->indisponibilited}}">
-	<p>{{ $relais->ville }}<br/>
-	{{ $relais->nom }}<br/>
-	{{ $relais->tel }}<br/>
-	{{ $relais->email }}</p>
-		@forelse($relais->indisponibilites as $indisponibilite)
-			<p class="cause" style="margin:-5px">Fermé pour cause de</p>
-			<p class="cause">{{ $indisponibilite->cause }}<br />
-			du {{ $indisponibilite->date_debut_enclair }}<br />au {{ $indisponibilite->date_fin_enclair }}</p>
-		@empty
-		@endforelse
-	@if(!$relais->indisponibilited == 'indisponibilited')
-		INPUT
-	@endif
-	</div>
+@forelse($modepaiements as $modepaiement)
+<div class="modepaiementcontainer {{$modepaiement->statut}}">
+		<div class="liaison" style="margin-bottom:5px;">
+			<input id="input_modepaiement_{{ $modepaiement->id }}" type="hidden" name="is_lied[{{ $modepaiement->id }}]" value="{{$modepaiement->is_lied}}">
+			<input type="hidden" name="liaison[{{ $modepaiement->id }}]" value="{{$modepaiement->liaison}}">
+		
+			<!-- Si modepaiement disponible pour cette date de livraison et non retiré -->
+			@if($modepaiement->is_lied == 1) 
+				<input type="text" id="flagLied" class="form-control LiedWIthThisLivraison" value="Lié à cette livraison">
+				<button class="form-control btn btn-info toggle" onClick="javascript:detachModepaiement({{$modepaiement->id}});">
+				Délier
+				</button>
+			@else
+				<input type="text" id="flagLied" class="form-control" value="Non lié à cette livraison">
+				<button class="form-control btn btn-info toggle" onClick="javascript:attachModepaiement({{$modepaiement->id}});return false;">
+				Lier
+				</button>
+			@endif
+		</div>
+	<p>
+		<span class="gras">{{ $modepaiement->nom }}</span><br/>
+	</p>
+	@forelse($modepaiement->indisponibilites as $indisponibilite)
+		<p name="{{$indisponibilite->statut}}_{{ $modepaiement->id }}" class="indispo {{$indisponibilite->statut}}">
+			<span class="premiere gras">Indisponible pour cause de</span><br/>
+			<span class="gras">{{ $indisponibilite->cause }}</span><br/>
+			du {{ $indisponibilite->date_debut_enclair }}<br />au {{ $indisponibilite->date_fin_enclair }}
+		</p>
+	@empty
+	@endforelse
+
+	
+</div>
 @empty
-	No relais
+	Aucun mode de paiement n’est accessible
 @endforelse
-
-<div>
-	<button type="submit" class="btn btn-sm btn-success">
-		<i class="fa fa-btn fa-save fa-lg"></i>Valider ces relais
-	</button>
-</div>

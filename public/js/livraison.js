@@ -6,7 +6,7 @@ $(function()
         altFormat: "yy-m-d",
         showOn: "button",
         buttonText: "Choisir",
-        onClose: function(valeur, dp) {var nom = 'date_cloture'; getComboDatesLivraison(nom, valeur);},
+        onClose: function(valeur, dp) {var nom = 'date_cloture'; getComboDates(nom, valeur);},
     });
 });
 
@@ -19,7 +19,7 @@ $(function()
         altFormat: "yy-m-d",
         showOn: "button",
         buttonText: "Choisir",
-        onClose: function(valeur, dp) {var nom = 'date_paiement'; getComboDatesLivraison(nom, valeur);},
+        onClose: function(valeur, dp) {var nom = 'date_paiement'; getComboDates(nom, valeur);},
     });
 });
 
@@ -32,7 +32,7 @@ $(function()
         altFormat: "yy-m-d",
         showOn: "button",
         buttonText: "Choisir",
-        onClose: function(valeur, dp) {var nom = 'date_livraison'; getComboDatesLivraison(nom, valeur);},
+        onClose: function(valeur, dp) {var nom = 'date_livraison'; getComboDates(nom, valeur);},
     });
 });
 
@@ -41,7 +41,7 @@ $(function()
 | Acquisition du contenu html pour les dates
 |
 */
-function getComboDatesLivraison(nom, valeur)
+function getComboDates(nom, valeur)
 {
     valeur = valeur.split(" ")[0];
     if (valeur === '') {valeur = 0;}
@@ -228,18 +228,20 @@ $(function()
     });
 });
 
-function attachRelais(relais_id, indispoLivraison)
+function attachRelais(relais_id)
 {
     var target = document.getElementById('input_'+relais_id);
     var indispoPourLivraison = document.getElementsByName('IndispoPourLivraison_'+relais_id)[0];
-        console.log(indispoPourLivraison);
+
+    console.log('target : '+target);
+    console.log('indispoPourLivraison : '+indispoPourLivraison);
+
     if(indispoPourLivraison){
-        alert('Attention ! Ce relais ne peut pas tre lié à cause de son indisponibilité à la date de livraison');
-        
+        alert('Attention ! Ce relais ne peut pas être lié à cause de son indisponibilité à la date de livraison');
     }else{
         target.value=1;
         console.log(target.id+' : '+target.value);
-        document.getElementsByName('relaisForm')[0].submit()
+        document.getElementsByName('relaisForm')[0].submit();
     }
 
 }
@@ -247,6 +249,33 @@ function attachRelais(relais_id, indispoLivraison)
 function detachRelais(relais_id)
 {
     var target = document.getElementById('input_'+relais_id);
+    target.value=0;
+    console.log(target.id+' : '+target.value);
+}
+
+
+
+function attachModepaiement(modepaiement_id)
+{
+    var target = document.getElementById('input_modepaiement_'+modepaiement_id);
+    var indispoPourLivraison = document.getElementsByName('IndispoPourLivraison_'+modepaiement_id)[0];
+
+    console.log('target : '+target);
+    console.log('indispoPourLivraison : '+indispoPourLivraison);
+
+    if(indispoPourLivraison){
+        alert('Attention ! Ce mode de paiement ne peut pas être lié à cause de son indisponibilité à la date de livraison');
+    }else{
+        target.value=1;
+        console.log(target.id+' : '+target.value);
+        document.getElementsByName('paiementForm')[0].submit();
+    }
+
+}
+
+function detachModepaiement(modepaiement_id)
+{
+    var target = document.getElementById('input_modepaiement_'+modepaiement_id);
     target.value=0;
     console.log(target.id+' : '+target.value);
 }

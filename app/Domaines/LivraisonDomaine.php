@@ -13,10 +13,12 @@ class LivraisonDomaine extends Domaine
 		$this->model = new Livraison;
 	}
 
+
 	public function index()
 	{
 		return $this->model->orderBy('id', 'desc')->get();
 	}
+
 
 	public function create(){
 		$model =  $this->model;
@@ -24,6 +26,7 @@ class LivraisonDomaine extends Domaine
 
 		return $model;
 	}
+
 
 	public function store($request){
 		$this->handleDatas($request);
@@ -62,70 +65,65 @@ class LivraisonDomaine extends Domaine
 	}
 
 
+    /**
+    * Synchronisation avec les paniers (avec ou sans les données pivot : producteur et prix).
+    *
+    * @param integer $model_id
+    * @param array[integer, integer] $paniers
+    *
+    * @return Redirection
+    **/
 	public function SyncPaniers($model_id, $paniers = array())
 	{
-		// return 	dd($paniers);
-
 		unset($paniers['_token']);
-		$model = Livraison::find($model_id);
+
+		$this->model = $this->model->find($model_id);
+
 		if(empty($paniers)){
-			return $model->panier()->detach();
+			$result = $this->model->panier()->detach();
 		}else{
-			return $this->prepareSyncPaniers($model, $paniers);
+			$result = $this->prepareSyncPaniers($paniers);
 		}
-	}
-
-
-	public function prepareSyncPaniers($model, $paniers)
-	{
-
-		// return dd('prepareSyncPaniers');
-		// dd($paniers);
-		$datas = array();
-		$nombre = count($paniers['panier_id'])-1;
-		// dd($nombre);
-		if (array_key_exists('producteur', $paniers)) {
-			foreach ($paniers['panier_id'] as $panier) {
-				$datas[$panier] = [ 'producteur' => $paniers['producteur'][$panier], 'prix_livraison' => $paniers['prix_livraison'][$panier] ];
-			}
-			return $model->panier()->sync($datas);
-		}
-		return $model->panier()->sync($paniers['panier_id']);
-	}
-
-
-
-	public function SyncRelaiss($model_id, $datas = array())
-	{
-		unset($datas['_token']);
-
-		$model = Livraison::find($model_id);
-		if(empty($datas['is_lied'])){
-			$result = $model->relais()->detach();
-		}else{
-			$sync = $this->prepareSyncRelaiss($model, $datas);
-			$result = $model->relais()->sync($sync);
-		}
-			// return dd($sync);
 		return $result;
 	}
 
 
-
-	public function prepareSyncRelaiss($model, $datas)
+    /**
+    * Adaptation des données de la vue pour la synchronisation, le cas échéant incluany les données de la table pivot.
+    *
+    * La vue d'origine peut être :
+    * – la vue modale de la liste des paniers, $paniers ne comporte alors que les panier_id
+    * – la vue édition d'une livraison, $paniers ne comporte alors panier_id, producteur, prix_livraison
+    *
+    * @param integer $model_id
+    * @param array[integer, integer] $paniers
+    *
+    * @return Redirection
+    **/
+	public function prepareSyncPaniers($paniers)
 	{
-		$sync = array();
-		foreach ($datas['is_lied'] as $model_id => $is_lied) {
-			if ($is_lied == 1) {
-				$sync[] = $model_id;
+		$datas = array();
+		if (array_key_exists('producteur', $paniers)) {
+
+			foreach ($paniers['panier_id'] as $panier) {
+				$datas[$panier] = [ 'producteur' => $paniers['producteur'][$panier], 'prix_livraison' => $paniers['prix_livraison'][$panier] ];
 			}
+			return $this->model->panier()->sync($datas);
 		}
-		// return dd($sync);
-		return $sync;
+
+		return $this->model->panier()->sync($paniers['panier_id']);
 	}
 
 
 
+    /**
+    * Détachement d’un panier depuis la vue édition d’une livraison.
+    *
+    * @param integer $model_id
+    * @param integer $panier
+    *
+    * @return Redirection
+    **/
 	public function detachPanier($model_id, $panier)
 	{
 		$model = Livraison::find($model_id);
@@ -134,29 +132,103 @@ class LivraisonDomaine extends Domaine
 
 
 
+    /**
+    * Synchronisation des relais.
+    *
+    * @param integer $livraison_id
+    * @param Request $request
+    *
+    * @return Redirection
+    **/
+	public function syncRelaiss($model_id, $datas = array())
+	{
+		unset($datas['_token']);
 
-	public function getComboDatesLivraison($valeur)
+		$this->model = Livraison::find($model_id);
+		if(empty($datas['is_lied'])){
+			$result = $this->model->relais()->detach();
+		}else{
+			$sync = $this->prepareSyncModel($datas);
+			$result = $this->model->relais()->sync($sync);
+		}
+		return $result;
+	}
+
+
+    /**
+    * Synchronisation des modes de paiement.
+    *
+    * @param integer $livraison_id
+    * @param Request $request
+    *
+    * @return Redirection
+    **/
+	public function syncModespaiements($model_id, $datas = array())
+	{
+		unset($datas['_token']);
+
+		$this->model = Livraison::find($model_id);
+		if(empty($datas['is_lied'])){
+			$result = $this->model->Modepaiements()->detach();
+		}else{
+			$sync = $this->prepareSyncModel($datas);
+			$result = $this->model->Modepaiements()->sync($sync);
+		}
+		return $result;
+	}
+
+
+
+    /**
+    * Réagencement des données issues de la vue pour les adapter à la synchronisation.
+    *
+    * @param integer $livraison_id
+    * @param Request $request
+    *
+    * @return Redirection
+    **/
+	public function prepareSyncModel($datas)
+	{
+		$sync = array();
+		foreach ($datas['is_lied'] as $model_id => $is_lied) {
+			if ($is_lied == 1) {
+				$sync[] = $model_id;
+			}
+		}
+ 		return $sync;
+	}
+
+
+
+	/**
+	* Composition des données pour l'affichage des dates :
+	* – $valeur = $valeur transformée en objet Carbon,
+	* – $enclair = $valeur en toutes lettres,
+	* – $delai = différence en jours entre $valeur et maintenant.
+	*
+	* @param string
+	* @return array[Carbon, string, string]
+	**/
+	public function getComboDates($valeur)
 	{
 		if ($valeur == 0) {
 			$datas['date'] = '';
 			$datas['enclair'] = 'À définir';
 			$datas['delai'] = '– – – –';
-			return $datas;
+		}else{
+
+			$valeur = Carbon::createFromFormat('Y-m-d', $valeur);
+
+			$enclair = $valeur->formatLocalized('%A %e %B %Y');
+
+			$now = Carbon::now();
+			$delai = $now->diffInDays($valeur, false);
+			$delai = $this->getDelaiExplicite($delai);
+
+			$datas['date'] = $valeur;
+			$datas['enclair'] = $enclair;
+			$datas['delai'] = $delai;
 		}
-		
-		$now = Carbon::now();
-		$valeur = Carbon::createFromFormat('Y-m-d', $valeur);
-
-		$enclair = $valeur->formatLocalized('%A %e %B %Y');
-        // Carbon::setLocale('fr');
-		$delai = $now->diffInDays($valeur, false);
-		$delai = $this->getDelaiExplicite($delai);
-
-        // dd("handleDate, nom : $nom - valeur : $valeur - date : $date - vue : $vue");
-		$datas['date'] = $valeur;
-		$datas['enclair'] = $enclair;
-		$datas['delai'] = $delai;
-
 		return $datas;
 	}
 
@@ -195,10 +267,11 @@ class LivraisonDomaine extends Domaine
 
 		$delai_explicite = $prefix.$chiffre.$suffix;
 
-		// dd("delai_explicite : $delai_explicite – prefix : $prefix – chiffre : $chiffre – suffix : $suffix");
+		// dd("delai_explicite : $delai_explicite – prefix : $prefix – chiffre : $chiffre – suffix : $suffix");//CTRL
 
 		return $delai_explicite;
 	}
+
 
     /**
     * Archivage d'une livraison
