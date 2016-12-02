@@ -87,6 +87,18 @@ class Domaine
 
 
 
+	public function allActivedIdForSyncLivraison()
+	{
+		$test = $this->model->where('is_actived', 1)->get(['id']);
+		$data = array();
+		foreach ($test as $item) {
+			$data[] = $item['id'];
+		}
+		return $data;
+	}
+
+
+
 	public function findFirst($critere, $colonne = 'id')
 	{
 		return $this->model->where($colonne, $critere)->first();

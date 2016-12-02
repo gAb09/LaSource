@@ -3,6 +3,8 @@
 namespace App\Domaines;
 
 use App\Models\Livraison;
+use App\Domaines\RelaisDomaine;
+use App\Domaines\ModePaiementDomaine;
 use App\Domaines\Domaine;
 use Carbon\Carbon;
 
@@ -31,11 +33,19 @@ class LivraisonDomaine extends Domaine
 	public function store($request){
 		$this->handleDatas($request);
 
-		$result = $this->model->save();
-		if($result){
+		if($this->model->save()){
+			$modepaiement = new ModePaiementDomaine;
+			$relais = new RelaisDomaine;
+
+			$modepaiements = $modepaiement->allActivedIdForSyncLivraison();
+			$relaiss = $relais->allActivedIdForSyncLivraison();
+
+			$this->model->modepaiements()->sync($modepaiements);
+			$this->model->relais()->sync($relaiss);
+
 			return $this->model->id;
 		}else{
-			return $result;
+			return false;
 		}
 	}
 

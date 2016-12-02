@@ -7,6 +7,7 @@ onDblClick="javascript:document.location.href='{{ route('livraison.edit', $model
 	<!-- id -->
 	<td>
 		{{ $model->id }}
+		<span class="datecreation">{{ $model->date_creation_courte }}</span>
 	</td>
 
 	<!-- date_cloture -->

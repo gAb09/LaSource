@@ -52,8 +52,6 @@ class LivraisonController extends Controller
 
     public function store(LivraisonRequest $request)
     {
-                // return dd('store');
-        // return dd($request->all());
         $result = $this->domaine->store($request);
 
         if(is_integer($result)){
