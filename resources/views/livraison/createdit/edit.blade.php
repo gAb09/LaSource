@@ -30,7 +30,7 @@
 </form>
 
 <!-- Les paniers -->
-<form class="form-inline" role="form" method="POST" action="{{ route('livraisonSyncPaniers', [$model->id]) }}">
+<form class="form-inline" role="form" method="POST" action="{{ route('livraisonSyncPaniers', [$model->id]) }}" onSubmit="javascript:resetChangeDetected();">
 	{!! csrf_field() !!}
 
 	<div class="col-md-12 flexcontainer form_paniers">
@@ -57,6 +57,5 @@
 		@include('livraison.createdit.modepaiements')
 	</div>
 </form>
-
 
 @stop

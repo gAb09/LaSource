@@ -62,8 +62,8 @@ function getComboDates(nom, valeur)
 
         error : function(resultat, statut, erreur){
             // alert(resultat);
-            alert(statut);
-            alert(erreur);
+            // alert(statut);
+            // alert(erreur);
         },
 
         complete : function(resultat, statut){
@@ -81,10 +81,15 @@ function getComboDates(nom, valeur)
 function listProducteursForPanier(idpanier)
 {
 
-    if (changed) {
-        var box = confirm("Attention vous avez apporté des modifications sur les paniers. \nSi vous cliquez sur Ok, vous accéderez à la liste des producteurs, mais ces modifications seront perdues.");
+    if (change_detected) {
+        var message = "Attention vous avez apporté des modifications sur des paniers sans les avoir validées.";
+        message =  message+"\nSi vous cliquez sur Ok, vous accéderez à la liste des producteurs, mais ces modifications seront perdues.";
+        message +=  "\nPour les valider, il faut annuler, puis “Valider ces paniers”, et ensuite redemandez la liste pour un ajout.";
+        var box = confirm(message);
         if (!box) {return false;}
     }
+
+    resetChangeDetected();
 
     var ad = 'http://lasource/livraison/panier/' + idpanier + '/listProducteurs';
 
@@ -127,10 +132,16 @@ $('#ModallistProducteursForPanier').on('hidden.bs.modal', function () {
 **/
 function listPaniers(livraison_id)
 {
-    if (changed) {
-        var box = confirm("Attention vous avez apporté des modifications sur les paniers. \nSi vous cliquez sur Ok, vous accéderez à la liste des paniers, mais ces modifications seront perdues.");
+    if (change_detected) {
+        var message = "Attention vous avez apporté des modifications sur les paniers sans les avoir validées.";
+        message =  message+"\nSi vous cliquez sur Ok, vous accéderez à la liste des paniers, mais ces modifications seront perdues.";
+        message +=  "\nPour les valider, il faut annuler, puis “Valider ces paniers”, et ensuite redemandez la liste pour un ajout.";
+        var box = confirm(message);
         if (!box) {return false;}
     }
+
+    resetChangeDetected();
+
 
     var ad = 'http://lasource/livraison/' + livraison_id + '/listpaniers';
 
@@ -168,6 +179,22 @@ $('#ModallistPaniers').on('hidden.bs.modal', function () {
 
 
 
+function toggleLied(panier)
+{
+    if($( panier ).hasClass( "lied" )){
+        $( panier ).removeClass( "lied" );
+        $(panier).children('input').prop('checked', false);
+    }else{
+        $( panier ).addClass( "lied" );
+        $(panier).children('input').prop('checked', true);
+    }
+
+}
+
+
+var change_detected = false;
+
+
 /**
 * Report du prix de base dans l'input .prixlivraison
 *
@@ -182,22 +209,11 @@ function reporterPrixBase(input)
     // alert(input_livraison.val() === prix_base);
     if (input_livraison.val() !== prix_base){
         input_livraison.val(prix_base);
-        detectChangementDatasPaniers();
+        changementDatasPaniersDetected(input_livraison);
     }
 }
 
-
-function toggleLied(panier)
-{
-    if($( panier ).hasClass( "lied" )){
-        $( panier ).removeClass( "lied" );
-        $(panier).children('input').prop('checked', false);
-    }else{
-        $( panier ).addClass( "lied" );
-        $(panier).children('input').prop('checked', true);
-    }
-
-}
+console.log(change_detected);
 
 
 /**
@@ -205,28 +221,44 @@ function toggleLied(panier)
 * Annulation possible.
 * 
 **/
-var changed = 0;
+function changementDatasPaniersDetected(item){
+    $(item).addClass('changed');
+    console.log(change_detected);
+    change_detected = true;
 
-function detectChangementDatasPaniers()
-{
-    changed = true;
-    // alert('changement : ' + changed);
+}
+
+function resetChangeDetected(){
+    var items = $( ".changed" );
+    $(items).each(function() {
+        $( this ).removeClass('changed');
+    });
+    change_detected = false;
+    console.log(change_detected);
 }
 
 
-$(function()
-{
-    $(".producteur").change(function(){
-        detectChangementDatasPaniers();
-    });
-});
+window.onbeforeunload = function(){
 
-$(function()
-{
-    $(".prixlivraison").change(function(){
-        detectChangementDatasPaniers();
-    });
-});
+    if ($( ".changed" ).length !== 0) {
+        console.log('des changements');
+        change_detected = true;
+    }else{
+        console.log('pas de changements');
+        change_detected = false;
+    }
+    console.log(change_detected);
+
+
+    if (change_detected) {
+        return "Atention. Un changement de prix ou de producteur affecté à un panier n'a pas été validé.";
+    }
+};
+
+
+
+
+
 
 function attachRelais(relais_id)
 {

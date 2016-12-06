@@ -144,10 +144,12 @@ class LivraisonController extends Controller
     **/
     public function syncPaniers($livraison_id, PanierForLivraisonRequest $request)
     {
+        // return dd($request);
+
         $result = $this->domaine->SyncPaniers($livraison_id, $request->except('_token'));
 
         if (!empty($result)) {
-            return redirect()->back()->with('success', trans('message.livraison.syncPaniersOk', ['result' => var_dump($result)]));
+            return redirect()->back()->withInput()->with('success', trans('message.livraison.syncPaniersOk', ['result' => var_dump($result)]));
         }else{
             return redirect()->back()->with('status', trans('message.livraison.syncPaniersfailed'));
         }

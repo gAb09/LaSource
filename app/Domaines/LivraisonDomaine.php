@@ -52,7 +52,20 @@ class LivraisonDomaine extends Domaine
 
 	public function edit($id)
 	{
-		return Livraison::with('Panier')->where('id', $id)->first();
+		$livraison = Livraison::with('Panier')->where('id', $id)->first();
+		foreach ($livraison->Panier as $panier) {
+			if (\Session::get('new_attached')) {
+				// var_dump($panier->id);
+				if (in_array($panier->id, \Session::get('new_attached'))) {
+					// var_dump('in_array');
+					$panier->changed = "changed";
+					// var_dump($panier);
+				}
+			}
+
+		}
+		return $livraison;
+		// return dd(\Session::get('new_attached'));
 	}
 
 
@@ -81,48 +94,50 @@ class LivraisonDomaine extends Domaine
     * @param integer $model_id
     * @param array[integer, integer] $paniers
     *
-    * @return Redirection
+    * @return ?????? | Array
     **/
-	public function SyncPaniers($model_id, $paniers = array())
-	{
-		unset($paniers['_token']);
+    public function SyncPaniers($model_id, $paniers = array())
+    {
+    	unset($paniers['_token']);
 
-		$this->model = $this->model->find($model_id);
+    	$this->model = $this->model->find($model_id);
 
-		if(empty($paniers)){
-			$result = $this->model->panier()->detach();
-		}else{
-			$result = $this->prepareSyncPaniers($paniers);
-		}
-		return $result;
-	}
+    	if(empty($paniers)){
+    		$result = $this->model->panier()->detach();
+    	}else{
+    		$result = $this->prepareSyncPaniers($paniers);
+    		\Session::flash('new_attached', $result['attached']);
+    	}
+    	return $result;
+    }
 
 
     /**
-    * Adaptation des données de la vue pour la synchronisation, le cas échéant incluany les données de la table pivot.
+    * Adaptation des données de la vue pour la synchronisation, le cas échéant incluant les données de la table pivot.
     *
     * La vue d'origine peut être :
     * – la vue modale de la liste des paniers, $paniers ne comporte alors que les panier_id
-    * – la vue édition d'une livraison, $paniers ne comporte alors panier_id, producteur, prix_livraison
+    * – la vue édition d'une livraison, $paniers comporte alors panier_id, producteur, prix_livraison
     *
     * @param integer $model_id
     * @param array[integer, integer] $paniers
     *
-    * @return Redirection
+    * @return Array
     **/
-	public function prepareSyncPaniers($paniers)
-	{
-		$datas = array();
-		if (array_key_exists('producteur', $paniers)) {
+    public function prepareSyncPaniers($paniers)
+    {
+    	$datas = array();
+    	if (array_key_exists('producteur', $paniers)) {
 
-			foreach ($paniers['panier_id'] as $panier) {
-				$datas[$panier] = [ 'producteur' => $paniers['producteur'][$panier], 'prix_livraison' => $paniers['prix_livraison'][$panier] ];
-			}
-			return $this->model->panier()->sync($datas);
-		}
+    		foreach ($paniers['panier_id'] as $panier) {
+    			$datas[$panier] = [ 'producteur' => $paniers['producteur'][$panier], 'prix_livraison' => $paniers['prix_livraison'][$panier] ];
+    		}
+    		return $this->model->panier()->sync($datas);
+    	}
 
-		return $this->model->panier()->sync($paniers['panier_id']);
-	}
+    	$result = $this->model->panier()->sync($paniers['panier_id']);
+    	return $result;
+    }
 
 
 
@@ -134,11 +149,11 @@ class LivraisonDomaine extends Domaine
     *
     * @return Redirection
     **/
-	public function detachPanier($model_id, $panier)
-	{
-		$model = Livraison::find($model_id);
-		$model->panier()->detach($panier);
-	}
+    public function detachPanier($model_id, $panier)
+    {
+    	$model = Livraison::find($model_id);
+    	$model->panier()->detach($panier);
+    }
 
 
 
@@ -150,19 +165,19 @@ class LivraisonDomaine extends Domaine
     *
     * @return Redirection
     **/
-	public function syncRelaiss($model_id, $datas = array())
-	{
-		unset($datas['_token']);
+    public function syncRelaiss($model_id, $datas = array())
+    {
+    	unset($datas['_token']);
 
-		$this->model = Livraison::find($model_id);
-		if(empty($datas['is_lied'])){
-			$result = $this->model->relais()->detach();
-		}else{
-			$sync = $this->prepareSyncModel($datas);
-			$result = $this->model->relais()->sync($sync);
-		}
-		return $result;
-	}
+    	$this->model = Livraison::find($model_id);
+    	if(empty($datas['is_lied'])){
+    		$result = $this->model->relais()->detach();
+    	}else{
+    		$sync = $this->prepareSyncModel($datas);
+    		$result = $this->model->relais()->sync($sync);
+    	}
+    	return $result;
+    }
 
 
     /**
@@ -173,19 +188,19 @@ class LivraisonDomaine extends Domaine
     *
     * @return Redirection
     **/
-	public function syncModespaiements($model_id, $datas = array())
-	{
-		unset($datas['_token']);
+    public function syncModespaiements($model_id, $datas = array())
+    {
+    	unset($datas['_token']);
 
-		$this->model = Livraison::find($model_id);
-		if(empty($datas['is_lied'])){
-			$result = $this->model->Modepaiements()->detach();
-		}else{
-			$sync = $this->prepareSyncModel($datas);
-			$result = $this->model->Modepaiements()->sync($sync);
-		}
-		return $result;
-	}
+    	$this->model = Livraison::find($model_id);
+    	if(empty($datas['is_lied'])){
+    		$result = $this->model->Modepaiements()->detach();
+    	}else{
+    		$sync = $this->prepareSyncModel($datas);
+    		$result = $this->model->Modepaiements()->sync($sync);
+    	}
+    	return $result;
+    }
 
 
 
@@ -197,16 +212,16 @@ class LivraisonDomaine extends Domaine
     *
     * @return Redirection
     **/
-	public function prepareSyncModel($datas)
-	{
-		$sync = array();
-		foreach ($datas['is_lied'] as $model_id => $is_lied) {
-			if ($is_lied == 1) {
-				$sync[] = $model_id;
-			}
-		}
- 		return $sync;
-	}
+    public function prepareSyncModel($datas)
+    {
+    	$sync = array();
+    	foreach ($datas['is_lied'] as $model_id => $is_lied) {
+    		if ($is_lied == 1) {
+    			$sync[] = $model_id;
+    		}
+    	}
+    	return $sync;
+    }
 
 
 

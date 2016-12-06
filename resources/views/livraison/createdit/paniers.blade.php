@@ -4,7 +4,7 @@
 
 	<table class="paniers_lied col-md-9">
 		<tbody>
-			@forelse($paniers_lied as $panier)
+			@forelse($model->Panier as $panier)
 
 			<tr>
 
@@ -30,6 +30,15 @@
 
 
 				<!-- producteur -->
+					<?php
+					if (isset(old('producteur')[$panier->id])) {
+						$value_producteur = old('producteur')[$panier->id];
+					}elseif (is_null($panier->prix_livraison)) {
+						$value_producteur = 0;
+					}else{
+						$value_producteur = $panier->producteur_id;
+					}
+					?>
 				<td class="form-group {{ $errors->has('producteur.'.$panier->id) ? ' has-error' : '' }}" style="width:58%">
 					<!-- validation -->
 					@if ($errors->has('producteur.'.$panier->id))
@@ -38,13 +47,13 @@
 					</span>
 					@endif
 					<!-- affichage -->
-					<select name="producteur[{{ $panier->id }}]">
-						@if($panier->producteur_id == 0))
+					<select class="{{ $panier->changed}}" name="producteur[{{ $panier->id }}]" onChange="javascript:changementDatasPaniersDetected(this);">
+						@if($value_producteur == 0))
 						<option value="0" selected="selected">producteur à déterminer</option>
 						@endif
 						@forelse($panier->producteur as $producteur)
 
-						@if($panier->producteur_id == $producteur->id)
+						@if($value_producteur == $producteur->id)
 						<option value="{!! $producteur->id !!}" selected="selected">{!! $producteur->nompourpaniers !!}</option>
 
 						@else
@@ -74,13 +83,22 @@
 					@endif
 					<!-- affichage -->
 					Prix livraison &nbsp;
-					<input type="text" class="prix prixlivraison" style="width:40px" name="prix_livraison[{{ $panier->id}}]" value="{{ $panier->prix_livraison }}">
+					<?php
+					if (isset(old('prix_livraison')[$panier->id])) {
+						$value_prix_livraison = old('prix_livraison')[$panier->id];
+					}elseif (is_null($panier->prix_livraison)) {
+						$value_prix_livraison = 0;
+					}else{
+						$value_prix_livraison = $panier->prix_livraison;
+					}
+					?>
+					<input type="text" class="prix prixlivraison {{ $panier->changed}}" style="width:50px" name="prix_livraison[{{ $panier->id}}]" value="{{ $value_prix_livraison }}" onChange="javascript:changementDatasPaniersDetected(this);">
 				</td>
 
 				<!-- prix commun-->
 				<td style="width:15%">				
 					Prix base &nbsp;
-					<input type="text" class="prix"  name="prix_base[]" value="{{ $panier->prix_base or old('prix_base') }}" onClick="javascript:reporterPrixBase(this)">
+					<input type="text" class="prix"  name="prix_base[]" value="{{ $panier->prix_base }}" onClick="javascript:reporterPrixBase(this)">
 				</td>
 				<td style="width:15%">
 					<button type="button" class="btn btn-primary btn-xs" onClick="javascript:document.location.href='{{ route('livraisonDetachPanier', ['livraison' => $model->id, 'panier' => $panier->id]) }}';">

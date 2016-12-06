@@ -48,7 +48,9 @@
 
 @section('script')
 @parent
-<script src="/js/livraison.js"></script>
+<script 
+	src="/js/livraison.js">
+</script>
 
 <script type="text/javascript">
 
@@ -61,6 +63,5 @@ getComboDates('date_paiement', paie);
 var liv = "{{ old('date_livraison', $model->date_livraison) }}";
 liv = liv.split(" ")[0];
 getComboDates('date_livraison', liv);
-
 </script>
 @stop
