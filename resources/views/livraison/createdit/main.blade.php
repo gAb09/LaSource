@@ -4,8 +4,6 @@
 <div class="modal fade" id="ModallistPaniers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 </div>
 
-{{-- @include('livraison.modales.EditPanier') --}}
-
 <div class="modal fade" id="ModallistProducteursForPanier" tabindex="-1" role="dialog" aria-labelledby="ModallistProducteursForPanierLabel">
 </div><!-- /.modal -->
 

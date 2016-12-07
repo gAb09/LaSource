@@ -10,7 +10,7 @@
 
 				<td style="width:15%">
 					<!-- Edit -->
-					<a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#ModalEditPanier">
+					<a class="btn btn-primary btn-xs"  href="{{ URL::route('panier.edit', $panier->id) }}">
 						<i class="fa fa-btn fa-edit fa-lg"></i>
 					</a>
 					<!-- panier id -->

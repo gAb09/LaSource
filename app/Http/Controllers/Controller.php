@@ -67,7 +67,9 @@ class Controller extends BaseController
     * 
     **/
     protected function getUrlInitiale(){
-        return \Session::get('url_initiale', \Session::get('_previous.url'));
+        $url = \Session::get('url_initiale', \Session::get('_previous.url'));
+        \Session::forget('url_initiale');
+        return $url;
     }
 
 
