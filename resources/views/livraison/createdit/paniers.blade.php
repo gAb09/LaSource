@@ -32,7 +32,7 @@
 					<?php
 					if (isset(old('producteur')[$panier->id])) {
 						$value_producteur = old('producteur')[$panier->id];
-					}elseif (is_null($panier->prix_livraison)) {
+					}elseif (is_null($panier->pivot->producteur)) {
 						$value_producteur = 0;
 					}else{
 						$value_producteur = $panier->pivot->producteur;
