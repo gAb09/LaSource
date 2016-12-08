@@ -7,7 +7,6 @@
 			@forelse($model->Panier as $panier)
 
 			<tr>
-
 				<td style="width:15%">
 					<!-- Edit -->
 					<a class="btn btn-primary btn-xs"  href="{{ URL::route('panier.edit', $panier->id) }}">
@@ -36,7 +35,7 @@
 					}elseif (is_null($panier->prix_livraison)) {
 						$value_producteur = 0;
 					}else{
-						$value_producteur = $panier->producteur_id;
+						$value_producteur = $panier->pivot->producteur;
 					}
 					?>
 				<td class="form-group {{ $errors->has('producteur.'.$panier->id) ? ' has-error' : '' }}" style="width:58%">
@@ -86,10 +85,10 @@
 					<?php
 					if (isset(old('prix_livraison')[$panier->id])) {
 						$value_prix_livraison = old('prix_livraison')[$panier->id];
-					}elseif (is_null($panier->prix_livraison)) {
+					}elseif (is_null($panier->pivot->prix_livraison)) {
 						$value_prix_livraison = 0;
 					}else{
-						$value_prix_livraison = $panier->prix_livraison;
+						$value_prix_livraison = $panier->pivot->prix_livraison;
 					}
 					?>
 					<input type="text" class="prix prixlivraison {{ $panier->changed}}" style="width:50px" name="prix_livraison[{{ $panier->id}}]" value="{{ $value_prix_livraison }}" onChange="javascript:changementDatasPaniersDetected(this);">
