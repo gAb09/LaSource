@@ -29,7 +29,7 @@ Vue index
 /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 Vue createdit (create & edit)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-.form_dates, .form_paniers, .form_relaiss, .form_modepaiements{
+.edit_show_livraison{
 	background-color:@color_livraison;
 	margin-top:10px;
 	justify-content:space-between;
@@ -38,7 +38,18 @@ Vue createdit (create & edit)
 	// border: 1px solid @color_livraison_dark;
 }
 
-.form_dates{
+
+// .form_dates, .form_paniers, .form_relaiss, .form_modepaiements{
+// 	background-color:@color_livraison;
+// 	margin-top:10px;
+// 	justify-content:space-between;
+// 	align-items: center;
+// 	box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
+// 	// border: 1px solid @color_livraison_dark;
+// }
+
+
+.form_dates, .showdates{
 	min-height: 100px;
 	input{
 		width:250px;
@@ -58,7 +69,7 @@ Vue createdit (create & edit)
 }
 
 
-.form_paniers{
+.form_paniers, .showpaniers{
 	.paniers_lied{
 		tr{
 			font-size:0.8em;
@@ -67,13 +78,16 @@ Vue createdit (create & edit)
 			border-color: @color_livraison_dark;
 			border-width: 1px 0;
 		}
-		td{
+		td, th{
 			padding: 0px 10px;
 		}
 		td .nomcourt {
 			font-size: 1.1em;
 			font-weight: bold;
 			width: 150px;
+		}
+		.producteur {
+			background-color: @color_panier;
 		}
 		select{
 			margin-top:10px;
@@ -85,6 +99,25 @@ Vue createdit (create & edit)
 	}
 }
 
+.showpaniers{
+	.paniers_lied{
+		td, th{
+			padding: 10px 10px;
+		}
+		.nomcourt {
+			width: 33%;
+		}
+		.producteur {
+			background-color: @color_panier;
+			width: 33%;
+		}
+		.prix{
+			width: 33%;
+		}
+	}
+}
+
+
 .boutonspaniers{
 	flex-flow: column wrap;
 	align-items: center;	
@@ -94,7 +127,7 @@ Vue createdit (create & edit)
 }
 
 
-.form_relaiss{
+.form_relaiss, .showrelaiss{
 	.relaiscontainer.IndispoGlobal{
 		// background-color: rgba(230, 240, 250, 0.3);
 		// border: 1px solid @color_warning;
@@ -186,7 +219,7 @@ Vue createdit (create & edit)
 }
 
 
-.form_modepaiements{
+.form_modepaiements, .showmodepaiements{
 	.modepaiementcontainer.IndispoGlobal{
 		// background-color: rgba(230, 240, 250, 0.3);
 		// border: 1px solid @color_warning;

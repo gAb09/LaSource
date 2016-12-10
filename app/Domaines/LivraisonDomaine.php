@@ -302,13 +302,14 @@ class LivraisonDomaine extends Domaine
     * Archivage d'une livraison
     *
     * @param integer  /  id de la livraison
+    * 
     * @return boolean
     **/
     public function archive($id)
     {
     	$this->model = $this->model->findOrFail($id);
 
-    	if ($this->controleArchivage($this->model)) {
+    	if ($this->controleAvantArchivage($this->model)) {
     		$this->model->is_archived = 1;
     		return $this->model->save();
     	}
@@ -321,9 +322,10 @@ class LivraisonDomaine extends Domaine
     * Controle avant archivage d'une livraison ////////////////////// ToDo
     *
     * @param  Model  / Livraison
+    * 
     * @return boolean
     **/
-    public function controleArchivage($model)
+    public function controleAvantArchivage($model)
     {
     	$this->message = trans('message.livraison.archivagefailed');
     	return true;

@@ -236,7 +236,7 @@ class LivraisonController extends Controller
     * Archivage d'une livraison
     *
     * @param integer  /  id de la livraison
-    * @return Response
+    * @return Redirect
     **/
     public function archive($id)
     {
