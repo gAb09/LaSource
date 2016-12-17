@@ -35,6 +35,21 @@ class Controller extends BaseController
     }
 
 
+
+    /**
+    * Récupération des modèles soft deleted. On utilise la même vue que pour l'index.
+    * C'est la variable $trashed qui permettra à la vue de se configurer.
+    * 
+    * @return string
+    **/
+    public function getDeleted()
+    {
+        $models = $this->domaine->getDeleted();
+        return view($this->domaine->getDomaineName().'.trashed')->with(['models' => $models, 'trashed' => 'trashed']);
+    }
+
+
+
     /**
     * Conservation de l'url initiale.
     * 
@@ -52,7 +67,9 @@ class Controller extends BaseController
     * 
     **/
     protected function getUrlInitiale(){
-        return \Session::get('url_initiale', \Session::get('_previous.url'));
+        $url = \Session::get('url_initiale', \Session::get('_previous.url'));
+        \Session::forget('url_initiale');
+        return $url;
     }
 
 

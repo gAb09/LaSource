@@ -1,1 +1,0 @@
-@include('panier.form')

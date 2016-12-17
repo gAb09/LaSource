@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Domaines\LivraisonDomaine;
-use App\Domaines\PanierDomaine as Panier;
-use App\Domaines\ProducteurDomaine as Producteur;
-use App\Domaines\RelaisDomaine as Relaiss;
+use App\Domaines\PanierDomaine;
+use App\Domaines\ProducteurDomaine;
+use App\Domaines\RelaisDomaine;
+use App\Domaines\ModePaiementDomaine;
 use App\Http\Requests\LivraisonRequest;
 use App\Http\Requests\PanierForLivraisonRequest;
 use App\Http\Requests\RelaissForLivraisonRequest;
@@ -21,12 +22,13 @@ class LivraisonController extends Controller
     protected $producteur;
     protected $relaiss;
     
-    public function __construct(LivraisonDomaine $domaine, Panier $panier, Producteur $producteur, Relaiss $relaiss)
+    public function __construct(LivraisonDomaine $domaine, PanierDomaine $panier, ProducteurDomaine $producteur, RelaisDomaine $relaiss, ModePaiementDomaine $modepaiements)
     {
         $this->domaine = $domaine;
         $this->panier = $panier;
         $this->producteur = $producteur;
         $this->relaiss = $relaiss;
+        $this->modepaiements = $modepaiements;
         $this->domaine_name = $this->domaine->getDomaineName();
 
     }
@@ -50,8 +52,6 @@ class LivraisonController extends Controller
 
     public function store(LivraisonRequest $request)
     {
-                // return dd('store');
-        // return dd($request->all());
         $result = $this->domaine->store($request);
 
         if(is_integer($result)){
@@ -68,20 +68,18 @@ class LivraisonController extends Controller
 
         $date_titrepage = $model->date_livraison_enclair;
 
-        $panierschoisis = $this->panier->paniersChoisis($id);
-        // dd($panierschoisis);
+        $paniers_lied = $this->panier->ListForLivraisonEdit($id);
 
         $relaiss = $this->relaiss->ListForLivraisonEdit($id);
-        // dd($relaiss);
 
-        return view('livraison.createdit.edit')->with(compact('model','date_titrepage', 'paniers', 'panierschoisis', 'relaiss' ));
+        $modepaiements = $this->modepaiements->ListForLivraisonEdit($id);
+
+        return view('livraison.createdit.edit')->with(compact('model','date_titrepage', 'paniers', 'paniers_lied', 'relaiss', 'modepaiements' ));
     }
 
 
     public function update($id, LivraisonRequest $request)
     {
-        // return dd($request->all());
-
         if($this->domaine->update($id, $request)){
             return redirect()->back()->with('success', trans('message.livraison.updateOk'));
         }else{
@@ -101,55 +99,85 @@ class LivraisonController extends Controller
 
     }
 
-
-    public function getComboDatesLivraison($valeur)
+    /**
+    * Obtention des données d'affichage des dates :
+    * valeur en objet Carbon + libellé en lettre + délai par rapport à aujourd’hui.
+    *
+    * @param string
+    *
+    * @return Response json
+    **/
+    public function getComboDates($valeur)
     {
-        $data = $this->domaine->getComboDatesLivraison($valeur);
+        $data = $this->domaine->getComboDates($valeur);
         return response()->json($data);
     }
 
 
     /**
-    * Obtention des infos pour constituer la liste des paniers liés à cette livraison.
-    * ToDo : Méthode de ce controleur où de PanierController ? Ou encore ProducteurController ?
+    * Obtention d'une liste de tous les paniers pour attachement/détachement avec la livraison concernée.
+    * Réponse à une requête Ajax.
     *
-    * @param integer $panier_id
+    * @param integer $livraison_id
+    *
     * @return Object View
     **/
     public function listPaniers($livraison_id)
     {
         $model = $this->domaine->findFirst($livraison_id, 'id');
 
-        $paniers = $this->panier->listPaniers($livraison_id);
+        $paniers = $this->panier->getAllPaniersForLivraisonSynchronisation($livraison_id);
+
         $titre_page = trans('titrepage.livraison.listPaniers', ['date' => $model->date_livraison_enclair]);
 
         return view('livraison.modales.listPaniers')->with(compact('model', 'paniers', 'titre_page'));
     }
 
 
+    /**
+    * Synchronisation avec les paniers (avec ou sans les données pivot : producteur et prix).
+    *
+    * @param integer $livraison_id
+    * @param PanierForLivraisonRequest $request
+    *
+    * @return Redirection
+    **/
     public function syncPaniers($livraison_id, PanierForLivraisonRequest $request)
     {
+        // return dd($request);
+
         $result = $this->domaine->SyncPaniers($livraison_id, $request->except('_token'));
+
         if (!empty($result)) {
-            return redirect()->back()->with('success', trans('message.livraison.syncPaniersOk', ['result' => var_dump($result)]));
+            return redirect()->back()->withInput()->with('success', trans('message.livraison.syncPaniersOk', ['result' => var_dump($result)]));
         }else{
             return redirect()->back()->with('status', trans('message.livraison.syncPaniersfailed'));
         }
-        
     }
 
+
+
+    /**
+    * Détachement d’un panier depuis la vue édition d’une livraison.
+    *
+    * @param integer $livraison
+    * @param integer $panier
+    *
+    * @return Redirection
+    **/
     public function detachPanier($livraison, $panier)
     {
-        // dd("detach panier $panier de $livraison");
         $this->domaine->detachPanier($livraison, $panier);
         return redirect()->action('LivraisonController@edit', ['livraison' => $livraison]);
     }
 
+
+
     /**
-    * Obtention des infos pour constituer la liste des producteurs liés à un des paniers de cette livraison.
-    * ToDo : Méthode de ce controleur où de PanierController ? Ou encore ProducteurController ?
+    * Obtention des infos pour constituer la liste des producteurs liés à l’un des paniers lié à cette livraison.
     *
     * @param integer $panier_id
+    *
     * @return Object View
     **/
     public function listProducteursForPanier($panier_id)
@@ -162,15 +190,42 @@ class LivraisonController extends Controller
         return view('livraison.modales.listProducteursForPanier')->with(compact('panier_id', 'producteurs', 'titre_page'));
     }
 
+
+    /**
+    * Synchronisation des relais.
+    *
+    * @param integer $livraison_id
+    * @param Request $request
+    *
+    * @return Redirection
+    **/
     public function syncRelaiss($livraison_id, Request $request)
     {
-        // dd($request->is_lied);
-
-        $result = $this->domaine->SyncRelaiss($livraison_id, $request->except('_token'));
+        $result = $this->domaine->syncRelaiss($livraison_id, $request->except('_token'));
         if (!empty($result)) {
             return redirect()->back()->with('success', trans('message.livraison.syncRelaissOk', ['result' => var_dump($result)]));
         }else{
             return redirect()->back()->with('status', trans('message.livraison.syncRelaissfailed'));
+        }
+        
+    }
+
+
+    /**
+    * Synchronisation des modes de paiement.
+    *
+    * @param integer $livraison_id
+    * @param Request $request
+    *
+    * @return Redirection
+    **/
+    public function syncModespaiements($livraison_id, Request $request)
+    {
+        $result = $this->domaine->syncModespaiements($livraison_id, $request->except('_token'));
+        if (!empty($result)) {
+            return redirect()->back()->with('success', trans('message.livraison.ModepaiementsOk', ['result' => var_dump($result)]));
+        }else{
+            return redirect()->back()->with('status', trans('message.livraison.Modepaiementsfailed'));
         }
         
     }
@@ -181,7 +236,7 @@ class LivraisonController extends Controller
     * Archivage d'une livraison
     *
     * @param integer  /  id de la livraison
-    * @return Response
+    * @return Redirect
     **/
     public function archive($id)
     {

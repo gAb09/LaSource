@@ -4,8 +4,6 @@
 <div class="modal fade" id="ModallistPaniers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 </div>
 
-{{-- @include('livraison.modales.EditPanier') --}}
-
 <div class="modal fade" id="ModallistProducteursForPanier" tabindex="-1" role="dialog" aria-labelledby="ModallistProducteursForPanierLabel">
 </div><!-- /.modal -->
 
@@ -48,19 +46,20 @@
 
 @section('script')
 @parent
-<script src="/js/livraison.js"></script>
+<script 
+	src="/js/livraison.js">
+</script>
 
 <script type="text/javascript">
 
-getComboDatesLivraison('date_cloture', "{{ old('date_cloture', $model->date_cloture) }}");
+getComboDates('date_cloture', "{{ old('date_cloture', $model->date_cloture) }}");
 
 var paie = "{{ old('date_paiement', $model->date_paiement) }}";
 paie = paie.split(" ")[0];
-getComboDatesLivraison('date_paiement', paie);
+getComboDates('date_paiement', paie);
 
 var liv = "{{ old('date_livraison', $model->date_livraison) }}";
 liv = liv.split(" ")[0];
-getComboDatesLivraison('date_livraison', liv);
-
+getComboDates('date_livraison', liv);
 </script>
 @stop

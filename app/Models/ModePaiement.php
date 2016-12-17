@@ -27,4 +27,10 @@ class ModePaiement extends Model
     }
 
 
+    public function indisponibilites()
+    {
+        return $this->morphMany('App\Models\Indisponibilite', 'indisponisable');
+    }
+
+
 }

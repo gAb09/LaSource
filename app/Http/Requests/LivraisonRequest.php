@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 
 use Carbon\Carbon;
+use App\Models\Parameter;
 
 class LivraisonRequest extends Request
 {
@@ -18,38 +19,60 @@ class LivraisonRequest extends Request
         return true;
     }
 
-    private $margeCloture = 5;
-    private $margePaiement = 10;
-    private $margeLivraison = 15;
 
-
+    public function __construct(Parameter $parameter){
+        $this->marge_paiement_livraison = $parameter->where('param', 'marge_paiement_livraison')->first()->valeur;
+        $this->marge_cloture_paiement = $parameter->where('param', 'marge_cloture_paiement')->first()->valeur;
+        $this->marge_cloture_now = $parameter->where('param', 'marge_cloture_now')->first()->valeur;
+    }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Livraison : requis et type date.
+     * 
+     * Limite paiement : requis, type date, avant date_livraison, 
+     * distant d'au moins x jours de date_livraison (avant $date_paiement_max).
+     * x est paramétrable par le gestionnaire  = marge_paiement_livraison, $date_paiement_max en est déduite.
+     *
+     * Cloture : requis, type date, avant date_paiement, après now,
+     * distant d'au moins y jours de date_paiement, (avant $date_cloture_max),
+     * y est paramétrable par le gestionnaire  = marge_cloture_paiement, $date_cloture_max en est déduite.
+     * distant d'au moins z jours de now, (après $date_cloture_min).
+     * z est paramétrable par le gestionnaire  = marge_cloture_now, $date_cloture_min en est déduite.
      *
      * @return array
      */
     public function rules()
     {
-        $buteeCloture = "$this->margeCloture day";
-        $buteePaiement = "$this->margePaiement day";
-        $buteeLivraison = "$this->margeLivraison day";
+        // Livraison
+
+        // Limite paiement
+        $date_paiement_max = Carbon::createFromFormat('Y-m-d', explode(" ", $this->date_livraison)[0])->subDay($this->marge_paiement_livraison-1);
+        // var_dump("now : ".Carbon::now());//CTRL
+        // var_dump("date_livraison : ".$this->date_livraison);//CTRL
+        // var_dump("date_paiement_max : ".$date_paiement_max);//CTRL
+
+        // Cloture
+        $date_cloture_max = Carbon::createFromFormat('Y-m-d', explode(" ", $this->date_paiement)[0])->subDay($this->marge_cloture_paiement-1);
+        $date_cloture_min = Carbon::now()->addDay($this->marge_cloture_now-1);
+        // var_dump("date_cloture_max : ".$date_cloture_max);//CTRL
+        // var_dump("date_cloture_min : ");//CTRL
+        // return dd($date_cloture_min);//CTRL
+
+
 
         return [
-        'date_cloture' => "required|date|after:$buteeCloture|before:date_paiement",
-        'date_paiement' => "required|date|after:$buteePaiement|before:date_livraison",
-        'date_livraison' => "required|date|after:$buteeLivraison",
+        'date_livraison' => "required|date",
+        'date_paiement' => "required|date|before:date_livraison|before:$date_paiement_max",
+        'date_cloture' => "required|date|before:date_paiement|after:now|before:$date_cloture_max|after:$date_cloture_min",
         ];
     }
 
     public function messages()
     {
         return [
-        'date_cloture.after' => "Date de clôture.<br />La date choisie est dans moins de $this->margeCloture jours.",
-        'date_paiement.after' => "Date de paiement.<br />La date choisie est dans moins de $this->margePaiement jours.",
-        'date_livraison.after' => "Date de livraison.<br />La date choisie est dans moins de $this->margeLivraison jours.",
-        'date_cloture.before' => 'Date de clôture.<br />Doit être antérieure à celle de paiement.',
-        'date_paiement.before' => 'Date de paiement.<br />Doit être antérieure à celle de livraison.',
+        'date_paiement.before' => "Date de paiement.<br />Cette date doit être ANTÉRIEURE à celle de livraison<br />et éloignée d'au moins $this->marge_paiement_livraison jours.",
+        'date_cloture.before' => "Date de clôture.<br />Cette date doit être ANTÉRIEURE à celle de paiement<br />et éloignée d'au moins $this->marge_cloture_paiement jours.",
+        'date_cloture.after' => "Date de clôture.<br />Cette date doit être POSTÉRIEURE à aujourd’hui<br />et éloignée d’au moins $this->marge_cloture_now jours.",
         ];
     }
 }

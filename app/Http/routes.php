@@ -134,7 +134,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 // LIVRAISON...
-	Route::get('livraison/combodate/{valeur}', 'LivraisonController@getComboDatesLivraison');
+	Route::get('livraison/combodate/{valeur}', 'LivraisonController@getComboDates');
 
 	// Pivot Panier
 	Route::get('livraison/{livraison_id}/listpaniers', 
@@ -151,6 +151,10 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::put('livraison/{livraison}/syncRelaiss', 
 		['as' => 'livraisonSyncRelaiss', 'uses' => 'LivraisonController@syncRelaiss']
+		);
+
+	Route::put('livraison/{livraison}/syncModespaiements', 
+		['as' => 'livraisonSyncModespaiements', 'uses' => 'LivraisonController@syncModespaiements']
 		);
 
 	Route::patch('livraison/archive/{id}', 

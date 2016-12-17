@@ -60,70 +60,83 @@ class PanierDomaine extends Domaine
 	}
 
 
-	public function listPaniers($livraison_id = null)
-	{
-		$models = $this->model->with('Producteur', 'livraison')->where('is_actived', 1)->orderBy('type')->get();
 
-		/* livraison.create */
-		if ($livraison_id == null) { 
-			return $models;
-		}
-
-		/* livraison.update */
-		$models->each(function($model) use($livraison_id)
-		{
-			$model->nom = str_replace(['<br />', '<br/>'], " - ", $model->nom);
-			$model = $this->preparePaniersForView($model, $livraison_id);
-		});
-		return $models;
-	}
-
-	public function paniersChoisis($livraison_id = null)
+    /**
+    * Obtention des paniers liés à la livraison concernée,
+    * avec gestion de l'affichage des données de pivot livraison/panier :
+    * – producteur,
+    * – prix_livraison.
+    *
+    * @param integer $livraison_id
+    * @return Collection de App\Models\Panier
+    **/
+	public function ListForLivraisonEdit($livraison_id)
 	{
 
-		$panierschoisis = Panier::whereHas('livraison', function ($query) use($livraison_id){
+		$paniers_lied = $this->model->whereHas('livraison', function ($query) use($livraison_id){
 			$query->where('livraison_id', $livraison_id);
 		})->with('producteur')->where('is_actived', 1)->get();
 
-		foreach ($panierschoisis as $panier) {
+		foreach ($paniers_lied as $panier) {
 			$producteur = $panier->livraison->find($livraison_id)->pivot->producteur;
 			if(is_null($producteur) ){
 				if(!empty(old('producteur.'.$panier->id))){
-					$panier->prod_value = old('producteur.'.$panier->id);
+					$panier->producteur = old('producteur.'.$panier->id);
 				}else{
-					$panier->prod_value = 0;
+					$panier->producteur_id = 0;
 				}
 			}else{
-				$panier->prod_value = $producteur;
+				$panier->producteur_id = $producteur;
 			}
 
 			$prix_livraison = $panier->livraison->find($livraison_id)->pivot->prix_livraison;
 			if(is_null($prix_livraison) ){
 				if(!empty(old('prix_livraison.'.$panier->id))){
-					$panier->liv_value = old('prix_livraison.'.$panier->id);
+					$panier->prix_livraison = old('prix_livraison.'.$panier->id);
 				}else{
-					$panier->liv_value = 0;
+					$panier->prix_livraison = 0;
 				}
 			}else{
-				$panier->liv_value = $prix_livraison;
+				$panier->prix_livraison = $prix_livraison;
 			}
 		}
 
-		return $panierschoisis;
+		return $paniers_lied;
 	}
 
 
-	public function PanierSyncProducteurs($panier_id, $producteurs = array())
+
+    /**
+    * Obtention d'une liste de tous les paniers pour attachement/détachement avec la livraison concernée,
+    * avec pour chaque panier :
+    * – réécriture de son nom.
+    * – détection si déjà lié ou non.
+    *
+    * @param integer $livraison_id
+    * @return Object View
+    **/
+	public function getAllPaniersForLivraisonSynchronisation($livraison_id)
 	{
-		$model = Panier::find($panier_id);
-		if(is_null($producteurs)){
-			$model->producteur()->detach();
-		}else{
-			$model->producteur()->sync($producteurs);
-		}
+		$models = $this->model->with('Producteur', 'livraison')->where('is_actived', 1)->orderBy('type')->get();
+
+		$models->each(function($model) use($livraison_id)
+		{
+			$model->nom = str_replace(['<br />', '<br/>'], " - ", $model->nom);
+			$model = $this->checkIfPanierIsLied($model, $livraison_id);
+		});
+		return $models;
 	}
 
-	private function preparePaniersForView($model, $livraison_id)
+
+
+    /**
+    * Détection si un panier est déjà déjà lié ou non à la livraison concernée.
+    *
+    * @param App\Models\Panier $model
+    * @param integer $livraison_id
+    * @return App\Models\Panier
+    **/
+	private function checkIfPanierIsLied($model, $livraison_id)
 	{
 		$livraisons = $model->livraison;
 		if(!empty($livraisons)){
@@ -139,6 +152,16 @@ class PanierDomaine extends Domaine
 		return $model;
 	}
 
+
+	public function PanierSyncProducteurs($panier_id, $producteurs = array())
+	{
+		$model = Panier::find($panier_id);
+		if(is_null($producteurs)){
+			$model->producteur()->detach();
+		}else{
+			$model->producteur()->sync($producteurs);
+		}
+	}
 }
 
 

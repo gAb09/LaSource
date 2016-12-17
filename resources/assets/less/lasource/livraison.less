@@ -20,13 +20,16 @@ Vue index
 	.L_ARCHIVABLE{
 		padding: 0;
 	}
+	.datecreation{
+		font-size: 0.6em;
+	}
 }
 
 
 /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 Vue createdit (create & edit)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-.form_dates, .form_paniers, .form_relaiss{
+.edit_show_livraison{
 	background-color:@color_livraison;
 	margin-top:10px;
 	justify-content:space-between;
@@ -35,7 +38,18 @@ Vue createdit (create & edit)
 	// border: 1px solid @color_livraison_dark;
 }
 
-.form_dates{
+
+// .form_dates, .form_paniers, .form_relaiss, .form_modepaiements{
+// 	background-color:@color_livraison;
+// 	margin-top:10px;
+// 	justify-content:space-between;
+// 	align-items: center;
+// 	box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
+// 	// border: 1px solid @color_livraison_dark;
+// }
+
+
+.form_dates, .showdates{
 	min-height: 100px;
 	input{
 		width:250px;
@@ -55,8 +69,8 @@ Vue createdit (create & edit)
 }
 
 
-.form_paniers{
-	.panierschoisis{
+.form_paniers, .showpaniers{
+	.paniers_lied{
 		tr{
 			font-size:0.8em;
 			background-color: @color_panier;
@@ -64,13 +78,16 @@ Vue createdit (create & edit)
 			border-color: @color_livraison_dark;
 			border-width: 1px 0;
 		}
-		td{
+		td, th{
 			padding: 0px 10px;
 		}
 		td .nomcourt {
 			font-size: 1.1em;
 			font-weight: bold;
 			width: 150px;
+		}
+		.producteur {
+			background-color: @color_panier;
 		}
 		select{
 			margin-top:10px;
@@ -82,6 +99,25 @@ Vue createdit (create & edit)
 	}
 }
 
+.showpaniers{
+	.paniers_lied{
+		td, th{
+			padding: 10px 10px;
+		}
+		.nomcourt {
+			width: 33%;
+		}
+		.producteur {
+			background-color: @color_panier;
+			width: 33%;
+		}
+		.prix{
+			width: 33%;
+		}
+	}
+}
+
+
 .boutonspaniers{
 	flex-flow: column wrap;
 	align-items: center;	
@@ -91,7 +127,7 @@ Vue createdit (create & edit)
 }
 
 
-.form_relaiss{
+.form_relaiss, .showrelaiss{
 	.relaiscontainer.IndispoGlobal{
 		// background-color: rgba(230, 240, 250, 0.3);
 		// border: 1px solid @color_warning;
@@ -182,6 +218,98 @@ Vue createdit (create & edit)
 	}
 }
 
+
+.form_modepaiements, .showmodepaiements{
+	.modepaiementcontainer.IndispoGlobal{
+		// background-color: rgba(230, 240, 250, 0.3);
+		// border: 1px solid @color_warning;
+		p{
+			// color: @color_txt_indisponisable;
+		}
+	}
+	.modepaiementcontainer.IndispoPourLivraison{
+		// background-color: rgba(230, 240, 250, 0.3);
+		// border: 1px solid @color_danger;
+		p{
+			// color: @color_txt_indisponisable;
+		}
+	}
+	.modepaiementcontainer{
+		padding: 5px;
+		align-self: start;
+		box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+		display: flex;
+		flex-direction: column;
+		background-color: @color_modepaiement;
+		text-align: center;
+		min-width: 13%;
+		max-width: 15%;
+		p{
+			line-height: 1.3em;
+			font-size: 0.8em;
+			.gras{
+				font-size: 1.1em;
+				font-weight: bold;
+				line-height: 1.3em;
+			}
+			.ville{
+				text-transform: uppercase;			
+			}
+		}
+		p.indispo{
+			color: @color_txt_indisponisable;
+			.premiere::before{
+				content: "Pour info";
+				display: block;
+			}
+		}
+
+		p.IndispoPourLivraison{
+			font-size: 0.9em;
+			color: @color_danger;
+			.premiere::before{
+				content: "Problème pour la livraison";
+				display: block;
+			}
+		}
+		p.IndispoPourLivraison::after{
+			content: "(Nota : ce mode de paiement refusera d’être associé tant que le problème de date subsistera)";
+			display: block;
+			font-size: 0.8em;
+			line-height: 1em;
+			margin-top: 5px;
+		}
+		p.IndispoGlobal{
+			font-size: 0.9em;
+			color: darken(@color_warning, 10%);
+			.premiere::before{
+				content: "Attention !!";
+				display: block;
+			}
+		}
+		.liaison{
+			#flagLied, #flagLied.LiedWIthThisLivraison, .toggle{
+				color: #fff;
+				font-size: 0.75em;
+				font-weight: 400;
+				width: auto;
+				height: 20px;
+				margin: 0;
+				padding: 0 5px;
+				text-align: center;
+			}
+			#flagLied{
+				color: @color_danger;
+			}
+			#flagLied.LiedWIthThisLivraison{
+				color: @color_success;
+			}
+			.toggle{
+			}
+		}
+	}
+}
+
 /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 Vue handleLivraisonChanges
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -234,6 +362,12 @@ Vues modales
 	margin: 30px auto;
 	width: 75%;
 }
+
+.modal-modemploi {
+    position: relative;
+    top: 0;
+    box-shadow: none;
+    }
 
 .choisirunproducteur {
 	flex-direction: row;

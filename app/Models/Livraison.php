@@ -22,7 +22,7 @@ class Livraison extends Model
 
     protected $appends = array('class_actived', 'state');
 
-    private $state = "L_EXISTANTE";
+    private $state = "L_CREATED";
 
     protected $guarded = [];
 
@@ -37,6 +37,12 @@ class Livraison extends Model
     public function Relais()
     {
         return $this->belongsToMany('App\Models\Relais')->withPivot('motif');
+    }
+
+
+    public function Modepaiements()
+    {
+        return $this->belongsToMany('App\Models\ModePaiement')->withPivot('motif');
     }
 
 
@@ -98,6 +104,22 @@ class Livraison extends Model
     }
 
 
+    public function getDateCreationEnclairAttribute($value)
+    {
+        $value = $this->created_at;
+        if (!is_null($value)) {
+            return $value->formatLocalized('%A %e %B %Y');
+        }
+    }
+
+    public function getDateCreationCourteAttribute($value)
+    {
+        $value = $this->created_at;
+        if (!is_null($value)) {
+            return $value->formatLocalized('%e/%m/%Y');
+        }
+    }
+
     /**
      * Non implémentée.
      * Prévoit la possibilté de fixer des conditions avant qu'une livraison créée puisse être ouverte,
@@ -114,7 +136,7 @@ class Livraison extends Model
 
     public function getStateAttribute($value)
     {
-        $value = "L_EXISTANTE";
+        $value = "L_CREATED";
 
         if ($this->checkIfOkForOuverture()) {
             $value = "L_OUVERTE";

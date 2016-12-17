@@ -11,7 +11,7 @@ return [
     |
     */
 
-        'L_EXISTANTE' => 'Existante',
+        'L_CREATED' => 'Créée',
         'L_OUVERTE' => 'Ouverte',
         'L_CLOTURED' => 'Clôturée',
         'L_ARCHIVABLE' => 'Archivable',

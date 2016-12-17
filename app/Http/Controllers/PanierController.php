@@ -11,8 +11,6 @@ use App\Http\Requests;
 
 class PanierController extends Controller
 {
-    use getDeletedTrait;
-
     
     public function __construct(Domaine $domaine, Request $request)
     {
@@ -42,7 +40,9 @@ class PanierController extends Controller
 
     public function edit($id)
     {
+        $this->keepUrlInitiale();
     	$model = $this->domaine->findFirst($id);
+        
     	return view('panier.edit')->with(compact('model'));
     }
 
@@ -50,8 +50,9 @@ class PanierController extends Controller
 
     public function update($id, PanierRequest $request)
     {
+        $url_back = $this->getUrlInitiale();
         if($this->domaine->update($id, $request)){
-            return redirect()->route('panier.index')->with('success', trans('message.panier.updateOk'));
+            return redirect($url_back)->with('success', trans('message.panier.updateOk'));
         }else{
             $message = $this->domaine->getMessage();
             return redirect()->back()->with('status', $message);

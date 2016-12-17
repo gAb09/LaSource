@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>La Source</title>
 
     <!-- Fonts -->
     <link href="{{asset('font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
@@ -155,7 +155,6 @@
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
     @section('script')
     <script src="/js/global.js"></script>
-    <script>$.datepicker.setDefaults( $.datepicker.regional[ "fr" ] );</script>
     @show
 
 </body>
