@@ -2,14 +2,15 @@
 	<h4>Les dates</h4>
 </div>
 
-<!-- date_cloture -->
-@if ($errors->has('date_cloture'))
-	<div id="div_date_cloture" class="datecontainer error_txt">
+	<!-- date_livraison -->
+@if ($errors->has('date_livraison'))
+	<div id="div_date_livraison" class="datecontainer error_txt">
 @else
-	<div id="div_date_cloture" class="datecontainer">
+	<div id="div_date_livraison" class="datecontainer">
 @endif
-		@include('livraison.partials.date_cloture')
+		@include('livraison.partials.date_livraison')
 	</div>
+
 
 	<!-- date_paiement -->
 @if ($errors->has('date_paiement'))
@@ -20,14 +21,17 @@
 		@include('livraison.partials.date_paiement')
 	</div>
 
-	<!-- date_livraison -->
-@if ($errors->has('date_livraison'))
-	<div id="div_date_livraison" class="datecontainer error_txt">
+
+<!-- date_cloture -->
+@if ($errors->has('date_cloture'))
+	<div id="div_date_cloture" class="datecontainer error_txt">
 @else
-	<div id="div_date_livraison" class="datecontainer">
+	<div id="div_date_cloture" class="datecontainer">
 @endif
-		@include('livraison.partials.date_livraison')
+		@include('livraison.partials.date_cloture')
 	</div>
+
+
 
 <div>
 	<button type="submit" class="btn btn-sm btn-success">
