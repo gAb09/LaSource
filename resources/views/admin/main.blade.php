@@ -16,6 +16,8 @@
                     {{Html::linkAction('OMController@transfertPanier', 'Transfert des paniers')}}<br />
                     <br />
                     {{Html::linkAction('OMController@transfertLivraison', 'Transfert des livraisons')}}<br />
+                    <br />
+                    {{Html::linkAction('OMController@transfertCommandes', 'Transfert des commandes')}}<br />
                 </div>
             </div>
         </div>

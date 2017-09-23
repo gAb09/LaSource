@@ -109,6 +109,7 @@ class AuthController extends Controller
 
     /**
      * Handle an authentication attempt.
+     * Redirige sur différentes pages d'accueil selon le rôle.
      *
      * @return Response
      */

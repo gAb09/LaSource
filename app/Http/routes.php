@@ -73,6 +73,7 @@ $this->get('om/transfertrelais', 'OMController@transfertRelais');
 $this->get('om/transfertproducteur', 'OMController@transfertProducteur');
 $this->get('om/transfertpanier', 'OMController@transfertPanier');
 $this->get('om/transfertlivraison', 'OMController@transfertLivraison');
+$this->get('om/transfertcommandes', 'OMController@transfertCommandes');
 
 
 Route::group(['middleware' => 'auth'], function () {

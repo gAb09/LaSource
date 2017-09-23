@@ -17,4 +17,14 @@ return [
         'L_ARCHIVABLE' => 'Archivable',
         'L_ARCHIVED' => 'Archivée',
         'L_ANNULED' => 'Annulée',
+
+        'C_CREATED' => 'Créée',
+        'C_REGISTERED' => 'Enregistrée',
+        'C_VALIDED' => 'Validée',
+        'C_NONPAID' => 'Impayée',
+        'C_ARCHIVABLE' => 'Archivable',
+        'C_OUBLIED' => 'Oubliée',
+        'C_SUSPECTED' => 'Suspecte',
+        'C_ARCHIVED' => 'Archivée',
+        'C_ANNULED' => 'Annulée',
     ];

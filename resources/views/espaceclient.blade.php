@@ -11,7 +11,6 @@
                 </div>
 
                 <div class="panel-body">
-
                     <h3>Mes coordonnées</h3>
                     {{ $model->Client->prenom }} {{ $model->Client->nom }} ({{ $model->pseudo }})<br />
                     {{ $model->Client->ad1 }}<br />
@@ -21,8 +20,8 @@
                     Portable : {{ $model->Client->mobile }}<br />
                     Courriel : {{ $model->email }}<br />
                     Rôle : {{ $model->role->etiquette }}<br />
-                    
                 </div>
+                
                 <div class="panel-body">
 
                     <h3>Mes commandes</h3>

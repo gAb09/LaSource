@@ -6,12 +6,17 @@ use App\Models\Relais;
 use App\Models\Producteur;
 use App\Models\Panier;
 use App\Models\Livraison;
+use App\Models\Commande;
+use App\Models\Ligne;
+use App\Models\ModePaiement;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+
+use Carbon\Carbon;
 
 class OMController extends Controller
 {	
@@ -121,5 +126,120 @@ class OMController extends Controller
 		}
 		return redirect()->back();
 	}
+
+
+	public function transfertCommandes()
+	{
+		$olds = \DB::connection('mysql_old')->table('paniers_commandes')->select('*')->get();
+
+		foreach ($olds as $old) {
+			$model = new Commande;
+
+			$model->id = $old->id_commande;
+			$model->livraison_id = $old->id_date;
+			$model->client_id= trim($old->numero_client, 'C');
+			$model->numero = $old->numero_commande;
+			$model->created_at = $old->date_creation;
+			if ($old->date_modif != '0000-00-00') {
+				$model->updated_at = $old->date_modif;
+			}else{
+				$model->updated_at = '0';
+			}
+			$model->relais_id = $this->transcode_oldrelais($old->lieu_livraison);
+			$model->modepaiement_id = $this->transcode_modepaiement($old->mode_reglement);
+			$model->is_paid = $old->paiement_ok;
+			$model->is_livred = $old->livraison_ok;
+			$model->is_retired = $old->retrait_ok;
+			$model->is_actived = 1;
+			$model->remarques = '';
+
+			$lignes = $this->RecompositionLignesDeLaCommande($old);
+
+			$model->save();
+			$model->lignes()->saveMany($lignes);
+
+		}
+
+		// return redirect()->back();
+		return var_dump('fini');
+	}
+
+
+
+	private function transcode_modepaiement($modepaiement)
+	{
+		if ($modepaiement == 'chèque') {
+			return ModePaiement::where('nom', 'Chèque')->first()->id;
+		}elseif ($modepaiement == 'virement') {
+			return ModePaiement::where('nom', 'Virement')->first()->id;
+		}
+		return ModePaiement::where('nom', 'Problème')->first()->id;
+	}
+
+
+
+	private function transcode_oldrelais($ville)
+	{
+		switch ($ville) {
+			case 'Foix':
+				return 9;
+				break;
+			
+			case 'La Bastide de Sérou':
+				return 10;
+				break;
+			
+			case 'Pamiers':
+				return 11;
+				break;
+			
+			case 'Saint-Girons':
+				return 12;
+				break;
+			
+			default:
+				return 13;
+				break;
+		}
+	}
+
+	private function RecompositionLignesDeLaCommande($commande)
+	{
+		$lignes=array();
+
+		// Mis en tableau des colonnes de la table
+		$colonnes = get_object_vars($commande);
+
+		foreach ($colonnes as $colonne => $valeur) {
+
+			// Détection des colonnes concernant les quantités des lignes de la commande
+			if (substr_count($colonne, 'ligne') == 1 and substr_count($colonne, '_qte') == 1) {
+
+				// Détection si quantité valide
+				if (is_integer($valeur) and $valeur != 0) {
+					// Récupération du numéro de la ligne
+					$retrait = ['ligne' => '', '_qte' => ''];
+					$numeroLigne = strtr($colonne, $retrait);
+					$lignes[] = $this->RecompositionLigne($numeroLigne, $commande);
+				}
+			}
+		}
+		return $lignes;
+	}
+
+	private function RecompositionLigne($numeroLigne, $commande)
+	{
+		$ligne = new Ligne;
+
+		$NameColonneQuantite = 'ligne'.$numeroLigne.'_qte';
+		$NameColonnePanier = 'ligne'.$numeroLigne.'_colis';
+
+		$ligne->quantite = $commande->$NameColonneQuantite;
+		$ligne->panier_id = $commande->$NameColonnePanier;
+		// $ligne->commande_id = $commande->id_commande;
+
+		return $ligne;
+	}
+
 
 }
