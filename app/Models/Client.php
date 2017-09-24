@@ -34,5 +34,9 @@ class Client extends Model
         return $this->belongsTo('App\Models\User');
     }
 
+    public function getNomCompletAttribute($value)
+    {
+            return $this->prenom.' '.$this->nom;
+        }
 
 }
