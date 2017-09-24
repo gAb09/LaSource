@@ -16,9 +16,9 @@ class LivraisonDomaine extends Domaine
 	}
 
 
-	public function index()
+	public function index($nbre_pages = 8)
 	{
-		return $this->model->orderBy('id', 'desc')->get();
+		return $this->model->orderBy('id', 'desc')->paginate($nbre_pages);
 	}
 
 

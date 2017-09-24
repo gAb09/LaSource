@@ -53,6 +53,8 @@
 
 </table>
 
+{!! $models->render() !!}
+
 
 @stop
 
