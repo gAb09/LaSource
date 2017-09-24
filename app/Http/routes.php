@@ -172,6 +172,10 @@ Route::group(['middleware' => 'auth'], function () {
 		['as' => 'PanierSyncProducteurs', 'uses' => 'PanierController@syncProducteurs']
 		);
 
+// COMMANDE...
+	Route::resource('commande', 'CommandeController');
+
+
 
 	
 // DASHBOARD

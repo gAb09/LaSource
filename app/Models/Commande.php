@@ -36,47 +36,61 @@ class Commande extends Model
         return $this->belongsTo('App\Models\Livraison');
     }
 
+    public function Client()
+    {
+        return $this->belongsTo('App\Models\Client');
+    }
 
+
+    public function getMontantTotalAttribute($value)
+    {
+        $value = 0;
+        foreach ($this->lignes as $ligne) {
+            $value += $ligne->montant_ligne;
+        }
+        return $value;
+    }
 
     public function getStateAttribute($value)
     {
-    	$livraison = $this->with('Livraison')->where('id', $this->id)->first()->livraison;
+    // 	$livraison = $this->with('Livraison')->where('id', $this->id)->first()->livraison;
 
-    	$value = "C_CREATED";
+    // 	$value = "C_CREATED";
 
-    	if ($this->checkIfOkForRegister()) {
-    		$value = "C_REGISTERED";
-    	}
+    // 	if ($this->checkIfOkForRegister()) {
+    // 		$value = "C_REGISTERED";
+    // 	}
 
-    	if ($livraison->date_paiement->diffInDays(Carbon::now(), false) > 0) {
-    		if ($this->is_paid) {
-    			$value = "C_VALIDED";
-    		}else{
-    			$value = "C_NONPAID";
-    		}
-    	}
-
-
-    	if ($livraison->date_livraison->diffInDays(Carbon::now(), false) > 0) {
-    		if ($this->is_paid) {
-    			if ($this->is_retired) {
-    				$value = "C_ARCHIVABLE";
-    			}else{
-    				$value = "C_OUBLIED";
-    			}
-    		}else{
-    			if ($this->is_retired) {
-    				$value = "C_NONPAID";
-    			}else{
-    				$value = "C_SUSPECTED";
-    			}
-    		}
-    	}
+    // 	if ($livraison->date_paiement->diffInDays(Carbon::now(), false) > 0) {
+    // 		if ($this->is_paid) {
+    // 			$value = "C_VALIDED";
+    // 		}else{
+    // 			$value = "C_NONPAID";
+    // 		}
+    // 	}
 
 
-        if ($this->is_archived) {
-            $value = 'C_ARCHIVED';
-        }
+    // 	if ($livraison->date_livraison->diffInDays(Carbon::now(), false) > 0) {
+    // 		if ($this->is_paid) {
+    // 			if ($this->is_retired) {
+    // 				$value = "C_ARCHIVABLE";
+    // 			}else{
+    // 				$value = "C_OUBLIED";
+    // 			}
+    // 		}else{
+    // 			if ($this->is_retired) {
+    // 				$value = "C_NONPAID";
+    // 			}else{
+    // 				$value = "C_SUSPECTED";
+    // 			}
+    // 		}
+    // 	}
+
+
+    //     if ($this->is_archived) {
+    //         $value = 'C_ARCHIVED';
+    //     }
+        $value = 'L_ARCHIVABLE';
 
         return $value;
     }

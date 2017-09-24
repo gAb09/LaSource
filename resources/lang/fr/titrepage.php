@@ -76,6 +76,11 @@ return [
                 'edit' => 'Modification d’une période d’indisponibilité associée à <br />“:nom”',
             ],
 
+        'commande' => 
+            [
+                'index' => 'Les commandes',
+            ],
+
         'dashboard' => 
             [
                 'main' => 'Tableau de bord',

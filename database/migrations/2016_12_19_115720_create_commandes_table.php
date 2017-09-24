@@ -17,7 +17,7 @@ class CreateCommandesTable extends Migration
             $table->increments('id');
             $table->integer('livraison_id')->unsigned();
             $table->integer('client_id')->unsigned();
-            $table->string('numero', 8);
+            $table->string('numero', 15);
             $table->integer('relais_id')->unsigned();
             $table->integer('modepaiement_id')->unsigned();
             $table->tinyInteger('is_actif')->default(1)->unsigned();
