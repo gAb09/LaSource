@@ -40,4 +40,22 @@ trait ModelTrait
         }
         return 'is_not_actived';
     }
+
+        public function getDateCreationCourteAttribute($value)
+    {
+        $value = $this->created_at;
+        if (!is_null($value)) {
+            return $value->formatLocalized('%e/%m/%Y');
+        }
+    }
+
+    public function getDateCreationEnclairAttribute($value)
+    {
+        $value = $this->created_at;
+        if (!is_null($value)) {
+            return $value->formatLocalized('%A %e %B %Y');
+        }
+    }
+
+
 }
