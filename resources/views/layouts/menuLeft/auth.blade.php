@@ -20,6 +20,8 @@
 
 <li>{{Html::linkAction('ClientController@index', 'Les clients')}}</li>
 
+<li>{{Html::linkAction('CommandeController@index', 'Les commandes')}}</li>
+
 <li>{{Html::linkAction('UserController@index', 'Les users')}}</li>
 
 <li class="dropdown">

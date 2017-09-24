@@ -14,9 +14,9 @@ class CommandeDomaine extends Domaine
 	}
 
 
-	public function index()
+	public function index($pages = 5)
 	{
-		return $this->model->with('livraison', 'client', 'lignes.panier', 'lignes.producteur' )->orderBy('id', 'desc')->get();
+		return $this->model->with('livraison', 'client', 'lignes.panier', 'lignes.producteur' )->orderBy('id', 'desc')->paginate($pages);
 	}
 
 }

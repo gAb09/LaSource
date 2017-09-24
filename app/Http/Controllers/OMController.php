@@ -161,7 +161,7 @@ class OMController extends Controller
 		}
 
 		// return redirect()->back();
-		return var_dump('fini');
+		return var_dump('transfert des commandes terminé');
 	}
 
 
@@ -182,24 +182,24 @@ class OMController extends Controller
 	{
 		switch ($ville) {
 			case 'Foix':
-				return 9;
-				break;
+			return 9;
+			break;
 			
 			case 'La Bastide de Sérou':
-				return 10;
-				break;
+			return 10;
+			break;
 			
 			case 'Pamiers':
-				return 11;
-				break;
+			return 11;
+			break;
 			
 			case 'Saint-Girons':
-				return 12;
-				break;
+			return 12;
+			break;
 			
 			default:
-				return 13;
-				break;
+			return 13;
+			break;
 		}
 	}
 
@@ -234,12 +234,123 @@ class OMController extends Controller
 		$NameColonneQuantite = 'ligne'.$numeroLigne.'_qte';
 		$NameColonnePanier = 'ligne'.$numeroLigne.'_colis';
 
+
 		$ligne->quantite = $commande->$NameColonneQuantite;
 		$ligne->panier_id = $commande->$NameColonnePanier;
-		// $ligne->commande_id = $commande->id_commande;
+		$ligne->prix_final = $this->getPrixFinal($ligne->panier_id, $commande);
 
 		return $ligne;
 	}
 
 
+	private function getPrixFinal($panier_id, $commande)
+	{
+		$date = Carbon::createFromFormat('Y-m-d', '2017-09-05');
+		$date_creation = Carbon::createFromFormat('Y-m-d', $commande->date_creation);
+
+		if ($date->diffInDays($date_creation) > 0) {
+			
+			switch ($panier_id) {
+				case '1':
+				return 80.00;
+				break;
+
+				case '2':
+				return 130.00;
+				break;
+
+				case '3':
+				return 0;
+				break;
+
+				case '4':
+				return 53.50;
+				break;
+
+				case '5':
+				return 26.50;
+				break;
+
+				case '6':
+				return 0;
+				break;
+
+				case '7':
+				return 43.50;
+				break;
+
+				case '8':
+				return 86.00;
+				break;
+
+				case '9':
+				return 56.00;
+				break;
+
+				case '10':
+				return 34.00;
+				break;
+
+				case '11':
+				return 39.50;
+				break;
+
+				case '12':
+				return 78.00;
+				break;
+
+				case '13':
+				return 50.00;
+				break;
+
+				case '14':
+				return 34.50;
+				break;
+
+				case '15':
+				return 39.00;
+				break;
+
+				case '16':
+				return 75.92;
+				break;
+
+				case '17':
+				return 37.50;
+				break;
+
+				case '18':
+				return 31.50;
+				break;
+
+				case '19':
+				return 62.50;
+				break;
+
+				case '20':
+				return 41.00;
+				break;
+
+				case '21':
+				return 81.00;
+				break;
+
+				case '22':
+				return 21.00;
+				break;
+
+				case '23':
+				return 0;
+				break;
+
+				default:
+				return 0;
+				break;
+			}
+
+		}else{
+
+		}
+
+	}
 }

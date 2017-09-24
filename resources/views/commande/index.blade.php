@@ -47,6 +47,7 @@
 
 </table>
 
+{!! $models->render() !!}
 
 @stop
 
