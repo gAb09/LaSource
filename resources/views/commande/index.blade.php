@@ -19,16 +19,19 @@
 
 
 @section('content')
-<table class="index_livraisons  col-md-12">
+<table class="index_commandes  col-md-12">
 	<thead>
 		<th style="width:10%">
 			N°
 		</th>
-		<th  style="width:20%">
+		<th  style="width:15%">
 			Client
 		</th>
 		<th  style="width:60%">
 			Paniers commandés
+		</th>
+		<th  style="width:15%">
+			Livraison concernée
 		</th>
 		<th style="width:10%">
 			Statut

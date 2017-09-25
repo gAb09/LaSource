@@ -1,0 +1,42 @@
+@import "variables.less";
+
+
+/*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Vue index
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+.index_commandes{
+	border-collapse: collapse;
+	thead{
+		background-color: @color_commande_dark;
+		color:@color_commande;
+	}
+	tbody tr{
+		background-color: @color_commande;
+		font-size: 0.9em;
+		border-bottom: 1px solid darken(@color_commande, 30%);
+		.total{
+			background-color: darken(@color_commande, 8%);
+		border-bottom: 0px;
+		}
+	}
+	th, td{
+		padding: 6px;
+	}
+	td.lignes_commande{
+		padding-bottom: 0px;
+	}
+	td.panier{
+		background-color: @color_commande;
+		padding-right:20px;
+		font-style: italic;
+	}
+	tr.top_txt{
+		vertical-align : top;
+	}
+	.C_ARCHIVABLE{
+		padding: 0;
+	}
+	.datecreation{
+		font-size: 0.6em;
+	}
+}

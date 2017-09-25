@@ -1,5 +1,5 @@
-<tr>
-	<td style='padding-right:20px'>
+<tr class="top_txt" >
+	<td class="Panier" >
 		@if($ligne->panier_id == 3 or $ligne->panier_id == 6)
 			<span class="is_error_txt">Panier obsolète</span><br/>
 		@else
@@ -15,14 +15,14 @@
 	<td>
 		<b>{{ $ligne->quantite }}</b>
 	</td>
-	<td style='margin:5px;font-size:smaller' >
-		<span >x</span>
+	<td>
+		x<br/>
 	</td>
 	<td>
 		{{ $ligne->prix_final }}
 	</td>
 	<td>
-		<span style='margin:5px;font-size:smaller'>=</span>
+		=<br/>
 	</td>
 	<td>
 		{{ $ligne->montant_ligne }}

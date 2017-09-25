@@ -90,7 +90,7 @@ class Commande extends Model
     //     if ($this->is_archived) {
     //         $value = 'C_ARCHIVED';
     //     }
-        $value = 'L_ARCHIVABLE';
+        $value = 'C_ARCHIVABLE';
 
         return $value;
     }
