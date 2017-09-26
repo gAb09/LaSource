@@ -1,0 +1,45 @@
+/*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+COULEURS
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Couleurs de bootstrap */
+/* Modèles */
+/*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Vue index
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+.index_commandes {
+  border-collapse: collapse;
+}
+.index_commandes thead {
+  background-color: #9e9e1f;
+  color: #f4f4c8;
+}
+.index_commandes tbody tr {
+  background-color: #f4f4c8;
+  font-size: 0.9em;
+  border-bottom: 1px solid #dbdb48;
+}
+.index_commandes tbody tr .total {
+  background-color: #ededa6;
+  border-bottom: 0px;
+}
+.index_commandes th,
+.index_commandes td {
+  padding: 6px;
+}
+.index_commandes td.lignes_commande {
+  padding-bottom: 0px;
+}
+.index_commandes td.panier {
+  background-color: #f4f4c8;
+  padding-right: 20px;
+  font-style: italic;
+}
+.index_commandes tr.top_txt {
+  vertical-align: top;
+}
+.index_commandes .C_ARCHIVABLE {
+  padding: 0;
+}
+.index_commandes .datecreation {
+  font-size: 0.6em;
+}

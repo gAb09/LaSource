@@ -1,0 +1,125 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf360
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red218\green6\blue56;\red5\green5\blue5;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww20720\viewh16360\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\f0\fs24 \cf0 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+AVANT\
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+Depuis Bioariege.fr :\
+clic sur "Paniers" => paniers_liste.php\
+\
+Depuis paniers_liste :\
+clic sur "d\'e9j\'e0 inscrit" => paniers/login.php\
+\
+Dans paniers/login :\
+Remplissage du formulaire - recherche du login\
+\
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+MAINTENANT\
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\b \cf0 Depuis Bioariege.fr :\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\b0 \cf0 clic sur "Paniers" => ROUTE /paniers as accueil\
+\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\b \cf0 Dans accueil :\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\b0 \cf0 \'95 Explication des paniers avec\
+	\'96 Liste des d\'e9p\'f4ts\
+	\'96 Liste des prochaines dates avec d\'e9tails produits\
+\'95 Liens\
+	\'96 Liste de tous les produits\
+	\'96 Liste de tous les producteurs ?\
+	\'96 S'inscrire => ROUTE /paniers/inscription\
+	\'96 Commander (d\'e9j\'e0 inscrit) => /paniers/login\
+\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\b\fs28 \cf0 Processus de transfert
+\fs24 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\b0 \cf0 Il va falloir proc\'e9der \'e0 un basculement  \
+\'95 de l'ancien processus de cryptage/v\'e9rification vers le nouveau,\
+\'95 de certains champs de la table \'93paniers_clients\'93 vers les tables \'93users\'93 et \'93\'93clients.\
+\'95 de l'attribution du r\'f4le \'93client\'94.\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\b \cf0 Attention \'e0 l'interclassement Latin1 !!! \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\b0 \cf0 => choix est fait de conserver ancienne table et de transf\'e9rer dans 2 nouvelles tables.
+\b \
+
+\b0 \
+\pard\tqc\tx1160\tqc\tx3820\tqc\tx6600\tx8100\ql\qnatural\pardirnatural
+
+\b \cf0 	paniers_clients	clients	users\
+
+\b0 	id_client	id	logable_id\
+	\'96	\'96	logable_type ???\
+\cf2 	numero_client	\cf3 accesseur dans mod\'e8le\cf2 	\'96\
+	id_session_membre	\'96	\'96\
+\cf0 	nom, prenom	nom, prenom	\'96\
+	ad1, ad2, cp, ville	ad1, ad2, cp, ville	\'96\
+	ad1, ad2, cp, ville	ad1, ad2, cp, ville	\'96\
+	mail	email	email	synchroniser via event - ATTENTION mail ou email ??\
+	login_client	\'96	login\
+	mdp_client	\'96	password\
+\cf2 	autorisation	\'96	\'96\
+\cf0 	\'96	\'96	FK role_id\
+	\'96	\'96	est_valide\
+	date_creation 	\'96	created_at\
+	date_modification 	\'96	updated_at\
+	\'96	\'96	deleted_at\
+ \
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\b\fs28 \cf0 Cr\'e9ation de date
+\fs24 \
+\pard\tqc\tx1160\tqc\tx3820\tqc\tx6600\tx8100\ql\qnatural\pardirnatural
+
+\b0 \cf0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+\cf0 A - Demander confirmation \
+	si non revenir \'e0 la page gestion livraisons\
+	si oui continuer\
+\
+B - Pr\'e9senter formulaire de saisie des 3 \'e9ch\'e9ances\
+\
+C - Stocker la saisie (en session ? en objet ?)\
+\
+D - Pr\'e9senter le formulaire de saisie pour assignation des colis\
+    (Disponibilit\'e9, Producteurs, etc.)\
+\
+E - Stocker la saisie (en session ? en objet ? en tableau ?)\
+\
+F - Pr\'e9senter r\'e9capitulatif avec \
+	0 : les 3 dates en clair + les colis disponibles seulement\
+	1 : Modifier date => retour en B\
+	2 : Modifier colis => retour en D \
+	3 : Valider date et colis\
+\
+G - V\'e9rifier \'e9tat initial de la base voir si modif possible / autoris\'e9e / coh\'e9rente\
+\
+H  - Sauvegarder la base (les tables concern\'e9es ?) ATTENTION \'e0 la dur\'e9e\
+\
+I  - Faire les ajouts/modifications dans la base\
+	a - D\'e9caler les dates\
+	b - Initialiser les colis de la nouvelle date\
+\
+J - Retour en page gestion dates\
+\
+\
+	}

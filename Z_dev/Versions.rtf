@@ -1,0 +1,305 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf360
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fswiss\fcharset0 ArialMT;\f2\fnil\fcharset0 LucidaGrande;
+}
+{\colortbl;\red255\green255\blue255;\red243\green24\blue0;\red25\green167\blue11;\red148\green8\blue7;
+\red1\green1\blue1;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww28140\viewh16100\viewkind0
+\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\sl264\slmult1\ql\qnatural\pardirnatural
+
+\f0\fs28 \cf0 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+VERSION 2.6.4  Impl\'e9mentation commandes\
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
+\cf0 \
+\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\sl264\slmult1\ql\qnatural\pardirnatural
+\cf0 	\'95 COMMANDES \'95 Mise en style + ajout colonne livraison concern\'e9e\
+	\'95 LIVRAISONS \'95 Ajout pagination en page d'index\
+	\'95 COMMANDES \'95 Am\'e9lioration transfert et index pour assainir les donn\'e9es lors du transfert de tables + pagination\
+	\'95 COMMANDES \'95 Impl\'e9mentation de la vue index (pour le dashboard)\
+	\'95 COMMANDES \'95 Transfert de table paniers_commandes vers les 2 tables commandes & lignes\
+	\'95 CLIENT \'95 Ajout de l'attribut nom_complet = prenom + nom\
+	\'95 GLOBAL \'95 Passage des getters "getDateCreationCourteAttribute" et "getDateCreationEnclairAttribute" dans ModelTrait\
+	\'95 CSS \'95 Ajout de la classe "is_error_txt" pour ajout direct sur un item (\uc0\u8800  "error_txt > span" ou "error_txt > p")\
+	\
+\
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+VERSION 2.6.3  Impl\'e9mentation modes de paiements - finition livraisons\
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
+\cf0 \
+\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\sl264\slmult1\ql\qnatural\pardirnatural
+\cf0 	\'95 LIVRAISON \'95 Impl\'e9mentation validation des dates + cr\'e9ation de la table parametres.\
+	\'95 LIVRAISON \'95 Finalisation impl\'e9mentation archivage\
+	\'95 LIVRAISON \'95 Impl\'e9mentation \'e9dition Panier depuis page Livraison\
+	\'95 LIVRAISON \'95 Sur page edit livraison mettre les dates en erreur en rouge\
+	\'95 LIVRAISON \'95 Sur page edit livraison impl\'e9mentation verouillage de la page si donn\'e9es non valid\'e9es + mettre en rouge les donn\'e9es chang\'e9es mais non encore valid\'e9es\cf2 .\cf0 \
+\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
+\cf0 	\'95 LIVRAISON \'95 A la cr\'e9ation d'une livraison, tous les relais et modes paiements activ\'e9s doivent \'eatre li\'e9s par d\'e9faut\
+	\'95 GLOBAL \'95 R\'e9\'e9criture quelques nommages + DocBlock + Commentaires\
+	\'95 MODES PAIEMENT \'95 Ajout \'e0 l'\'e9dition d'une livraison\
+\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\sl264\slmult1\ql\qnatural\pardirnatural
+\cf0 \
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+VERSION 2.6.2 Relais + Indispos + Divers global\
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+	\'95 INDISPOS \'95 Impl\'e9mentation du report de traitement de la modification d'une livraison suite \'e0 un changement d'indisponibilit\'e9\
+	\'95 INDISPOS : debuggage extract doublons\
+\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
+\cf3 	\'95 \cf0 INDISPOS \'95 Modification du contr\'f4le influence sur livraisons avant modification d'une indisponibilit\'e9\cf3 \
+\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
+\cf0 	\'95 RENOMMAGE : indisponible => indisponisable\
+\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
+\cf3 	\'95 \cf0 INDISPOS \'95 Modification du contr\'f4le influence sur livraisons avant cr\'e9ation d'une indisponibilit\'e9\
+\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\sl264\slmult1\ql\qnatural\pardirnatural
+\cf0 	\'95 INDISPOS \'95 Contr\'f4le influence sur livraisons avant suppression d'une indisponibilit\'e9 OK sur suppression\
+\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
+\cf0 	\'95 NETTOYAGE :  findFirstWithoutTrashed() / findFirst() / findFirstWithTrashed()\
+	\'95 RENOMMAGE : getErrorMessage()  =>  getMessage() + $error_message => $message\
+\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\sl264\slmult1\ql\qnatural\pardirnatural
+\cf0 	\'95 INDISPOS \'95 Modification du contr\'f4le influence sur livraisons avant suppression d'une indisponibilit\'e9 \
+	\'95 TESTS \'95 Premi\'e8re mise en place\
+\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
+\cf4 	\'95 \cf0 Indispos \'95 Impl\'e9mentation contr\'f4les avant cr\'e9ation et suppression\
+	\'95 Global : R\'e9\'e9criture des contr\'f4les avant suppression et d\'e9sactivation de panier, relais, producteur et mode de paiement\
+	\'95 Livraison : pr\'e9-impl\'e9menter archivage (penser \'e0 ajout de \'93is_archived dans la table\'94).\
+	\'95 Livraison : Impl\'e9menter les \'e9tats d'une livraison (penser \'e0 intervenir sur contr\'f4le avant suppression et d\'e9sactivation de panier, relais et mode de paiement).\
+	\'95 Page cr\'e9ation livraison \'95 HTML/CSS Modif de la pr\'e9sentation des relais\
+	\'95 Global \'95 renommage \'93is_actif\'94 => \'93is_actived\'94\
+	\'95 Global \'95 refactorisation fonctionnalit\'e9 \'93indisponilisable\'94, sans recours aux traits\
+	\'95 Global \'95 refactorisation fonctionnalit\'e9 \'93rangeable\'94, sans recours aux traits\
+	\'95 Livraison \'95 petit d\'e9bugage liaison avec relais\
+	\'95 Livraison \'95 r\'e9\'e9criture mode d'emploi\
+	\'95 Renommage \'95 r\'e9habiliter => restaurer\
+	\'95 Renommage \'95 fermeture => indisponibilit\'e9\
+\cf4 	\'95 \cf0 Livraison \'95 Ajout du param\'e9trage des relais + gestion des indisponibilit\'e9s\
+\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\sl264\slmult1\ql\qnatural\pardirnatural
+\cf0 	\cf4 \'95 \cf0 Livraison \'95 Renommage vue partielle des dates : self => dates\
+	\cf4 \'95 \cf0 Livraison \'95 Deplacement vues create et edit\
+	\cf4 \'95 \cf0 Indispos \'95 Impl\'e9mentation (Edition, validation, old dans formulaire)\
+	\'95 Indispos \'95 impl\'e9mentation du trait "addIndisposTrait" et ajout \'e0 RelaisController\
+	\'95 Indispos \'95 ajout au relais + d\'e9but impl\'e9mentation (bdd, cr\'e9ation)\
+	\'95 Relais \'95 Ajout bouton Indispos en page index\
+	\'95 Font Awesome de CDN en local\
+	\'95 HTML \'95 Suppression de la position \'93topcontent2\'94 => \'93modemploi\'94.\
+	\'95 Bootstrap de CDN en local\
+	\'95 Global \'95 changement prix commun => prix de base (r\'e9percussion partout, scripts, bdd, doc\'85)\
+	
+\f1 \cf5 \'95 
+\f0 \cf0 Modes paiement
+\f1 \cf5  \'95 d\'e9finition couleur 
+\f0 \cf0 Modes paiement
+\f1 \cf5  + bouton \'93Cr\'e9er un 
+\f0 \cf0 mode paiement
+\f1 \cf5 \'94 + Suppression/r\'e9habilitation
+\f2  + 
+\f1 Drag&Drop  => changement des rangs
+\f0 \cf0 \
+	\'95 Factorisation : GetDeleted() et setRangs() transf\'e9rs dans les traits du m\'eame nom\
+	\'95 Divers \'95 Factoriser boutons supprimer et valider (create+edit)\
+	\'95 
+\f1 Relais : d\'e9finition couleur relais + bouton \'93Cr\'e9er un relais\'94 + Suppression/r\'e9habilitation
+\f2  + 
+\f1 Drag&Drop  => changement des rangs
+\f0 \
+	\'95 Producteurs \'95 Contr\'f4le des liaisons \'e9ventuelles avec livraison(s) avant suppression et d\'e9sactivation + gestion de la liaison avec panier lors de la suppression\
+	\'95 Factorisation du mesage validation apr\'e8s setRangs (via acquisition du nom du mod\'e8le dans classe Domaine)\
+	\'95 CSS : mise au point bouton footer fiches\
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+VERSION 2.6.1 Producteurs\
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\ri-10960\sl288\slmult1\ql\qnatural
+
+\f1 \cf0 	\'95 Producteurs  \'95 d\'e9finition couleur producteur + bouton \'93Cr\'e9er un producteur\'94 + Suppression/r\'e9habilitation
+\f2  + 
+\f1 Drag&Drop  => changement des rangs.
+\f0 \
+\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\sl264\slmult1\ql\qnatural\pardirnatural
+\cf0 	\'95 Less: factorisation de la plupart des feuilles de style\
+	\'95 Changement de nommage : portrait => fiche dans css et vues\'85\
+	\'95 Changement de nommage : item => model dans modeles, domaines, controleurs et vues\'85\
+\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-10960\ql\qnatural\pardirnatural
+\cf0 	\'95 Paniers \'95 Gestion de la liaison avec producteur lors de la suppression.\
+\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\sl264\slmult1\ql\qnatural\pardirnatural
+\cf0 	\'95 Paniers \'95 Ajustement des boutons \'93Modifier\'94 et \'93Supprimer\'94 sur chaque portrait \
+	  + \'93partials.buttonRetourListe\'94 et \'93partials.buttonSupprimer\'94 => \'93button.index\'94 et \'93button.supprimer\'94.\
+	\'95 Paniers \'95 Ajout des boutons \'93Modifier\'94 et \'93Supprimer\'94 sur chaque portrait (valable pour tous les models).\
+	\'95 Paniers \'95 Contr\'f4le des liaisons \'e9ventuelles avec livraison(s) avant suppression (modifi\'e9) et d\'e9sactivation (ajout\'e9).\
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+VERSION 2.6.0 Paniers\
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+	\'95 Panier 	\'95 HTML/CSS : derniers ajustements + LESS : cr\'e9ation couleur panier et couleur is_not_actif.\
+	\'95 Panier 	\'95 Impl\'e9mentation changement de l'ordre d'affichage par drag and drop\
+	\'95 Panier \'95 Mise en place r\'e9habilitation des softdeleted = vue "paniers.getdeleted" + restauration sur \'e9dition\
+	\'95 Panier \'95 Mise en place des menus\
+	\'95 Panier \'95 Mise en place des validations\
+	\'95 Panier \'95 R\'e9vision de la pr\'e9sentation\
+	\'95 Panier : debug probl\'e8me routage + domaine\
+	\'95 Dashboard :  d\'e9but impl\'e9mentation, mails partiels\
+	\'95 Redirection apr\'e8s authentification s\'e9lective selon r\'f4le : client => espaceclient, gestionnaire => dashboard, ouaibmaistre => dashboard\
+	\'95 compl\'e9ment du menu + pr\'e9-mise en place de la vue 'Etat d'une livraison' et du dashboard\
+\
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+VERSION 2.5.0\
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+	\'95 JS : impl\'e9mentation vidage des modales listPaniers & listProducteurs \'e0 leur fermeture sans validation\
+	\'95 fixed affichage index\
+	\'95 CSS : menues corrections - Ajout mode emploi modales - diverses reprises de libell\'e9s.\
+	\'95 suppression variables $paniers dans livraisonController car devenue obsol\'e8te	\'95 JS : <input id="prixlivraison" =>  <input classe="prixlivraison" dans livraisons r\'e9percut\'e9 dans livraisons + reporterValeur => reporterPrixBase\
+	\'95  JS : Box confirm sur appel de la liste des paniers lorsque des changements apport\'e9s au(x) panier(s) n'ont pas \'e9t\'e9 valid\'e9s.\
+	\'95 Obtention de \'93d\'e9lai explicite\'93 selon valeur de \'93d\'e9lai\'93\
+	\'95 D\'e9placement des messages d'erreur : globaux en zone top content => div de chaque date concern\'e9e\
+	\'95 Correction de l'obtention des combo de dates + adaptation au mode create\
+	\'95 Correction de l'obtention des \'93old input\'93 pour les dates\
+	\'95 Livraison AJAX : impl\'e9mentation mise \'e0 jour des dates apr\'e8s s\'e9lection dans DatePicker \
+	   + PHP ajout des getters pour dates en clair et d\'e9lai/aujourd'hui\
+	    + HTML cr\'e9ation de 3 partials, un pour chaque date\
+	\'95 Livraison : ajout messages utilisateurs\
+	\'95 Livraison : impl\'e9mentation validations des paniers\
+	\'95 Livraison : impl\'e9mentation validation des dates\
+	\'95 Reprise du mode d'emploi et de quelques libell\'e9s de boutons\
+	\'95 Livraison : debug sur detach global depuis modale list paniers\
+	\'95 Livraison : menues corrections\
+	\'95 Livraison : ajout de la mention 'liste vide' dans le select des producteurs si aucun producteur li\'e9\
+	\'95 ajout de l'option 'ind\'e9termin\'e9' dans le select des producteurs si = null dans la table Livraison/Panier\
+ 	\'95 Persistence du producteur par son id dans le pivot Livraison/Panier plut\'f4t que par son nom + adaptation de l'option selected\
+	\'95 Livraison : d\'e9placement bouton valider pour usage global + clic sur prix commun => report dans prix livraison\
+	\'95 suppression derni\'e8re ligne dans css\
+	\'95 Livraison : apr\'e8s update, redirection sur page edit plut\'f4t que index\
+	\'95  impl\'e9mentation persistence des datas pivot Livraison/Panier\
+	\'95 Chargement de la modale listPaniers diff\'e9r\'e9\
+	\'95 restructuration des vues livraisons\
+	\'95 Livraisons : impl\'e9mentation changement des producteurs li\'e9s \'e0 un des paniers d'une livraison\
+	\'95 Gros pataqu\'e8s de renommage\
+	\'95 Impl\'e9mentation Livraison : create + edit + synchronise paniers\
+	\'95 Impl\'e9mentation attachement d'un panier \'e0 une livraison\
+	\'95 Renommage et restructuration dossier des vues modales pour les livraisons\
+	\'95 factorisation du bouton d\'e9tacher un panier d'une livraison\
+	\'95 Ajout eagerload pivot sur mod\'e8le Panier\
+	\'95 modification libell\'e9 titre page modale choixPaniers\
+	\'95 Impl\'e9mentation d\'e9tachement d'un panier d'une livraison\
+	\'95 Livraisons : Impl\'e9mentation HTML CSS JS de la r\'e9attribution des producteurs \'e0 un panier\
+	\'95 ajout modale \'e9dition panier + renommage modale choixPaniers\
+	\'95 Passage des paniers choisis en table + select pour les producteurs\
+	\'95 Livraisons : Ajout de DatePicker + adaptation\
+	\'95 Ajout JQuery UI en local + bascule sur son JQuery local\
+	\'95 modification pr\'e9setnation dates handle livraisons\
+	\'95 HTML/CSS : finalisation de livraison cr\'e9ation & edit\
+	\'95 Ajout JQuery UI en local + bascule sur son JQuery local\
+	\'95 modification pr\'e9setnation dates handle livraisons\
+	\'95 HTML/CSS : finalisation de livraison cr\'e9ation & edit\
+	\'95 HTML : construction des pages create & edit pour les livraisons - 2\
+	\'95 HTML : construction des pages create & edit pour les livraisons\
+	\'95 D\'e9placement de la 'traduction' des dates dans le domaine des livraisons\
+	\'95 Mise en place des less via Koala\
+	\'95 Pr\'e9-mise en place du process de cr\'e9ation d'une livraison\
+\
+\
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+VERSION 2.4.0\
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+	\'95 corrections injection dependances (pages guest producers et guest relays\
+	\'95 HTML : traitement du footer en flex\
+	\'95 Mise en place CRUD des Modes de paiement\
+	\'95 R\'e9agencement des pages temporaires de gestion\
+	\'95 Correction nom table des modes de paiement\
+\
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+VERSION 2.3.0\
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+	\'95 Adaptation des vues guest Relais et Producteur suite changement dans les domaines\
+	\'95 Transfert paniers_colis >> colis + Mise en place crud Colis\
+	\'95 Mise en place gabHelper des dates\
+	\'95 Transfert paniers_dates >> livraison\
+	\'95 Mise en place crud Livraison\
+	\'95 Transfert paniers_colis >> Colis\
+	\'95 Mise en place crud Colis\
+	\'95 HTML-CSS : refonte des vues Livraison de table => flex\
+	\'95 Ajout d'une section 'messages' au layout + impl\'e9mentation pour Livraison\
+	\'95 Affichage version dor\'e9navant g\'e9r\'e9 via les lang\
+\
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+VERSION 2.2.0\
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+	\'95 HTML : ajout de la version au footer + reprise CSS\
+	\'95 Impl\'e9mentation finale des entit\'e9s Relais et Producteur (y compris domaines)\
+	\'95 Supprimer double zone messages de session\
+	\'95 Impl\'e9mentation des domaines pour Relais\
+	\'95 Impl\'e9mentation g\'e9n\'e9rale des domaines\
+	\'95 renommage argument\
+\
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+VERSION 2.1.0  - Guest\
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+	\'95 Pr\'e9-mise en place de la navigation Guest : routes + vues + viewcomposer\
+		accueil : pr\'e9sentation des colis (mode d\'92emploi)\
+		lasource : pr\'e9sentation de l'association\
+		lesproducteurs : liste des producteurs\
+		lesrelais : liste des relais\
+		lescolis : liste des colis TODO contenu de la page\
+		leslivraisons : liste des livraisons \'e0 venir TODO contenu de la page\
+\
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+VERSION 2.0.0\
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+	\'95 Cr\'e9ation de TraitModel et factorisation des traitements de telephone + class_is_actif\
+	\'95 Pr\'e9-implantation entit\'e9 Client2 + html :  d\'e9placement section messages\
+	\'95 Pr\'e9-implantation entit\'e9 Client\
+	\'95 correctifs dans ProducteurController\
+	\'95 Ajout de la validation client\
+	\'95 Ajout de la traduction locale des messsages crud\
+	\'95 Impl\'e9mentation des producteurs : quelques corrections\
+	\'95 Impl\'e9mentation compl\'e8te des producteurs (transfert + bdd  + CRUD + validations)\
+	\'95 HTML : ajout partie accueil\
+	\'95 reprise css du footer + ajour partie pr\'e9sentation asso 2\
+	\'95 reprise css du footer + ajout partie pr\'e9sentation asso\
+	\'95 Ajout des relais en page accuei via viewcomposer\
+	\'95 pr\'e9-mise en place des footers et de la vue accueil\
+	\'95 Ajout des routes contacts\
+	\'95 Impl\'e9mentation \'e9dition des d\'e9p\'f4ts\
+	\'95 acces user depuis auth::check\
+	\'95 depots devient relais\
+	\'95 mise en place transfert d\'e9p\'f4ts\
+	\'95 Impl\'e9mentation partielle edition d'un client + factorisation forumlaire inscription\
+	\'95 resolution du merge\
+	\'95 D\'e9but mise en place espace client\
+	\'95 changements gitignore\
+	\'95 bug avec git\
+	\'95 Fin impl\'e9mentation auth, reset et register\
+	\'95 impl\'e9mentation du transfert proprement dit\
+	\'95 Merge branch 'models' into dev2\
+	\'95 Deplacement des mod\'e8les dans App\\Models\
+	\'95 Mineures corrections de nommage et de signatures de m\'e9thodes\
+	\'95  Impl\'e9mentation de l'inscription (fin)\
+	\'95 Impl\'e9mentation de l'inscription + traduction des validations\
+	\'95 Impl\'e9mentation reset identifiants - Modification nommage m\'e9thodes\
+	\'95 Impl\'e9mentation reset identifiants\
+	\'95 Correctifs sur compteinconnu + renommage en compteintrouvable\
+	\'95 Ajout de Z_dev aux dossuiers ignor\'e9s\
+	\'95 Impl\'e9mentation compteinconnu => inscription. Impl\'e9mentation branche ResetOldCredentials\
+	\'95 Impl\'e9mentation aiguillage sur reset credentials\
+	\'95 Deplacement et renommage du trait 'helper'\
+	\'95 nettoyage de code\
+	\'95 Impl\'e9mentation finale de la partie authentification fails\
+	\'95 Etat avant modification de la mod\'e9lisation\
+	\'95 ajout de clientOld comme userProvider et aussi comme resetPasswords dans Config.auth\
+	\'95 Impl\'e9mentation de la branche OldAuthFail\
+	\'95 Impl\'e9mentation finale de la branche OldLoginFailed + OldUserInconnu FIN\
+	\'95 Impl\'e9mentation finale de la branche OldLoginFailed + OldUserInconnu\
+	\'95 Impl\'e9mentation de la branche OldUserInconnu (vues)\
+	\'95 Impl\'e9mentation de la branche OldUserInconnu\
+	\'95 R\'e9organisation/traduction des premi\'e8res pages\
+	\'95 Param\'e9trage envoi mails via Swiftmailer\
+	\'95 Premier jet de traductions en fran\'e7ais\
+	\'95 Ajout de la vue ResetOldloginForm au d\'e9p\'f4t git\
+	\'95 Ajout du mod\'e8le ClientOld au d\'e9p\'f4t git\
+	\'95 Ajout du helper Transfert au d\'e9p\'f4t git\
+	\'95 Cr\'e9ation du helper Transfert, et d\'e9placement des m\'e9thodes de transfert depuis AuthController. \\n 	Mise en place de la proc\'e9dure DismatchOldPseudo. Adaptation des routes, cr\'e9ation de la vue 	DismatchO\
+	\'95 Pr\'e9paration de l'authentification\
+	\'95 authenfication maintenant bas\'e9e sur le login et non l'email OK\
+	\'95 authenfication maintenant bas\'e9e sur le login et non l'email\
+	\'95 authenfication maintenant bas\'e9e sur le login et non l'email\
+	\'95 reinitialisation artisan make auth\
+	\'95 modification composer.json\
+	\'95 Ajout packages collective html et form\
+	\'95 Ajout authentication Laravel\
+	\'95 Initialisation}

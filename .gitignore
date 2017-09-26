@@ -1,7 +1,5 @@
-/vendor
 /node_modules
 *storage*
-/public/css/lasource
 Homestead.yaml
 Homestead.json
 .env
@@ -11,4 +9,3 @@ lasource.sublime-project
 lasource.sublime-workspace
 readme.md
 *.DS_Store
-/Z_dev

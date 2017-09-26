@@ -1,0 +1,21 @@
+{
+    "name": "gab09/helpers",
+    "description": "Helpers pour les domaines",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "gAb09",
+            "email": "brunogabiot@club-internet.fr"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "laravel/framework": "5.2.29"
+    },
+    "autoload": {
+        "psr-4": {
+            "Gab\\Helpers\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
