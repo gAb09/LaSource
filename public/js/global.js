@@ -1,3 +1,6 @@
+var domaine = document.domain;
+console.log(domaine);
+
 /**
 * Disponible pour tous les models.
 * Change la présentation (CSS) des éléments relatifs à is_actived.

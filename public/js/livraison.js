@@ -46,7 +46,7 @@ function getComboDates(nom, valeur)
     valeur = valeur.split(" ")[0];
     if (valeur === '') {valeur = 0;}
 
-    var ad = 'http://lasource/livraison/combodate/'+valeur;
+    var ad = 'http://'+domaine+'/livraison/combodate/'+valeur;
     var span_enclair = '#'+nom+'_enclair';
     var span_delai = '#'+nom+'_delai';
     var input_date = '#'+nom;
@@ -91,7 +91,7 @@ function listProducteursForPanier(idpanier)
 
     resetChangeDetected();
 
-    var ad = 'http://lasource/livraison/panier/' + idpanier + '/listProducteurs';
+    var ad = 'http://'+domaine+'/livraison/panier/' + idpanier + '/listProducteurs';
 
     $.ajax({
         url : ad,
@@ -143,7 +143,7 @@ function listPaniers(livraison_id)
     resetChangeDetected();
 
 
-    var ad = 'http://lasource/livraison/' + livraison_id + '/listpaniers';
+    var ad = 'http://'+domaine+'/livraison/' + livraison_id + '/listpaniers';
 
     $.ajax({
         url : ad,

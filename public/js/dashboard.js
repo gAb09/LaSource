@@ -5,7 +5,7 @@
 **/
 function getComposerMailContent()
 {
-    var ad = 'http://lasource/dashboard/composerMails';
+    var ad = 'http://'+domaine+'/dashboard/composerMails';
     var cible = $('#composer_mails');
     $.ajax({
         url : ad,

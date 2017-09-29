@@ -16,7 +16,7 @@
 <div class="offset3 span11 flexcontainer">
 
 	@foreach($models as $model)
-
+{{-- LSProblem --}}
 		<div class="fiche {{$model->class_actived}}" ondblClick = "javascript:document.location.href='http://lasource/client/{{ $model->id }}/edit';">
 
 			<p class="lighten50">
