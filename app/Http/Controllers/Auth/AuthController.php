@@ -64,26 +64,6 @@ class AuthController extends Controller
     }
 
 
-    /**
-     * Override de Illuminate\Foundation\Auth\AuthenticatesUsers.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showLoginForm()
-    {
-
-        return view('auth.connexionform');
-    }
-
-
-    /**
-     * Reprise de Illuminate\Foundation\Auth\AuthenticatesUsers.
-     * + Recours à l'ancienne procédure d'authentification
-     * avant de déclarer l'échec de la nouvelle.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function connexion(Request $request)
     {
 
