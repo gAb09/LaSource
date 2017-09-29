@@ -165,6 +165,7 @@ return [
         Menus\MenusServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class,
         ],
 
     /*

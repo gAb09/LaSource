@@ -95,6 +95,7 @@ class ComposerStaticInit7025498258a9ed58c9e891e839c00d40
         'B' => 
         array (
             'Barryvdh\\Debugbar\\' => 18,
+            'Barryvdh\\Cors\\' => 14,
         ),
         'A' => 
         array (
@@ -249,6 +250,10 @@ class ComposerStaticInit7025498258a9ed58c9e891e839c00d40
         'Barryvdh\\Debugbar\\' => 
         array (
             0 => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src',
+        ),
+        'Barryvdh\\Cors\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/barryvdh/laravel-cors/src',
         ),
         'App\\' => 
         array (

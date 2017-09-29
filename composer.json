@@ -15,7 +15,8 @@
         "gab09/helpers": "1.*",
         "gab09/menus": "1.*",
         "laravelcollective/html": "5.2.4",
-        "barryvdh/laravel-debugbar": "^2.3"
+        "barryvdh/laravel-debugbar": "^2.3",
+        "barryvdh/laravel-cors": "0.8.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
