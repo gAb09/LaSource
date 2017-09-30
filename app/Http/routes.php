@@ -68,12 +68,12 @@ Route::get('contactLS', 'ContactController@ContactLS');
 Route::get('contactOM', 'ContactController@ContactOM');
 
 // OuaibMaistre Routes...
-$this->get('om', 'OMController@index');
-$this->get('om/transfertrelais', 'OMController@transfertRelais');
-$this->get('om/transfertproducteur', 'OMController@transfertProducteur');
-$this->get('om/transfertpanier', 'OMController@transfertPanier');
-$this->get('om/transfertlivraison', 'OMController@transfertLivraison');
-$this->get('om/transfertcommandes', 'OMController@transfertCommandes');
+$this->get('om', 'TransfertController@index');
+$this->get('om/transfertrelais', 'TransfertController@transfertRelais');
+$this->get('om/transfertproducteur', 'TransfertController@transfertProducteur');
+$this->get('om/transfertpanier', 'TransfertController@transfertPanier');
+$this->get('om/transfertlivraison', 'TransfertController@transfertLivraison');
+$this->get('om/transfertcommandes', 'TransfertController@transfertCommandes');
 
 
 Route::group(['middleware' => 'auth'], function () {

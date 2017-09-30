@@ -18,7 +18,7 @@ use App\Http\Requests;
 
 use Carbon\Carbon;
 
-class OMController extends Controller
+class TransfertController extends Controller
 {	
 	public function index()
 	{

@@ -9,15 +9,15 @@
                     <h3>Administration</h3>
                 </div>
                 <div class="panel-body">
-                    {{Html::linkAction('OMController@transfertRelais', 'Transfert des relais')}}<br />
+                    {{Html::linkAction('TransfertController@transfertRelais', 'Transfert des relais')}}<br />
                     <br />
-                    {{Html::linkAction('OMController@transfertProducteur', 'Transfert des producteurs')}}<br />
+                    {{Html::linkAction('TransfertController@transfertProducteur', 'Transfert des producteurs')}}<br />
                     <br />
-                    {{Html::linkAction('OMController@transfertPanier', 'Transfert des paniers')}}<br />
+                    {{Html::linkAction('TransfertController@transfertPanier', 'Transfert des paniers')}}<br />
                     <br />
-                    {{Html::linkAction('OMController@transfertLivraison', 'Transfert des livraisons')}}<br />
+                    {{Html::linkAction('TransfertController@transfertLivraison', 'Transfert des livraisons')}}<br />
                     <br />
-                    {{Html::linkAction('OMController@transfertCommandes', 'Transfert des commandes')}}<br />
+                    {{Html::linkAction('TransfertController@transfertCommandes', 'Transfert des commandes')}}<br />
                 </div>
             </div>
         </div>
