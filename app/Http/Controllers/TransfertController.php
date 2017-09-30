@@ -26,7 +26,7 @@ class TransfertController extends Controller
 	}
 
 
-	public function transfertRelais()
+	public function relais()
 	{
 		$olds = \DB::connection('mysql_old')->table('paniers_lieux')->select('*')->get();
 		foreach ($olds as $old) {
@@ -50,7 +50,7 @@ class TransfertController extends Controller
 	}
 
 
-	public function transfertProducteur()
+	public function producteurs()
 	{
 		$olds = \DB::connection('mysql_old')->table('civam_guide')->select('*')->get();
 		foreach ($olds as $old) {
@@ -83,7 +83,7 @@ class TransfertController extends Controller
 		}
 	}
 
-	public function transfertPanier()
+	public function paniers()
 	{
 		$olds = \DB::connection('mysql_old')->table('paniers_colis')->select('*')->get();
 
@@ -105,7 +105,7 @@ class TransfertController extends Controller
 		return redirect()->back();
 	}
 
-	public function transfertLivraison()
+	public function livraisons()
 	{
 		$olds = \DB::connection('mysql_old')->table('paniers_dates')->select('*')->get();
 
@@ -128,7 +128,7 @@ class TransfertController extends Controller
 	}
 
 
-	public function transfertCommandes()
+	public function commandes()
 	{
 		$olds = \DB::connection('mysql_old')->table('paniers_commandes')->select('*')->get();
 

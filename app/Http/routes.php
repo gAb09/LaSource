@@ -58,7 +58,7 @@ $this->get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
 $this->post('password/email', 'Auth\PasswordController@HandleSendingResetMail');
 $this->post('password/reset', 'Auth\PasswordController@handleResetCredentials');
 
-// Transfert Routes...
+// Old login failed...
 $this->get('transfert/OldLoginFailed/{pseudo?}', 'Auth\AuthController@askMailOldLoginFailed');
 $this->post('transfert/OldLoginFailed', 'Auth\AuthController@HandleOldLoginFailed');
 
@@ -68,12 +68,12 @@ Route::get('contactLS', 'ContactController@ContactLS');
 Route::get('contactOM', 'ContactController@ContactOM');
 
 // OuaibMaistre Routes...
-$this->get('om', 'TransfertController@index');
-$this->get('om/transfertrelais', 'TransfertController@transfertRelais');
-$this->get('om/transfertproducteur', 'TransfertController@transfertProducteur');
-$this->get('om/transfertpanier', 'TransfertController@transfertPanier');
-$this->get('om/transfertlivraison', 'TransfertController@transfertLivraison');
-$this->get('om/transfertcommandes', 'TransfertController@transfertCommandes');
+$this->get('transfert', 'TransfertController@index');
+$this->get('transfert/relais', 'TransfertController@relais');
+$this->get('transfert/producteurs', 'TransfertController@producteurs');
+$this->get('transfert/paniers', 'TransfertController@paniers');
+$this->get('transfert/livraisons', 'TransfertController@livraisons');
+$this->get('transfert/commandes', 'TransfertController@commandes');
 
 
 Route::group(['middleware' => 'auth'], function () {
