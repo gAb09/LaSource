@@ -33,3 +33,10 @@ $("#relaiss_index").sortable({
 	}
 });
 
+
+function editRelais(relais_id){
+	// console.log(domaine);
+	// console.log(relais_id);
+
+	document.location.href='http://'+domaine+'/relais/'+relais_id+'/edit';
+}

@@ -33,3 +33,12 @@ $("#producteurs_index").sortable({
 	}
 });
 
+
+
+function editProducteur(producteur_id){
+	console.log(domaine);
+	console.log(producteur_id);
+
+	document.location.href='http://'+domaine+'/producteur/'+producteur_id+'/edit';
+}
+

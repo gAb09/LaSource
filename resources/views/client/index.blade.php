@@ -17,7 +17,7 @@
 
 	@foreach($models as $model)
 {{-- LSProblem --}}
-		<div class="fiche {{$model->class_actived}}" ondblClick = "javascript:document.location.href='http://lasource/client/{{ $model->id }}/edit';">
+		<div class="fiche {{$model->class_actived}}" ondblClick = "javascript:editClient({{ $model->id }} );">
 
 			<p class="lighten50">
 				{{ $model->prenom }} {{ $model->nom }}<br />
@@ -38,4 +38,9 @@
 
 </div>
 
+@stop
+
+@section('script')
+@parent
+<script src="/js/client.js"></script>
 @stop

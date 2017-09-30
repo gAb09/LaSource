@@ -27,3 +27,11 @@ $("#paniers_index").sortable({
 	}
 });
 
+
+
+function editPanier(panier_id){
+	// console.log(domaine);
+	// console.log(panier_id);
+
+	document.location.href='http://'+domaine+'/panier/'+panier_id+'/edit';
+}

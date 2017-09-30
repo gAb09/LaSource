@@ -1,7 +1,7 @@
 <div id="modepaiements_index" class="offset3 span11 flexcontainer">
 	@forelse($models as $model)
 {{-- LSProblem --}}
-	<div class="fiche stickycontainer {{$model->class_actived}}" ondblClick = "javascript:document.location.href='http://lasource/modepaiement/{{ $model->id }}/edit';">
+	<div class="fiche stickycontainer {{$model->class_actived}}" ondblClick = "javascript:editModePaiement({{ $model->id }} );">
 
 		<div class="allowstickyfooter">
 

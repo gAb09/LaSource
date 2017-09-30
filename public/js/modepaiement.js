@@ -27,3 +27,13 @@ $("#modepaiements_index").sortable({
 	}
 });
 
+
+
+function editModePaiement(modepaiement_id){
+	console.log(modepaiement_id);
+	console.log(domaine);
+
+	document.location.href='http://'+domaine+'/modepaiement/'+modepaiement_id+'/edit';
+}
+
+
