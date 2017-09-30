@@ -184,11 +184,9 @@ Route::group(['middleware' => 'auth'], function () {
 		['as' => 'dashboardComposerMails', 'uses' => 'DashboardController@composerMails']
 		);
 
-Route::group(['middleware' => 'cors'], function () {
 
 	Route::resource('livraison', 'LivraisonController');
 
-});
 
 // Menus...
 	Route::resource('menus', '\Menus\MenuController');
