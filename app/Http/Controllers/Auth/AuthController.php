@@ -7,7 +7,7 @@ use App\Models\User as UserModel;
 
 use App\Models\Client;
 use App\Domaines\ClientOldDomaine as ClientOld;
-use App\Http\Controllers\Transfert\TransfertTrait;
+use App\Http\Controllers\Transfert\TransfertUserTrait;
 use App\Http\Requests\InscriptionRequest;
 
 use App\Http\Controllers\Controller;
@@ -31,7 +31,7 @@ class AuthController extends Controller
     |
     */
 
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins, TransfertTrait;
+    use AuthenticatesAndRegistersUsers, ThrottlesLogins, TransfertUserTrait;
 
     /**
      * Where to redirect users after login / registration.

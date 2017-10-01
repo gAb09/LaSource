@@ -9,7 +9,7 @@ use App\Domaines\ClientOldDomaine as ClientOld;
 use Mail;
 
 
-trait TransfertTrait
+trait TransfertUserTrait
 {
     /*
     |--------------------------------------------------------------------------

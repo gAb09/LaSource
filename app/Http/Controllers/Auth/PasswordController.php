@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 
-use App\Http\Controllers\Transfert\TransfertTrait;
+use App\Http\Controllers\Transfert\TransfertUserTrait;
 use App\Domaines\UserDomaine as User;
 use App\Domaines\ClientOldDomaine as ClientOld;
 
@@ -26,7 +26,7 @@ class PasswordController extends Controller
     |
     */
 
-    use ResetsPasswords, TransfertTrait;
+    use ResetsPasswords, TransfertUserTrait;
 
     private $linkRequestView = 'auth.passwords.askMail';
 
