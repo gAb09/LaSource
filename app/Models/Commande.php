@@ -93,6 +93,7 @@ class Commande extends Model
         $value = 'C_ARCHIVABLE';
 
         return $value;
+        // return 'Fonction à implémenter';
     }
 
 

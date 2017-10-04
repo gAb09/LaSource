@@ -27,11 +27,17 @@
 		<th  style="width:15%">
 			Client
 		</th>
-		<th  style="width:60%">
+		<th  style="width:30%">
 			Paniers commandés
 		</th>
 		<th  style="width:15%">
 			Livraison concernée
+		</th>
+		<th style="width:10%">
+			Paiement
+		</th>
+		<th style="width:25%">
+			Relais
 		</th>
 		<th style="width:10%">
 			Statut
@@ -50,7 +56,7 @@
 
 </table>
 
-{!! $models->render() !!}
+{{ $models->links() }}
 
 @stop
 

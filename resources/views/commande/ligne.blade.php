@@ -3,12 +3,12 @@
 		@if($ligne->panier_id == 3 or $ligne->panier_id == 6)
 			<span class="is_error_txt">Panier obsolète</span><br/>
 		@else
-			{{ str_replace('<br/>', ' ', $ligne->Panier->nom )  }}<br/>
+			{{ str_replace('<br/>', ' ', $ligne->panier )  }}<br/>
 		<small><small>
-		@if($ligne->producteur_id == 0)
+		@if($ligne->producteur == 0)
 			<span class="is_error_txt">Producteur non spécifié</span>
 		@else
-			{{$ligne->Producteur->exploitation}}
+			{{$ligne->producteur}}
 		@endif
 		</small></small>
 	</td>
@@ -19,7 +19,7 @@
 		x<br/>
 	</td>
 	<td>
-		{{ $ligne->prix_final }}
+		{{ $ligne->prix_livraison }}
 	</td>
 	<td>
 		=<br/>

@@ -1,19 +1,19 @@
 <tr 
 class="ombrable"
-id="row_{{ $model->id }}" 
+id="row_{{ $model->idcommande }}" 
 >
 
 <!-- numero + date création -->
 <td>
 	{{ $model->numero }}<br/>
-	<span class="datecreation">{{ $model->date_creation_courte }}</span>
+	<span class="datecreation">{{ $model->datecreation }}</span>
 </td>
 
 
 <!-- client -->
 <td>
-	@if($model->client)
-	{{ $model->client->nom_complet }}
+	@if($model->client != 0)
+	{{ $model->client }}
 	@else
 	<span class="is_error_txt">Client inconnu !</span>
 	@endif             
@@ -24,7 +24,6 @@ id="row_{{ $model->id }}"
 <td class="lignes_commande">
 	<table class="lignes_commande">
 		<tbody>
-			@if($model->has('lignes'))
 			@foreach($model->lignes as $ligne)
 			@include("commande.ligne")
 			@endforeach
@@ -43,24 +42,34 @@ id="row_{{ $model->id }}"
 					{{ $model->montant_total }}
 				</td>
 			</tr>
-			@else
-			<tr class="is_error_txt">Commande factice (sans lignes)</tr>
-			@endif
-		</tbody>
+ 		</tbody>
 	</table>
 </td>
 
 
 <!-- livraison -->
 <td>
-	@if($model->livraison_id != 0)
-		{{ $model->livraison->date_livraison_enclair }}
+	@if($model->date_livraison !== 0)
+		{{ $model->date_livraison }}
 	@else
 		<span class="is_error_txt">
 			Livraison non identifiée
 		</span>
 	@endif
 </td>
+
+
+<!-- mode paiement -->
+<td>
+		{{ $model->modepaiement }}
+</td>
+
+
+<!-- relais -->
+<td>
+		{{ $model->relais }}
+</td>
+
 
 <!-- state -->
 <td class="{{$model->state}}">

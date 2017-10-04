@@ -15,7 +15,7 @@ Vue index
 }
 .index_commandes tbody tr {
   background-color: #f4f4c8;
-  font-size: 0.9em;
+  font-size: 0.8em;
   border-bottom: 1px solid #dbdb48;
 }
 .index_commandes tbody tr .total {

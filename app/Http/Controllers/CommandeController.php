@@ -23,6 +23,8 @@ class CommandeController extends Controller
     public function index()
     {
         $models = $this->domaine->index();
+        // $models = array_slice($models, 0);
+        return dd($models);
         return view('commande.index')->with(compact('models'));
     }
 
