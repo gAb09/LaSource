@@ -37,6 +37,9 @@ Vue index
 .index_commandes tr.top_txt {
   vertical-align: top;
 }
+.index_commandes tr.total {
+  text-align: right;
+}
 .index_commandes .C_ARCHIVABLE {
   padding: 0;
 }

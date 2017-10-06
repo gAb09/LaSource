@@ -28,89 +28,40 @@ class CommandeDomaine extends Domaine
 	 *
 	 * @return Illuminate\Pagination\Paginator
 	 **/
-	public function index($pages = 5){
-		$raws = $this->doQuery();
+	public function index($pages){
+		$commandes = $this->model->with('lignes.panier', 'Livraison', 'Client', 'Relais', 'ModePaiement')->whereIn('id', [62, 63])->orderBy('id', 'DESC')->get();
+		$commandes = $this->model->with('lignes.panier', 'Livraison', 'Client', 'Relais', 'ModePaiement')->orderBy('id', 'DESC')->paginate($pages);
 
-		$commandes = new \Illuminate\Support\Collection;
-		$id_en_cours = 0;  // initialisation de la boucle
+		$commandes->each(function ($commande, $keys) {
+			$commande->lignes->each(function ($ligne, $keys) use($commande){
+				$ligne->complement = $this->doQuery($commande->livraison_id, $ligne->panier_id);
+				// var_dump('commande : '.$commande->id);
+				// var_dump($commande->livraison_id);
+				// var_dump($ligne->panier_id);
+				// var_dump($ligne->complement);
+			});
+		});
 
-		foreach ($raws as $raw) {
-			if ($id_en_cours != $raw->idcommande) {
-				$commandes->push($this->handleCommande($raw));
-				$commandes->last()->lignes = collect();
-				$commandes->last()->lignes->push($this->handleLignes($raw));
-				$commandes->last()->montant_total += $this->montant_ligne;
-				$id_en_cours = $raw->idcommande;
-			}else{
-				$commandes->last()->lignes->push($this->handleLignes($raw));
-				$commandes->last()->montant_total += $this->montant_ligne;
-				$id_en_cours = $raw->idcommande;
-			}
-
-		}
-
-		// return dd($paginator);
+		// return dd('FIN');
+		// return dd($commandes[0]->lignes);
 		return $commandes;
 	}
 
 
-	private function doQuery(){
+	private function doQuery($livraison_id, $panier_id){
 
-		$models = \DB::table('commandes')
-
-		// lignes
-		->join('lignes', function ($join) {
-			$join->on('lignes.commande_id', '=', 'commandes.id');
-		})
-
-		// Panier
-		->leftjoin('paniers', function ($join) {
-			$join->on('lignes.panier_id', '=', 'paniers.id');
-		})
-
-		// Livraison
-		->leftjoin('livraisons', function ($join) {
-			$join->on('commandes.livraison_id', '=', 'livraisons.id');
-		})
-
-		// Client
-		->leftjoin('clients', function ($join) {
-			$join->on('clients.id', '=', 'commandes.client_id');
-		})
-
-		// Relais
-		->leftjoin('relais', function ($join) {
-			$join->on('commandes.relais_id', '=', 'relais.id');
-		})
-
-		// Mode de paiement
-		->leftjoin('modepaiements', function ($join) {
-			$join->on('commandes.modepaiement_id', '=', 'modepaiements.id');
-		})
-
-		// Pivot livraison_panier
-		->leftjoin('livraison_panier', function ($join) {
-			$join->on('commandes.livraison_id', '=', 'livraison_panier.livraison_id');
-		})
+		$models = \DB::table('livraison_panier')
 
 		// Producteur
 		->leftjoin('producteurs', function ($join) {
 			$join->on('producteurs.id', '=', 'livraison_panier.producteur');
 		})
 
-		// ->whereIn('commande_id',[62, 63, 65])
-		->select('commandes.id as idcommande', 'commandes.numero as numero', 'commandes.created_at' // Commande
-			, 'livraisons.is_archived as livraison_archived', 'livraisons.date_livraison as date_livraison' // Livraison
-			, 'clients.prenom', 'clients.nom' // Client
-			, 'lignes.id', 'lignes.panier_id', 'lignes.quantite' // Lignes
-			, 'paniers.nom as panier' // Panier
-			, 'relais.nom as relais' // Relais
-			, 'modepaiements.nom as modepaiement' // Mode de paiement
-			, 'livraison_panier.producteur', 'livraison_panier.prix_livraison' // Pivot livraison_panier
+		->where([['livraison_id', '=', $livraison_id], ['panier_id', '=', $panier_id]])
+		->select(
+			'livraison_panier.producteur', 'livraison_panier.prix_livraison' // Pivot livraison_panier
 			, 'producteurs.exploitation as producteur' // Producteur
 			)
-		// ->groupBy('lignes.panier_id')
-		->orderBy('lignes.commande_id', 'DESC')
 		->get();
 
 		return $models;

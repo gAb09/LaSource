@@ -20,11 +20,9 @@ class CommandeController extends Controller
     }
 
 
-    public function index()
+    public function index($pages=5)
     {
-        $models = $this->domaine->index();
-        // $models = array_slice($models, 0);
-        return dd($models);
+        $models = $this->domaine->index($pages);
         return view('commande.index')->with(compact('models'));
     }
 

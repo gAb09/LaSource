@@ -28,7 +28,7 @@ class Commande extends Model
     public function Lignes()
     {
         return $this->hasMany('App\Models\Ligne');
-    }
+    }        
 
 
     public function Livraison()
@@ -38,7 +38,17 @@ class Commande extends Model
 
     public function Client()
     {
-        return $this->belongsTo('App\Models\Client');
+        return $this->belongsTo('App\Models\Client', 'client_id');
+    }
+
+    public function Relais()
+    {
+        return $this->belongsTo('App\Models\Relais');
+    }
+
+    public function ModePaiement()
+    {
+        return $this->belongsTo('App\Models\ModePaiement', 'modepaiement_id');
     }
 
 

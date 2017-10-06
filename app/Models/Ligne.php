@@ -9,6 +9,7 @@ class Ligne extends Model
     public function Commande()
     {
         return $this->belongsTo('App\Models\Commande');
+
     }
 
     public function Panier()
@@ -17,20 +18,19 @@ class Ligne extends Model
     }
 
 
-    public function Producteur()
+    public function getPrixLivraisonAttribute($value)
     {
-        return $this->belongsTo('App\Models\Producteur');
-    }
-
-
-    public function getPrixFinalAttribute($value)
-    {
-        return (double) $value;
+        if (!isset($this->complement[0])) {
+            $value = NULL;
+        }else{
+            $value = $this->complement[0]->prix_livraison;
+        }
+        return $value;
     }
 
     public function getMontantLigneAttribute($value)
     {
-    	$value = $this->quantite*$this->prix_final;
+        $value = $this->quantite*$this->prix_livraison;
 
         return $value;
     }
