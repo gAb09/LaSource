@@ -26,6 +26,29 @@ class TransfertController extends Controller
 	}
 
 
+	public function client()
+	{
+		$olds = \DB::connection('mysql_old')->table('paniers_clients')->select('*')->get();
+		foreach ($olds as $old) {
+			$model = new Client;
+
+			$model->id = $old->id_lieu;
+			$model->nom = $old->relais;
+			$model->ad1 = $old->ad1;
+			$model->ad2 = $old->ad2;
+			$model->cp = $old->cp;
+			$model->ville = $old->lieu_livraison;
+			$model->tel = $old->tel;
+			$model->email = $old->mail;
+			$model->retrait = $old->horaires;
+			$model->ouvertures = $old->remarques;
+			$model->is_actived = 1;
+
+			$model->save();
+		}
+		return redirect()->back();
+	}
+
 	public function relais()
 	{
 		$olds = \DB::connection('mysql_old')->table('paniers_lieux')->select('*')->get();
@@ -131,37 +154,48 @@ class TransfertController extends Controller
 	public function commandes()
 	{
 		$olds = \DB::connection('mysql_old')->table('paniers_commandes')->select('*')->get();
+		try{
+			\DB::beginTransaction();
 
 		foreach ($olds as $old) {
-			$model = new Commande;
+			if (!empty($old->id_date) and is_numeric($old->id_date)) {
+				$model = new Commande;
 
-			$model->id = $old->id_commande;
-			$model->livraison_id = $old->id_date;
-			$model->client_id= trim($old->numero_client, 'C');
-			$model->numero = $old->numero_commande;
-			$model->created_at = $old->date_creation;
-			if ($old->date_modif != '0000-00-00') {
-				$model->updated_at = $old->date_modif;
-			}else{
-				$model->updated_at = '0';
+				$model->id = $old->id_commande;
+				$model->livraison_id = $old->id_date;
+				$model->client_id= trim($old->numero_client, 'C');
+				$model->numero = $old->numero_commande;
+				$model->created_at = $old->date_creation;
+				if ($old->date_modif != '0000-00-00') {
+					$model->updated_at = $old->date_modif;
+				}else{
+					$model->updated_at = Carbon::now();
+				}
+				$model->relais_id = $this->transcode_oldrelais($old->lieu_livraison);
+				$model->modepaiement_id = $this->transcode_modepaiement($old->mode_reglement);
+				$model->is_paid = $old->paiement_ok;
+				$model->is_livred = $old->livraison_ok;
+				$model->is_retired = $old->retrait_ok;
+				$model->is_actived = 1;
+				$model->remarques = '';
+
+
+				$lignes = $this->transpositionLignes($old);
+
+
+				$model->save();
+				$model->lignes()->saveMany($lignes);
+				$this->actualisePivotLivraisonPanier($lignes, $old);
 			}
-			$model->relais_id = $this->transcode_oldrelais($old->lieu_livraison);
-			$model->modepaiement_id = $this->transcode_modepaiement($old->mode_reglement);
-			$model->is_paid = $old->paiement_ok;
-			$model->is_livred = $old->livraison_ok;
-			$model->is_retired = $old->retrait_ok;
-			$model->is_actived = 1;
-			$model->remarques = '';
-
-			$lignes = $this->RecompositionLignesDeLaCommande($old);
-
-			$model->save();
-			$model->lignes()->saveMany($lignes);
-
+			}
+		}
+		catch(\exception $e){
+			\DB::rollBack();
+			return redirect('transfert')->with('status', 'Problème : '.$e->getLine());
 		}
 
-		// return redirect()->back();
-		return var_dump('transfert des commandes terminé');
+		\DB::commit();
+		return redirect()->back()->with('success', 'transfert des commandes effectué');
 	}
 
 
@@ -184,50 +218,74 @@ class TransfertController extends Controller
 			case 'Foix':
 			return 9;
 			break;
-			
+
 			case 'La Bastide de Sérou':
 			return 10;
 			break;
-			
+
 			case 'Pamiers':
 			return 11;
 			break;
-			
+
 			case 'Saint-Girons':
 			return 12;
 			break;
-			
+
 			default:
 			return 13;
 			break;
 		}
 	}
 
-	private function RecompositionLignesDeLaCommande($commande)
+
+	/**
+	 * Passer les colonnes en revues, s'il s'agit d'une colonne persistant une quantité (non égale à 0),
+	 * obtenir le numéro de la ligne, vérifier la conformité de la quantité,
+	 * et reconstituer ainsi chaque ligne sous sa nouvelle forme.
+	 *
+	 * @param stdClass
+	 * @return Array - Les lignes de la commande
+	 **/
+	private function transpositionLignes($commande_old)
 	{
 		$lignes=array();
 
 		// Mis en tableau des colonnes de la table
-		$colonnes = get_object_vars($commande);
+		$colonnes = get_object_vars($commande_old);
 
 		foreach ($colonnes as $colonne => $valeur) {
 
 			// Détection des colonnes concernant les quantités des lignes de la commande
 			if (substr_count($colonne, 'ligne') == 1 and substr_count($colonne, '_qte') == 1) {
 
-				// Détection si quantité valide
-				if (is_integer($valeur) and $valeur != 0) {
-					// Récupération du numéro de la ligne
-					$retrait = ['ligne' => '', '_qte' => ''];
-					$numeroLigne = strtr($colonne, $retrait);
-					$lignes[] = $this->RecompositionLigne($numeroLigne, $commande);
+				if ($valeur != 0) { // Si la quantité est 0 on ne traite pas cette ligne
+
+					// Obtention du numéro de la ligne
+					$txt_a_retirer = ['ligne' => '', '_qte' => ''];
+					$numeroLigne = strtr($colonne, $txt_a_retirer);
+
+					// Recomposition ligne si quantité valide
+					if (is_integer($valeur)){
+						$lignes[] = $this->recompositionLigne($numeroLigne, $commande_old);
+					}else{
+						dd('Problème : la ligne n° '.$numeroLigne.' de la commande id = '.$commande_old->id_commande.' présente la valeur : '.$valeur);
+					}
 				}
 			}
 		}
-		return $lignes;
+		return($lignes);
 	}
 
-	private function RecompositionLigne($numeroLigne, $commande)
+
+
+	/**
+	 * À partir du muméro de ligne, récupérer la quantité et le panier_id, 
+	 * les assigner à la nouvelle ligne et retourner celle-ci.
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	private function recompositionLigne($numeroLigne, $commande_old)
 	{
 		$ligne = new Ligne;
 
@@ -235,18 +293,38 @@ class TransfertController extends Controller
 		$NameColonnePanier = 'ligne'.$numeroLigne.'_colis';
 
 
-		$ligne->quantite = $commande->$NameColonneQuantite;
-		$ligne->panier_id = $commande->$NameColonnePanier;
-		$ligne->prix_final = $this->getPrixFinal($ligne->panier_id, $commande);
+		$ligne->quantite = $commande_old->$NameColonneQuantite;
+		$ligne->panier_id = $commande_old->$NameColonnePanier;
 
 		return $ligne;
 	}
 
 
-	private function getPrixFinal($panier_id, $commande)
+	/**
+	 * undocumented function
+	 *
+	 **/
+	function actualisePivotLivraisonPanier($lignes, $commande_old)
+	{
+		foreach ($lignes as $ligne) {
+			$query = \DB::table('livraison_panier')->where([['livraison_id', '=', $commande_old->id_date], ['panier_id', '=', $ligne->panier_id]])->get();
+			if (empty($query)) {
+				\DB::table('livraison_panier')->insert([
+					'livraison_id' => $commande_old->id_date,
+					'panier_id' => $ligne->panier_id,
+					'prix_livraison' => $this->getPrixFinal($ligne->panier_id, $commande_old)
+					]);
+			}
+		}
+
+	}
+	
+
+
+	private function getPrixFinal($panier_id, $commande_old)
 	{
 		$date = Carbon::createFromFormat('Y-m-d', '2017-09-05');
-		$date_creation = Carbon::createFromFormat('Y-m-d', $commande->date_creation);
+		$date_creation = Carbon::createFromFormat('Y-m-d', $commande_old->date_creation);
 
 		if ($date->diffInDays($date_creation) > 0) {
 			
@@ -349,7 +427,8 @@ class TransfertController extends Controller
 			}
 
 		}else{
-
+			$panier = Panier::find($panier_id);
+			return $panier->prix_base;
 		}
 
 	}
