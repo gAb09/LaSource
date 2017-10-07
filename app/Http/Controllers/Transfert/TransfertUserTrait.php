@@ -187,7 +187,7 @@ trait TransfertUserTrait
         $client->ad2 = $client_old->ad2;
         $client->cp = $client_old->cp;
         $client->ville = $client_old->ville;
-        $client->telephone = $client_old->telephone;
+        $client->tel = $client_old->telephone;
         $client->mobile = $client_old->mobile;
         $client->save();
 

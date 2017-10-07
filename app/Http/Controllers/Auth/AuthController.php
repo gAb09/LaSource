@@ -144,8 +144,8 @@ class AuthController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function register(InscriptionRequest $request)
-    {
-        $this->HandleReinscriptionCases($request);
+    {dd('stopregister');
+        $this->isItReinscriptionCases($request);
 
         Auth::guard($this->getGuard())->login($this->create($request->all()));
 
@@ -163,7 +163,7 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      *
      */
-    protected function HandleReinscriptionCases($request)
+    protected function isItReinscriptionCases($request)
     {
         $statut = \Session::get('transfert_statut');
         if( $statut == 'CompteIntrouvable' or $statut == 'TransfertFailed' ){
@@ -175,13 +175,13 @@ class AuthController extends Controller
     }
 
     /**
-     * Create a new user instance after a valid registration.
+     * Création d'un compte (client + user) n'existant pas dans l'ancienne base.
      *
      * @param  array  $data
      * @return User
      */
     protected function create(array $data)
-    {
+    {dd('stop');
         $user = new UserModel;
         $user->pseudo = $data['pseudo'];
         $user->email = $data['email'];
