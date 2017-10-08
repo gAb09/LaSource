@@ -70,6 +70,12 @@ return [
                 'trashed'  => 'Réhabilitation des clients supprimés',
             ],
 
+        'user' => 
+            [
+                'index' => 'Les utilisateurs',
+                'edit'  => 'Modification de mes identifiants',
+            ],
+
         'indisponibilite' => 
             [
                 'create' => 'Ajout d’une période d’indisponibilité :entity “:nom”',

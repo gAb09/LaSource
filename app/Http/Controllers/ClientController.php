@@ -23,15 +23,6 @@ class ClientController extends Controller
     }
 
 
-    public function espaceClient()
-    {
-        $model = \Auth::user();
-        $model = $model->load('Client');
-
-        return view('espaceclient')->with(compact('model'));
-    }
-
-
     public function index()
     {
         $models = Client::with('User')->get();
@@ -84,7 +75,7 @@ class ClientController extends Controller
         $model->mobile = $model->cleanTel($request->mobile);
         // $model->is_actived = (isset($request->is_actived)?1:0); // ToDo ??
         // $model->email = $request->email; // ToDo
-
+// dd($model);
         if($model->save()){
             return redirect()->route('espaceclient')->with('success', trans('message.client.updateOk'));
         }else{

@@ -89,8 +89,10 @@ Route::group(['middleware' => 'auth'], function () {
 
 // CLIENT...
 	Route::get('client/getdeleted', ['as' => 'client.getdeleted', 'uses' => 'ClientController@getDeleted']);
-	Route::get('espaceclient', ['as' => 'espaceclient', 'uses' => 'ClientController@espaceclient']);
 	Route::resource('client', 'ClientController');
+
+// ESPACE CLIENT...
+	Route::get('espaceclient', ['as' => 'espaceclient', 'uses' => 'EspaceClientController@espaceclient']);
 
 
 // MODE DE PAIEMENT...

@@ -34,6 +34,11 @@ class Client extends Model
         return $this->belongsTo('App\Models\User');
     }
 
+    public function Commandes()
+    {
+        return $this->hasMany('App\Models\Commande');
+    }
+
     public function getNomCompletAttribute($value)
     {
             return $this->prenom.' '.$this->nom;
