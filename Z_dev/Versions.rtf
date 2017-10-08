@@ -3,7 +3,7 @@
 }
 {\colortbl;\red255\green255\blue255;\red243\green24\blue0;\red25\green167\blue11;\red148\green8\blue7;
 \red1\green1\blue1;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww28140\viewh16100\viewkind0
+\paperw11900\paperh16840\margl1440\margr1440\vieww28020\viewh12920\viewkind0
 \pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\sl264\slmult1\ql\qnatural\pardirnatural
 
 \f0\fs28 \cf0 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
@@ -11,9 +11,12 @@ VERSION 2.6.4  Impl\'e9mentation commandes\
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
 \pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
 \cf0 \
+	\'95 TRANSFERT \'95 Ajout du transfert des clients + users (partiel).\
+	\'95 TRANSFERT \'95 Modification du traitement du transfert des commandes.\
+	\'95 COMMANDES \'95 Retrait de la r\'e9f\'e9rence au producteur et au prix livraison de la table 'ligne', pour ne pas doublonner avec livraison_panier. Refonte en cons\'e9quence des requ\'eates de commande.\
 	\'95 GLOBAL \'95 Utilisation d'une variable contenant le domaine du site, \'e0 la place de l'\'e9criture 'en dur', pour \'e9dition des entit\'e9s sur onDblclick\
 \pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\sl264\slmult1\ql\qnatural\pardirnatural
-\cf0 	\'95 GLOBAL \'95 changemet de nom OmController en TansfertControler\
+\cf0 	\'95 GLOBAL \'95 changemet de nom OmController en TransfertControler\
 	\'95 COMMANDES \'95 Mise en style + ajout colonne livraison concern\'e9e\
 	\'95 LIVRAISONS \'95 Ajout pagination en page d'index\
 	\'95 COMMANDES \'95 Am\'e9lioration transfert et index pour assainir les donn\'e9es lors du transfert de tables + pagination\
@@ -48,9 +51,7 @@ VERSION 2.6.2 Relais + Indispos + Divers global\
 	\'95 INDISPOS : debuggage extract doublons\
 \pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
 \cf3 	\'95 \cf0 INDISPOS \'95 Modification du contr\'f4le influence sur livraisons avant modification d'une indisponibilit\'e9\cf3 \
-\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
 \cf0 	\'95 RENOMMAGE : indisponible => indisponisable\
-\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
 \cf3 	\'95 \cf0 INDISPOS \'95 Modification du contr\'f4le influence sur livraisons avant cr\'e9ation d'une indisponibilit\'e9\
 \pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\sl264\slmult1\ql\qnatural\pardirnatural
 \cf0 	\'95 INDISPOS \'95 Contr\'f4le influence sur livraisons avant suppression d'une indisponibilit\'e9 OK sur suppression\
