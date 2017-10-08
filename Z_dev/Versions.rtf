@@ -11,6 +11,7 @@ VERSION 2.6.4  Impl\'e9mentation commandes\
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
 \pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
 \cf0 \
+	\'95 LIVRAISON \'95 Refonte du traitement du statut : 'state' => 'statut', le champ 'is_archived' est remplac\'e9 en BDD par champ 'statut = 'L_ARCHIVED'. R\'e9\'e9criture du code en cons\'e9quence.\
 	\'95 TRANSFERT \'95 Ajout du transfert des clients + users (partiel).\
 	\'95 TRANSFERT \'95 Modification du traitement du transfert des commandes.\
 	\'95 COMMANDES \'95 Retrait de la r\'e9f\'e9rence au producteur et au prix livraison de la table 'ligne', pour ne pas doublonner avec livraison_panier. Refonte en cons\'e9quence des requ\'eates de commande.\
@@ -51,7 +52,9 @@ VERSION 2.6.2 Relais + Indispos + Divers global\
 	\'95 INDISPOS : debuggage extract doublons\
 \pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
 \cf3 	\'95 \cf0 INDISPOS \'95 Modification du contr\'f4le influence sur livraisons avant modification d'une indisponibilit\'e9\cf3 \
+\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
 \cf0 	\'95 RENOMMAGE : indisponible => indisponisable\
+\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
 \cf3 	\'95 \cf0 INDISPOS \'95 Modification du contr\'f4le influence sur livraisons avant cr\'e9ation d'une indisponibilit\'e9\
 \pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\sl264\slmult1\ql\qnatural\pardirnatural
 \cf0 	\'95 INDISPOS \'95 Contr\'f4le influence sur livraisons avant suppression d'une indisponibilit\'e9 OK sur suppression\
