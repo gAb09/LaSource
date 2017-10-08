@@ -24,7 +24,7 @@
 	
 	<!-- Les dates -->
 	<div class="col-md-12 flexcontainer edit_show_livraison form_dates">
-		@include('livraison.createdit.dates')
+		@include('livraison.createdit.dates', ['mode' => 'create'])
 	</div>
 </form>
 

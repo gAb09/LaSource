@@ -11,14 +11,14 @@
 
 
 @section('topcontent1')
-<h1 class="titrepage">{!! trans('titrepage.livraison.edit', ['date_titrepage' => $date_titrepage]) !!} <small>({{ trans('constante.'.$model->state) }})</small></h1>
+<h1 class="titrepage">{!! trans('titrepage.livraison.edit', ['date_titrepage' => $date_titrepage]) !!} <small>({{ trans('constante.'.$model->statut) }})</small></h1>
 @parent
 @stop
 
 
 
 @section('createdit')
-	@if($model->is_archived)
+	@if($model->statut == 'L_ARCHIVED')
 	@include('livraison.show_archived')
 
 	@else
@@ -28,7 +28,7 @@
 		<input type="hidden" class="form-control" name="_method" value="PUT">
 
 		<div class="col-md-12 flexcontainer edit_show_livraison form_dates">
-			@include('livraison.createdit.dates')
+			@include('livraison.createdit.dates', ['mode' => 'edit'])
 		</div>
 	</form>
 

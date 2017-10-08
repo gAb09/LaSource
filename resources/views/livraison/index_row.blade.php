@@ -27,7 +27,7 @@ onDblClick="javascript:document.location.href='{{ route('livraison.edit', $model
 
 	<!-- state -->
 	<td class="{{$model->state}}">
-		@if($model->state == 'L_ARCHIVABLE')
+		@if($model->statut == 'L_ARCHIVABLE')
 		<form method="POST" name="livraison_archive" action="{{ URL::route('livraison.archive', $model->id) }}">
                         {!! csrf_field() !!}
                         <input type="hidden" class="form-control" name="_method" value="PATCH">
@@ -36,7 +36,7 @@ onDblClick="javascript:document.location.href='{{ route('livraison.edit', $model
 			</button>
 		</form>
 		@else
-			{{ trans('constante.'.$model->state) }}
+			{{ trans('constante.'.$model->statut) }}
 		@endif
 	</td>
 

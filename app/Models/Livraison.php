@@ -114,31 +114,40 @@ class Livraison extends Model
      */
     public function checkIfOkForOuverture()
     {
-        if ($this->date_cloture) {
+        if (1 == 1) {
             return true;
         }
     }
 
-    public function getStateAttribute($value)
+    public function getStatutAttribute($value)
     {
-        $value = "L_CREATED";
+        if ($value == '') {
+            $newValue = "L_CREATED";
+        }
 
         if ($this->checkIfOkForOuverture()) {
-            $value = "L_OUVERTE";
+            $newValue = "L_OUVERTE";
         }
 
         if ($this->date_cloture->diffInDays(Carbon::now(), false) > 0) {
-            $value = "L_CLOTURED";
+            $newValue = "L_CLOTURED";
         }
 
         if ($this->date_livraison->diffInDays(Carbon::now(), false) > 0) {
-            $value = 'L_ARCHIVABLE';
+            $newValue = 'L_ARCHIVABLE';
         }
 
-        if ($this->is_archived) {
-            $value = 'L_ARCHIVED';
+        if ($value == 'L_ARCHIVED') {
+            $newValue = "L_ARCHIVED";
         }
-        return $value;
+
+        return $newValue;
+    }
+
+    public function setStatutAttribute($value)
+    {
+        $this->attributes['statut'] = $value;
+
     }
 
 }

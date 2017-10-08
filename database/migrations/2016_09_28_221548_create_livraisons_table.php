@@ -18,7 +18,7 @@ class CreateLivraisonsTable extends Migration
             $table->timestamp('date_cloture')->default('2016-09-25 00:00:00');
             $table->timestamp('date_paiement')->default('2016-09-30 00:00:00');
             $table->integer('is_actived')->unsigned()->default(1);
-            $table->integer('is_archived')->unsigned()->default(0);
+            $table->string('statut', 20)->default('L_CREATED');
             $table->string('remarques', 2000)->nullable();
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();

@@ -180,7 +180,7 @@ class Domaine
 		$model_name = $this->getDomaineName();
 		$message = "Oups !! $action impossible !<br />";
 		foreach ($this->model->livraison as $livraison) {
-			if(!$livraison->is_archived){
+			if(!$livraison->statut == 'L_ARCHIVED'){
 				$message .= trans("message.$model_name.liedToLivraison", ['date' => $livraison->date_livraison_enClair]).'<br />';
 			}
 		}

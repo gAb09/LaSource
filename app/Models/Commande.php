@@ -97,7 +97,7 @@ class Commande extends Model
     // 	}
 
 
-    //     if ($this->is_archived) {
+    //     if ($this->statut == 'C_ARCHIVED' ) {
     //         $value = 'C_ARCHIVED';
     //     }
         $value = 'C_ARCHIVABLE';

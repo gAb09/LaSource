@@ -52,7 +52,7 @@ class LivraisonDomaine extends Domaine
 
 	public function edit($id)
 	{
-		$livraison = Livraison::with('Panier')->where('id', $id)->first();
+		$livraison = Livraison::with('Panier')->findOrFail($id);
 		foreach ($livraison->Panier as $panier) {
 			if (\Session::get('new_attached')) {
 				// var_dump($panier->id);
@@ -83,7 +83,8 @@ class LivraisonDomaine extends Domaine
 		$this->model->date_paiement = $request->date_paiement;
 		$this->model->date_livraison = $request->date_livraison;
 		$this->model->remarques = $request->remarques;
-		$this->model->is_actived = (isset($request->is_actived)?1:0);
+        $this->model->is_actived = (isset($request->is_actived)?1:0);
+        $this->model->statut = $request->statut;
 		
 	}
 
@@ -310,7 +311,7 @@ class LivraisonDomaine extends Domaine
     	$this->model = $this->model->findOrFail($id);
 
     	if ($this->controleAvantArchivage($this->model)) {
-    		$this->model->is_archived = 1;
+    		$this->model->statut = 'L_ARCHIVED';
     		return $this->model->save();
     	}
 
