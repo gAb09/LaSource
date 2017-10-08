@@ -20,10 +20,10 @@ class Ligne extends Model
 
     public function getPrixLivraisonAttribute($value)
     {
-        if (!isset($this->complement[0])) {
+        if (!isset($this->complement)) {
             $value = NULL;
         }else{
-            $value = $this->complement[0]->prix_livraison;
+            $value = $this->complement->prix_livraison;
         }
         return $value;
     }
