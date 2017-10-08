@@ -74,7 +74,7 @@ class LivraisonController extends Controller
 
         $modepaiements = $this->modepaiements->ListForLivraisonEdit($id);
 
-        return view('livraison.createdit.edit')->with(compact('model','date_titrepage', 'paniers', 'paniers_lied', 'relaiss', 'modepaiements' ));
+        return view('livraison.createdit.edit')->with(compact('model','date_titrepage', 'paniers', 'paniers_lied', 'relaiss', 'modepaiements'));
     }
 
 

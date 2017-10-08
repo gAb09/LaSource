@@ -31,11 +31,12 @@
 		@include('livraison.partials.date_cloture')
 	</div>
 
-<!-- statut (masqué) + inclus uniquement si on est en mode "edit" -->
+<!-- statut (masqué) -->
 @if($mode == 'edit')
 <input type="hidden" id="statut" name="statut" value="{{ old('statut', $model->statut) }}">
+@elseif($mode == 'create')
+<input type="hidden" id="statut" name="statut" value="L_CREATED">
 @endif
-
 <div>
 	<button type="submit" class="btn btn-sm btn-success">
 		<i class="fa fa-btn fa-save fa-lg"></i>Valider ces dates

@@ -62,17 +62,17 @@ class LivraisonRequest extends Request
 
         return [
         'date_livraison' => "required|date",
-        'date_paiement' => "required|date|before:date_livraison|before:$date_paiement_max",
-        'date_cloture' => "required|date|before:date_paiement|after:now|before:$date_cloture_max|after:$date_cloture_min",
+        'date_paiement' => "required|date|before:$date_paiement_max",
+        'date_cloture' => "required|date|before:$date_cloture_max|after:$date_cloture_min",
         ];
     }
 
     public function messages()
     {
         return [
-        'date_paiement.before' => "Date de paiement.<br />Cette date doit être ANTÉRIEURE à celle de livraison<br />et éloignée d'au moins $this->marge_paiement_livraison jours.",
-        'date_cloture.before' => "Date de clôture.<br />Cette date doit être ANTÉRIEURE à celle de paiement<br />et éloignée d'au moins $this->marge_cloture_paiement jours.",
-        'date_cloture.after' => "Date de clôture.<br />Cette date doit être POSTÉRIEURE à aujourd’hui<br />et éloignée d’au moins $this->marge_cloture_now jours.",
+        'date_paiement.before' => "Date de paiement.<br />Cette date doit PRÉCÉDER<br />la date de livraison<br />d'au moins $this->marge_paiement_livraison jours.",
+        'date_cloture.before' => "Date de clôture.<br />Cette date doit PRÉCÉDER<br />la date de PAIEMENT d'au moins $this->marge_cloture_paiement jours.",
+        'date_cloture.after' => "Date de clôture.<br />Cette date doit être éloignée d’AUJOURD’HUI<br />d’au moins $this->marge_cloture_now jours.",
         ];
     }
 }

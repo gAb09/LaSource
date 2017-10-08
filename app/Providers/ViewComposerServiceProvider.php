@@ -28,6 +28,9 @@ class ViewComposerServiceProvider extends ServiceProvider
         view()->composer(
             'layouts.app', 'App\ViewComposers\LayoutComposer'
             );    
+        view()->composer(
+            'livraison.partials.param_ecarts', 'App\ViewComposers\ParamEcartsComposer'
+            );    
     }
 
     /**
