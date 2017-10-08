@@ -67,8 +67,9 @@ $this->post('transfert/OldLoginFailed', 'Auth\AuthController@HandleOldLoginFaile
 Route::get('contactLS', 'ContactController@ContactLS');
 Route::get('contactOM', 'ContactController@ContactOM');
 
-// OuaibMaistre Routes...
+// Transfert Routes...
 $this->get('transfert', 'TransfertController@index');
+$this->get('transfert/clients', 'TransfertController@client');
 $this->get('transfert/relais', 'TransfertController@relais');
 $this->get('transfert/producteurs', 'TransfertController@producteurs');
 $this->get('transfert/paniers', 'TransfertController@paniers');

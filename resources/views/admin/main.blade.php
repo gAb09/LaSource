@@ -9,9 +9,11 @@
                     <h3>Administration</h3>
                 </div>
                 <div class="panel-body">
+                    {{Html::linkAction('TransfertController@client', 'Transfert des clients')}}<br />
+                    <br />
                     {{Html::linkAction('TransfertController@relais', 'Transfert des relais')}}<br />
                     <br />
-                    {{Html::linkAction('TransfertController@tproducteurs', 'Transfert des producteurs')}}<br />
+                    {{Html::linkAction('TransfertController@producteurs', 'Transfert des producteurs')}}<br />
                     <br />
                     {{Html::linkAction('TransfertController@paniers', 'Transfert des paniers')}}<br />
                     <br />

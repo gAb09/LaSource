@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
+use App\Models\User;
 use App\Models\Relais;
 use App\Models\Producteur;
 use App\Models\Panier;
@@ -28,25 +30,49 @@ class TransfertController extends Controller
 
 	public function client()
 	{
+		\DB::transaction(function(){
+
+			$this->user();
+
+			$olds = \DB::connection('mysql_old')->table('paniers_clients')->select('*')->get();
+			foreach ($olds as $old) {
+				$model = new Client;
+
+				$model->id = $old->id_client;
+				$model->user_id = $old->id_client;
+				$model->nom = $old->nom;
+				$model->prenom = $old->prenom;
+				$model->ad1 = $old->ad1;
+				$model->ad2 = $old->ad2;
+				$model->cp = $old->cp;
+				$model->ville = $old->ville;
+				$model->tel = $old->telephone;
+				$model->mobile = $old->mobile;
+				$model->created_at = $this->checkAndReformateDate($old->date_creation);
+				$model->updated_at = $this->checkAndReformateDate($old->date_modif);
+
+				$model->save();
+			}
+		});
+
+		return redirect()->back();
+	}
+
+	public function user()
+	{
 		$olds = \DB::connection('mysql_old')->table('paniers_clients')->select('*')->get();
 		foreach ($olds as $old) {
-			$model = new Client;
+			$model = new User;
 
-			$model->id = $old->id_lieu;
-			$model->nom = $old->relais;
-			$model->ad1 = $old->ad1;
-			$model->ad2 = $old->ad2;
-			$model->cp = $old->cp;
-			$model->ville = $old->lieu_livraison;
-			$model->tel = $old->tel;
-			$model->email = $old->mail;
-			$model->retrait = $old->horaires;
-			$model->ouvertures = $old->remarques;
-			$model->is_actived = 1;
-
-			$model->save();
+			$model->id = $old->id_client;
+			$model->pseudo = $old->login_client;
+			$model->email = $old->email;
+			$model->role_id = 10;
+			$model->created_at = $this->checkAndReformateDate($old->date_creation);
+			$model->updated_at = $this->checkAndReformateDate($old->date_modif);
+				
+				$model->save();
 		}
-		return redirect()->back();
 	}
 
 	public function relais()
@@ -157,36 +183,36 @@ class TransfertController extends Controller
 		try{
 			\DB::beginTransaction();
 
-		foreach ($olds as $old) {
-			if (!empty($old->id_date) and is_numeric($old->id_date)) {
-				$model = new Commande;
+			foreach ($olds as $old) {
+				if (!empty($old->id_date) and is_numeric($old->id_date)) {
+					$model = new Commande;
 
-				$model->id = $old->id_commande;
-				$model->livraison_id = $old->id_date;
-				$model->client_id= trim($old->numero_client, 'C');
-				$model->numero = $old->numero_commande;
-				$model->created_at = $old->date_creation;
-				if ($old->date_modif != '0000-00-00') {
-					$model->updated_at = $old->date_modif;
-				}else{
-					$model->updated_at = Carbon::now();
+					$model->id = $old->id_commande;
+					$model->livraison_id = $old->id_date;
+					$model->client_id= trim($old->numero_client, 'C');
+					$model->numero = $old->numero_commande;
+					$model->created_at = $old->date_creation;
+					if ($old->date_modif != '0000-00-00') {
+						$model->updated_at = $old->date_modif;
+					}else{
+						$model->updated_at = Carbon::now();
+					}
+					$model->relais_id = $this->transcode_oldrelais($old->lieu_livraison);
+					$model->modepaiement_id = $this->transcode_modepaiement($old->mode_reglement);
+					$model->is_paid = $old->paiement_ok;
+					$model->is_livred = $old->livraison_ok;
+					$model->is_retired = $old->retrait_ok;
+					$model->is_actived = 1;
+					$model->remarques = '';
+
+
+					$lignes = $this->transpositionLignes($old);
+
+
+					$model->save();
+					$model->lignes()->saveMany($lignes);
+					$this->actualisePivotLivraisonPanier($lignes, $old);
 				}
-				$model->relais_id = $this->transcode_oldrelais($old->lieu_livraison);
-				$model->modepaiement_id = $this->transcode_modepaiement($old->mode_reglement);
-				$model->is_paid = $old->paiement_ok;
-				$model->is_livred = $old->livraison_ok;
-				$model->is_retired = $old->retrait_ok;
-				$model->is_actived = 1;
-				$model->remarques = '';
-
-
-				$lignes = $this->transpositionLignes($old);
-
-
-				$model->save();
-				$model->lignes()->saveMany($lignes);
-				$this->actualisePivotLivraisonPanier($lignes, $old);
-			}
 			}
 		}
 		catch(\exception $e){
@@ -301,7 +327,10 @@ class TransfertController extends Controller
 
 
 	/**
-	 * undocumented function
+	 * Il s'agit ici de créer un enregistrement dans panier_livraison lorsqu'une ligne d'une commande est créée,
+	 * ce, pour persister le producteur et le prix livraison. 
+	 * Mais attention, plusieurs commandes d'une même livraison peuvent faire référence à un même couple panier/livraison.
+	 * En ce cas on ne recrée pas un nouvel enregistrement pour conserver l'unicité des données en BDD.
 	 *
 	 **/
 	function actualisePivotLivraisonPanier($lignes, $commande_old)
@@ -431,5 +460,27 @@ class TransfertController extends Controller
 			return $panier->prix_base;
 		}
 
+	}
+
+	/**
+	 * Filtrer les dates, car, par erreur, au début de l'utilisation de l'ancienne base certaines dates ont été codées (D-m-Y) et non (Y-m-D)
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	function checkAndReformateDate($date)
+	{
+		if ($date == '') {
+			$date = '2009-10-22';
+		}else{
+			$date = explode('-', $date);
+			if( strlen($date[2]) == 4 ){
+				$date = implode('-', [ $date[2], $date[1], $date[0] ]);
+			}else{
+				$date = implode('-', [ $date[0], $date[1], $date[2] ]);
+			}
+		}
+
+		return $date;
 	}
 }
