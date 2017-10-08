@@ -9,9 +9,12 @@
 \f0\fs28 \cf0 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
 VERSION 2.6.4  Impl\'e9mentation commandes\
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
+\
+	\'95 COMMANDE \'95 Impl\'e9mentation de l'index des commandes dans l'espace client (''Mes commandes'').\
+	\'95 COMMANDE \'95 Factorisation des m\'e9thodes d'obtention des commandes avec lignes compl\'e8tes\
+	\'95 LIVRAISON \'95 Cr\'e9ation vue partielle pour informer des param\'e8tres d'\'e9carts + viewcomposer + int\'e9gration aux vues ceate et edit.\
 \pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
-\cf0 \
-	\'95 LIVRAISON \'95 Refonte du traitement du statut : 'state' => 'statut', le champ 'is_archived' est remplac\'e9 en BDD par champ 'statut = 'L_ARCHIVED'. R\'e9\'e9criture du code en cons\'e9quence.\
+\cf0 	\'95 LIVRAISON \'95 Refonte du traitement du statut : 'state' => 'statut', le champ 'is_archived' est remplac\'e9 en BDD par champ 'statut = 'L_ARCHIVED'. R\'e9\'e9criture du code en cons\'e9quence.\
 	\'95 TRANSFERT \'95 Ajout du transfert des clients + users (partiel).\
 	\'95 TRANSFERT \'95 Modification du traitement du transfert des commandes.\
 	\'95 COMMANDES \'95 Retrait de la r\'e9f\'e9rence au producteur et au prix livraison de la table 'ligne', pour ne pas doublonner avec livraison_panier. Refonte en cons\'e9quence des requ\'eates de commande.\
@@ -34,8 +37,7 @@ VERSION 2.6.3  Impl\'e9mentation modes de paiements - finition livraisons\
 \pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
 \cf0 \
 \pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\sl264\slmult1\ql\qnatural\pardirnatural
-\cf0 	\'95 LIVRAISON \'95 Cr\'e9ation vue partielle pour informer des param\'e8tres d'\'e9carts + viewcomposer + int\'e9gration aux vues ceate et edit.\
-	\'95 LIVRAISON \'95 Impl\'e9mentation validation des dates + cr\'e9ation de la table parametres.\
+\cf0 	\'95 LIVRAISON \'95 Impl\'e9mentation validation des dates + cr\'e9ation de la table parametres.\
 	\'95 LIVRAISON \'95 Finalisation impl\'e9mentation archivage\
 	\'95 LIVRAISON \'95 Impl\'e9mentation \'e9dition Panier depuis page Livraison\
 	\'95 LIVRAISON \'95 Sur page edit livraison mettre les dates en erreur en rouge\
