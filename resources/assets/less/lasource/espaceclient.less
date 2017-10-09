@@ -1,14 +1,38 @@
+@import "variables.less";
+
 .nav > li > p{
 	color: #d00;
 	padding: 15px 15px 2px;
 	display: block;
 }
 
-.espace_client h2, .espace_client h3{
-	color: #00C;
-	display: block;
+.espace_client{
+	.panel-body{
+		background-color: @color_fond_gris_leger;
+		border : 5px solid white;
+	}
+	width :100%;
+	h2, h3{
+		color: @color_titres;
+		display: block;
+	}
+	h2{
+		text-align: center;
+	}
+	h4{
+		border-top: 5px solid @color_titres;
+		margin-top: 25px;
+		padding-top: 5px;
+	}
+	.ma_commande:hover{
+		color:@color_titres;
+		table{
+			display:table;
+		}
+	}
+	.ma_commande{
+		table{
+			display:none;
+		}
+	}
 }
-.espace_client h2{
-	text-align: center;
-}
-

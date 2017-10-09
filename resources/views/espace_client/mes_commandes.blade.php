@@ -3,36 +3,27 @@
 	Pas de commande
 @else
 	@foreach($model->Client->Commandes as $commande)
+	<div class="ma_commande">
 		<h4>Livraison du {{ $commande->Livraison->date_livraison_enClair }} <small>(commande {{ $commande->numero }})</small></h4>
 
 		
-		Relais : {{ $commande->relais->nom }}<br />
-		Paiement par {{ $commande->modepaiement->nom }}<br />
 
-		@foreach($commande->lignes as $ligne)
-		<table>
-			<thead>
-			</thead>
+		<table class="index_commandes_espaceclient">
 			<tbody>
-				<tr style="border-top: 1px dashed red;">
-					<td>
-						{!! $ligne->panier->type !!} {!! $ligne->panier->nom_court !!}
+				@foreach($commande->lignes as $ligne)
+					@include("commande.ligne")
+				@endforeach
+				<tr class="total">
+					<td colspan="5">TOTAL :
 					</td>
 					<td>
-						{{ $ligne->quantite }}
+						{{ $commande->montant_total }}
 					</td>
-					<td>
-						 x {{ $ligne->complement->prix_livraison }}
-					</td>
-					<td>
-						 = {{ $ligne->montant_ligne }} 
-					</td>
-				</tr>
-				<tr>
 				</tr>
 			</tbody>
 		</table>
-		@endforeach
-		{{ $commande->montant_total }}
+		Relais : {{ $commande->relais->nom }} – Paiement par {{ $commande->modepaiement->nom }}<br />
+</div>
 	@endforeach
 @endif
+

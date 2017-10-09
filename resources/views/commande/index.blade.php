@@ -19,6 +19,9 @@
 
 
 @section('content')
+
+{{ $models->links() }}
+
 <table class="index_commandes  col-md-12">
 	<thead>
 		<th style="width:10%">
@@ -56,7 +59,6 @@
 
 </table>
 
-{{ $models->links() }}
 
 @stop
 

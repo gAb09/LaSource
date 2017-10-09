@@ -3,46 +3,59 @@ COULEURS
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /* Couleurs de bootstrap */
 /* Modèles */
+/* Couleurs site */
 /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 Vue index
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-.index_commandes {
+table.index_commandes,
+table.index_commandes_espaceclient {
   border-collapse: collapse;
 }
-.index_commandes thead {
+table.index_commandes thead,
+table.index_commandes_espaceclient thead {
   background-color: #9e9e1f;
   color: #f4f4c8;
 }
-.index_commandes tbody tr {
+table.index_commandes tbody tr,
+table.index_commandes_espaceclient tbody tr {
   background-color: #f4f4c8;
   font-size: 0.8em;
   border-bottom: 1px solid #dbdb48;
 }
-.index_commandes tbody tr .total {
+table.index_commandes tbody tr .total,
+table.index_commandes_espaceclient tbody tr .total {
   background-color: #ededa6;
   border-bottom: 0px;
 }
-.index_commandes th,
-.index_commandes td {
+table.index_commandes th,
+table.index_commandes_espaceclient th,
+table.index_commandes td,
+table.index_commandes_espaceclient td {
   padding: 6px;
 }
-.index_commandes td.lignes_commande {
+table.index_commandes td.lignes_commande,
+table.index_commandes_espaceclient td.lignes_commande {
   padding-bottom: 0px;
 }
-.index_commandes td.panier {
+table.index_commandes td.panier,
+table.index_commandes_espaceclient td.panier {
   background-color: #f4f4c8;
   padding-right: 20px;
   font-style: italic;
 }
-.index_commandes tr.top_txt {
+table.index_commandes tr.top_txt,
+table.index_commandes_espaceclient tr.top_txt {
   vertical-align: top;
 }
-.index_commandes tr.total {
+table.index_commandes tr.total,
+table.index_commandes_espaceclient tr.total {
   text-align: right;
 }
-.index_commandes .C_ARCHIVABLE {
+table.index_commandes .C_ARCHIVABLE,
+table.index_commandes_espaceclient .C_ARCHIVABLE {
   padding: 0;
 }
-.index_commandes .datecreation {
+table.index_commandes .datecreation,
+table.index_commandes_espaceclient .datecreation {
   font-size: 0.6em;
 }
