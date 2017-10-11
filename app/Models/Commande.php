@@ -61,7 +61,7 @@ class Commande extends Model
         return $value;
     }
 
-    public function getStateAttribute($value)
+    public function getStatutAttribute($value)
     {
     // 	$livraison = $this->with('Livraison')->where('id', $this->id)->first()->livraison;
 
@@ -100,7 +100,7 @@ class Commande extends Model
     //     if ($this->statut == 'C_ARCHIVED' ) {
     //         $value = 'C_ARCHIVED';
     //     }
-        $value = 'C_ARCHIVABLE';
+        $value = 'Statut à définir';
 
         return $value;
         // return 'Fonction à implémenter';

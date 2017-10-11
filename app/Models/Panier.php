@@ -29,5 +29,11 @@ class Panier extends Model
         return $this->belongsToMany('App\Models\Livraison')->withPivot('producteur', 'prix_livraison');
     }
 
+    public function getNomSansRetoursAttribute($value)
+    {
+        $value = $this->nom;
+        return str_replace('<br/>', ' ', $value);
+    }
+
 
 }

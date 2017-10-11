@@ -6,20 +6,34 @@ use App\Models\Livraison;
 use App\Domaines\RelaisDomaine;
 use App\Domaines\ModePaiementDomaine;
 use App\Domaines\Domaine;
+use App\Domaines\ProducteurDomaine;
 use Carbon\Carbon;
 
 
 class LivraisonDomaine extends Domaine
 {
 	public function __construct(){
+        $this->producteurD = new ProducteurDomaine;
 		$this->model = new Livraison;
 	}
 
 
-	public function index($nbre_pages = 8)
-	{
-		return $this->model->orderBy('id', 'desc')->paginate($nbre_pages);
-	}
+    public function getAllLivraisonsOuvertes()
+    {
+        $models = $this->model->orderBy('date_livraison')->whereStatut('L_OUVERTE')->get();
+        $models->each(function($livraison){
+            $livraison->panier->each(function($panier)use($livraison){
+                $panier->exploitation = $this->producteurD->findFirst($panier->pivot->producteur)->exploitation;
+            });
+        });
+        return $models;
+    }
+
+
+    public function index($nbre_pages = 8)
+    {
+        return $this->model->orderBy('id', 'desc')->paginate($nbre_pages);
+    }
 
 
 	public function create(){

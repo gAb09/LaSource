@@ -3,8 +3,9 @@
 	Pas de commande
 @else
 	@foreach($model->Client->Commandes as $commande)
-	<div class="ma_commande">
+	<div class="ma_commande" style="position:relative">
 		<h4>Livraison du {{ $commande->Livraison->date_livraison_enClair }} <small>(commande {{ $commande->numero }})</small></h4>
+		<p class="statut">{{ $commande->statut }}</p>
 
 		
 

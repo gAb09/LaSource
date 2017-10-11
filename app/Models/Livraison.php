@@ -146,7 +146,12 @@ class Livraison extends Model
 
     public function setStatutAttribute($value)
     {
-        $this->attributes['statut'] = $value;
+        if ($this->checkIfOkForOuverture()) {
+            $newValue = "L_OUVERTE";
+        }
+
+
+        $this->attributes['statut'] = $newValue;
 
     }
 

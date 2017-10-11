@@ -62,7 +62,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Les paniers de La Source<br />
+                    Les paniers<br />de La Source<br />
                 </a>
 
             </div>
