@@ -85,6 +85,7 @@ return [
         'commande' => 
             [
                 'index' => 'Les commandes',
+                'create'  => 'Création d’une commande',
             ],
 
         'dashboard' => 

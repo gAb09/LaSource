@@ -1,11 +1,5 @@
 @import "variables.less";
 
-.nav > li > p{
-	color: #d00;
-	padding: 15px 15px 2px;
-	display: block;
-}
-
 .espace_client{
 	.panel-body{
 		background-color: @color_fond_gris_leger;
@@ -14,15 +8,36 @@
 	width :100%;
 	h2, h3{
 		color: @color_titres;
-		display: block;
 	}
 	h2{
 		text-align: center;
 	}
+	h3{
+		margin-top:0;
+	}
 	h4{
-		border-top: 5px solid @color_titres;
 		margin-top: 25px;
 		padding-top: 5px;
+	}
+	.livraisons_ouvertes{
+		h4{
+			border-top: 5px solid @color_livraison_dark;
+			color: @color_livraison_dark;
+		}
+	}
+	.commandes{
+		p{
+			position:absolute;
+			color:darken(@color_commande, 50%);
+			right: 0;
+			top: 10px;
+		}
+		table{
+			display:none;
+		}
+		h4{
+			border-top: 5px solid @color_titres;
+		}
 	}
 	.ma_commande:hover{
 		color:@color_titres;
@@ -30,18 +45,38 @@
 			display:table;
 		}
 	}
-	.ma_commande{
-		table{
-			display:none;
+	.onglet{
+		text-align:center;
+		border-left: solid 3px white;
+		border-right: solid 3px white;
+	}
+	.flexcontainer{
+		justify-content:center;
+		>div{
+			margin:5px;
+			text-align:center;
+			background-color: white;
+			width: 24%;
 		}
 	}
-}
-
-.ma_commande{
-	p{
-		position:absolute;
-		color:darken(@color_commande, 50%);
-		right: 0;
-		top: 10px;
+	div.paiement_relais{
+		// text-align: left;
+		// padding-left: 20px;
+		h5{
+			font-size: 1.1em;
+			margin-bottom: 1px;
+		}
+	}
+	.relais, .modepaiement{
+		background-color: white;
+		span{
+			font-size:0.8em;
+			margin:3px;
+		}
+	}
+	.relais{
+		flex-direction:column;
+		span{
+		}
 	}
 }

@@ -132,4 +132,18 @@ class RelaisDomaine extends Domaine
     	return $relais->livraison()->detach($livraison_id);
     }
 
+
+/**
+ * Renvoie tous les relais existants en y précisant les choix par défaut du client loggé
+ *
+ * @return collection of App\Models\Relais
+ **/
+    public function getForThisClient($id)
+    {
+        $models = $this->allActived('id');
+        return $models;
+    }
+
+
+
 }

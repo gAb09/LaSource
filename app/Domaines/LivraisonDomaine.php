@@ -346,4 +346,17 @@ class LivraisonDomaine extends Domaine
     	return true;
     }
 
+
+    /**
+     * Acquisition de la livraison choisie pour y souscrire une commande.
+     * En incluant ses paniers, et pour chacu d'entre eux leproducteur et le prix livraison.
+     *
+     * @param integer : id de la livraison
+     * @return App\Models\Livraison
+     **/
+    public function creationCommande($id)
+    {
+        return $this->model->with('panier')->find($id);
+    }
+
 }
