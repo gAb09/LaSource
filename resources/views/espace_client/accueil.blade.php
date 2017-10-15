@@ -5,9 +5,9 @@
 <div class="container-fluid espace_client">
     <div class="row">
         <div class="panel panel-default">
-                    <h3 style="text-align:center">{{ trans_choice('message.livraison.ouvertes', $livraisons->count(), [ 'count' => $livraisons->count() ]) }}
+                    <h2 style="text-align:center">{{ trans_choice('message.livraison.ouvertes', $livraisons->count(), [ 'count' => $livraisons->count() ]) }}
                         {{ trans_choice('message.commande.encours', $commandes->count(), [ 'count' => $commandes->count() ]) }}
-                    </h3>
+                    </h2>
 
             <div class="panel-body col-md-2" style="position:fixed">
                 <h3>Mes coordonnées</h3>

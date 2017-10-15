@@ -10,18 +10,20 @@
 		color: @color_titres;
 	}
 	h2{
+		margin-top: 12px;
 		text-align: center;
+		font-size:1.8em;
 	}
 	h3{
 		margin-top:0;
 	}
 	h4{
-		margin-top: 25px;
+		// margin-top: 25px;
 		padding-top: 5px;
 	}
 	.livraisons_ouvertes{
 		h4{
-			border-top: 5px solid @color_livraison_dark;
+			border-top: 3px solid @color_livraison_dark;
 			color: @color_livraison_dark;
 		}
 	}
@@ -36,7 +38,7 @@
 			display:none;
 		}
 		h4{
-			border-top: 5px solid @color_titres;
+			border-top: 3px solid @color_titres;
 		}
 	}
 	.ma_commande:hover{
@@ -70,8 +72,15 @@
 	.relais, .modepaiement{
 		background-color: white;
 		span{
+			background-color: white;
+			border: solid 2px lighten(@color_info, 30%);
 			font-size:0.8em;
 			margin:3px;
+		}
+		span.checked{
+			border: solid 2px @color_info;
+			color: white;
+			background-color: @color_info
 		}
 	}
 	.relais{

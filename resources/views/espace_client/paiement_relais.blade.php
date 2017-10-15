@@ -1,15 +1,19 @@
 <h5>Mode de paiement</h5>
 <div class="modepaiement flexcontainer">
+	<input class="hidden" type="txt" name="{{ $ref_livraison }}_paiement" value="">
 	@foreach($modespaiement as $mode)
-		<input class="hidden" type="txt" name="{{ $ref_livraison }}_paiement" value="{{ $mode->id }}">
-		<span class="btn btn-info btn-xs" name="{{ $mode->nom }}" contexte="{{$ref_livraison}}" onClick="javascript:select(this);">{{ $mode->nom }} </span>
+	<span class="btn-xs" model="paiement" name="{{ $mode->nom }}" livraison="{{$ref_livraison}}" 
+		onClick="javascript:select('{{$ref_livraison}}', 'paiement', this, {{ $mode->id }});">{{ $mode->nom }}
+	</span>
 	@endforeach
 </div>
 
 <h5>Relais</h5>
 <div class="relais flexcontainer">
+	<input class="hidden" type="txt" name="{{ $ref_livraison }}_relais" value="">
 	@foreach($relaiss as $relais)
-		<input class="hidden" type="txt" name="{{ $ref_livraison }}_relais" value="{{ $relais->id }}">
-		<span class="btn btn-info btn-xs" name="{{ $relais->nom }}" contexte="{{$ref_livraison}}" onClick="javascript:select(this);">{{ $relais->ville}} - {{$relais->nom }} </span>
+	<span class="btn-xs" model="relais" name="{{ $relais->nom }}" livraison="{{$ref_livraison}}" 
+		onClick="javascript:select('{{$ref_livraison}}', 'relais', this, {{ $relais->id }});">{{ $relais->nom }}
+	</span>
 	@endforeach
 </div>
