@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+
 @section('content')
 
 <div class="container-fluid espace_client">
@@ -11,7 +12,7 @@
 
             <div class="panel-body col-md-2" style="position:fixed">
                 <h3>Mes coordonnées</h3>
-                {{ $model->Client->prenom }} {{ $model->Client->nom }}<br/><small>(Pseudo : {{ $model->pseudo }})</small><br />
+                <h4>{{ $model->Client->prenom }} {{ $model->Client->nom }}<br/><small>(Pseudo : {{ $model->pseudo }})</small><br /></h4>
                 {{ $model->Client->ad1 }}<br />
                 @if(!empty($model->Client->ad2))
                 {{ $model->Client->ad2 }}<br />
@@ -26,19 +27,29 @@
 
                 <br/>
                 <h3 style="margin-top:10px">Mes préférences</h3>
-                @include('espace_client.paiement_relais', ['ref_livraison' => 0])
+                @include('espace_client.paiement_relais', ['ref_livraison' => 0, 'par_defaut' => "par défaut"])
             </div>
 
             <div class="panel-body col-md-offset-2 col-md-10">
-                <form class="form-horizontal" role="form" method="POST" action="{{ route('commande.store', $model->id) }}">
+                <form id="commande_store" class="form-horizontal" role="form" method="POST" action="{{ route('commande.store', $model->id) }}">
                 {!! csrf_field() !!}
-                    <button type="submit" class="btn btn-success" style="float:right;">Valider toutes mes commandes</button>
+                    
 
                     <div class="livraisons_ouvertes">
-                        @include('espace_client.livraisons_ouvertes')
+                        @forelse($livraisons as $livraison)
+                            @include('espace_client.livraisons_ouvertes')
+                        @empty
+                            À ce jour, pas de livraison programmée
+                        @endforelse
                     </div>
                     <div class="commandes">
-                        @include('espace_client.mes_commandes')
+                        @if($model->Client->Commandes->isEmpty())
+                            Pas de commande
+                        @else
+                            @foreach($model->Client->Commandes as $commande)
+                                @include('espace_client.mes_commandes')
+                            @endforeach
+                        @endif
                     </div>
                 </form>
              </div>
