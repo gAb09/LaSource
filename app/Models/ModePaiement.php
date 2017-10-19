@@ -21,7 +21,7 @@ class ModePaiement extends Model
     ];
 
 
-    public function Livraison()
+    public function livraison()
     {
         return $this->belongsToMany('App\Models\Livraison')->withPivot('motif');
     }

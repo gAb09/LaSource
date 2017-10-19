@@ -27,17 +27,32 @@ class Client extends Model
     protected $hidden = [
     ];
 
+    protected $appends = array('class_actived');
 
 
-    public function User()
+
+    public function user()
     {
         return $this->belongsTo('App\Models\User');
     }
 
-    public function Commandes()
+    public function commandes()
     {
         return $this->hasMany('App\Models\Commande');
     }
+
+
+    public function relais()
+    {
+        return $this->belongsTo('App\Models\Relais', 'pref_relais');
+    }
+
+
+    public function modePaiement()
+    {
+        return $this->belongsTo('App\Models\Relais', 'pref_mode');
+    }
+
 
     public function getNomCompletAttribute($value)
     {

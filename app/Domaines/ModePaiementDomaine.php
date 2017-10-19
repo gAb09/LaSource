@@ -61,19 +61,6 @@ class ModePaiementDomaine extends Domaine
 		return $this->model->delete();
 	}
 
-/**
- * Renvoie tous les modes de paiements existants en y précisant les choix par défaut du client loggé
- *
- * @return collection of App\Models\ModePaiement
- **/
-	public function getForThisClient($id)
-	{
-		$models = $this->allActived('id');
-		return $models;
-	}
-
-
-
 
 
 }

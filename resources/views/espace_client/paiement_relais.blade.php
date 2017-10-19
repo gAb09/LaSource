@@ -2,7 +2,7 @@
 <div class="modepaiement flexcontainer">
 	<input class="hidden" type="txt" name="{{ $ref_livraison }}_paiement" value="">
 	@foreach($modespaiement as $mode)
-	<span class="btn-xs" model="paiement" name="{{ $mode->nom }}" livraison="{{$ref_livraison}}" 
+	<span class="btn-xs {{$mode->checked}}" model="paiement" name="{{ $mode->nom }}" livraison="{{$ref_livraison}}" 
 		onClick="javascript:becomeSelected(this, {{ $mode->id }});">{{ $mode->nom }}
 	</span>
 	@endforeach
@@ -12,7 +12,7 @@
 <div class="relais flexcontainer">
 	<input class="hidden" type="txt" name="{{ $ref_livraison }}_relais" value="">
 	@foreach($relaiss as $relais)
-	<span class="btn-xs" model="relais" name="{{ $relais->nom }}" livraison="{{$ref_livraison}}" 
+	<span class="btn-xs {{$relais->checked}}" model="relais" name="{{ $relais->nom }}" livraison="{{$ref_livraison}}" 
 		onClick="javascript:becomeSelected(this, {{ $relais->id }});">{{ $relais->nom }}
 	</span>
 	@endforeach

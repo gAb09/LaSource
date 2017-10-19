@@ -33,17 +33,31 @@ class EspaceClientController extends Controller
         $auth_user = \Auth::user();
         $auth_user = 87; // ToDo  penser à enlever !!!!
 
-        $model = User::with('Client.Commandes.Livraison')->find($auth_user);
+        $model = User::with('client.commandes.livraison')->find($auth_user);
 
-        $commandes = $model->load('Client.Commandes')->Client->Commandes;
+        $commandes = $model->load('client.commandes')->client->commandes;
         $commandes = $this->commandesD->getAllLignes($commandes);
 
         $livraisons = $this->livraisonD->getAllLivraisonsOuvertes();
 
-        $relaiss = $this->relaissD->getForThisClient($auth_user);
+        $relaiss = $this->relaissD->allActived('id');
+        $relaiss->each(function($item) use($model){
+            if ($item->id == $model->client->pref_relais) {
+                $item->checked = 'checked';
+            }else{
+                $item->checked = '';
+            }
+        });
 
-        $modespaiement = $this->modepaiementD->getForThisClient($auth_user);
-        // return dd($relaiss);
+        $modespaiement = $this->modepaiementD->allActived('id');
+        $modespaiement->each(function($item) use($model){
+            if ($item->id == $model->client->pref_mode) {
+                $item->checked = 'checked';
+            }else{
+                $item->checked = '';
+            }
+        });
+        // return dd($model->client->relais);
 
         return view('espace_client.accueil')->with(compact('model', 'commandes', 'livraisons', 'modespaiement', 'relaiss'));
     }

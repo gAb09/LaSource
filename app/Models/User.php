@@ -29,12 +29,12 @@ class User extends Authenticatable
     'password', 'remember_token',
     ];
 
-    public function Client()
+    public function client()
     {
         return $this->hasOne('App\Models\Client');
     }
 
-    public function Role()
+    public function role()
     {
         return $this->belongsTo('App\Models\Role');
     }

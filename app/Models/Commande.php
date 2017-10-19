@@ -25,28 +25,28 @@ class Commande extends Model
 
 
 
-    public function Lignes()
+    public function lignes()
     {
         return $this->hasMany('App\Models\Ligne');
     }        
 
 
-    public function Livraison()
+    public function livraison()
     {
         return $this->belongsTo('App\Models\Livraison');
     }
 
-    public function Client()
+    public function client()
     {
         return $this->belongsTo('App\Models\Client', 'client_id');
     }
 
-    public function Relais()
+    public function relais()
     {
         return $this->belongsTo('App\Models\Relais');
     }
 
-    public function ModePaiement()
+    public function modePaiement()
     {
         return $this->belongsTo('App\Models\ModePaiement', 'modepaiement_id');
     }

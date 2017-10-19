@@ -13,7 +13,7 @@
 
 @section('content')
 
-<div class="offset3 span11 flexcontainer">
+<div class=" index_clients offset3 span11 flexcontainer">
 
 	@foreach($models as $model)
 {{-- LSProblem --}}
@@ -30,6 +30,9 @@
 				@endif
 				{{ $model->cp }} {{ $model->ville }}<br />
 				{{ $model->user->email }}
+				@if(!is_null($model->relais))
+				<p>{{ $model->relais->nom }}</p>
+				@endif
 
 
 		</div>
