@@ -25,106 +25,115 @@
 			border-top: 3px solid @color_livraison_dark;
 			color: @color_livraison_dark;
 		}
-	}
-	.commandes{
-		p{
-			position:absolute;
-			color:darken(@color_commande, 50%);
-			right: 0;
-			top: 10px;
-		}
-		table{
-			display:none;
-		}
-		h4{
-			border-top: 3px solid @color_titres;
-		}
-	}
-	.ma_commande:hover{
-		color:@color_titres;
-		table{
-			display:table;
-		}
-	}
-	.onglet{
-		text-align:center;
-		border-left: solid 3px white;
-		border-right: solid 3px white;
-	}
-	.flexcontainer{
-		justify-content:center;
-		>div{
-			margin:5px;
-			text-align:center;
-			background-color: white;
-			width: 24%;
-		}
-	}
-	div.paiement_relais{
-		h5{
+		.total_livraison{
 			font-size: 1.1em;
-			margin-bottom: 1px;
-		}
-	}
-	.relais, .modepaiement{
-		background-color: white;
-		span{
-			background-color: white;
-			border: solid 2px @color_commande;
-			font-size:0.8em;
-			margin:3px;
-		}
-		span.checked{
-			border: solid 2px darken(@color_commande, 50%);
-			color: white;
-			background-color: darken(@color_commande, 50%);
-		}
-	}
-	.relais{
-		flex-direction:column;
-		span{
-		}
-	}
-	#commande_store>button{
-		width:80%;
-		text-align: center;
-		position: fixed;
-		top: 0;
-		z-index: 1000;
-	}
-	.panierDeLivraisonOuverte{
-		.type{
-			background-color: @color_commande;
+			color: @color_livraison_dark;
 			text-align: center;
-			width: 100%;
+			font-weight: 900;		}
 		}
-		p{
-			margin:5px auto;
-		}
-		.quantite{
-			position:relative;
-			width:100%;
-			margin: auto;
-			height:40px;
-			input{
-				background-color: @color_commande;
-				border: none;
-				width:20%;
-				height:100%;
-				font-size:1.8em;
-				text-align: center;
+		.commandes{
+			p{
+				position:absolute;
+				color:darken(@color_commande, 50%);
+				right: 0;
+				top: 10px;
 			}
-			.fleche{
+			table{
+				display:none;
+			}
+			h4{
+				border-top: 3px solid @color_titres;
+			}
+		}
+		.ma_commande:hover{
+			color:@color_titres;
+			table{
+				display:table;
+			}
+		}
+		.onglet{
+			text-align:center;
+			border-left: solid 3px white;
+			border-right: solid 3px white;
+		}
+		.flexcontainer{
+			justify-content:center;
+			>div{
+				margin:5px;
+				text-align:center;
+				background-color: white;
+				width: 24%;
+			}
+		}
+		div.paiement_relais{
+			h5{
+				font-size: 1.1em;
+				margin-bottom: 1px;
+			}
+		}
+		.relais, .modepaiement{
+			background-color: white;
+			span{
+				background-color: white;
+				border: solid 2px @color_commande;
+				font-size:0.8em;
+				margin:3px;
+			}
+			span.checked{
+				border: solid 2px darken(@color_commande, 50%);
+				color: white;
+				background-color: darken(@color_commande, 50%);
+			}
+		}
+		.relais{
+			flex-direction:column;
+			span{
+			}
+		}
+		#commande_store>button{
+			width:80%;
+			text-align: center;
+			position: fixed;
+			bottom: 0;
+			z-index: 1000;
+		}
+		.panierDeLivraisonOuverte{
+			flex-direction: column;		
+			align-items: space-between;		
+			.type{
+				background-color: @color_commande;
+				text-align: center;
+				width: 100%;
+			}
+			p{
+				margin:3px auto;
+			}
+			.quantite{
+				position:relative;
+				width:100%;
+				margin: auto;
+				height:40px;
+				input{
+					background-color: @color_commande;
+					border: none;
+					width:25%;
+					height:100%;
+					font-size:1.8em;
+					text-align: center;
+				}
+				.fleche{
+				// opacity:0.5;
+				color: @color_livraison_dark;
 				cursor: pointer;
-				top: 25%;
+				top: 33%;
 				position: absolute;
 				height:20%;
 			}
 			.increment{
-				right:41%;
+				right:39%;
 			}
 			.decrement{
-				left:41%
+				left:39%
 			}
 		}
 	}
