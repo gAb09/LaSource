@@ -187,8 +187,9 @@ Global.
 ----------------------------------------------------------------*/
 
 function changementDetected(){
-	//console.log('changementDetected');
+	if ($("#commande_store").children('button').length === 0) {
 	$("#commande_store").append('<button type="submit" class="btn btn-success" style="float:right;">Vous êtes en train de faire des changements, une fois ceux-ci terminés, cliquez sur cette barre pour les valider</button>');
+	}
 
 }
 
