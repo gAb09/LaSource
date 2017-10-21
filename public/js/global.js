@@ -45,6 +45,7 @@ function setRangs(model, tablo){
 		},
 
 		error : function(data, resultat, statut, erreur){
+			$('#messages').empty().append('tralala');
 			console.log(data);
 			console.log(resultat);
 			console.log(statut);

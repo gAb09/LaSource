@@ -50,7 +50,7 @@ class Client extends Model
 
     public function modePaiement()
     {
-        return $this->belongsTo('App\Models\Relais', 'pref_mode');
+        return $this->belongsTo('App\Models\ModePaiement', 'pref_mode');
     }
 
 

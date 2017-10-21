@@ -2,17 +2,16 @@
 Gestion de la sélection des modes de paiement et des relais + valeurs par défaut + report dans formulaire.
 ----------------------------------------------------------------*/
 
-function becomeSelected(item, valeur){
+function becomeSelected(item, id){
 	var livraison = $(item).attr('livraison');
 	var model = $(item).attr('model');
 	var nom_item = $(item).attr('name');
 
 	to_uncheck = $("span[livraison="+livraison+"][model="+model+"]");
 
-	//console.log('item : '+$(item));
-	//console.log('livraison : '+livraison);
-	//console.log('model : '+model);
-	//console.log('nom_item : '+nom_item);
+	console.log('item : '+item);
+	console.log('livraison : '+livraison);
+	console.log('nom_item : '+nom_item);
 	//console.log('to_uncheck : '+$(to_uncheck).length);
 
 	/* On décoche tous les boutons de ce model pour cette livraison + on coche ce bouton  */
@@ -24,19 +23,50 @@ function becomeSelected(item, valeur){
 	Si l'id désigne une livraison on actualise l'input associé.
 	Et dans les 2 cas on avertit qu'il y a eu un changement sur la page */
 	if (livraison === '0') {
-		persisterParametres();
-		reporterValeurDefaut(model, nom_item, valeur);
+		persisterParametres(id, model);
+		reporterValeurDefaut(model, nom_item, id);
 		changementDetected();
 	}else{
-		updateAssociatedInput(livraison, model, valeur);
+		updateAssociatedInput(livraison, model, id);
 		changementDetected();
 	}
 }
 
 
-function persisterParametres(argument) {
-	//console.log('persistance en BDD');
+/**
+* Persister l'id du model en BDD, table client, colonne pref_relais ou pref_mode.
+* 
+* @arguments : id, model.
+**/
+function persisterParametres(id, model) {
+
+	console.log('model : '+model);
+	console.log('id : '+id);
+
+	var ad = 'http://'+domaine+'/client/setPref/'+model;
+
+	$.ajax({
+		url : ad,
+		contentType : 'text/json',
+		type : 'GET',
+		data : {'id' : id},
+		dataType : 'html',
+		success : function(code_html, data, statut){
+			console.log(code_html);
+			$('#messages').empty().append(code_html);
+		},
+
+		error : function(data, resultat, statut, erreur){
+			console.log(data);
+			console.log(resultat);
+			console.log(statut);
+			console.log(erreur);
+		},
+
+	});
+
 }
+
 
 
 function reporterValeurDefaut(model, nom_item, valeur){
@@ -181,14 +211,14 @@ function ActualiserTotalLivraison(c){
 
 }
 
-
 /* --------------------------------------------------------------
 Global.
-----------------------------------------------------------------*/
+-----------------------------------------------------------------*/
 
 function changementDetected(){
 	if ($("#commande_store").children('button').length === 0) {
-	$("#commande_store").append('<button type="submit" class="btn btn-success" style="float:right;">Vous êtes en train de faire des changements, une fois ceux-ci terminés, cliquez sur cette barre pour les valider</button>');
+		$("#commande_store").append('<button type="submit" class="btn btn-success" style="float:right;">'+
+			'Vous êtes en train de faire des changements, une fois ceux-ci terminés, cliquez sur cette barre pour les valider</button>');
 	}
 
 }

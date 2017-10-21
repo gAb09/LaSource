@@ -31,9 +31,8 @@ class EspaceClientController extends Controller
     public function espaceClient()
     {
         $auth_user = \Auth::user();
-        $auth_user = 87; // ToDo  penser à enlever !!!!
 
-        $model = User::with('client.commandes.livraison')->find($auth_user);
+        $model = User::with('client.commandes.livraison')->find($auth_user->id);
 
         $commandes = $model->load('client.commandes')->client->commandes;
         $commandes = $this->commandesD->getAllLignes($commandes);
@@ -51,7 +50,7 @@ class EspaceClientController extends Controller
 
         $modespaiement = $this->modepaiementD->allActived('id');
         $modespaiement->each(function($item) use($model){
-            if ($item->id == $model->client->pref_mode) {
+            if ($item->id == $model->client->pref_paiement) {
                 $item->checked = 'checked';
             }else{
                 $item->checked = '';

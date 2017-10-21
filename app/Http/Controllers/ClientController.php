@@ -9,6 +9,7 @@ use App\Http\Requests\CoordonneesRequest;
 use App\Http\Requests;
 use App\Http\Requests\ClientRequest;
 use Illuminate\Http\Request;
+use App\Domaines\ClientDomaine;
 
 class ClientController extends Controller
 {
@@ -17,18 +18,18 @@ class ClientController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(ClientDomaine $clientD)
     {
+        $this->domaine = $clientD;
         // $this->middleware('auth');
     }
 
 
     public function index()
     {
-        $models = Client::with('User', 'Relais')->get();
+        $models = $this->clientD->index();
         // return dd($models);
         return view('client.index')->with(compact('models'));
-
     }
 
 
@@ -84,6 +85,8 @@ class ClientController extends Controller
         }
     }
 
+
+
     public function destroy($id)
     {
         $model = Client::where('id', $id)->first();
@@ -96,11 +99,21 @@ class ClientController extends Controller
 
     }
 
-    public function getDeleted()
+
+
+    public function setPrefRelais(Request $request)
     {
-        $models = $this->domaine->getDeleted();
-        return view('client.trashed')->with(compact('models', 'trashed'));
+        return $models = $this->domaine->setPrefRelais($request->id);
     }
+
+
+
+    public function setPrefPaiement(Request $request)
+    {
+        return $models = $this->domaine->setPrefPaiement($request->id);
+    }
+
+
 
     public function setRangs(Request $request)
     {

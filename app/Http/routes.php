@@ -90,6 +90,8 @@ Route::group(['middleware' => 'auth'], function () {
 // CLIENT...
 	Route::get('client/getdeleted', ['as' => 'client.getdeleted', 'uses' => 'ClientController@getDeleted']);
 	Route::resource('client', 'ClientController');
+	Route::get('client/setPref/relais', 'ClientController@setPrefRelais');
+	Route::get('client/setPref/paiement', 'ClientController@setPrefPaiement');
 
 // ESPACE CLIENT...
 	Route::get('espaceclient', ['as' => 'espaceclient', 'uses' => 'EspaceClientController@espaceclient']);

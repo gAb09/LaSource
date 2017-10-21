@@ -12,13 +12,17 @@ return [
     */
 
     'client' => [
-    'updateOk'     => 'Vos coordonnées ont bien été modifiées.',
-    'updatefailed' => 'Problème. Vos coordonnées n\ont pas été mises à jour…',
-    'storeOk'           => 'Le client a bien été créé.',
-    'storefailed'       => 'Problème. Le client n’a pas pu être créé…',
-    'deleteOk'           => 'Le client a bien été supprimé.',
-    'deletefailed'       => 'Problème. Le client n’a pas pu être supprimé…',
-    'confirmDelete'    => 'Êtes-vous sur de vouloir supprimer le client “:model” ?\nTous les liens éventuels avec …… seront supprimés.',
+    'updateOk'              => 'Vos coordonnées ont bien été modifiées.',
+    'updatefailed'          => 'Problème. Vos coordonnées n\ont pas été mises à jour…',
+    'storeOk'               => 'Le client a bien été créé.',
+    'storefailed'           => 'Problème. Le client n’a pas pu être créé…',
+    'deleteOk'              => 'Le client a bien été supprimé.',
+    'deletefailed'          => 'Problème. Le client n’a pas pu être supprimé…',
+    'confirmDelete'         => 'Êtes-vous sur de vouloir supprimer le client “:model” ?\nTous les liens éventuels avec …… seront supprimés.',
+    'setPrefRelaisOK'       => 'Le relais par défaut a bien été enregistré',
+    'setPrefRelaisFailed'   => 'Problème : le relais par défaut n’a pas pu être enregistré',
+    'setPrefPaiementOK'        => 'Le mode de paiement par défaut a bien été enregistré',
+    'setPrefPaiementFailed'    => 'Problème : le mode de paiement par défaut n’a pas pu être enregistré',
     ],
 
     'producteur' => [
