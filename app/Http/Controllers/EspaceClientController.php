@@ -34,9 +34,9 @@ class EspaceClientController extends Controller
 
         $model = User::with('client.commandes.livraison')->find($auth_user->id);
 
-        $commandes = $model->load('client.commandes')->client->commandes;
-        $commandes = $this->commandesD->getAllLignes($commandes);
-
+        $commandesbrutes = $model->load('client.commandes')->client->commandes;
+        $commandes = $this->commandesD->getAllLignes($commandesbrutes);
+// dd($commandes);
         $livraisons = $this->livraisonD->getAllLivraisonsOuvertes();
 
         $relaiss = $this->relaissD->allActived('id');
@@ -56,7 +56,6 @@ class EspaceClientController extends Controller
                 $item->checked = '';
             }
         });
-        // return dd($model->client->relais);
 
         return view('espace_client.accueil')->with(compact('model', 'commandes', 'livraisons', 'modespaiement', 'relaiss'));
     }

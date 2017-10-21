@@ -8,10 +8,10 @@
 			{{ str_replace('<br/>', ' ', $ligne->panier->nom )  }}<br/>
 
 			<small><small>
-			@if(!isset($ligne->complement->producteur))
+			@if(!isset($ligne->producteur))
 				<span class="is_error_txt">Producteur non spécifié</span>
 			@else
-				{{$ligne->complement->producteur}}
+				{{$ligne->producteur}}
 			@endif
 			</small></small>
 
@@ -27,10 +27,10 @@
 
 		<td>
 
-		@if(!isset($ligne->complement->prix_livraison))
-			<span class="is_error_txt">OUPS</span>
+		@if(!isset($ligne->prix_livraison))
+			<span class="is_error_txt">OUPSss</span>
 		@else
-			{{ $ligne->complement->prix_livraison }}
+			{{ $ligne->prix_livraison }}
 		@endif
 		</td>
 

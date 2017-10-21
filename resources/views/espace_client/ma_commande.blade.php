@@ -1,5 +1,4 @@
-<div class="ma_commande" style="position:relative">
-	<h4 class="titre">Commande pour le {{ $commande->Livraison->date_livraison_enClair }} <small>(numéro {{ $commande->numero }})</small></h4>
+	<h4 class="titre">Commande du {{ $commande->Livraison->date_livraison_enClair }} <small>(numéro {{ $commande->numero }})</small></h4>
 	<p class="statut">{{ $commande->statut }}</p>
 
 	
@@ -19,4 +18,3 @@
 		</tbody>
 	</table>
 	Relais : {{ $commande->relais->nom }} – Paiement par {{ $commande->modepaiement->nom }}<br />
-</div>

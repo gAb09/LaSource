@@ -52,14 +52,6 @@ class Commande extends Model
     }
 
 
-    public function getMontantTotalAttribute($value)
-    {
-        $value = 0;
-        foreach ($this->lignes as $ligne) {
-            $value += $ligne->montant_ligne;
-        }
-        return $value;
-    }
 
     public function getStatutAttribute($value)
     {

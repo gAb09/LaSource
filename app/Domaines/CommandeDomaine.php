@@ -46,18 +46,22 @@ class CommandeDomaine extends Domaine
 	 **/
 	function getAllLignes($commandes)
 	{
-		$commandes = $commandes;
 		$commandes->each(function ($commande, $keys) {
+			$commande->montant_total = 0;
 
 			$commande->lignes->each(function ($ligne, $keys) use($commande){
-				$ligne->complement = $this->lignesD->completeLignes($commande->livraison_id, $ligne->panier_id);
-
+				$complement = $this->lignesD->completeLignes($commande->livraison_id, $ligne->panier_id);
+				$ligne->prix_livraison = $complement->prix_livraison;
+				$ligne->montant_ligne = $ligne->prix_livraison*$ligne->quantite;
+				$ligne->producteur = $complement->producteur;
+				$commande->montant_total += $ligne->montant_ligne;
 			});
 			// return dd($commande);
+			return $commande;
 		});
 
-		return $commandes;
 		// return dd($commandes);
+		return $commandes;
 
 	}
 

@@ -18,21 +18,4 @@ class Ligne extends Model
     }
 
 
-    public function getPrixLivraisonAttribute($value)
-    {
-        if (!isset($this->complement)) {
-            $value = NULL;
-        }else{
-            $value = $this->complement->prix_livraison;
-        }
-        return $value;
-    }
-
-    public function getMontantLigneAttribute($value)
-    {
-        $value = $this->quantite*$this->prix_livraison;
-
-        return $value;
-    }
-
 }

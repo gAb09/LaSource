@@ -2,7 +2,6 @@
 
 
 @section('content')
-
 <div class="container-fluid espace_client">
     <div class="row">
         <div class="panel panel-default">
@@ -43,11 +42,23 @@
                         @endforelse
                     </div>
                     <div class="commandes">
-                        @if($model->Client->Commandes->isEmpty())
+                        @if($commandes->isEmpty())
                             Pas de commande
                         @else
-                            @foreach($model->Client->Commandes as $commande)
-                                @include('espace_client.mes_commandes')
+                            @foreach($commandes as $commande)
+                                @if($commande->livraison->statut == 'L_OUVERTE')
+                                <div class="ma_commande" style="position:relative">
+                                    @include('espace_client.ma_commande')
+                                </div>
+                                @endif
+                            @endforeach
+                            <div class="btn btn-primary" onClick="javascript:$('#ma_commande_archive').toggleClass('hidden');;" >Voir mes commandes archivées</div>
+                            @foreach($commandes as $commande)
+                                @if($commande->livraison->statut != 'L_OUVERTE')
+                                <div id="ma_commande_archive" class="hidden" style="position:relative">
+                                    @include('espace_client.ma_commande')
+                                </div>
+                                @endif
                             @endforeach
                         @endif
                     </div>
