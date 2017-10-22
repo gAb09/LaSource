@@ -161,11 +161,11 @@ function getContextPanierChange(livraison, panier){
 		livraisonId :livraison,
 		panierId : panier,
 		qte_panier : 0,
-		qte_panier_cible : function() {return $("[name='qte_"+this.livraisonId+"_"+this.panierId+"']").get(0);},
-		prix_panier : function() {return $("[name='prix_panier_"+this.panierId+"']").get(0).innerHTML;},
-		total_panier_cible : function() {return $("[name='total_panier_"+this.livraisonId+"_"+this.panierId+"']").get(0);},
-		total_livraison_cible : function() {return $("[name='total_livraison_"+this.livraisonId+"']").get(0);},
-		all_totaux_panier : function() {return $("p[name^='total_panier_"+this.livraisonId+"']");},
+		qte_panier_cible : function() {return $("[name='" + this.livraisonId + "_qte_"+this.panierId+"']").get(0);},
+		prix_panier : function() {return $("[name='" + this.panierId + "_prix_panier']").get(0).innerHTML;},
+		total_panier_cible : function() {return $("[name='" + this.livraisonId + "_total_panier_" + this.panierId + "']").get(0);},
+		total_livraison_cible : function() {return $("[name='" + this.livraisonId + "_total_livraison']").get(0);},
+		all_totaux_panier : function() {return $("p[name^='" + this.livraisonId + "_total_panier_']");},
 	};
 	console.log('livraisonId : '+contexte.livraisonId);
 	console.log('panierId : '+contexte.panierId);
