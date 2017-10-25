@@ -11,7 +11,7 @@ use App\Http\Requests;
 
 class CommandeController extends Controller
 {
-    
+
     public function __construct(Domaine $domaine, LivraisonDomaine $livraisonD, Request $request)
     {
         $this->domaine = $domaine;
@@ -37,9 +37,17 @@ class CommandeController extends Controller
 
     public function store(Request $request)
     {
-        return dd($request->all());
+        $result = $this->domaine->store($request);
+        if( !is_integer($result) ){
+            if ($result instanceof \Exception) {
+                $e_message = "<br />".$result->getMessage();
+            }else{
+                $e_message = "";
+            }
+            $message = trans('message.commande.storefailed').$e_message;
+            return redirect()->back()->with('status', $message);
+        }else{
+            return redirect()->back()->with('success', trans_choice('message.commande.storeOk', $result, ['count' => $result]));
+        }
     }
-
-
-
 }

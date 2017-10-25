@@ -217,7 +217,7 @@ class TransfertController extends Controller
 		}
 		catch(\exception $e){
 			\DB::rollBack();
-			return redirect('transfert')->with('status', 'Problème : '.$e->getLine());
+			return redirect('transfert')->with('status', 'Problème : '.$e->getMessage());
 		}
 
 		\DB::commit();

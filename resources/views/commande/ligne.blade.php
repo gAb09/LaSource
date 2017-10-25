@@ -42,6 +42,14 @@
 			{{ $ligne->montant_ligne }}
 		</td>
 
+		<!--td>
+			Relais : {{ $commande->relais->nom }}
+		</td>
+
+		<td>
+			Paiement par {{ $commande->modepaiement->nom }}
+		</td-->
+
 		@endif
 
 </tr>

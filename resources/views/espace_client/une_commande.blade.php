@@ -9,7 +9,13 @@
 			@include("commande.ligne")
 			@endforeach
 			<tr class="total">
-				<td colspan="5">TOTAL :
+				<td colspan="3">
+					@if($en_cours)
+						<div class="btn btn-primary btn-xs" onClick="alert('Modifier la commande '+{{$commande->id}})" >Modifier cette commande</div>
+                    @endif
+				</td>
+				<td colspan="2">
+					TOTAL :
 				</td>
 				<td>
 					{{ $commande->montant_total }}
@@ -17,4 +23,6 @@
 			</tr>
 		</tbody>
 	</table>
-	Relais : {{ $commande->relais->nom }} – Paiement par {{ $commande->modepaiement->nom }}<br />
+	<div>
+		Relais : {{ $commande->relais->nom }} – Paiement par {{ $commande->modepaiement->nom }}<br />
+	</div>

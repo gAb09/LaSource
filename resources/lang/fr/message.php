@@ -19,9 +19,9 @@ return [
     'deleteOk'              => 'Le client a bien été supprimé.',
     'deletefailed'          => 'Problème. Le client n’a pas pu être supprimé…',
     'confirmDelete'         => 'Êtes-vous sur de vouloir supprimer le client “:model” ?\nTous les liens éventuels avec …… seront supprimés.',
-    'setPrefRelaisOK'       => 'Le relais par défaut a bien été enregistré',
+    'setPrefRelaisOK'       => 'Le changement de relais par défaut a bien été pris en compte.<br />ATTENTION : ce changement changement vient d\'être répercuté sur toutes les commandes actuellement affichées !',
     'setPrefRelaisFailed'   => 'Problème : le relais par défaut n’a pas pu être enregistré',
-    'setPrefPaiementOK'        => 'Le mode de paiement par défaut a bien été enregistré',
+    'setPrefPaiementOK'        => 'Le changement de mode de paiement par défaut a bien été pris en compte.<br />ATTENTION : ce changement vient d\'être répercuté sur toutes les commandes actuellement affichées !',
     'setPrefPaiementFailed'    => 'Problème : le mode de paiement par défaut n’a pas pu être enregistré',
     ],
 
@@ -94,11 +94,13 @@ return [
     'archivagefailed'    => 'Problème. La livraison n’a pas pu être archivée…',
     'handleConcernedOk'        => '<br />Les modifications éventuelles demandées ont été apportées aux livraisons.',
     'handleConcernedfailed'    => 'Un problème est survenu aucune modifications n’ont été apportées, ni à l’indisponibilité, ni aux livraisons.<br />Veuillez réessayer et contacter le Ouaibmaistre si l’erreur persiste',
-    'ouvertes'              => 'Il y a une livraison ouverte à la commande | [2, Inf] Il y a :count livraisons ouvertes à la commande'
+    'ouvertes'              => '{0} Il n’y a aucune livraison ouverte à la commande | {1}Il y a une livraison ouverte à la commande | [2, Inf] Il y a :count livraisons ouvertes à la commande'
     ],
 
     'commande' => [
-    'encours'              => ' - Vous avez une commande en cours. | [2, Inf] - Vous avez :count commandes en cours.'
+    'encours'              => '{0} - Vous n\'avez aucune commande en cours. |{1} - Vous avez une commande en cours. | [2, Inf] - Vous avez :count commandes en cours.',
+    'storeOk'       => 'Votre commande a bien été prise en compte. | [2, Inf] Vos :count commandes ont bien été prises en compte',
+    'storefailed'       => 'Problème. Votre demande n’a pas pu être prise en compte…',
     ],
 
     'indisponibilite' => [

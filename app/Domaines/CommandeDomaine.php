@@ -7,15 +7,17 @@ use App\Models\Commande;
 use Carbon\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Domaines\LigneDomaine;
+use App\Models\Ligne;
 
 class CommandeDomaine extends Domaine
 {
 
 	private $montant_ligne = 0;
 
-	public function __construct(LigneDomaine $lignesD){
+	public function __construct(){
 		$this->model = new Commande;
-		$this->lignesD = $lignesD;
+		$this->lignesD = new LigneDomaine;
+		$this->ligne = new Ligne;
 	}
 
 
@@ -33,6 +35,88 @@ class CommandeDomaine extends Domaine
 		return $commandes;
 
 	}
+
+
+	public function store($request){
+
+		try {
+		$commandes = $this->handleRequest($request);
+		\DB::beginTransaction();
+		$count = $this->handleCommandes($commandes);
+		}
+		catch(\exception $e){
+			\DB::rollBack();
+			return $e;
+		}
+
+		\DB::commit();
+		return $count;
+	}
+
+
+
+	private function transcode_modepaiement($modepaiement)
+	{
+		if ($modepaiement == 'chèque') {
+			return ModePaiement::where('nom', 'Chèque')->first()->id;
+		}elseif ($modepaiement == 'virement') {
+			return ModePaiement::where('nom', 'Virement')->first()->id;
+		}
+		return ModePaiement::where('nom', 'Problème')->first()->id;
+	}
+
+
+	/**
+	 * Décompose/recompose les éléments de la requête pour traiter les valeurs de la (des) commande(s).
+	 *
+	 * @return array : recomposition des commandes
+	 **/
+	private function handleRequest($request)
+	{
+		foreach ($request->except('_token') as $key => $value) {
+			if (!($value == 0 or $value == "")) {
+				$key_parts = explode("_", $key);
+				if (count($key_parts) == 2) {
+					$commandes[$key_parts[0]][$key_parts[1]] = $value;
+				}else{
+					$commandes[$key_parts[0]]['paniers'][$key_parts[2]] = $value;
+				}
+			}
+		}
+		return $commandes;
+	}
+
+
+
+	/**
+	 * Enregistre les commandes valides ainsi que les lignes associées.
+	 *
+	 **/
+	private function handleCommandes($commandes)
+	{
+		$count = (int) 0;
+		foreach($commandes as $key => $value){
+        	if (isset($value['paniers'])) { // on ne traite forcément pas une commande sans panier commandé…
+        		$this->model = $this->model->create();
+        		// return dd($this->model);
+        		// $this->model->id = \DB::table('commandes')->max('id')+1;
+        		$this->model->livraison_id =  $key;
+        		$this->model->client_id = \Auth::user()->id;
+        		$this->model->numero = \date('y')."-C".\Auth::user()->id."-".$this->model->id;
+        		$this->model->relais_id = $value['relais'];
+        		$this->model->modepaiement_id = $value['paiement'];
+
+        		$this->model->save();
+        		$count++;
+
+        		foreach ($value['paniers'] as $id => $qte) {
+        			$ligne = new ligne(['commande_id' => $this->model->id, 'panier_id' => $id, 'quantite' => $qte]); 
+        			$ligne->save(); 
+        		}
+        	}
+        }
+        return $count;
+    }
 
 
 	/**

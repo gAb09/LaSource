@@ -6,7 +6,7 @@
     <div class="row">
         <div class="panel panel-default">
                     <h2 style="text-align:center">{{ trans_choice('message.livraison.ouvertes', $livraisons->count(), [ 'count' => $livraisons->count() ]) }}
-                        {{ trans_choice('message.commande.encours', $commandes->count(), [ 'count' => $commandes->count() ]) }}
+                        {{ trans_choice('message.commande.encours', $nbre_commandes_en_cours, [ 'count' => $nbre_commandes_en_cours ]) }}
                     </h2>
 
             <div class="panel-body col-md-2" style="position:fixed">
@@ -43,20 +43,21 @@
                     </div>
                     <div class="commandes">
                         @if($commandes->isEmpty())
-                            Pas de commande
+                            Aucune commande trouvée
                         @else
-                            @foreach($commandes as $commande)
-                                @if($commande->livraison->statut == 'L_OUVERTE')
-                                <div class="ma_commande" style="position:relative">
-                                    @include('espace_client.ma_commande')
+                            @foreach($commandes as $commande) <!-- affichage des commandes en cours -->
+                                @if($commande->en_cours)
+                                <div class="une_commande" style="position:relative">
+                                    @include('espace_client.une_commande', ['en_cours' => true])
                                 </div>
                                 @endif
                             @endforeach
-                            <div class="btn btn-primary" onClick="javascript:$('#ma_commande_archive').toggleClass('hidden');;" >Voir mes commandes archivées</div>
-                            @foreach($commandes as $commande)
-                                @if($commande->livraison->statut != 'L_OUVERTE')
-                                <div id="ma_commande_archive" class="hidden" style="position:relative">
-                                    @include('espace_client.ma_commande')
+                            <div id="show_commandes_archived" style="margin-top:10px" class="btn btn-info" onClick="javascript:toggleCommandesArchived();" >Voir mes commandes archivées</div>
+                            <div id="hide_commandes_archived" style="margin-top:10px" class="btn btn-info hidden" onClick="javascript:toggleCommandesArchived();" >Masquer mes commandes archivées</div>
+                            @foreach($commandes as $commande)  <!-- affichage des commandes archivées -->
+                                @if(!$commande->en_cours)
+                                <div id="une_commande_archive" class="hidden" style="position:relative">
+                                    @include('espace_client.une_commande', ['en_cours' => false])
                                 </div>
                                 @endif
                             @endforeach

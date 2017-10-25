@@ -402,15 +402,9 @@ private function handleDatas($request){
      **/
     public function ActualiserStatut()
     {
-        $livraisons = $this->model->where('is_archived', '<>', 1)->get();
-        return dd($livraisons);
-        $livraison_id;
-        $user_id;
-        $result = Commande::where([ ['livraison_id', '=', $livraison_id], ['client_id', '=', $user_id] ])->get();
-        if ($result->isEmpty()) {
-            return false;
-        }else{
-            return true;
+        $livraisons = $this->model->where('statut', '<>', 'L_ARCHIVED')->get();
+        foreach ($livraisons as $livraison) {
+            $livraison->save();
         }
     }
 

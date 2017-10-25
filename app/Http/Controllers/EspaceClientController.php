@@ -36,8 +36,21 @@ class EspaceClientController extends Controller
 
         $commandesbrutes = $model->load('client.commandes')->client->commandes;
         $commandes = $this->commandesD->getAllLignes($commandesbrutes);
-// dd($commandes);
-        $livraisons = $this->livraisonD->getAllLivraisonsOuvertes();
+
+        $this->nbre_commandes_en_cours = 0;
+        $commandes = $commandes->each(function($commande) {
+            if(in_array($commande->livraison->statut, ['L_CREATED', 'L_OUVERTE', 'L_CLOTURED'])) {
+                $commande->en_cours = true;
+                $this->nbre_commandes_en_cours++;
+            }else{
+                $commande->en_cours = false;
+            }
+        });
+
+        $nbre_commandes_en_cours = $this->nbre_commandes_en_cours;
+
+        $livraisons = $this->livraisonD->getAllLivraisonsOuvertes($auth_user);
+// return dd($livraisons);
 
         $relaiss = $this->relaissD->allActived('id');
         $relaiss->each(function($item) use($model){
@@ -57,7 +70,7 @@ class EspaceClientController extends Controller
             }
         });
 
-        return view('espace_client.accueil')->with(compact('model', 'commandes', 'livraisons', 'modespaiement', 'relaiss'));
+        return view('espace_client.accueil')->with(compact('model', 'commandes', 'livraisons', 'modespaiement', 'relaiss', 'nbre_commandes_en_cours'));
     }
 
 
