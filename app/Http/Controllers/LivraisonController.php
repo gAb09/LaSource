@@ -238,9 +238,9 @@ class LivraisonController extends Controller
     * @param integer  /  id de la livraison
     * @return Redirect
     **/
-    public function archive($id)
+    public function archiver($id)
     {
-        if ($this->domaine->archive($id)) {
+        if ($this->domaine->archiver($id)) {
             return redirect()->back()->with('success', trans('message.livraison.archivageOk'));
         }else{
             $message = $this->domaine->getMessage();

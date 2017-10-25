@@ -3,24 +3,37 @@
 namespace App\Domaines;
 
 use App\Models\Livraison;
+use App\Models\Commande;
+use App\Domaines\Domaine;
 use App\Domaines\RelaisDomaine;
 use App\Domaines\ModePaiementDomaine;
-use App\Domaines\Domaine;
 use App\Domaines\ProducteurDomaine;
+use App\Domaines\CommandeDomaine;
 use Carbon\Carbon;
 
 
 class LivraisonDomaine extends Domaine
 {
 	public function __construct(){
+        $this->commandeD = new CommandeDomaine;
         $this->producteurD = new ProducteurDomaine;
-		$this->model = new Livraison;
-	}
+        $this->model = new Livraison;
+    }
 
 
-    public function getAllLivraisonsOuvertes()
+    public function getAllLivraisonsOuvertes($user = null)
     {
-        $models = $this->model->orderBy('date_livraison')->whereStatut('L_OUVERTE')->get();
+        $this->ActualiserStatut();
+        $models = $this->model->orderBy('date_livraison')->where('date_cloture', '>', Carbon::now())->get();
+
+        if (!is_null($user)) {
+            /* On retire les livraisons pour lesquelles l'user courant à déjà passé commande */
+            $models = $models->reject(function ($livraison) use($user){
+                return $this->rejectLivraisonNonOuverteForThisCurrentUser($livraison->id, $user->id);
+            });
+        }        
+
+        /* récupération du nom du producteur via son id en pivot "livraison_panier"*/
         $models->each(function($livraison){
             $livraison->panier->each(function($panier)use($livraison){
                 $panier->exploitation = $this->producteurD->findFirst($panier->pivot->producteur)->exploitation;
@@ -36,71 +49,71 @@ class LivraisonDomaine extends Domaine
     }
 
 
-	public function create(){
-		$model =  $this->model;
-		$model->clotureEnClair = $model->paiementEnClair= $model->livraisonEnClair = " en création";
+    public function create(){
+      $model =  $this->model;
+      $model->clotureEnClair = $model->paiementEnClair= $model->livraisonEnClair = " en création";
 
-		return $model;
-	}
-
-
-	public function store($request){
-		$this->handleDatas($request);
-
-		if($this->model->save()){
-			$modepaiement = new ModePaiementDomaine;
-			$relais = new RelaisDomaine;
-
-			$modepaiements = $modepaiement->allActivedIdForSyncLivraison();
-			$relaiss = $relais->allActivedIdForSyncLivraison();
-
-			$this->model->modepaiements()->sync($modepaiements);
-			$this->model->relais()->sync($relaiss);
-
-			return $this->model->id;
-		}else{
-			return false;
-		}
-	}
+      return $model;
+  }
 
 
-	public function edit($id)
-	{
-		$livraison = Livraison::with('Panier')->findOrFail($id);
-		foreach ($livraison->Panier as $panier) {
-			if (\Session::get('new_attached')) {
+  public function store($request){
+      $this->handleDatas($request);
+
+      if($this->model->save()){
+       $modepaiement = new ModePaiementDomaine;
+       $relais = new RelaisDomaine;
+
+       $modepaiements = $modepaiement->allActivedIdForSyncLivraison();
+       $relaiss = $relais->allActivedIdForSyncLivraison();
+
+       $this->model->modepaiements()->sync($modepaiements);
+       $this->model->relais()->sync($relaiss);
+
+       return $this->model->id;
+   }else{
+       return false;
+   }
+}
+
+
+public function edit($id)
+{
+  $livraison = Livraison::with('Panier')->findOrFail($id);
+  foreach ($livraison->Panier as $panier) {
+   if (\Session::get('new_attached')) {
 				// var_dump($panier->id);
-				if (in_array($panier->id, \Session::get('new_attached'))) {
+    if (in_array($panier->id, \Session::get('new_attached'))) {
 					// var_dump('in_array');
-					$panier->changed = "changed";
+     $panier->changed = "changed";
 					// var_dump($panier);
-				}
-			}
+ }
+}
 
-		}
-		return $livraison;
+}
+return $livraison;
 		// return dd(\Session::get('new_attached'));
-	}
+}
 
 
-	public function update($id, $request){
+public function update($id, $request){
 
-		$this->model = Livraison::where('id', $id)->first();
-		$this->handleDatas($request);
+  $this->model = Livraison::where('id', $id)->first();
+  $this->handleDatas($request);
 
-		return $this->model->save();
-	}
+  return $this->model->save();
+}
 
 
-	private function handleDatas($request){
-		$this->model->date_cloture = $request->date_cloture;
-		$this->model->date_paiement = $request->date_paiement;
-		$this->model->date_livraison = $request->date_livraison;
-		$this->model->remarques = $request->remarques;
-        $this->model->is_actived = (isset($request->is_actived)?1:0);
-        $this->model->statut = $request->statut;
-		
-	}
+private function handleDatas($request){
+  $this->model->date_cloture = $request->date_cloture;
+  $this->model->date_paiement = $request->date_paiement;
+  $this->model->date_livraison = $request->date_livraison;
+  $this->model->remarques = $request->remarques;
+  $this->model->is_actived = (isset($request->is_actived)?1:0);
+  $this->model->statut = $request->statut;
+
+}
 
 
     /**
@@ -320,12 +333,13 @@ class LivraisonDomaine extends Domaine
     * 
     * @return boolean
     **/
-    public function archive($id)
+    public function archiver($id)
     {
     	$this->model = $this->model->findOrFail($id);
 
     	if ($this->controleAvantArchivage($this->model)) {
-    		$this->model->statut = 'L_ARCHIVED';
+            $this->model->statut = 'L_ARCHIVED';
+            // dd('archivage ok');
     		return $this->model->save();
     	}
 
@@ -357,6 +371,47 @@ class LivraisonDomaine extends Domaine
     public function creationCommande($id)
     {
         return $this->model->with('panier')->find($id);
+    }
+
+
+    /**
+     * Détermination si une commande existe déjà ou non pour (une livraison et un current user) donnés.
+     * En incluant ses paniers, et pour chacu d'entre eux leproducteur et le prix livraison.
+     *
+     * @param integer : id de la livraison | integer : id du client (user)
+     * @return false : la livraison à déjà fait l'objet d'une commande par ce client, on la rejette | true : l'inverse, on la garde.
+     **/
+    public function rejectLivraisonNonOuverteForThisCurrentUser($livraison_id, $user_id)
+    {
+        $livraison_id;
+        $user_id;
+        $result = Commande::where([ ['livraison_id', '=', $livraison_id], ['client_id', '=', $user_id] ])->get();
+        if ($result->isEmpty()) {
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+
+    /**
+     * Actualiser le statut des livraisons non archivées par ouverture/sauvegarde.
+     *
+     * @param integer : id de la livraison | integer : id du client (user)
+     * @return false : la livraison à déjà fait l'objet d'une commande par ce client, on la rejette | true : l'inverse, on la garde.
+     **/
+    public function ActualiserStatut()
+    {
+        $livraisons = $this->model->where('is_archived', '<>', 1)->get();
+        return dd($livraisons);
+        $livraison_id;
+        $user_id;
+        $result = Commande::where([ ['livraison_id', '=', $livraison_id], ['client_id', '=', $user_id] ])->get();
+        if ($result->isEmpty()) {
+            return false;
+        }else{
+            return true;
+        }
     }
 
 }

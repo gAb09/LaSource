@@ -164,7 +164,7 @@ Route::group(['middleware' => 'auth'], function () {
 		);
 
 	Route::patch('livraison/archive/{id}', 
-		['as' => 'livraison.archive', 'uses' => 'LivraisonController@archive']
+		['as' => 'livraison.archive', 'uses' => 'LivraisonController@archiver']
 		);
 
 
