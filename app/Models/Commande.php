@@ -53,66 +53,66 @@ class Commande extends Model
 
 
 
-    public function getStatutAttribute($value)
-    {
-    // 	$livraison = $this->with('Livraison')->where('id', $this->id)->first()->livraison;
-
-    // 	$value = "C_CREATED";
-
-    // 	if ($this->checkIfOkForRegister()) {
-    // 		$value = "C_REGISTERED";
-    // 	}
-
-    // 	if ($livraison->date_paiement->diffInDays(Carbon::now(), false) > 0) {
-    // 		if ($this->is_paid) {
-    // 			$value = "C_VALIDED";
-    // 		}else{
-    // 			$value = "C_NONPAID";
-    // 		}
-    // 	}
-
-
-    // 	if ($livraison->date_livraison->diffInDays(Carbon::now(), false) > 0) {
-    // 		if ($this->is_paid) {
-    // 			if ($this->is_retired) {
-    // 				$value = "C_ARCHIVABLE";
-    // 			}else{
-    // 				$value = "C_OUBLIED";
-    // 			}
-    // 		}else{
-    // 			if ($this->is_retired) {
-    // 				$value = "C_NONPAID";
-    // 			}else{
-    // 				$value = "C_SUSPECTED";
-    // 			}
-    // 		}
-    // 	}
-
-
-    //     if ($this->statut == 'C_ARCHIVED' ) {
-    //         $value = 'C_ARCHIVED';
-    //     }
-        $value = 'Statut à définir';
-
-        return $value;
-        // return 'Fonction à implémenter';
-    }
-
-
     /**
      * Non implémentée.
-     * Prévoit la possibilté de fixer des conditions avant qu'une commande créée puisse être enregistrée,
+     * Prévoit la possibilté de fixer des conditions avant qu'une livraison créée puisse être ouverte,
      * (par exemple qu'un nombre minimum de commandes soit atteint).
      *
      * @var array
      */
-    public function checkIfOkForRegister()
+    public function checkIfOkForOuverture()
     {
-        if (1==1) {
+        if (1 == 1) {
             return true;
         }
     }
 
 
+    public function getStatutAttribute($value)
+    {
+        if ($value == '') {
+            $newValue = "C_CREATED";
+        }
 
+        if ($this->checkIfOkForOuverture()) {
+            $newValue = "C_REGISTERED";
+        }
+
+        /* date de clôture passée */
+        if ($this->livraison()->find($this->livraison_id)->date_cloture->diffInDays(Carbon::now(), false) > 0) {
+            $newValue = "C_CLOTURED";
+        }
+
+        /* date de paiement passée */
+        if ($this->livraison()->find($this->livraison_id)->date_paiement->diffInDays(Carbon::now(), false) > 0) {
+            if ($this->is_paid) {
+                $newValue = 'C_PAID';
+            }else{
+                $newValue = 'C_NONPAID';
+            }
+        }
+
+        /* date de livraison passée */
+        if ($this->livraison()->find($this->livraison_id)->date_livraison->diffInDays(Carbon::now(), false) > 0) {
+            if ($this->is_retired and $this->is_paid) {
+                $newValue = 'C_ARCHIVABLE';
+            }
+            if (!$this->is_retired and $this->is_paid) {
+                $newValue = 'C_OUBLIED';
+            }
+            if ($this->is_retired and !$this->is_paid) {
+                $newValue = 'C_NONPAID';
+            }
+            if (!$this->is_retired and !$this->is_paid) {
+                $newValue = 'C_SUSPECTED';
+            }
+
+        }
+
+        if ($value == 'C_ARCHIVED') {
+            $newValue = "C_ARCHIVED";
+        }
+
+
+    }
 }

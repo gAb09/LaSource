@@ -20,7 +20,8 @@ return [
 
         'C_CREATED' => 'Créée',
         'C_REGISTERED' => 'Enregistrée',
-        'C_VALIDED' => 'Validée',
+        'C_CLOTURED' => 'Clôturée',
+        'C_PAID' => 'Payée',
         'C_NONPAID' => 'Impayée',
         'C_ARCHIVABLE' => 'Archivable',
         'C_OUBLIED' => 'Oubliée',
