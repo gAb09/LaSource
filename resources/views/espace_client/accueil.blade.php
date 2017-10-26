@@ -6,7 +6,7 @@
     <div class="row">
         <div class="panel panel-default">
                     <h2 style="text-align:center">{{ trans_choice('message.livraison.ouvertes', $livraisons->count(), [ 'count' => $livraisons->count() ]) }}
-                        {{ trans_choice('message.commande.encours', $nbre_commandes_en_cours, [ 'count' => $nbre_commandes_en_cours ]) }}
+                        {{ trans_choice('message.commande.encours', count($commandes_en_cours), [ 'count' => count($commandes_en_cours) ]) }}
                     </h2>
 
             <div class="panel-body col-md-2" style="position:fixed">

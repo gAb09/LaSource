@@ -1,5 +1,5 @@
 	<h4 class="titre">Commande du {{ $commande->Livraison->date_livraison_enClair }} <small>(numéro {{ $commande->numero }})</small></h4>
-	<p class="statut">{{ $commande->statut }}</p>
+	<p class="statut">{{ trans('constante.'.$commande->statut) }}</p>
 
 	
 
@@ -10,7 +10,7 @@
 			@endforeach
 			<tr class="total">
 				<td colspan="3">
-					@if($en_cours)
+					@if($commande->statut == 'C_CREATED' or $commande->statut == 'C_REGISTERED')
 						<div class="btn btn-primary btn-xs" onClick="alert('Modifier la commande '+{{$commande->id}})" >Modifier cette commande</div>
                     @endif
 				</td>

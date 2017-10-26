@@ -9,9 +9,8 @@
 \f0\fs28 \cf2 Encours  \cf0 2.6.4\
 \
 Commandes\cf3 \
-	\'95 Mise en place crud Commande\
-	\'95 Impl\'e9mentation persistence et usage des choix par d\'e9faut (relais et modes de paiement)\
-	\'95 Traitement du statut\
+	\'95 Mise en place modification Commande\
+	\'95 Mise en place suppression Commande\
 	\'95 Traitement de l'archivage\
 	\'95 Attention anciennes versions navigateurs\
 \
@@ -48,44 +47,32 @@ Dashboard Gestionnaire\cf4 \
 
 \f0 \cf0 \
 Role Client \'97 espace client\cf5 \
-\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
 \cf4 	\'95 alert.warning \{!!  =>> \{\{\
 	\'95 Finaliser la vue Espace client \cf5 \
-\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
 \cf0 \
 Role Guest\
-\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
 \cf4 	\'95 Afficher la liste des paniers (tous ??) avec les prochaines livraisons en page d'accueil.\
 	\'95 Passer coordonn\'e9es La Source en API\
 	\'95 contenu de la page lescolis\
 	\'95 contenu de la page leslivraisons\
 \
-\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
 \cf0 Role Producteur\
-\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
 \cf4 	\'95 Rapports Livraisons\
 	\'95 Gestion prix Colis ?\
 	\'95 R\'e9habiliter anciens producteurs\
-\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
 \cf0 \
 \
 R\'f4le Relais\cf5 \
-\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
 \cf4 	\'95 Gestion indispos ??\
-\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
 \cf0 \
-\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
 \cf4 \
-\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
 \cf0 Contact du Ouaibmaistre\cf5 \
-\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
 \cf4 	\'95 Cr\'e9er vue+controller pour le formulaire de contact du OuaibMaistre\
 		+ Impl\'e9menter son renvoi automatique si d\'e9faut d'envoi des mails au client\
 \
 	\'95 Ajouter un pied de page :\
 		Contact OuaibMaistre\
 		Coordonn\'e9es La Source ?\
-\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
 \cf0 \
 Authentification\cf4 \
 \pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\ri-17820\sl288\slmult1\ql\qnatural
@@ -106,9 +93,7 @@ TODO divers\
 \
 	\'95 Mails : Impl\'e9mentation envoi mail dans fonction \'93alertOuaibMaistre\'94 si erreur lors de l\\'attachement d\\'une indisponibilit\'e9. Sous forme de trait ?\
 	 Idem pour archivage\
-\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
 \cf4 	\'95 Impl\'e9menter l'utilisation du champs \'93motif\'94 pour les indisponibilit\'e9s\
-\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
 \cf0 	\'95 mise en place gestion chiffres en fra\'e7ais\
 	\'95 Revoir int\'e9grit\'e9s r\'e9f\'e9rentielles (cascades)\
 	\'95 Passer messages en modale ?\
@@ -128,7 +113,6 @@ TODO divers\
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
 VERSION 3\
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \
-\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
 \cf4 	\'95 Ajouts du concept de lots ?\
 	\'95 Ajouts du concept d'\'e9tiquettes ?\
 	\'95 Ajouts du concept d'unit\'e9s ?\
@@ -137,6 +121,5 @@ VERSION 3\
 \cf7 	\'95 INDISPOS \'95 refonte pour ajout simple des indispos \'e0 n'importe quel model ?\
 \pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
 \cf4 \
-\pard\tx1133\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ri-17820\ql\qnatural\pardirnatural
 \cf0 Dashboard Gestionnaire\cf4 \
 	\'95 Gestion Familles - Colis}

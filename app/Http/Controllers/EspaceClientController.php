@@ -15,7 +15,7 @@ use App\Domaines\RelaisDomaine;
 
 class EspaceClientController extends Controller
 {
-
+    private $commandes_en_cours = [];
 
     public function __construct(CommandeDomaine $commandesD, LivraisonDomaine $livraisonD, ModePaiementDomaine $modepaiementD, RelaisDomaine $relaissD, Request $request)
     {
@@ -36,21 +36,17 @@ class EspaceClientController extends Controller
 
         $commandesbrutes = $model->load('client.commandes')->client->commandes;
         $commandes = $this->commandesD->getAllLignes($commandesbrutes);
-
-        $this->nbre_commandes_en_cours = 0;
         $commandes = $commandes->each(function($commande) {
-            if(in_array($commande->livraison->statut, ['L_CREATED', 'L_OUVERTE', 'L_CLOTURED'])) {
-                $commande->en_cours = true;
-                $this->nbre_commandes_en_cours++;
-            }else{
+            if(in_array($commande->statut, ['C_ARCHIVED', 'C_ARCHIVABLE'])) {
                 $commande->en_cours = false;
+            }else{
+                $commande->en_cours = true;
+                $this->commandes_en_cours[] = $commande->livraison->id;
             }
         });
-
-        $nbre_commandes_en_cours = $this->nbre_commandes_en_cours;
+        $commandes_en_cours = $this->commandes_en_cours;
 
         $livraisons = $this->livraisonD->getAllLivraisonsOuvertes($auth_user);
-// return dd($livraisons);
 
         $relaiss = $this->relaissD->allActived('id');
         $relaiss->each(function($item) use($model){
@@ -70,7 +66,7 @@ class EspaceClientController extends Controller
             }
         });
 
-        return view('espace_client.accueil')->with(compact('model', 'commandes', 'livraisons', 'modespaiement', 'relaiss', 'nbre_commandes_en_cours'));
+        return view('espace_client.accueil')->with(compact('model', 'commandes', 'livraisons', 'modespaiement', 'relaiss', 'commandes_en_cours'));
     }
 
 

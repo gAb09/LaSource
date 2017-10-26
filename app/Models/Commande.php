@@ -19,7 +19,7 @@ class Commande extends Model
      */
     protected $dates = ['deleted_at'];
 
-    protected $appends = array('state');
+    protected $appends = array('statut');
 
     private $state = "C_CREATED";
 
@@ -113,6 +113,7 @@ class Commande extends Model
             $newValue = "C_ARCHIVED";
         }
 
+        return $newValue;
 
     }
 }
