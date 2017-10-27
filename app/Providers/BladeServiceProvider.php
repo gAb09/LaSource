@@ -16,14 +16,13 @@ class BladeServiceProvider extends ServiceProvider
     {
         Blade::directive('prix', function ($expression) {
             return "<?php echo
-            number_format($expression, 2, ',', ' ').'&nbsp;&euro;';
+            number_format($expression, 2, ',', ' ').'&nbsp;&euros;';
             ?>";
         });
 
-        Blade::directive('date_complete', function ($expression) {
-          $formattedDate = \Carbon\Carbon::createFromFormat('Y-m', '2017-01')->formatLocalized('%A %e %B %Y');
+        Blade::directive('date_longue', function ($expression) { 
             return "<?php echo
-            '$formattedDate';
+            \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $expression)->formatLocalized('%A %e %B %Y');
             ?>";
         });
     }

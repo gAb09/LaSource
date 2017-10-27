@@ -66,15 +66,13 @@ class LivraisonController extends Controller
     {
     	$model = $this->domaine->edit($id);
 
-        $date_titrepage = $model->date_livraison_enclair;
-
         $paniers_lied = $this->panier->ListForLivraisonEdit($id);
 
         $relaiss = $this->relaiss->ListForLivraisonEdit($id);
 
         $modepaiements = $this->modepaiements->ListForLivraisonEdit($id);
 
-        return view('livraison.createdit.edit')->with(compact('model','date_titrepage', 'paniers', 'paniers_lied', 'relaiss', 'modepaiements'));
+        return view('livraison.createdit.edit')->with(compact('model', 'paniers', 'paniers_lied', 'relaiss', 'modepaiements'));
     }
 
 

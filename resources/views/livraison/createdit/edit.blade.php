@@ -11,7 +11,7 @@
 
 
 @section('topcontent1')
-<h1 class="titrepage">{!! trans('titrepage.livraison.edit', ['date_titrepage' => $date_titrepage]) !!} <small>({{ trans('constante.'.$model->statut) }})</small></h1>
+<h1 class="titrepage">{!! trans('titrepage.livraison.edit') !!} @date_longue($model->date_livraison) <small>({{ trans('constante.'.$model->statut) }})</small></h1>
 @parent
 @stop
 

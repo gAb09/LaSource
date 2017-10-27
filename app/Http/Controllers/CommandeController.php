@@ -27,13 +27,6 @@ class CommandeController extends Controller
         return view('commande.index')->with(compact('models'));
     }
 
-    public function create()
-    {
-        $livraison_id = $this->request->livraison_id;
-        $livraison = $this->livraisonD->creationCommande($livraison_id);
-        $model =  $this->domaine->getCurrentModel();
-        return view('commande.create')->with(compact('model', 'livraison'));
-    }
 
     public function store(Request $request)
     {

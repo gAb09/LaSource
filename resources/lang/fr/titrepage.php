@@ -47,7 +47,7 @@ return [
             [
                 'index' => 'Les livraisons',
                 'create'  => 'Création d’une livraison',
-                'edit'  => 'Édition de la livraison du&nbsp:date_titrepage',
+                'edit'  => 'Édition de la livraison du&nbsp',
                 'listPaniers'  => 'Choisir un (plusieurs) panier(s) pour la livraison : :date',
                 'editpanier'  => 'Modification du panier :panier',
                 'enCours'  => 'Les livraisons en cours',

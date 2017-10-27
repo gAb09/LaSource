@@ -40,7 +40,7 @@
 			<hr />
 			<div class="livraison">
 				<p>
-					Livraison du {{ $livraison->date_livraison_enClair }} {{ $livraison->id }}<br />
+					Livraison du @date_longue($livraison->date_livraison) {{ $livraison->id }}<br />
 					<span>
 						Pour info la clôture des commandes est fixée au {{ $livraison->date_cloture_enClair }}, donc dans <strong>{{ $livraison->date_cloture_delai }} jours</strong><br />
 					</span>
@@ -76,7 +76,7 @@
 			<hr />
 			<div class="livraison">
 				<p>
-					Livraison du {{ $livraison->date_livraison_enClair }}  ({{ $livraison->id }})<br />
+					Livraison du @date_longue($livraison->date_livraison)  ({{ $livraison->id }})<br />
 					<span>
 						Pour info la clôture des commandes est fixée au {{ $livraison->date_cloture_enClair }}, donc dans <strong>{{ $livraison->date_cloture_delai }} jours</strong><br />
 					</span>

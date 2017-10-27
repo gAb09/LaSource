@@ -1,5 +1,5 @@
-<h4 class="">Livraison du {{$livraison->date_livraison_enclair}}
-	<small>ouverte jusqu'au {{$livraison->date_cloture_enclair}} et payable avant le {{$livraison->date_paiement_enclair}}</small>
+<h4 class="">Livraison du @date_longue($livraison->date_livraison)
+	<small>ouverte jusqu'au @date_longue($livraison->date_cloture) et payable avant le @date_longue($livraison->date_paiement)</small>
 </h4>
 @if($livraison->remarques)<p class="remarques">{{$livraison->remarques}}</p>@endif
 

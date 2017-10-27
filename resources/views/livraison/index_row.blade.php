@@ -12,19 +12,17 @@ onDblClick="javascript:document.location.href='{{ route('livraison.edit', $model
 
 	<!-- date_cloture -->
 	<td>
-		@date_complete($model->date_cloture)
-		{{-- var_dump($model->date_cloture) --}}
-		 - {{ $model->date_cloture_enclair }}
+		@date_longue($model->date_cloture)
 	</td>
 
 	<!-- date_paiement -->
 	<td>
-		{{ $model->date_paiement_enclair }}
+		@date_longue($model->date_paiement)
 	</td>
 
 	<!-- date_livraison -->
 	<td>
-		{{ $model->date_livraison_enclair }}
+		@date_longue($model->date_livraison)
 	</td>
 
 	<!-- state -->

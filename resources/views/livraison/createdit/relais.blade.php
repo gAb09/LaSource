@@ -31,7 +31,7 @@
 		<p name="{{$indisponibilite->statut}}_{{ $relais->id }}" class="indispo {{$indisponibilite->statut}}">
 			<span class="premiere gras">Indisponible pour cause de</span><br/>
 			<span class="gras">{{ $indisponibilite->cause }}</span><br/>
-			du {{ $indisponibilite->date_debut_enclair }}<br />au {{ $indisponibilite->date_fin_enclair }}
+			du @date_longue($indisponibilite->date_debut)<br />au @date_longue($indisponibilite->date_fin)
 		</p>
 	@empty
 	@endforelse
