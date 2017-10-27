@@ -18,7 +18,7 @@
 			</p>
 
 			<p>
-				<strong>{{ $model->prix_base }}</strong>
+				<strong>@prix($model->prix_base)</strong>
 			</p>
 
 			<p class="remarques">

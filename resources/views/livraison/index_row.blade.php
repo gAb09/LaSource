@@ -1,6 +1,6 @@
-<tr 
+<tr
 class="ombrable"
-id="row_{{ $model->id }}" 
+id="row_{{ $model->id }}"
 onDblClick="javascript:document.location.href='{{ route('livraison.edit', $model->id) }}' ;"
 >
 
@@ -12,7 +12,9 @@ onDblClick="javascript:document.location.href='{{ route('livraison.edit', $model
 
 	<!-- date_cloture -->
 	<td>
-		{{ $model->date_cloture_enclair }}
+		@date_complete($model->date_cloture)
+		{{-- var_dump($model->date_cloture) --}}
+		 - {{ $model->date_cloture_enclair }}
 	</td>
 
 	<!-- date_paiement -->
