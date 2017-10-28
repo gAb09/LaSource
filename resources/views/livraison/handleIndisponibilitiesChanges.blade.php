@@ -1,3 +1,5 @@
+@php use gab\Helpers\DateFr @endphp
+
 @extends('layouts.app')
 
 @section('titre')
@@ -40,9 +42,9 @@
 			<hr />
 			<div class="livraison">
 				<p>
-					Livraison du @date_longue($livraison->date_livraison) {{ $livraison->id }}<br />
+					Livraison du @date_complete($livraison->date_livraison) {{ $livraison->id }}<br />
 					<span>
-						Pour info la clôture des commandes est fixée au {{ $livraison->date_cloture_enClair }}, donc dans <strong>{{ $livraison->date_cloture_delai }} jours</strong><br />
+						Pour info la clôture des commandes est fixée au {{ DateFr::complete($livraison->date_cloture) }}, donc dans <strong>{{ $livraison->date_cloture_delai }} jours</strong><br />
 					</span>
 				</p>
 				<div class="radio" style="display:inherit;">
@@ -76,9 +78,9 @@
 			<hr />
 			<div class="livraison">
 				<p>
-					Livraison du @date_longue($livraison->date_livraison)  ({{ $livraison->id }})<br />
+					Livraison du @date_complete($livraison->date_livraison)  ({{ $livraison->id }})<br />
 					<span>
-						Pour info la clôture des commandes est fixée au {{ $livraison->date_cloture_enClair }}, donc dans <strong>{{ $livraison->date_cloture_delai }} jours</strong><br />
+						Pour info la clôture des commandes est fixée au {{ $livraison->date_cloture }}, donc dans <strong>{{ $livraison->date_cloture_delai }} jours</strong><br />
 					</span>
 				</p>
 				<div class="radio" style="display:inherit;">

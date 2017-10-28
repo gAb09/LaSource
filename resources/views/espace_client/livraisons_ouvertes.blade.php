@@ -1,5 +1,5 @@
-<h4 class="">Livraison du @date_longue($livraison->date_livraison)
-	<small>ouverte jusqu'au @date_longue($livraison->date_cloture) et payable avant le @date_longue($livraison->date_paiement)</small>
+<h4 class="">Livraison du @date_complete($livraison->date_livraison)
+	<small>ouverte jusqu'au @date_complete($livraison->date_cloture) et payable avant le @date_complete($livraison->date_paiement)</small>
 </h4>
 @if($livraison->remarques)<p class="remarques">{{$livraison->remarques}}</p>@endif
 
@@ -17,7 +17,8 @@
 				{{$panier->exploitation}}
 			</p>
 			<p  class="prix_panier">
-				<span name="{{$panier->id}}_prix_panier" class="prix">{{$panier->pivot->prix_livraison}}</span> euros
+				<span name="{{$panier->id}}_prix_panier_enclair" class="prix">@FRprix($panier->pivot->prix_livraison)</span>
+				<span name="{{$panier->id}}_prix_panier" class="hidden"> {{ $panier->pivot->prix_livraison }}</span>
 			</p>
 			<p>
 				<small>{!! $panier->idee_nobr !!}</small>

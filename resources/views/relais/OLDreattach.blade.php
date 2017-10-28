@@ -34,9 +34,9 @@
 	<div>
 		<input type="checkbox" class="form-control" name="livraison_id[]" value="{{ $livraison->id }}">
 		<span>
-			&nbsp;Livraison du {{ $livraison->date_livraison_enClair }}<br />
+			&nbsp;Livraison du {{ $livraison->date_livraison }}<br />
 		</span>
-		Cloture des commandes dans <strong>{{ $livraison->date_cloture_delai }} jours</strong> : {{ $livraison->date_cloture_enClair }}<hr />
+		Cloture des commandes dans <strong>{{ $livraison->date_cloture_delai }} jours</strong> : {{ $livraison->date_cloture }}<hr />
 	</div>
 	@endforeach
 	<button type="submit" class="btn btn-success">Valider</button>

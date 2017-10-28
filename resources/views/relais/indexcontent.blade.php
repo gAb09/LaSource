@@ -37,9 +37,9 @@
 			@foreach($model->indisponibilites as $indisponibilite)
 				Indisponible pour cause de 
 				<strong>{{ $indisponibilite->cause }}</strong>
-				<br />du @date_longue($indisponibilite->date_debut)
+				<br />du @date_complete($indisponibilite->date_debut)
 				<br />au 
-				@date_longue($indisponibilite->date_fin)
+				@date_complete($indisponibilite->date_fin)
 				<br />
 				<p class="remarques">
 					{{ $indisponibilite->remarques }}

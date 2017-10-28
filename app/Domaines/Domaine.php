@@ -3,6 +3,7 @@
 namespace App\Domaines;
 
 use App\Models\Livraison;
+use Gab\Helpers\DateFr;
 
 class Domaine
 {
@@ -181,7 +182,7 @@ class Domaine
 		$message = "Oups !! $action impossible !<br />";
 		foreach ($this->model->livraison as $livraison) {
 			if(!$livraison->statut == 'L_ARCHIVED'){
-				$message .= trans("message.$model_name.liedToLivraison", ['date' => $livraison->date_livraison_enClair]).'<br />';
+				$message .= trans("message.$model_name.liedToLivraison", ['date' => DateFr::complete($livraison->date_livraison)]).'<br />';
 			}
 		}
 		$this->message = $message;
@@ -220,7 +221,7 @@ class Domaine
 		$message = "Oups !! $action impossible !<br />";
 		foreach ($occurence as $pivot) {
 			$livraison = Livraison::where('id', $pivot->livraison_id)->first();
-			$message .= trans("message.$model_name.liedToLivraison", ['date' => $livraison->date_livraison_enClair]).'<br />';
+			$message .= trans("message.$model_name.liedToLivraison", ['date' => DateFr::complete($livraison->date_livraison)]).'<br />';
 		}
 		return $message;
 	}

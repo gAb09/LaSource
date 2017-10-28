@@ -5,7 +5,7 @@
 <p style="text-align:center"><b>Date limite de paiement</b>
 	@endif
 	<br />
-	<span id="date_paiement_enclair" >@date_longue($model->date_paiement)</span><br />
+	<span id="date_paiement_enclair" >@date_complete($model->date_paiement)</span><br />
 	(<span id="date_paiement_delai" >{{$model->date_paiement_delai}}</span>)<br />
 	<input type="hidden" id="date_paiement" name="date_paiement" value="{{ old('date_paiement', $model->date_paiement) }}">
 </p>

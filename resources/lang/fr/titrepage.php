@@ -48,7 +48,7 @@ return [
                 'index' => 'Les livraisons',
                 'create'  => 'Création d’une livraison',
                 'edit'  => 'Édition de la livraison du&nbsp',
-                'listPaniers'  => 'Choisir un (plusieurs) panier(s) pour la livraison : :date',
+                'listPaniers'  => 'Gérer les paniers pour la livraison du :date',
                 'editpanier'  => 'Modification du panier :panier',
                 'enCours'  => 'Les livraisons en cours',
                 'handleIndisponibilities'  => ':action de l’indisponibilité de “:indisponisable” peut avoir des répercussions sur certaines livraisons ouvertes :',

@@ -14,6 +14,7 @@ use App\Http\Requests\RelaissForLivraisonRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Carbon\Carbon;
+use Gab\Helpers\DateFr;
 
 class LivraisonController extends Controller
 {
@@ -126,7 +127,7 @@ class LivraisonController extends Controller
 
         $paniers = $this->panier->getAllPaniersForLivraisonSynchronisation($livraison_id);
 
-        $titre_page = trans('titrepage.livraison.listPaniers', ['date' => $model->date_livraison_enclair]);
+        $titre_page = trans('titrepage.livraison.listPaniers', ['date' => DateFr::complete($model->date_livraison)]);
 
         return view('livraison.modales.listPaniers')->with(compact('model', 'paniers', 'titre_page'));
     }

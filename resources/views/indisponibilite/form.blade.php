@@ -1,4 +1,4 @@
-<!-- indisponisable_type -->
+@php use Gab\Helpers\DateFr @endphp<!-- indisponisable_type -->
         <input type="hidden" name="indisponisable_type" value="{{ $model->indisponisable_type or old('indisponisable_type') }}">
 
 <!-- indisponisable_id -->
@@ -17,10 +17,10 @@
         <div id="div_date_debut" class="datecontainer">
             <p style=""><b>Date de début&nbsp*</b>
     @endif
-                <br /><span id="date_debut_enclair" >@date_longue($model->date_debut)</span><br />
+                <br /><span id="date_debut_enclair" >@date_complete($model->date_debut)</span><br />
         </p>
             <input type="hidden" id="date_debut" name="date_debut" value="{{ old('date_debut', $model->date_debut) }}">
-            <input type="hidden" id="datepicker_debut" name="datepicker_debut" value="{{ old('datepicker_debut', $model->date_debut_enclair) }}">
+            <input type="hidden" id="datepicker_debut" name="datepicker_debut" value="{!! old('datepicker_debut', $datedebut = DateFr::complete($model->date_debut)) !!}">
         </div>
 
 
@@ -35,10 +35,10 @@
         <div id="div_date_fin" class="datecontainer">
             <p style=""><b>Date de fin&nbsp*</b>
     @endif
-                <br /><span id="date_fin_enclair" >@date_longue($model->date_fin_enclair)</span>
+                <br /><span id="date_fin_enclair" >@date_complete($model->date_fin)</span>
         </p>
             <input type="hidden" id="date_fin" name="date_fin" value="{{ old('date_fin', $model->date_fin) }}">
-            <input type="hidden" id="datepicker_fin" name="datepicker_fin" value="{{ old('datepicker_fin', $model->date_fin_enclair) }}">
+            <input type="hidden" id="datepicker_fin" name="datepicker_fin" value="{{ old('datepicker_fin', $datedebut = DateFr::complete($model->date_fin)) }}">
         </div>
 
 

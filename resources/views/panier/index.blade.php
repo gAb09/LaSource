@@ -14,7 +14,16 @@
 
 
 @section('content')
-	@include('panier.indexcontent')
+<div id="paniers_index" class="offset3 span11 flexcontainer">
+	@forelse($models as $model)
+		@include('panier.un_panier')
+	@empty 
+		<h3>Aucun panier supprimé
+			@include('shared.button.index', ['modelName' => 'panier', 'buttonEtiquette' => 'Retour à la liste'])
+		</h3>
+	@endforelse
+</div>
+
 @stop
 
 

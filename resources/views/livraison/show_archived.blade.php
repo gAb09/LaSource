@@ -7,7 +7,7 @@
 	<!-- date_cloture -->
 	<p style="text-align:center"><b>Date de clôture</b>
 		<br />
-		<span id="date_cloture_enclair" >@date_longue($model->date_cloture)</span><br />
+		<span id="date_cloture_enclair" >@date_complete($model->date_cloture)</span><br />
 		(<span id="date_cloture_delai" >{{$model->date_cloture_delai}}</span>)<br />
 		<input type="hidden" id="date_cloture" name="date_cloture" value="{{ old('date_cloture', $model->date_cloture) }}">
 	</p>
@@ -16,7 +16,7 @@
 	<!-- date_paiement -->
 	<p style="text-align:center"><b>Date limite de paiement</b>
 		<br />
-		<span id="date_paiement_enclair" >@date_longue($model->date_paiement)</span><br />
+		<span id="date_paiement_enclair" >@date_complete($model->date_paiement)</span><br />
 		(<span id="date_paiement_delai" >{{$model->date_paiement_delai}}</span>)<br />
 		<input type="hidden" id="date_paiement" name="date_paiement" value="{{ old('date_paiement', $model->date_paiement) }}">
 	</p>
@@ -25,7 +25,7 @@
 	<!-- date_livraison -->
 	<p style="text-align:center"><b>Date de livraison</b>
 		<br />
-		<span id="date_livraison_enclair" >@date_longue($model->date_livraison)</span><br />
+		<span id="date_livraison_enclair" >@date_complete($model->date_livraison)</span><br />
 		(<span id="date_livraison_delai" >{{$model->date_livraison_delai}}</span>)<br />
 		<input type="hidden" id="date_livraison" name="date_livraison" value="{{ old('date_livraison', $model->date_livraison) }}">
 	</p>
