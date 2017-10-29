@@ -1,6 +1,20 @@
 @extends('layouts.app')
 
 
+@section('modal')
+<div id="overlay">
+    <div class="popup_block une_livraison_ouverte">
+        <a class="close" href="#noWhere">
+            <i class="btn_close fa fa-btn fa-close"></i>
+        </a>
+        @php $livraison = $livraisons->first(); @endphp
+        @include('espace_client.une_livraison_ouverte')
+    </div>
+</div>
+@endsection
+
+
+
 @section('content')
 <div class="container-fluid espace_client">
     <div class="row">
@@ -34,9 +48,9 @@
                 {!! csrf_field() !!}
                     
 
-                    <div class="livraisons_ouvertes">
+                    <div class="une_livraison_ouverte">
                         @forelse($livraisons as $livraison)
-                            @include('espace_client.livraisons_ouvertes')
+                            @include('espace_client.une_livraison_ouverte')
                         @empty
                             À ce jour, pas de livraison programmée
                         @endforelse

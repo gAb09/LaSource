@@ -17,7 +17,7 @@
 				{{$panier->exploitation}}
 			</p>
 			<p  class="prix_panier">
-				<span name="{{$panier->id}}_prix_panier_enclair" class="prix">@FRprix($panier->pivot->prix_livraison)</span>
+				<span name="{{$panier->id}}_prix_panier_enclair" class="prix">@prixFR($panier->pivot->prix_livraison)</span>
 				<span name="{{$panier->id}}_prix_panier" class="hidden"> {{ $panier->pivot->prix_livraison }}</span>
 			</p>
 			<p>

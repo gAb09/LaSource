@@ -11,7 +11,7 @@
 			<tr class="total">
 				<td colspan="3">
 					@if($commande->statut == 'C_CREATED' or $commande->statut == 'C_REGISTERED')
-						<div class="btn btn-primary btn-xs" onClick="alert('Modifier la commande '+{{$commande->id}})" >Modifier cette commande</div>
+						<a class="btn btn-primary btn-xs" href="#overlay"  >Modifier cette commande</a>
                     @endif
 				</td>
 				<td colspan="2">
