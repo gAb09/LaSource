@@ -37,6 +37,12 @@ class BladeServiceProvider extends ServiceProvider
             \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $expression)->formatLocalized('%A %e %B %Y');
             ?>";
         });
+
+        Blade::directive('nobr', function ($expression) { 
+            return "<?php echo
+            str_replace('<br/>', ' ', $expression);
+            ?>";
+        });
     }
 
     /**

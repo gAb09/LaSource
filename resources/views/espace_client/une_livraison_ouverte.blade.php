@@ -12,7 +12,7 @@
 				{{ $panier->type }}
 			</p>
 			<p>
-				{{ $panier->nom_nobr }}
+				@nobr($panier->nom)
 			</p>
 			<p style="font-style:italic">
 				{{$panier->exploitation}}
@@ -22,7 +22,7 @@
 				<span name="{{$panier->id}}_prix_panier" class="hidden"> {{ $panier->pivot->prix_livraison }}</span>
 			</p>
 			<p>
-				<small>{!! $panier->idee_nobr !!}</small>
+				<small>@nobr($panier->idee)</small>
 			</p>
 			<div class="quantite">
 				<span class="fleche decrement" onclick="javascript:decrement({{$livraison->id}}, {{$panier->id}});"><i class="fa fa-angle-double-down"></i></span>
