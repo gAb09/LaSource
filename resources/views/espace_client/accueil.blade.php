@@ -4,11 +4,18 @@
 @section('modal')
 <div id="overlay">
     <div class="popup_block une_livraison_ouverte">
-        <a class="close" href="#noWhere">
+        <a class="close" href="#noWhere" onClick="javascript:$('#modification_livraison').empty()">
             <i class="btn_close fa fa-btn fa-close"></i>
         </a>
-        @php $livraison = $livraisons->first(); @endphp
-        @include('espace_client.une_livraison_ouverte')
+        <form id="commande_update" class="form-horizontal" role="form" method="POST" action="">
+                        {!! csrf_field() !!}
+                        <input type="hidden" class="form-control" name="_method" value="PUT">
+            <div id="livraison_modified">
+            </div>
+            <button id="button_update" type="submit" class="btn btn-success">
+                Valider mes modifications
+            </button>
+        </form>
     </div>
 </div>
 @endsection
@@ -77,6 +84,9 @@
                             @endforeach
                         @endif
                     </div>
+                        <button id="button_store" type="submit" class="btn btn-success hidden" style="float:right;">'
+                            Vous êtes en train de faire des changements, une fois ceux-ci terminés, cliquez sur cette barre pour les valider
+                        </button>
                 </form>
              </div>
         </div>

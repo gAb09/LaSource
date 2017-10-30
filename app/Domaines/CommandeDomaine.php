@@ -7,7 +7,11 @@ use App\Models\Commande;
 use Carbon\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Domaines\LigneDomaine;
+use App\Domaines\ModePaiementDomaine;
+use App\Domaines\RelaisDomaine;
+use App\Models\Livraison;
 use App\Models\Ligne;
+use App\Models\User;
 
 class CommandeDomaine extends Domaine
 {
@@ -18,6 +22,8 @@ class CommandeDomaine extends Domaine
 		$this->model = new Commande;
 		$this->lignesD = new LigneDomaine;
 		$this->ligne = new Ligne;
+        $this->modepaiementD = new ModePaiementDomaine;
+        $this->relaissD = new RelaisDomaine;
 	}
 
 
@@ -40,9 +46,9 @@ class CommandeDomaine extends Domaine
 	public function store($request){
 
 		try {
-		$commandes = $this->handleRequest($request);
-		\DB::beginTransaction();
-		$count = $this->handleCommandes($commandes);
+			$commandes = $this->handleRequest($request);
+			\DB::beginTransaction();
+			$count = $this->handleCommandes($commandes);
 		}
 		catch(\exception $e){
 			\DB::rollBack();
@@ -54,6 +60,61 @@ class CommandeDomaine extends Domaine
 	}
 
 
+	/**
+	 * undocumented function
+	 *
+	 * @param integer : commande_id
+	 *
+	 * @return void
+	 **/
+	function edit($commande_id)
+	{
+
+		// $model = User::with('client.commandes.livraison')->find($auth_user->id);
+		$model = User::with('client.commandes.livraison')->find(300);
+
+		$commandeBrute = $this->model->with('livraison.panier', 'lignes')->findOrFail($commande_id);
+		$commande = $this->getAllLignes($commandeBrute);
+
+        /* Pour chaque panier de cette livraison, connaître les quantités commandées par l'user current et les fournir à la vue */
+        $livraison = $commande->livraison;
+        $livraison->panier->each(function($panier) use($livraison, $commande){
+        	$commande->lignes->each(function($ligne) use ($livraison, $commande, $panier){
+        		if ($panier->id == $ligne->panier_id) {
+        			$panier->quantite = $ligne->quantite;
+        		}
+        	});
+        });
+
+        /* Connaître le relais choisi par l'user current pour cette livraison et le fournir à la vue */
+        $relaiss = $this->relaissD->allActived('id');
+        $relaiss->each(function($item) use($commande){
+            if ($item->id == $commande->relais_id) {
+                $item->checked = 'checked';
+            }else{
+                $item->checked = '';
+            }
+        });
+
+        /* Connaître le mode de paiement choisi par l'user current pour cette livraison et le fournir à la vue */
+        $modespaiement = $this->modepaiementD->allActived('id');
+        $modespaiement->each(function($item) use($commande){
+            if ($item->id == $commande->modepaiement_id) {
+                $item->checked = 'checked';
+            }else{
+                $item->checked = '';
+            }
+        });
+
+        $datas['commande'] = $commande;
+        $datas['livraison'] = $livraison;
+        $datas['modespaiement'] = $modespaiement;
+        $datas['relaiss'] = $relaiss;
+        $datas['model'] = $model;
+
+        // return dd($commande);
+		return $datas;
+	}
 
 	private function transcode_modepaiement($modepaiement)
 	{

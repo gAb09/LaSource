@@ -43,4 +43,31 @@ class CommandeController extends Controller
             return redirect()->back()->with('success', trans_choice('message.commande.storeOk', $result, ['count' => $result]));
         }
     }
+
+
+    public function edit($id)
+    {
+        $datas = $this->domaine->edit($id);
+
+        $commande = $datas['commande'];
+        $livraison = $datas['livraison'];
+        $modespaiement = $datas['modespaiement'];
+        $relaiss = $datas['relaiss'];
+        $model = $datas['model'];
+
+
+        return view('espace_client.une_livraison_ouverte')->with(compact('model', 'commande', 'livraison', 'modespaiement', 'relaiss'));
+    }
+
+    /**
+     * undocumented function
+     *
+     * @return void
+     * @author 
+     **/
+    function update($id, Request $request)
+    {
+        return dd($request->except('_token', '_method'));
+    }
+
 }

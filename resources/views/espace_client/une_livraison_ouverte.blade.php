@@ -1,4 +1,5 @@
-<h4 class="">Livraison du @date_complete($livraison->date_livraison)
+
+<h4 class=""><span id="modification_livraison" class=""></span>Livraison du @date_complete($livraison->date_livraison)
 	<small>ouverte jusqu'au @date_complete($livraison->date_cloture) et payable avant le @date_complete($livraison->date_paiement)</small>
 </h4>
 @if($livraison->remarques)<p class="remarques">{{$livraison->remarques}}</p>@endif
@@ -26,7 +27,7 @@
 			<div class="quantite">
 				<span class="fleche decrement" onclick="javascript:decrement({{$livraison->id}}, {{$panier->id}});"><i class="fa fa-angle-double-down"></i></span>
 				<span class="fleche increment" onclick="javascript:increment({{$livraison->id}}, {{$panier->id}});"><i class="fa fa-angle-double-up"></i></span>
-				<input type="txt" class="" name="{{ $livraison->id }}_qte_{{ $panier->id }}" value="0" onBlur="javascript:qteChange(this, {{$livraison->id}}, {{$panier->id}})">
+				<input type="txt" class="" name="{{ $livraison->id }}_qte_{{ $panier->id }}" value="{{$panier->quantite or 0}}" onBlur="javascript:qteChange(this, {{$livraison->id}}, {{$panier->id}})">
 			<br />
 			</div>
 				<p class="total_panier" name="{{$livraison->id}}_total_panier_{{$panier->id}}" >non commandé</p>

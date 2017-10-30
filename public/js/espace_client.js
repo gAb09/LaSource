@@ -9,9 +9,9 @@ function becomeSelected(item, id){
 
 	to_uncheck = $("span[livraison="+livraison+"][model="+model+"]");
 
-	console.log('item : '+item);
-	console.log('livraison : '+livraison);
-	console.log('nom_item : '+nom_item);
+	// console.log('item : '+item);
+	// console.log('livraison : '+livraison);
+	// console.log('nom_item : '+nom_item);
 	//console.log('to_uncheck : '+$(to_uncheck).length);
 
 	/* On décoche tous les boutons de ce model pour cette livraison + on coche ce bouton  */
@@ -40,8 +40,8 @@ function becomeSelected(item, id){
 **/
 function persisterParametres(id, model) {
 
-	console.log('model : '+model);
-	console.log('id : '+id);
+	// console.log('model : '+model);
+	// console.log('id : '+id);
 
 	var ad = 'http://'+domaine+'/client/setPref/'+model;
 
@@ -52,7 +52,7 @@ function persisterParametres(id, model) {
 		data : {'id' : id},
 		dataType : 'html',
 		success : function(code_html, data, statut){
-			console.log(code_html);
+			// console.log(code_html);
 			$('#messages').empty().append(code_html);
 		},
 
@@ -167,14 +167,14 @@ function getContextPanierChange(livraison, panier){
 		total_livraison_cible : function() {return $("[name='" + this.livraisonId + "_total_livraison']").get(0);},
 		all_totaux_panier : function() {return $("p[name^='" + this.livraisonId + "_total_panier_']");},
 	};
-	console.log('livraisonId : '+contexte.livraisonId);
-	console.log('panierId : '+contexte.panierId);
-	console.log('qte_panier : '+contexte.qte_panier);
-	console.log('qte_panier_cible : '+contexte.qte_panier_cible().length);
-	console.log('prix_panier : '+contexte.prix_panier());
-	console.log('total_panier_cible : '+contexte.total_panier_cible().length);
-	console.log('total_livraison_cible : '+contexte.total_livraison_cible().name);
-	console.log('all_totaux_panier : '+contexte.all_totaux_panier().length);
+	// console.log('livraisonId : '+contexte.livraisonId);
+	// console.log('panierId : '+contexte.panierId);
+	// console.log('qte_panier : '+contexte.qte_panier);
+	// console.log('qte_panier_cible name : '+contexte.qte_panier_cible().getAttribute('name'));
+	// console.log('prix_panier : '+contexte.prix_panier());
+	// console.log('total_panier_cible : '+contexte.total_panier_cible().getAttribute('name'));
+	// console.log('total_livraison_cible : '+contexte.total_livraison_cible().getAttribute('name'));
+	// console.log('all_totaux_panier : '+contexte.all_totaux_panier().length);
 	return contexte;
 }
 
@@ -192,6 +192,7 @@ function sanitizeInputValue(input){
 
 
 function ActualiserTotalPanier(c){
+	// console.log('ActualiserTotalPanier');
 	c.total_panier_cible().innerHTML = 'Total panier : <span>'+c.qte_panier*c.prix_panier()+'</span> euros';
 	/* Le span à pour but d'isoler le nombre significatif de tout texte, puisqu'il entrera dans le calcul du total livraison */
 }
@@ -199,7 +200,7 @@ function ActualiserTotalPanier(c){
 
 function ActualiserTotalLivraison(c){
 	var collection = c.all_totaux_panier();
-	console.log('calculTotalLivraison');
+	// console.log('calculTotalLivraison');
 	nbre = collection.length;
 	var total = 0;
 	for (i = 0 ; i < nbre ; i++) {
@@ -216,15 +217,66 @@ Global.
 -----------------------------------------------------------------*/
 
 function changementDetected(){
-	if ($("#commande_store").children('button').length === 0) {
-		$("#commande_store").append('<button type="submit" class="btn btn-success" style="float:right;">'+
-			'Vous êtes en train de faire des changements, une fois ceux-ci terminés, cliquez sur cette barre pour les valider</button>');
+	if ($("#modification_livraison").html() === '') {
+		$("#button_store").removeClass('hidden');
 	}
 
 }
 
 function toggleCommandesArchived(){
-$('#une_commande_archive').toggleClass('hidden');
-$('#show_commandes_archived').toggleClass('hidden');
-$('#hide_commandes_archived').toggleClass('hidden');
+	$('#une_commande_archive').toggleClass('hidden');
+	$('#show_commandes_archived').toggleClass('hidden');
+	$('#hide_commandes_archived').toggleClass('hidden');
+}
+
+
+function editCommande(commande_id, livraison_id){
+	// console.log('commande n° '+commande_id);
+	// console.log(domaine);
+	var adresse = 'commande/'+commande_id+'/edit';
+	// console.log(adresse);
+
+
+	$.ajax({
+		url : adresse,
+		type : 'GET',
+		dataType : 'html',
+		success : function(data, statut){
+			$('#livraison_modified').empty().append(data);
+
+			$('#modification_livraison').empty().html('Modification de la ');
+
+			$('#commande_update').attr('action', 'http://'+domaine+"/commande/"+livraison_id);
+
+
+			all_qte_panier = $("[name^='" + livraison_id + "_qte']");
+			all_qte_panier.each(function(index){
+				var panier_id = this.name.replace(livraison_id + '_qte_', '');
+				// console.log(panier_id+" : "+this.name+" vaut : "+this.value);
+				if (this.value !== 0) {
+					var c = getContextPanierChange(livraison_id, panier_id);
+					// console.log('Quantité : '+this.value);
+					c.qte_panier = this.value;
+
+					ActualiserTotalPanier(c);
+					ActualiserTotalLivraison(c);
+				}
+			});
+
+		},
+
+		error : function(resultat, statut, erreur){
+            // alert(resultat);
+            // alert(statut);
+            // alert(erreur);
+        },
+
+        complete : function(resultat, statut){
+
+        }
+    });
+    // var c = getContextPanierChange(livraison_id, panier_id);
+	// ActualiserTotalPanier(c);
+	// ActualiserTotalLivraison(c);
+
 }
