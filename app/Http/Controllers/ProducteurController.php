@@ -41,7 +41,7 @@ class ProducteurController extends Controller
  
     public function edit($id)
     {
-    	$model = $this->domaine->findFirst($id);
+    	$model = $this->domaine->findFirstWithTrashed($id);
     	return view('producteur.edit')->with(compact('model'));
     }
 
@@ -49,7 +49,7 @@ class ProducteurController extends Controller
 
     public function update($id, ProducteurRequest $request)
     {
-        if($this->domaine->update($id, $request)){
+        if($this->domaine->updateAfterVerif($id, $request)){
             return redirect()->route('producteur.index')->with('success', trans('message.producteur.updateOk'));
         }else{
             $message = $this->domaine->getMessage();
@@ -61,7 +61,7 @@ class ProducteurController extends Controller
 
     public function destroy($id)
     {        
-        if($this->domaine->destroy($id)){
+        if($this->domaine->destroyAfterVerif($id)){
             return redirect()->route('producteur.index')->with('success', trans('message.producteur.deleteOk'));
         }else{
             $message = $this->domaine->getMessage();

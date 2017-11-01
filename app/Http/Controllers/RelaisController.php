@@ -52,7 +52,7 @@ class RelaisController extends Controller
 
     public function update($id, RelaisRequest $request)
     {
-        if($this->domaine->update($id, $request)){
+        if($this->domaine->updateAfterVerif($id, $request)){
             return redirect()->route('relais.index')->with('success', trans('message.relais.updateOk'));
         }else{
             $message = $this->domaine->getMessage();
@@ -64,7 +64,7 @@ class RelaisController extends Controller
 
     public function destroy($id)
     {
-        if($this->domaine->destroy($id)){
+        if($this->domaine->destroyAfterVerif($id)){
             return redirect()->route('relais.index')->with('success', trans('message.relais.deleteOk'));
         }else{
             $message = $this->domaine->getMessage();

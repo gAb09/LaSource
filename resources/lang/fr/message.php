@@ -77,6 +77,7 @@ return [
     'setRangsFailed'    => 'L’ordre des modes de paiement n’a pas pu été modifié.',
     'liedToLivraison'    => 'Ce mode de paiement est proposé dans la livraison du :date',
     'confirmDelete'    => 'Êtes-vous sur de vouloir supprimer le mode de paiement “:model” ?\nTous les liens éventuels avec …… seront supprimés.',
+    'restoreOk'      => 'Le mode de paiement a bien été restauré.',
     ],
 
     'livraison' => [

@@ -112,10 +112,51 @@ class Domaine
 	}
 
 
+	/**
+	* Si l'update comporte une désactivation du model (!isset($request->is_actived),
+	* il faut d'abord vérifier que ce model n'est impliqué dans aucune livraison créée, ouverte ou clôturée.
+	* Si le model était déjà désactivé, il n'avait pas pu être associé à une livraison,
+	* donc le résultat de 'hasLiaisonDirecteWithLivraison' sera forcément false, donc la vérification sera traversée sans effet.
+	* Sinon le résultat de la vérification dépendra de la valeur de 'hasLiaisonDirecteWithLivraison'
+	* et soit renverra directement false au contrôleur soit sera traversée.
+	* 
+	* @return boolean : true si la mise à jour a été faite | false dans les autres cas.
+	**/
+	public function updateAfterVerif($id, $request){
+
+		$this->model = $this->model->withTrashed()->where('id', $id)->first();
+
+		/* Désactivation possible ? */
+		if (!isset($request->is_actived) and $this->hasLiaisonDirecteWithLivraison('Désactivation')) {
+			return false;
+		}
+
+		$this->handleRequest($request);
+		return $this->model->save();
+	}
+
+
 
 	public function destroy($id)
 	{
 		$this->model = $this->model->where('id', $id)->first();
+		return $this->model->delete();
+	}
+
+
+	public function destroyAfterVerif($id)
+	{
+		$this->model = $this->model->withTrashed()->where('id', $id)->first();
+
+		/* Suppression possible ? */		
+		if ($this->hasLiaisonDirecteWithLivraison($id, 'Suppression')) {
+			return false;
+		}
+
+		$aucun = array();
+		$this->model = $this->model->where('id', $id)->first();
+		$this->model->livraison()->sync($aucun);
+		
 		return $this->model->delete();
 	}
 
@@ -163,11 +204,14 @@ class Domaine
 	* 
 	* @return boolean  true si liaison | false sinon
 	**/
-	public function hasLiaisonDirecteWithLivraison($model_id, $action)
+	public function hasLiaisonDirecteWithLivraison($action)
 	{
-		return ($this->model);
-		$this->model = $this->model->withTrashed()->with('livraison')->where('id', $model_id)->first();
-		/* Si il existe au moins une livraison non archivée liée */
+		$this->model->load(['livraison' => function ($query) {
+			$query->whereIn('statut', ['L_CREATED', 'L_OUVERTE', 'L_CLOTURED']);
+		}])
+		;
+		return dd($this->model->livraison);
+		/* Si il existe au moins une livraison concernée */
 		if (!$this->model->livraison->isEmpty()) {
 			$this->setMessageLiaisonDirecteWithLivraison($action);
 			return true;
@@ -188,9 +232,7 @@ class Domaine
 		$model_name = $this->getDomaineName();
 		$message = "Oups !! $action impossible !<br />";
 		foreach ($this->model->livraison as $livraison) {
-			if($livraison->statut != 'L_ARCHIVED'){
 				$message .= trans("message.$model_name.liedToLivraison", ['date' => DateFr::complete($livraison->date_livraison)]).'<br />';
-			}
 		}
 		$this->message = $message;
 	}
@@ -305,6 +347,9 @@ class Domaine
 		return $item;
 	}
 
-
+	public function restore($id){
+		$this->model = $this->model->withTrashed()->findOrFail($id);
+		return $this->model->restore();
+	}
 
 }

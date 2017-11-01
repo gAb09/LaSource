@@ -26,7 +26,7 @@
                     </form>
                 </div> 
             </div>
-            @include('shared.button.delete', ['modelName' => 'modepaiement', 'buttonEtiquette' => 'modepaiement'])
+            @include('shared.button.delete', ['modelName' => 'modepaiement', 'buttonEtiquette' => 'mode de paiement'])
         </div>
     </div>
 </div>

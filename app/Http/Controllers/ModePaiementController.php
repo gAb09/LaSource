@@ -48,7 +48,7 @@ class ModePaiementController extends Controller
 
     public function update($id, ModePaiementRequest $request)
     {
-        if($this->domaine->update($id, $request)){
+        if($this->domaine->updateAfterVerif($id, $request)){
             return redirect()->route('modepaiement.index')->with('success', trans('message.modepaiement.updateOk'));
         }else{
             $message = $this->domaine->getMessage();
@@ -59,7 +59,7 @@ class ModePaiementController extends Controller
 
     public function destroy($id)
     {
-        if($this->domaine->destroy($id)){
+        if($this->domaine->destroyAfterVerif($id)){
             return redirect()->route('modepaiement.index')->with('success', trans('message.modepaiement.deleteOk'));
         }else{
             $message = $this->domaine->getMessage();

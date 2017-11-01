@@ -100,6 +100,7 @@ Route::group(['middleware' => 'auth'], function () {
 // MODE DE PAIEMENT...
 	Route::get('modepaiement/getdeleted', ['as' => 'modepaiement.getdeleted', 'uses' => 'ModePaiementController@getDeleted']);
 	Route::get('setrangs/modepaiement', ['as' => 'media.set_rang', 'uses' => 'ModePaiementController@setRangs']);
+	Route::get('restore/modepaiement/{id}', ['as' => 'modepaiement.restore', 'uses' => 'ModePaiementController@restore']);
 	Route::resource('modepaiement', 'ModePaiementController');
 
 
@@ -119,6 +120,7 @@ Route::group(['middleware' => 'auth'], function () {
 // PRODUCTEUR...
 	Route::get('producteur/getdeleted', ['as' => 'producteur.getdeleted', 'uses' => 'ProducteurController@getDeleted']);
 	Route::get('setrangs/producteur', ['as' => 'media.set_rang', 'uses' => 'ProducteurController@setRangs']);
+	Route::get('restore/producteur/{id}', ['as' => 'producteur.restore', 'uses' => 'ProducteurController@restore']);
 	Route::resource('producteur', 'ProducteurController');
 
 

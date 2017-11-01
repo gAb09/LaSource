@@ -33,9 +33,11 @@
 
 		<div class="footer flexcontainer">
 			@if(!isset($trashed))
-			@include('layouts.button.supp', ['model' => 'producteur', 'model_id' => $model->id, 'text_confirm' => trans('message.producteur.confirmDelete', ['model' => "$model->nompourpaniers"]) ])
+				@include('layouts.button.supp', ['model' => 'producteur', 'model_id' => $model->id, 'text_confirm' => trans('message.producteur.confirmDelete', ['model' => "$model->nompourpaniers"]) ])
+				@include('layouts.button.edite', ['model' => 'producteur', 'model_id' => $model->id])
+			@else
+				@include('layouts.button.restore', ['buttonEtiquette' => 'producteur', 'model' => 'producteur', 'model_id' => $model->id])
 			@endif
-			@include('layouts.button.edite', ['model' => 'producteur', 'model_id' => $model->id])
 		</div>
 
 	</div>

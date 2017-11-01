@@ -1,20 +1,47 @@
 @extends('layouts.app')
 
+
+@section('modemploi')
+	@if($mode == 'trashed')
+		<p class ="modemploi">
+			Un <strong>double-clic</strong> sur un modepaiement le sortira de la corbeille et permettra sa modification.
+		</p>
+	@else
+	@endif
+@stop
+
+
 @section('titre')
 @parent
+	@if($mode == 'trashed')
+		<h1 class="titrepage">{{ trans('titrepage.modepaiement.trashed') }}</h1>
+	@else
+		<h1 class="titrepage">{{ trans('titrepage.modepaiement.index') }}</h1>
+	@endif
 @stop
 
 
 
 @section('topcontent1')
-<h1 class="titrepage">{{ trans('titrepage.modepaiement.index') }}</h1>
-
-<a href="{{ route('modepaiement.create') }}" class="btn-xs btn-primary"> <i class="fa fa-btn fa-trash-o"></i>Créer un mode de paiement</a>
+	@if($mode == 'trashed')
+	@else
+		<a href="{{ route('modepaiement.create') }}" class="btn-xs btn-primary">Créer un mode de paiement</a>
+	@endif
 @stop
 
 
 @section('content')
-	@include('modepaiement.indexcontent')
+<div id="modepaiements_index" class="offset3 span11 flexcontainer">
+	@forelse($models as $model)
+		@include('modepaiement.show')
+	@empty 
+		@if($mode == 'trashed')
+			<h3>Aucun mode de paiement supprimé
+				@include('shared.button.index', ['modelName' => 'modepaiement', 'buttonEtiquette' => 'Retour à la liste'])
+			</h3>
+		@endif
+	@endforelse
+</div>
 @stop
 
 
@@ -22,3 +49,4 @@
 @parent
 <script src="/js/modepaiement.js"></script>
 @stop
+

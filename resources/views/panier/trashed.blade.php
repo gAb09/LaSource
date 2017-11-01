@@ -19,5 +19,5 @@ Un <strong>double-clic</strong> sur un panier le sortira de la corbeille et perm
 
 
 @section('content')
-	@include('panier.indexcontent')
+	@include('panier.show')
 @stop

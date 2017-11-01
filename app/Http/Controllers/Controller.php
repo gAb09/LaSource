@@ -24,7 +24,7 @@ class Controller extends BaseController
     	$sens_tri = (null !== $this->request->get('sens_tri'))? $this->request->get('sens_tri') : 'asc';
 
         $models = $this->domaine->all($critere_tri, $sens_tri);
-        return view($this->domaine_name.'.index')->with(compact('models'));
+        return view($this->domaine_name.'.index')->with(compact('models'))->with('mode', 'index');
     }
 
 
@@ -38,14 +38,14 @@ class Controller extends BaseController
 
     /**
     * Récupération des modèles soft deleted. On utilise la même vue que pour l'index.
-    * C'est la variable $trashed qui permettra à la vue de se configurer.
+    * C'est la variable $mode qui permettra à la vue de se configurer.
     * 
-    * @return string
+    * @return view
     **/
     public function getDeleted()
     {
         $models = $this->domaine->getDeleted();
-        return view($this->domaine->getDomaineName().'.trashed')->with(['models' => $models, 'trashed' => 'trashed']);
+        return view($this->domaine->getDomaineName().'.index')->with(['models' => $models, 'mode' => 'trashed']);
     }
 
 
@@ -70,6 +70,16 @@ class Controller extends BaseController
         $url = \Session::get('url_initiale', \Session::get('_previous.url'));
         \Session::forget('url_initiale');
         return $url;
+    }
+
+
+    public function restore($id){
+        if($this->domaine->restore($id)){
+            return redirect()->route($this->domaine->getDomaineName().'.index')->with('success', trans('message.'.$this->domaine->getDomaineName().'.restoreOk'));
+        }else{
+            $message = $this->domaine->getMessage();
+            return redirect()->back()->with('status', $message);
+        }
     }
 
 
