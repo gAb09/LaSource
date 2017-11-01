@@ -3,9 +3,6 @@
 
 @section('modemploi')
 	@if($mode == 'trashed')
-		<p class ="modemploi">
-			Un <strong>double-clic</strong> sur un modepaiement le sortira de la corbeille et permettra sa modification.
-		</p>
 	@else
 	@endif
 @stop
@@ -21,11 +18,14 @@
 @stop
 
 
-
 @section('topcontent1')
 	@if($mode == 'trashed')
+		<h1 class="titrepage">{{ trans('titrepage.modepaiement.trashed') }}</h1>
 	@else
-		<a href="{{ route('modepaiement.create') }}" class="btn-xs btn-primary">Créer un mode de paiement</a>
+		<h1 class="titrepage">{{ trans('titrepage.modepaiement.index') }}</h1>
+		<a href="{{ route('modepaiement.create') }}" class="btn-xs btn-primary">
+			Créer un mode de paiement
+		</a>
 	@endif
 @stop
 
@@ -49,4 +49,3 @@
 @parent
 <script src="/js/modepaiement.js"></script>
 @stop
-

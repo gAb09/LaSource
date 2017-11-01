@@ -1,15 +1,32 @@
 @extends('layouts.app')
 
-@section('titre')
-@parent
+
+@section('modemploi')
+	@if($mode == 'trashed')
+	@else
+	@endif
 @stop
 
 
+@section('titre')
+@parent
+	@if($mode == 'trashed')
+		<h1 class="titrepage">{{ trans('titrepage.panier.trashed') }}</h1>
+	@else
+		<h1 class="titrepage">{{ trans('titrepage.panier.index') }}</h1>
+	@endif
+@stop
+
 
 @section('topcontent1')
-<h1 class="titrepage">{{ trans('titrepage.panier.index') }}</h1>
-
-<a href="{{ route('panier.create') }}" class="btn-xs btn-primary"> <i class="fa fa-btn fa-trash-o"></i>Créer un panier</a>
+	@if($mode == 'trashed')
+		<h1 class="titrepage">{{ trans('titrepage.panier.trashed') }}</h1>
+	@else
+		<h1 class="titrepage">{{ trans('titrepage.modepaiement.index') }}</h1>
+		<a href="{{ route('panier.create') }}" class="btn-xs btn-primary">
+			Créer un panier
+		</a>
+	@endif
 @stop
 
 
@@ -18,12 +35,13 @@
 	@forelse($models as $model)
 		@include('panier.show')
 	@empty 
-		<h3>Aucun panier supprimé
-			@include('shared.button.index', ['modelName' => 'panier', 'buttonEtiquette' => 'Retour à la liste'])
-		</h3>
+		@if($mode == 'trashed')
+			<h3>Aucun panier supprimé
+				@include('shared.button.index', ['modelName' => 'panier', 'buttonEtiquette' => 'Retour à la liste'])
+			</h3>
+		@endif
 	@endforelse
 </div>
-
 @stop
 
 

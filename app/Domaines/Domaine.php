@@ -119,6 +119,8 @@ class Domaine
 	* donc le résultat de 'hasLiaisonDirecteWithLivraison' sera forcément false, donc la vérification sera traversée sans effet.
 	* Sinon le résultat de la vérification dépendra de la valeur de 'hasLiaisonDirecteWithLivraison'
 	* et soit renverra directement false au contrôleur soit sera traversée.
+	* La relation est dite directe si l'entité est liée à l'entité livraison via une table pivot.
+	* La relation est dite indirecte si l'entité est liée à l'entité livraison via une foreign key dans la table pivot 'livraison/panier'.
 	* 
 	* @return boolean : true si la mise à jour a été faite | false dans les autres cas.
 	**/
@@ -126,8 +128,11 @@ class Domaine
 
 		$this->model = $this->model->withTrashed()->where('id', $id)->first();
 
+		/* Vérification directe ou indirecte ? */
+		$relation_type = $this->getVerificationType();
+
 		/* Désactivation possible ? */
-		if (!isset($request->is_actived) and $this->hasLiaisonDirecteWithLivraison('Désactivation')) {
+		if (!isset($request->is_actived) and $this->{$relation_type}('Désactivation')) {
 			return false;
 		}
 
@@ -135,6 +140,20 @@ class Domaine
 		return $this->model->save();
 	}
 
+	/**
+	 * Selon le modèle concerné par une supression ou une désactivation,
+	 * renvoyer le nom de la méthode à utiliser pour la détection
+	 * de liaisons éventuelles avec une ou plusieurs livraisons.
+	 *
+	 * @return string
+	 **/
+	private function getVerificationType(){
+		if($this->getDomaineName() == 'producteur'){
+			return 'hasLiaisonIndirecteWithLivraison';
+		}else{
+			return 'hasLiaisonDirecteWithLivraison';
+		}
+	}
 
 
 	public function destroy($id)
@@ -148,15 +167,14 @@ class Domaine
 	{
 		$this->model = $this->model->withTrashed()->where('id', $id)->first();
 
-		/* Suppression possible ? */		
-		if ($this->hasLiaisonDirecteWithLivraison($id, 'Suppression')) {
+		/* Vérification directe ou indirecte ? */
+		$relation_type = $this->getVerificationType();
+
+		/* Suppression possible ? */
+		if ($this->{$relation_type}('Suppression')) {
 			return false;
 		}
 
-		$aucun = array();
-		$this->model = $this->model->where('id', $id)->first();
-		$this->model->livraison()->sync($aucun);
-		
 		return $this->model->delete();
 	}
 
@@ -210,7 +228,7 @@ class Domaine
 			$query->whereIn('statut', ['L_CREATED', 'L_OUVERTE', 'L_CLOTURED']);
 		}])
 		;
-		return dd($this->model->livraison);
+																								// return dd($this->model->livraison);
 		/* Si il existe au moins une livraison concernée */
 		if (!$this->model->livraison->isEmpty()) {
 			$this->setMessageLiaisonDirecteWithLivraison($action);
@@ -244,11 +262,10 @@ class Domaine
 	* 
 	* @return false|string
 	**/
-	public function checkIfLiaisonIndirecteWithLivraison($model_id, $action)
+	public function hasLiaisonIndirecteWithLivraison($action)
 	{
 		$model_name = $this->getDomaineName();
-		$occurence = \DB::table('livraison_panier')->where($model_name, $model_id)->get();
-		// return dd($occurence);
+		$occurence = \DB::table('livraison_panier')->where($model_name, $this->model->id)->get();
 
 		if (!empty($occurence)) {
 			$this->message = $this->setMessageLiaisonIndirecteWithLivraison($action, $occurence);

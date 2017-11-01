@@ -28,7 +28,7 @@ class ModePaiementDomaine extends Domaine
 	}
 
 
-	public function handleRequest($request){
+	protected function handleRequest($request){
 		$this->model->nom = $request->nom;
 		$this->model->is_actived = (isset($request->is_actived)?1:0);
 		$this->model->remarques = $request->remarques;

@@ -18,19 +18,7 @@ class ProducteurDomaine extends Domaine
 		return $this->model->save();
 	}
 
-	public function update($id, $request){
-
-		if ($request->input('is_actived') == 0 and $this->checkIfLiaisonIndirecteWithLivraison($id, 'Désactivation')) {
-			return false;
-		}
-
-		$this->model = Producteur::withTrashed()->where('id', $id)->first();
-		$this->handleRequest($request);
-
-		return $this->model->save();
-	}
-
-	private function handleRequest($request){
+	protected function handleRequest($request){
 		$this->model->exploitation = $request->exploitation;
 		$this->model->nom = $request->nom;
 		$this->model->prenom = $request->prenom;
@@ -52,20 +40,6 @@ class ProducteurDomaine extends Domaine
 		$this->model->rang = ($request->rang)? $request->rang :$new_rang ;
 		$this->model->restore();
 	}
-
-
-	public function destroy($id)
-	{
-		if ($this->checkIfLiaisonIndirecteWithLivraison($id, 'Suppression')) {
-			return false;
-		}
-		$aucun = array();
-		$this->model = $this->model->where('id', $id)->first();
-		$this->model->panier()->sync($aucun);
-		
-		return $this->model->delete();
-	}
-
 
 
 

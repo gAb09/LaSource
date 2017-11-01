@@ -30,7 +30,7 @@
 	</div>
 
 	<div class="footer flexcontainer">
-		@if(!isset($trashed))
+		@if($mode == 'index')
 			@include('layouts.button.supp', ['model' => 'panier', 'model_id' => $model->id, 'text_confirm' => trans('message.panier.confirmDelete', ['model' => "$model->nom_court"]) ])
 			@include('layouts.button.edite', ['model' => 'panier', 'model_id' => $model->id])
 		@else

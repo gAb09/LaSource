@@ -20,7 +20,7 @@ class PanierDomaine extends Domaine
 	}
 
 
-	private function handleRequest($request){
+	protected function handleRequest($request){
 		$this->model->nom = $request->nom;
 		$this->model->nom_court = $request->nom_court;
 		$this->model->famille = $request->famille;

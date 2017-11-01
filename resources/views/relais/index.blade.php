@@ -1,20 +1,47 @@
 @extends('layouts.app')
 
-@section('titre')
-@parent
+
+@section('modemploi')
+	@if($mode == 'trashed')
+	@else
+	@endif
 @stop
 
 
+@section('titre')
+@parent
+	@if($mode == 'trashed')
+		<h1 class="titrepage">{{ trans('titrepage.relais.trashed') }}</h1>
+	@else
+		<h1 class="titrepage">{{ trans('titrepage.relais.index') }}</h1>
+	@endif
+@stop
+
 
 @section('topcontent1')
-<h1 class="titrepage">{{ trans('titrepage.relais.index') }}</h1>
-
-<a href="{{ route('relais.create') }}" class="btn btn-sm btn-primary"> <i class="fa fa-btn fa-trash-o"></i>Créer un relais</a>
+	@if($mode == 'trashed')
+		<h1 class="titrepage">{{ trans('titrepage.relais.trashed') }}</h1>
+	@else
+		<h1 class="titrepage">{{ trans('titrepage.relais.index') }}</h1>
+		<a href="{{ route('relais.create') }}" class="btn-xs btn-primary">
+			Créer un mode de paiement
+		</a>
+	@endif
 @stop
 
 
 @section('content')
-	@include('relais.indexcontent')
+<div id="relaiss_index" class="offset3 span11 flexcontainer">
+	@forelse($models as $model)
+		@include('relais.show')
+	@empty 
+		@if($mode == 'trashed')
+			<h3>Aucun relais supprimé
+				@include('shared.button.index', ['modelName' => 'relais', 'buttonEtiquette' => 'Retour à la liste'])
+			</h3>
+		@endif
+	@endforelse
+</div>
 @stop
 
 

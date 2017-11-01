@@ -108,6 +108,7 @@ Route::group(['middleware' => 'auth'], function () {
 // RELAIS...
 	Route::get('relais/getdeleted', ['as' => 'relais.getdeleted', 'uses' => 'RelaisController@getDeleted']);
 	Route::get('setrangs/relais', ['as' => 'media.set_rang', 'uses' => 'RelaisController@setRangs']);
+	Route::get('restore/relais/{id}', ['as' => 'relais.restore', 'uses' => 'RelaisController@restore']);
 	Route::resource('relais', 'RelaisController');
 
 	// Indisponibilité...
@@ -127,6 +128,7 @@ Route::group(['middleware' => 'auth'], function () {
 // PANIER...
 	Route::get('panier/getdeleted', ['as' => 'panier.getdeleted', 'uses' => 'PanierController@getDeleted']);
 	Route::get('setrangs/panier', ['as' => 'media.set_rang', 'uses' => 'PanierController@setRangs']);
+	Route::get('restore/panier/{id}', ['as' => 'panier.restore', 'uses' => 'PanierController@restore']);
 	Route::resource('panier', 'PanierController');
 
 

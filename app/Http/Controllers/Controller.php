@@ -24,7 +24,8 @@ class Controller extends BaseController
     	$sens_tri = (null !== $this->request->get('sens_tri'))? $this->request->get('sens_tri') : 'asc';
 
         $models = $this->domaine->all($critere_tri, $sens_tri);
-        return view($this->domaine_name.'.index')->with(compact('models'))->with('mode', 'index');
+        $mode = 'index';
+        return view($this->domaine_name.'.index')->with(compact('models', 'mode'));
     }
 
 

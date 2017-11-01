@@ -40,7 +40,7 @@ class RelaisDomaine extends Domaine
 		return $this->model->save();
 	}
 
-	private function handleRequest($request){
+	protected function handleRequest($request){
 		$this->model->nom = $request->nom;
 		$this->model->retrait = $request->retrait;
 		$this->model->ad1 = $request->ad1;

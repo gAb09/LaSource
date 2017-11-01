@@ -36,6 +36,7 @@ return [
     'setRangsFailed'    => 'L’ordre des producteurs n’a pas pu été modifié.',
     'liedToLivraison'    => 'Ce producteur est fournisseur pour la livraison du :date',
     'confirmDelete'    => 'Êtes-vous sur de vouloir supprimer le producteur “:model” ?\nTous les liens éventuels avec des paniers seront supprimés.',
+    'restoreOk'      => 'Le producteur a bien été restauré.',
     ],
 
     'relais' => [
@@ -51,6 +52,7 @@ return [
     'confirmDelete'    => 'Êtes-vous sur de vouloir supprimer le relais “:model” ?\nTous les liens éventuels avec …… seront supprimés.',
     'reattachOk'    => 'Le relais vient d’être lié à nouveau.',
     'reattachFailed'    => 'Problème. Le relais n’a pas pu être lié…',
+    'restoreOk'      => 'Le relais a bien été restauré.',
     ],
 
     'panier' => [
@@ -64,6 +66,7 @@ return [
     'setRangsFailed'    => 'L’ordre des paniers n’a pas pu été modifié.',
     'liedToLivraison'    => 'Ce panier est proposé dans la livraison du :date',
     'confirmDelete'    => 'Êtes-vous sur de vouloir supprimer le panier “:model” ?\nTous les liens éventuels avec des producteurs seront supprimés.',
+    'restoreOk'      => 'Le panier a bien été restauré.',
     ],
 
     'modepaiement' => [
