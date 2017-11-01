@@ -30,7 +30,7 @@
 		@if(!isset($ligne->prix_livraison))
 			<span class="is_error_txt">OUPSss</span>
 		@else
-			{{ $ligne->prix_livraison }}
+			@nbreFR($ligne->prix_livraison)
 		@endif
 		</td>
 
@@ -39,15 +39,15 @@
 		</td>
 
 		<td>
-			{{ $ligne->montant_ligne }}
+			@nbreFR($ligne->montant_ligne)
 		</td>
 
 		<!--td>
-			Relais : {{ $commande->relais->nom }}
+			Relais : {{-- $commande->relais->nom --}}
 		</td>
 
 		<td>
-			Paiement par {{ $commande->modepaiement->nom }}
+			Paiement par {{-- $commande->modepaiement->nom --}}
 		</td-->
 
 		@endif

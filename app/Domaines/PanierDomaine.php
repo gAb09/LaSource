@@ -21,7 +21,7 @@ class PanierDomaine extends Domaine
 
 	public function update($id, $request){
 
-		if ($request->input('is_actived') == 0 and $this->checkIfLiaisonDirecteWithLivraison($id, 'Désactivation')) {
+		if ($request->input('is_actived') == 0 and $this->hasLiaisonDirecteWithLivraison($id, 'Désactivation')) {
 			return false;
 		}
 
@@ -49,7 +49,7 @@ class PanierDomaine extends Domaine
 
 	public function destroy($id)
 	{
-		if ($this->checkIfLiaisonDirecteWithLivraison($id, 'Suppression')) {
+		if ($this->hasLiaisonDirecteWithLivraison($id, 'Suppression')) {
 			return false;
 		}
 

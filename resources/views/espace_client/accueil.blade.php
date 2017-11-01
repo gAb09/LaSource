@@ -56,11 +56,9 @@
                     
 
                     <div class="une_livraison_ouverte">
-                        @forelse($livraisons as $livraison)
+                        @foreach($livraisons as $livraison)
                             @include('espace_client.une_livraison_ouverte')
-                        @empty
-                            À ce jour, pas de livraison programmée
-                        @endforelse
+                        @endforeach
                     </div>
                     <div class="commandes">
                         @if($commandes->isEmpty())

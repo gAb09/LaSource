@@ -38,7 +38,7 @@
 	</div>
 	</div>
 		<p  name="{{$livraison->id}}_total_livraison" class="total_livraison">
-			Aucune commande
+			Aucun panier commandé
 		</p>
 @else
 	<p class="is_error_txt">

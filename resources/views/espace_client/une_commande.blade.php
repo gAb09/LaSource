@@ -1,4 +1,4 @@
-	<h4 class="titre">Commande du @date_complete($commande->Livraison->date_livraison) <small>(numéro {{ $commande->numero }})</small></h4>
+	<h4 class="titre">Commande sur la livraison du @date_complete($commande->Livraison->date_livraison) <small>(numéro {{ $commande->numero }})</small></h4>
 	<p class="statut">{{ trans('constante.'.$commande->statut) }}</p>
 
 	
@@ -18,7 +18,7 @@
 					TOTAL :
 				</td>
 				<td>
-					{{ $commande->montant_total }}
+					@prixFR($commande->montant_total)
 				</td>
 			</tr>
 		</tbody>

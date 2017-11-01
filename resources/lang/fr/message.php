@@ -99,7 +99,8 @@ return [
 
     'commande' => [
     'encours'              => '{0} - Vous n’avez aucune commande en cours. |{1} - Vous avez une commande en cours. | [2, Inf] - Vous avez :count commandes en cours.',
-    'storeOk'       => 'Votre commande a bien été prise en compte. | [2, Inf] Vos :count commandes ont bien été prises en compte',
+    'storeOk'       => '{1} Votre commande a bien été prise en compte. | [2, Inf] Vos :count commandes ont bien été prises en compte.',
+    'storeNul'       => 'Aucune commande n’a été validée (toutes les quantités étaient nulles).',
     'storefailed'       => 'Problème. Votre demande n’a pas pu être prise en compte…',
     ],
 

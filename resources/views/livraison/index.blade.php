@@ -28,13 +28,13 @@
 			N°
 		</th>
 		<th>
-			Date de clôture des commandes
+			Date de livraison
 		</th>
 		<th>
 			Date limite de paiement
 		</th>
 		<th>
-			Date de livraison
+			Date de clôture des commandes
 		</th>
 		<th>
 			Statut

@@ -5,14 +5,14 @@ onDblClick="javascript:document.location.href='{{ route('livraison.edit', $model
 >
 
 	<!-- id -->
-	<td>
+	<td style="width:10%">
 		{{ $model->id }}
-		<span class="datecreation">{{ $model->date_creation_courte }}</span>
+		<br /><span class="datecreation">{{ $model->date_creation_courte }}</span>
 	</td>
 
-	<!-- date_cloture -->
-	<td>
-		@date_complete($model->date_cloture)
+	<!-- date_livraison -->
+	<td style="font-weight:900">
+		@date_complete($model->date_livraison)
 	</td>
 
 	<!-- date_paiement -->
@@ -20,9 +20,9 @@ onDblClick="javascript:document.location.href='{{ route('livraison.edit', $model
 		@date_complete($model->date_paiement)
 	</td>
 
-	<!-- date_livraison -->
+	<!-- date_cloture -->
 	<td>
-		@date_complete($model->date_livraison)
+		@date_complete($model->date_cloture)
 	</td>
 
 	<!-- state -->

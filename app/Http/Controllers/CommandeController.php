@@ -39,6 +39,8 @@ class CommandeController extends Controller
             }
             $message = trans('message.commande.storefailed').$e_message;
             return redirect()->back()->with('status', $message);
+        }else if($result == 0) {
+            return redirect()->back()->with('status', trans('message.commande.storeNul'));
         }else{
             return redirect()->back()->with('success', trans_choice('message.commande.storeOk', $result, ['count' => $result]));
         }

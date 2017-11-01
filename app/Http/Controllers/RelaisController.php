@@ -45,7 +45,7 @@ class RelaisController extends Controller
 
     public function edit($id)
     {
-    	$model = $this->domaine->findFirst($id);
+    	$model = $this->domaine->findFirstWithTrashed($id);
     	return view('relais.edit')->with(compact('model'));
     }
 

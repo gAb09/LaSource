@@ -106,6 +106,12 @@ class Domaine
 	}
 
 
+	public function findFirstWithTrashed($critere, $colonne = 'id')
+	{
+		return $this->model->withtrashed()->where($colonne, $critere)->first();
+	}
+
+
 
 	public function destroy($id)
 	{
@@ -157,8 +163,9 @@ class Domaine
 	* 
 	* @return boolean  true si liaison | false sinon
 	**/
-	public function checkIfLiaisonDirecteWithLivraison($model_id, $action)
+	public function hasLiaisonDirecteWithLivraison($model_id, $action)
 	{
+		return ($this->model);
 		$this->model = $this->model->withTrashed()->with('livraison')->where('id', $model_id)->first();
 		/* Si il existe au moins une livraison non archivée liée */
 		if (!$this->model->livraison->isEmpty()) {
@@ -181,7 +188,7 @@ class Domaine
 		$model_name = $this->getDomaineName();
 		$message = "Oups !! $action impossible !<br />";
 		foreach ($this->model->livraison as $livraison) {
-			if(!$livraison->statut == 'L_ARCHIVED'){
+			if($livraison->statut != 'L_ARCHIVED'){
 				$message .= trans("message.$model_name.liedToLivraison", ['date' => DateFr::complete($livraison->date_livraison)]).'<br />';
 			}
 		}

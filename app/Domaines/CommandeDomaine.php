@@ -157,7 +157,7 @@ class CommandeDomaine extends Domaine
 	{
 		$count = (int) 0;
 		foreach($commandes as $key => $value){
-        	if (isset($value['paniers'])) { // on ne traite forcément pas une commande sans panier commandé…
+        	if (isset($value['paniers'])) { // Forcément, on ne traite pas une commande sans panier commandé…
         		$this->model = $this->model->create();
         		// return dd($this->model);
         		// $this->model->id = \DB::table('commandes')->max('id')+1;

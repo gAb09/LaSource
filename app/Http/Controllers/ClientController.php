@@ -27,7 +27,7 @@ class ClientController extends Controller
 
     public function index()
     {
-        $models = $this->clientD->index();
+        $models = $this->domaine->index();
         // return dd($models);
         return view('client.index')->with(compact('models'));
     }
