@@ -53,6 +53,7 @@
 		@if($mode == 'index')
 			@include('layouts.button.supp', ['model' => 'relais', 'model_id' => $model->id, 'text_confirm' => trans('message.relais.confirmDelete', ['model' => "$model->nom"]) ])
 			@include('layouts.button.edite', ['model' => 'relais', 'model_id' => $model->id])
+			@include('layouts.button.index.activation', ['model_class' => 'relais', 'is_actived' => $model->is_actived, 'id' => $model->id])
 			@include('layouts.button.addIndisponibilite', ['model_classe' => 'Relais', 'model_id' => $model->id])
 		@else
 			@include('layouts.button.restore', ['buttonEtiquette' => 'relais', 'model' => 'relais', 'model_id' => $model->id])

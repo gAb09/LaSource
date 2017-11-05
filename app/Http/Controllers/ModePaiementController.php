@@ -48,7 +48,7 @@ class ModePaiementController extends Controller
 
     public function update($id, ModePaiementRequest $request)
     {
-        if($this->domaine->updateAfterVerif($id, $request)){
+        if($this->domaine->update($id, $request)){
             return redirect()->route('modepaiement.index')->with('success', trans('message.modepaiement.updateOk'));
         }else{
             $message = $this->domaine->getMessage();

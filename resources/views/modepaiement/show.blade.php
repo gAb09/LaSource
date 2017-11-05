@@ -23,6 +23,7 @@
 		@if($mode == 'index')
 			@include('layouts.button.supp', ['model' => 'modepaiement', 'model_id' => $model->id, 'text_confirm' => trans('message.modepaiement.confirmDelete', ['model' => "$model->nom"]) ])
 			@include('layouts.button.edite', ['model' => 'modepaiement', 'model_id' => $model->id])
+			@include('layouts.button.index.activation', ['model_class' => 'modepaiement', 'is_actived' => $model->is_actived, 'id' => $model->id])
 		@else
 			@include('layouts.button.restore', ['buttonEtiquette' => 'mode de paiement', 'model' => 'modepaiement', 'model_id' => $model->id])
 		@endif

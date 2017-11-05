@@ -52,7 +52,7 @@ class RelaisController extends Controller
 
     public function update($id, RelaisRequest $request)
     {
-        if($this->domaine->updateAfterVerif($id, $request)){
+        if($this->domaine->update($id, $request)){
             return redirect()->route('relais.index')->with('success', trans('message.relais.updateOk'));
         }else{
             $message = $this->domaine->getMessage();

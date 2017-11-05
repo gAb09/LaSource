@@ -8,65 +8,66 @@ use App\Domaines\Domaine;
 
 class RelaisDomaine extends Domaine
 {
-	protected $model;
-	protected $liv_concerned;
+    use ActivableDomaineTrait;
 
-	public function __construct(){
-		$this->model = new Relais;
-	}
+    protected $model;
+    protected $liv_concerned;
 
-
-
-	public function index(){
-		return $models = $this->model->with('indisponibilites')->get();;
-	}
+    public function __construct(){
+      $this->model = new Relais;
+  }
 
 
-	public function store($request){
-		$this->handleRequest($request);
 
-		return $this->model->save();
-	}
+  public function index(){
+      return $models = $this->model->with('indisponibilites')->get();;
+  }
 
 
-	public function update($id, $request){
-		if ($request->input('is_actived') == 0 and $this->hasLiaisonDirecteWithLivraison($id, 'Désactivation')) {
-			return false;
-		}
+  public function store($request){
+      $this->handleRequest($request);
 
-		$this->model = Relais::withTrashed()->where('id', $id)->first();
-		$this->handleRequest($request);
+      return $this->model->save();
+  }
 
-		return $this->model->save();
-	}
 
-	protected function handleRequest($request){
-		$this->model->nom = $request->nom;
-		$this->model->retrait = $request->retrait;
-		$this->model->ad1 = $request->ad1;
-		$this->model->ad2 = $request->ad2;
-		$this->model->cp = $request->cp;
-		$this->model->ville = $request->ville;
-		$this->model->tel = $this->model->cleanTel($request->tel);
-		$this->model->email = $request->email;
-		$this->model->ouvertures = $request->ouvertures;
-		$this->model->remarques = $request->remarques;
-		$this->model->is_actived = (isset($request->is_actived)?1:0);
-		$new_rang = $this->model->max('rang')+1;
-		$this->model->rang = ($request->rang)? $request->rang :$new_rang ;
-		$this->model->restore();
-	}
+  public function update($id, $request){
+      if ($request->input('is_actived') == 0 and $this->hasLiaisonDirecteWithLivraison($id, 'Désactivation')) {
+       return false;
+   }
 
-	public function destroy($id)
-	{
-		if ($this->hasLiaisonDirecteWithLivraison($id, 'Suppression')) {
-			return false;
-		}
+   $this->model = Relais::withTrashed()->where('id', $id)->first();
+   $this->handleRequest($request);
 
-		$this->model = $this->model->where('id', $id)->first();
-		
-		return $this->model->delete();
-	}
+   return $this->model->save();
+}
+
+protected function handleRequest($request){
+  $this->model->nom = $request->nom;
+  $this->model->retrait = $request->retrait;
+  $this->model->ad1 = $request->ad1;
+  $this->model->ad2 = $request->ad2;
+  $this->model->cp = $request->cp;
+  $this->model->ville = $request->ville;
+  $this->model->tel = $this->model->cleanTel($request->tel);
+  $this->model->email = $request->email;
+  $this->model->ouvertures = $request->ouvertures;
+  $this->model->remarques = $request->remarques;
+  $new_rang = $this->model->max('rang')+1;
+  $this->model->rang = ($request->rang)? $request->rang :$new_rang ;
+  $this->model->restore();
+}
+
+public function destroy($id)
+{
+  if ($this->hasLiaisonDirecteWithLivraison($id, 'Suppression')) {
+   return false;
+}
+
+$this->model = $this->model->where('id', $id)->first();
+
+return $this->model->delete();
+}
 
     /**
     * Post-traitement du formulaire de gestion des livraisons concernées.
@@ -138,11 +139,11 @@ class RelaisDomaine extends Domaine
  *
  * @return collection of App\Models\Relais
  **/
-    public function getForThisClient($id)
-    {
-        $models = $this->allActived('id');
-        return $models;
-    }
+public function getForThisClient($id)
+{
+    $models = $this->allActived('id');
+    return $models;
+}
 
 
 

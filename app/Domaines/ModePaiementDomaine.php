@@ -8,6 +8,8 @@ use App\Domaines\Domaine;
 
 class ModePaiementDomaine extends Domaine
 {
+    use ActivableDomaineTrait;
+
 	public function __construct(){
 		$this->model = new ModePaiement;
 	}
@@ -30,7 +32,6 @@ class ModePaiementDomaine extends Domaine
 
 	protected function handleRequest($request){
 		$this->model->nom = $request->nom;
-		$this->model->is_actived = (isset($request->is_actived)?1:0);
 		$this->model->remarques = $request->remarques;
 		$this->model->rang = ($request->rang)? $request->rang : $this->model->max('rang')+1 ;
 	}

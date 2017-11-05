@@ -29,7 +29,6 @@ class PanierDomaine extends Domaine
 		$this->model->type = $request->type;
 		$this->model->idee = $request->idee;
 		$this->model->prix_base = $request->prix_base;
-		$this->model->is_actived = (isset($request->is_actived)?1:0);
 		$this->model->remarques = $request->remarques;
 		$new_rang = $this->model->max('rang')+1;
 		$this->model->rang = ($request->rang)? $request->rang :$new_rang ;

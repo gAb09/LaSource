@@ -37,7 +37,6 @@ class ProducteurDomaine extends Domaine
 		$this->model->email = $request->email;
 		$this->model->nompourpaniers = $request->nompourpaniers;
 		$this->model->remarques = $request->remarques;
-		$this->model->is_actived = (isset($request->is_actived)?1:0);
 		$new_rang = $this->model->max('rang')+1;
 		$this->model->rang = ($request->rang)? $request->rang :$new_rang ;
 		$this->model->restore();
