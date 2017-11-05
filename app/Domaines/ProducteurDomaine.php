@@ -8,6 +8,8 @@ use App\Domaines\Domaine;
 
 class ProducteurDomaine extends Domaine
 {
+	use ActivableDomaineTrait;
+
 	public function __construct(){
 		$this->model = new Producteur;
 	}

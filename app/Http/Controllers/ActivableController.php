@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Domaines\PanierDomaine;
+use App\Domaines\ProducteurDomaine;
 
 class ActivableController extends Controller
 {
@@ -17,8 +18,8 @@ class ActivableController extends Controller
      **/
     function active($model_class, $id)
     {
-    	$domaine_class = ucfirst($model_class).'Domaine';
-    	$domaine = new PanierDomaine;
+        $domaine_class = 'App\\Domaines\\'.ucfirst($model_class).'Domaine';
+    	$domaine = new $domaine_class;
         return $domaine->active($id);
     }
 
@@ -31,8 +32,8 @@ class ActivableController extends Controller
      **/
     function desactive($model_class, $id)
     {
-    	$domaine_class = ucfirst($model_class).'Domaine';
-    	$domaine = new PanierDomaine;
+    	$domaine_class = 'App\\Domaines\\'.ucfirst($model_class).'Domaine';
+    	$domaine = new $domaine_class;
         return $domaine->desactive($id);
     }
 }

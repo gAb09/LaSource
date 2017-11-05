@@ -43,3 +43,8 @@
 	@endforelse
 </div>
 @stop
+
+@section('script')
+@parent
+<script src="/js/producteur.js"></script>
+@stop

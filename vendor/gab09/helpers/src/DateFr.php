@@ -48,6 +48,10 @@ class DateFr {
 	** 2 séparateurs = nbspace 
 	*/
 	public static function complete(Carbon $date){
+		if(!($date instanceof Carbon)){
+			throw new Exception("La date n'est pas un objet Carbon", 1);
+			
+		}
 		return $date->formatlocalized('%A&nbsp;%e&nbsp;%B&nbsp;%Y');
 	}
 

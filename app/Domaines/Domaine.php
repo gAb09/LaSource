@@ -4,6 +4,7 @@ namespace App\Domaines;
 
 use App\Models\Livraison;
 use Gab\Helpers\DateFr;
+use Carbon\Carbon;
 
 class Domaine
 {
@@ -141,17 +142,9 @@ class Domaine
 	* 
 	* @return boolean : true si la mise à jour a été faite | false dans les autres cas.
 	**/
-	public function updateAfterVerif($id, $request){
+	public function update($id, $request){
 
 		$this->model = $this->model->withTrashed()->where('id', $id)->first();
-
-		/* Vérification directe ou indirecte ? */
-		$relation_type = $this->getVerificationType();
-
-		/* Désactivation possible ? */
-		if (!isset($request->is_actived) and $this->{$relation_type}('Désactivation')) {
-			return false;
-		}
 
 		$this->handleRequest($request);
 		return $this->model->save();
@@ -180,6 +173,14 @@ class Domaine
 	}
 
 
+	/**
+	* Il faut d'abord déterminer si le model courant est en relation avec l'entité livraison de façon directe ou indirecte.
+	* La relation est dite directe si le model courant est lié via une table pivot.
+	* La relation est dite indirecte si le model courant est lié via une foreign key dans la table pivot 'livraison/panier'.
+	* Il faut ensuite déterminer si le model courant est impliqué ou non avec une livraison créée, ouverte ou clôturée.
+	* 
+	* @return boolean : true si la suppresion a été faite | false dans les autres cas.
+	**/
 	public function destroyAfterVerif($id)
 	{
 		$this->model = $this->model->withTrashed()->where('id', $id)->first();
@@ -281,11 +282,25 @@ class Domaine
 	**/
 	public function hasLiaisonIndirecteWithLivraison($action)
 	{
-		$model_name = $this->getDomaineName();
-		$occurence = \DB::table('livraison_panier')->where($model_name, $this->model->id)->get();
+		$model_name = $this->getDomaineName();            
+		$occurences = \DB::table('livraison_panier')
+		->rightjoin('livraisons', function ($join) {
+			$join->on('livraisons.id', '=', 'livraison_panier.livraison_id')
+			->whereIn('statut', ['L_CREATED', 'L_OUVERTE', 'L_CLOTURED']);
+		})
+		->where($model_name, $this->model->id)
+		->select(
+			'livraison_panier.*' // Pivot livraison_panier
+			, 'livraisons.*' // Livraison
+			);
 
-		if (!empty($occurence)) {
-			$this->message = $this->setMessageLiaisonIndirecteWithLivraison($action, $occurence);
+		$occurences = $occurences->get();                // return dd($occurences);   
+														 // return dd(!empty($occurences));
+
+		if (!empty($occurences)) {
+			// return dd('occurences not empty');
+			$this->setMessageLiaisonIndirecteWithLivraison($action, $occurences);
+			// return dd($this->message);
 			return true;
 		}else{
 			return false;
@@ -298,16 +313,18 @@ class Domaine
 	* 
 	* @return string
 	**/
-	public function setMessageLiaisonIndirecteWithLivraison($action, $occurence)
+	public function setMessageLiaisonIndirecteWithLivraison($action, $occurences)
 	{
+		// return dd($occurences);
 		$model_name = $this->getDomaineName();
 		$message = "Oups !! $action impossible !<br />";
-		foreach ($occurence as $pivot) {
-			$livraison = Livraison::where('id', $pivot->livraison_id)->first();
-			$message .= trans("message.$model_name.liedToLivraison", ['date' => DateFr::complete($livraison->date_livraison)]).'<br />';
+		foreach ($occurences as $occurence) {
+			$date = Carbon::createFromFormat('Y-m-d H:i:s', $occurence->date_livraison);
+			$message .= trans("message.$model_name.liedToLivraison", ['date' => DateFr::complete($date)]).'<br />';
 		}
-		return $message;
+		$this->message = $message;
 	}
+
 
 
 	public function ListForLivraisonEdit($livraison_id){

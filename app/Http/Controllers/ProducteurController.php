@@ -49,7 +49,7 @@ class ProducteurController extends Controller
 
     public function update($id, ProducteurRequest $request)
     {
-        if($this->domaine->updateAfterVerif($id, $request)){
+        if($this->domaine->update($id, $request)){
             return redirect()->route('producteur.index')->with('success', trans('message.producteur.updateOk'));
         }else{
             $message = $this->domaine->getMessage();

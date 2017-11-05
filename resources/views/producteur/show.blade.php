@@ -32,6 +32,7 @@
 		@if($mode == 'index')
 			@include('layouts.button.supp', ['model' => 'producteur', 'model_id' => $model->id, 'text_confirm' => trans('message.producteur.confirmDelete', ['model' => "$model->nompourpaniers"]) ])
 			@include('layouts.button.edite', ['model' => 'producteur', 'model_id' => $model->id])
+			@include('layouts.button.index.activation', ['model_class' => 'producteur', 'is_actived' => $model->is_actived, 'id' => $model->id])
 		@else
 			@include('layouts.button.restore', ['buttonEtiquette' => 'producteur', 'model' => 'producteur', 'model_id' => $model->id])
 		@endif

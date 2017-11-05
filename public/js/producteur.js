@@ -27,7 +27,7 @@ $("#producteurs_index").sortable({
 			tablo.push(doublet);
 
 		});
-			console.log('tablo sortie boucle : '+tablo);
+			// console.log('tablo sortie boucle : '+tablo);
 		setRangs('producteur', tablo);
 
 	}
@@ -36,9 +36,11 @@ $("#producteurs_index").sortable({
 
 
 function editProducteur(producteur_id){
-	console.log(domaine);
-	console.log(producteur_id);
+	// console.log(domaine);
+	// console.log(producteur_id);
+	var adresse = 'http://'+domaine+'/producteur/'+producteur_id+'/edit';
+	// console.log('adresse : '+adresse);
 
-	document.location.href='http://'+domaine+'/producteur/'+producteur_id+'/edit';
+	document.location.href = adresse;
 }
 

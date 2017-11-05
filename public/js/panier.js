@@ -21,7 +21,7 @@ $("#paniers_index").sortable({
 			tablo.push(doublet);
 
 		});
-			console.log('tablo sortie boucle : '+tablo);
+			// console.log('tablo sortie boucle : '+tablo);
 		setRangs('panier', tablo);
 
 	}

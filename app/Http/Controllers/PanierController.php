@@ -51,7 +51,7 @@ class PanierController extends Controller
     public function update($id, PanierRequest $request)
     {
         $url_back = $this->getUrlInitiale();
-        if($this->domaine->updateAfterVerif($id, $request)){
+        if($this->domaine->update($id, $request)){
             return redirect($url_back)->with('success', trans('message.panier.updateOk'));
         }else{
             $message = $this->domaine->getMessage();

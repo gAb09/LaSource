@@ -46,10 +46,12 @@ trait ActivableDomaineTrait
         try{
             $this->model = $this->model->withTrashed()->findOrFail($id);
 
+
             $this->model->is_actived = 0;
 
             /* Vérification si liaison directe ou indirecte ? */
             $relation_type = $this->getVerificationType();
+
 
             /* Désactivation possible ? */
             if ($this->{$relation_type}('Désactivation')) {
