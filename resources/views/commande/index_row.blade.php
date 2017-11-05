@@ -72,10 +72,10 @@
        </td>
 
 
-       <!-- state -->
+       <!-- statut -->
        <td class="{{$model->state}}">
 
-               @if($model->state == 'C_ARCHIVABLE')
+               @if($model->statut == 'C_ARCHIVABLE')
                <form method="POST" name="livraison_archive" action="{{ URL::route('livraison.archive', $model->id) }}">
                        {!! csrf_field() !!}
                        <input type="hidden" class="form-control" name="_method" value="PATCH">
@@ -84,7 +84,7 @@
                        </button>
                </form>
                @else
-               {{ trans('constante.'.$model->state) }}
+               {{ trans('constante.'.$model->statut) }}
                @endif
        </td>
 
