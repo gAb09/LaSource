@@ -1,4 +1,4 @@
-<div class="fiche stickycontainer {{$model->class_actived}}" ondblClick = "javascript:editPanier( {{ $model->id }} );">
+<div id="fiche_{{$model->id}}" class="fiche stickycontainer {{$model->class_actived}}" ondblClick = "javascript:editPanier( {{ $model->id }} );">
 
 	<div class="allowstickyfooter">
 
@@ -33,10 +33,10 @@
 		@if($mode == 'index')
 			@include('layouts.button.supp', ['model' => 'panier', 'model_id' => $model->id, 'text_confirm' => trans('message.panier.confirmDelete', ['model' => "$model->nom_court"]) ])
 			@include('layouts.button.edite', ['model' => 'panier', 'model_id' => $model->id])
+			@include('layouts.button.index.activation', ['model_class' => 'panier', 'is_actived' => $model->is_actived, 'id' => $model->id])
 		@else
 			@include('layouts.button.restore', ['buttonEtiquette' => 'panier', 'model' => 'panier', 'model_id' => $model->id])
 		@endif
 	</div>
 
 </div>
-

@@ -23,8 +23,8 @@
 		<h1 class="titrepage">{{ trans('titrepage.client.trashed') }}</h1>
 	@else
 		<h1 class="titrepage">{{ trans('titrepage.client.index') }}</h1>
-		<a href="{{ route('client.create') }}" class="btn-xs btn-primary">
-			Créer un mode de paiement
+		<a href="{{ route('client.create') }}" class="btn-xs btn-primary is_error_txt">
+			Créer un client
 		</a>
 	@endif
 @stop

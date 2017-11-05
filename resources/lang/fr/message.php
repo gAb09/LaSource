@@ -125,6 +125,13 @@ return [
     'updatefailed' => 'Problème. Vos identifiants n\ont pas été mis à jour…',
     ],
 
+    'activation' => [
+    'activeOk'     => 'Le :model a bien été activé',
+    'activeFailed' => 'Problème. Le :model n’a pas pu être activé',
+    'desactiveOk'     => 'Le :model a bien été desactivé',
+    'desactiveFailed' => 'Problème. Le :model n’a pas pu être desactivé',
+    ],
+
     'bug' => [
     'transmis'     => '<br />Le Ouaibmaistre vient d’en être informé et va répondre à ce problème dès que possible',
     ],

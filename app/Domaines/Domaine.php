@@ -10,7 +10,7 @@ class Domaine
     /**
     * Le modèle courant. Nouveau modèle vide créé à la construction, peut être assigné par la suite.
     **/
-	protected $model;
+    protected $model;
 
 
     /**
@@ -27,6 +27,13 @@ class Domaine
     protected $message;
 
 
+    /**
+    * La réponse fournie sur une requête ajax.
+    * Dispose d'un accesseur à l'attention des controleurs
+    **/
+    protected $reponse = array();
+
+
 
 
     /**
@@ -35,8 +42,8 @@ class Domaine
     * @return string
     **/
     public function getCurrentModel(){  // ToDo ajouter if(!isset($this->model)) {$this->model = new Static} ??
-        return $this->model;
-    }
+    return $this->model;
+}
 
 
     /**
@@ -45,7 +52,7 @@ class Domaine
     * @return string
     **/
     public function getTitrePage(){
-        return $this->titre_page;
+    	return $this->titre_page;
     }
 
 
@@ -56,60 +63,70 @@ class Domaine
     * @return string
     **/
     public function getMessage(){
-        return $this->message;
+    	return $this->message;
+    }
+
+
+    /**
+    * Accesseur réponse.
+    * 
+    * @return array
+    **/
+    public function getReponse(){
+    	return $this->reponse;
     }
 
 
 
     /**
-    * Obtention du nom du model courant en minuscules.
+    * Obtention du nom de la classe courante en minuscules.
     * 
     * @return string
     **/
-	public function getDomaineName()
-	{
-		$name = explode("\\", get_class($this->model));
-		return strtolower(array_pop($name));
-	}
+    public function getDomaineName()
+    {
+    	$name = explode("\\", get_class($this->model));
+    	return strtolower(array_pop($name));
+    }
 
 
 
-	public function all($order = 'rang')
-	{
-		return $this->model->orderBy($order)->get();
-	}
+    public function all($order = 'rang')
+    {
+    	return $this->model->orderBy($order)->get();
+    }
 
 
 
-	public function allActived($order = 'rang')
-	{
-		return $this->model->where('is_actived', 1)->orderBy($order)->get();
-	}
+    public function allActived($order = 'rang')
+    {
+    	return $this->model->where('is_actived', 1)->orderBy($order)->get();
+    }
 
 
 
-	public function allActivedIdForSyncLivraison()
-	{
-		$test = $this->model->where('is_actived', 1)->get(['id']);
-		$data = array();
-		foreach ($test as $item) {
-			$data[] = $item['id'];
-		}
-		return $data;
-	}
+    public function allActivedIdForSyncLivraison()
+    {
+    	$test = $this->model->where('is_actived', 1)->get(['id']);
+    	$data = array();
+    	foreach ($test as $item) {
+    		$data[] = $item['id'];
+    	}
+    	return $data;
+    }
 
 
 
-	public function findFirst($critere, $colonne = 'id')
-	{
-		return $this->model->where($colonne, $critere)->first();
-	}
+    public function findFirst($critere, $colonne = 'id')
+    {
+    	return $this->model->where($colonne, $critere)->first();
+    }
 
 
-	public function findFirstWithTrashed($critere, $colonne = 'id')
-	{
-		return $this->model->withtrashed()->where($colonne, $critere)->first();
-	}
+    public function findFirstWithTrashed($critere, $colonne = 'id')
+    {
+    	return $this->model->withtrashed()->where($colonne, $critere)->first();
+    }
 
 
 	/**
@@ -147,7 +164,7 @@ class Domaine
 	 *
 	 * @return string
 	 **/
-	private function getVerificationType(){
+	public function getVerificationType(){
 		if($this->getDomaineName() == 'producteur'){
 			return 'hasLiaisonIndirecteWithLivraison';
 		}else{
@@ -250,7 +267,7 @@ class Domaine
 		$model_name = $this->getDomaineName();
 		$message = "Oups !! $action impossible !<br />";
 		foreach ($this->model->livraison as $livraison) {
-				$message .= trans("message.$model_name.liedToLivraison", ['date' => DateFr::complete($livraison->date_livraison)]).'<br />';
+			$message .= trans("message.$model_name.liedToLivraison", ['date' => DateFr::complete($livraison->date_livraison)]).'<br />';
 		}
 		$this->message = $message;
 	}

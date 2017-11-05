@@ -42,7 +42,7 @@
 /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 Boutons supp et edite */
 
-.supp, .edite, .addIndisponibilite{
+.supp, .edite, .addIndisponibilite, .activation{
 	border-radius: 6px;
 	background-color: #FFF;
 	position: relative;
@@ -83,7 +83,7 @@ Boutons supp et edite */
 
 /* Bouton edite */
 
-.edite, .addIndisponibilite{
+.edite, .addIndisponibilite, .activation{
 	// left: 30px;
 
 	&:hover{
@@ -94,6 +94,17 @@ Boutons supp et edite */
 		}
 	}
 }
+
+.activation{
+	&:hover{
+		background-color: @color_success;
+
+		.etiquette{
+			background-color: @color_success;
+		}
+	}
+}
+
 
 
 .addIndisponibilite{

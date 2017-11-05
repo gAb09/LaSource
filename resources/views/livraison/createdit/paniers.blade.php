@@ -67,7 +67,7 @@
 					<div>
 						<a class="btn btn-xs" onClick="javascript:listProducteursForPanier({{$panier->id}})" data-toggle="modal" data-target="#ModallistProducteursForPanier">
 							<i class="fa fa-btn fa-edit"></i>
-							Modifier les producteurs liés
+							Modifier la liste des producteurs
 						</a>
 					</div>
 				</td>

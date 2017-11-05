@@ -27,10 +27,10 @@ class ClientDomaine extends Domaine
 	}
 
 
-	public function setPrefRelais($id){
+	public function setPrefRelais($relais_id){
 		$user = \Auth::user()->id;
 		$model = $this->model->find($user);
-		$model->pref_relais = $id;
+		$model->pref_relais = $relais_id;
 		// return dd($model->save());
 
 		try{
@@ -48,10 +48,10 @@ class ClientDomaine extends Domaine
 
 
 
-	public function setPrefPaiement($id){
+	public function setPrefPaiement($paiement_id){
 		$user = \Auth::user()->id;
 		$model = $this->model->find($user);
-		$model->pref_paiement = $id;
+		$model->pref_paiement = $paiement_id;
 		// return dd($model->save());
 
 		try{

@@ -197,6 +197,16 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('livraison', 'LivraisonController');
 
 
+// ACTIVATION
+	Route::any('active/{model_class}/{id}', 
+		['as' => 'active', 'uses' => 'ActivableController@active']
+		);
+
+	Route::any('desactive/{model_class}/{id}', 
+		['as' => 'desactive', 'uses' => 'ActivableController@desactive']
+		);
+
+
 // Menus...
 	Route::resource('menus', '\Menus\MenuController');
 

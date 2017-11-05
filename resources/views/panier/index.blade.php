@@ -22,7 +22,7 @@
 	@if($mode == 'trashed')
 		<h1 class="titrepage">{{ trans('titrepage.panier.trashed') }}</h1>
 	@else
-		<h1 class="titrepage">{{ trans('titrepage.modepaiement.index') }}</h1>
+		<h1 class="titrepage">{{ trans('titrepage.panier.index') }}</h1>
 		<a href="{{ route('panier.create') }}" class="btn-xs btn-primary">
 			Créer un panier
 		</a>

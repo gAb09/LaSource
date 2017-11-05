@@ -1,4 +1,4 @@
-<div class="fiche stickycontainer {{$model->class_actived}}" ondblClick = "javascript:editModePaiement({{ $model->id }} );">
+<div  id="fiche_{{$model->id}}" class="fiche stickycontainer {{$model->class_actived}}" ondblClick = "javascript:editModePaiement({{ $model->id }} );">
 
 	<div class="allowstickyfooter">
 

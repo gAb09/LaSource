@@ -155,6 +155,7 @@
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
     @section('script')
     <script src="/js/global.js"></script>
+    <script src="/js/activation.js"></script>
     @show
 
 </body>
