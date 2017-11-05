@@ -218,7 +218,7 @@ Global.
 
 function changementDetected(){
 	if ($("#modification_livraison").html() === '') {
-		$("#button_store").removeClass('hidden');
+		$("#change_detected").removeClass('hidden');
 	}
 
 }

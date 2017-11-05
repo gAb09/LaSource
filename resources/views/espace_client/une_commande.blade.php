@@ -11,7 +11,7 @@
 			<tr class="total">
 				<td colspan="3">
 					@if($commande->statut == 'C_CREATED' or $commande->statut == 'C_REGISTERED')
-						<a class="btn btn-primary btn-xs" href="#overlay"  onClick="javascript:editCommande({{ $commande->id }}, {{ $commande->Livraison->id }});$('#button_store').addClass('hidden');" >Modifier cette commande</a>
+						<a class="btn btn-primary btn-xs" href="#overlay"  onClick="javascript:editCommande({{ $commande->id }}, {{ $commande->Livraison->id }});$('#change_detected').addClass('hidden');" >Modifier cette commande</a>
                     @endif
 				</td>
 				<td colspan="2">

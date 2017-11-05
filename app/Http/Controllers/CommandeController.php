@@ -12,6 +12,11 @@ use App\Http\Requests;
 class CommandeController extends Controller
 {
 
+    /**
+     * undocumented function
+     *
+     * @return void
+     **/
     public function __construct(Domaine $domaine, LivraisonDomaine $livraisonD, Request $request)
     {
         $this->domaine = $domaine;
@@ -21,6 +26,11 @@ class CommandeController extends Controller
     }
 
 
+    /**
+     * undocumented function
+     *
+     * @return void
+     **/
     public function index($pages=5)
     {
         $models = $this->domaine->index($pages);
@@ -28,8 +38,14 @@ class CommandeController extends Controller
     }
 
 
+    /**
+     * undocumented function
+     *
+     * @return void
+     **/
     public function store(Request $request)
     {
+        // return dd($request->all());
         $result = $this->domaine->store($request);
         if( !is_integer($result) ){
             if ($result instanceof \Exception) {
@@ -47,6 +63,11 @@ class CommandeController extends Controller
     }
 
 
+    /**
+     * undocumented function
+     *
+     * @return void
+     **/
     public function edit($id)
     {
         $datas = $this->domaine->edit($id);
@@ -63,13 +84,27 @@ class CommandeController extends Controller
 
     /**
      * undocumented function
+     * Si toutes les quantités sont à 0 => delete ??
+     * Si pas de modifications => ???
+     *
+     * @return void
+     **/
+    function update($id, Request $request)
+    {
+        var_dump('Si toutes les quantités sont à 0 => delete ??');
+        var_dump('Si pas de modifications => ???');
+        return dd($request->except('_token', '_method'));
+    }
+
+
+    /**
+     * undocumented function
      *
      * @return void
      * @author 
      **/
-    function update($id, Request $request)
+    function archiver()
     {
-        return dd($request->except('_token', '_method'));
+        return dd('archivage à implémenter ??');
     }
-
 }

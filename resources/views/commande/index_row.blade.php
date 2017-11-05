@@ -76,7 +76,7 @@
        <td class="{{$model->state}}">
 
                @if($model->statut == 'C_ARCHIVABLE')
-               <form method="POST" name="livraison_archive" action="{{ URL::route('livraison.archive', $model->id) }}">
+               <form method="POST" name="livraison_archive" action="{{ URL::route('commande.archive', $model->id) }}">
                        {!! csrf_field() !!}
                        <input type="hidden" class="form-control" name="_method" value="PATCH">
                        <button class="btn btn-info btn-xs">

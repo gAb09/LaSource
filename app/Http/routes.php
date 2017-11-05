@@ -184,6 +184,9 @@ Route::group(['middleware' => 'auth'], function () {
 // COMMANDE...
 	Route::resource('commande', 'CommandeController');
 
+	Route::patch('commande/archive/{id}', 
+		['as' => 'commande.archive', 'uses' => 'CommandeController@archiver']
+		);
 
 
 	
