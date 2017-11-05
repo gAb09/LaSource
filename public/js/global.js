@@ -1,21 +1,6 @@
 var domaine = document.domain;
 console.log(domaine);
 
-/**
-* Disponible pour tous les models.
-* Change la présentation (CSS) des éléments relatifs à is_actived.
-* 
-* 
-**/
-function handleIsActivedClass()
-{
-	var item = $('.toggle_actived');
-	console.log(item);
-
-	$(item).toggleClass('is_not_actived').toggleClass('is_actived');
-}
-
-
 
 /**
 * Disponible pour tous les models.
