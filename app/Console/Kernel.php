@@ -29,6 +29,6 @@ class Kernel extends ConsoleKernel
             $domaine = new Domaine;  
             $domaine->cron();
 
-        })->daily();
+        })->dailyAt('00:00');
     }
 }
