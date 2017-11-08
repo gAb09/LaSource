@@ -3,6 +3,7 @@
 namespace App\Domaines;
 
 use App\Models\Livraison;
+use App\Models\Commande;
 use Gab\Helpers\DateFr;
 use Carbon\Carbon;
 
@@ -34,6 +35,17 @@ class Domaine
     **/
     protected $reponse = array();
 
+
+    /**
+    * Les états qui nécessitent d'être actualisés quotidiennement pour une livraison.
+    **/
+    protected $livraison_statut_archive = ['L_ARCHIVED', 'L_ARCHIVABLE', 'L_ANNULED'];
+
+
+    /**
+    * Les états qui nécessitent d'être actualisés quotidiennement pour une commande.
+    **/
+    protected $commande_statut_archive = ['C_ARCHIVED', 'C_ARCHIVABLE', 'C_ANNULED'];
 
 
 
@@ -243,7 +255,7 @@ class Domaine
 	public function hasLiaisonDirecteWithLivraison($action)
 	{
 		$this->model->load(['livraison' => function ($query) {
-			$query->whereIn('statut', ['L_CREATED', 'L_OUVERTE', 'L_CLOTURED']);
+			$query->whereNotIn('statut', $this->livraison_statut_archive);
 		}])
 		;
 																								// return dd($this->model->livraison);
@@ -286,7 +298,7 @@ class Domaine
 		$occurences = \DB::table('livraison_panier')
 		->rightjoin('livraisons', function ($join) {
 			$join->on('livraisons.id', '=', 'livraison_panier.livraison_id')
-			->whereIn('statut', ['L_CREATED', 'L_OUVERTE', 'L_CLOTURED']);
+			->whereNotIn('statut', [$this->livraison_statut_archive]);
 		})
 		->where($model_name, $this->model->id)
 		->select(
@@ -402,5 +414,52 @@ class Domaine
 		$this->model = $this->model->withTrashed()->findOrFail($id);
 		return $this->model->restore();
 	}
+
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function cron(){
+		$this->handleStatutLivraisonViaCron();
+		$this->handleStatutCommandeViaCron();
+	}
+
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function handleStatutLivraisonViaCron(){
+		$models = Livraison::whereNotIn('statut', $this->livraison_statut_archive)->get();
+		$models->each( function($item){
+			$statut = $item->statut;
+			$item->statut = $statut;
+			$item->update();
+		});
+			return var_dump('livraisons');
+	}
+
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function handleStatutCommandeViaCron(){
+		$models = Commande::whereNotIn('statut', $this->commande_statut_archive)->get();
+		$models->each( function($item){
+			$statut = $item->statut;
+			$item->statut = $statut;
+			$item->update();
+		});
+			return var_dump('commandes');
+	}
+
 
 }
