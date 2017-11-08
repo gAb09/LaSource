@@ -29,5 +29,6 @@ class Kernel extends ConsoleKernel
             $domaine = new Domaine;  
             $domaine->cron();
 
-        })->everyMinute();    }
+        })->daily();
     }
+}

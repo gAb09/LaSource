@@ -441,7 +441,7 @@ class Domaine
 			$item->statut = $statut;
 			$item->update();
 		});
-			return var_dump('livraisons');
+			// return var_dump('livraisons');
 	}
 
 
@@ -458,7 +458,7 @@ class Domaine
 			$item->statut = $statut;
 			$item->update();
 		});
-			return var_dump('commandes');
+			// return var_dump('commandes');
 	}
 
 

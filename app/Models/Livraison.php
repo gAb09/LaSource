@@ -105,11 +105,11 @@ class Livraison extends Model
             $newValue = "L_OUVERTE";
         }
 
-        if ($this->date_cloture->diffInDays(Carbon::now(), false) >= 0) {
+        if ($this->date_cloture->diffInDays(Carbon::now(), false) > 0) {
             $newValue = "L_CLOTURED";
         }
 
-        if ($this->date_livraison->diffInDays(Carbon::now(), false) >= 0) {
+        if ($this->date_livraison->diffInDays(Carbon::now(), false) > 0) {
             $newValue = 'L_ARCHIVABLE';
         }
 
