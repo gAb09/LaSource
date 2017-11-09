@@ -24,7 +24,7 @@ class LivraisonDomaine extends Domaine
     public function getAllLivraisonsOuvertes($user = null)
     {
         $this->ActualiserStatut();
-        $models = $this->model->orderBy('date_livraison')->where('date_cloture', '>', Carbon::now())->get();
+        $models = $this->model->orderBy('date_livraison')->whereNotIn('statut', $this->livraison_morte)->get();
 
         if (!is_null($user)) {
             /* On retire les livraisons pour lesquelles l'user courant à déjà passé commande */
