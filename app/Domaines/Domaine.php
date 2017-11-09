@@ -39,13 +39,13 @@ class Domaine
     /**
     * Les états qui nécessitent d'être actualisés quotidiennement pour une livraison.
     **/
-    protected $livraison_morte = ['L_ARCHIVED', 'L_ARCHIVABLE', 'L_ANNULED'];
+    protected $livraison_statut_archive = ['L_ARCHIVED', 'L_ARCHIVABLE', 'L_ANNULED'];
 
 
     /**
     * Les états qui nécessitent d'être actualisés quotidiennement pour une commande.
     **/
-    protected $commande_morte = ['C_ARCHIVED', 'C_ARCHIVABLE', 'C_ANNULED'];
+    protected $commande_statut_archive = ['C_ARCHIVED', 'C_ARCHIVABLE', 'C_ANNULED'];
 
 
 
@@ -255,7 +255,7 @@ class Domaine
 	public function hasLiaisonDirecteWithLivraison($action)
 	{
 		$this->model->load(['livraison' => function ($query) {
-			$query->whereNotIn('statut', $this->$livraison_morte);
+			$query->whereNotIn('statut', $this->livraison_statut_archive);
 		}])
 		;
 																								// return dd($this->model->livraison);
@@ -298,7 +298,7 @@ class Domaine
 		$occurences = \DB::table('livraison_panier')
 		->rightjoin('livraisons', function ($join) {
 			$join->on('livraisons.id', '=', 'livraison_panier.livraison_id')
-			->whereNotIn('statut', [$this->$livraison_morte]);
+			->whereNotIn('statut', [$this->livraison_statut_archive]);
 		})
 		->where($model_name, $this->model->id)
 		->select(
@@ -423,8 +423,12 @@ class Domaine
 	 * @author 
 	 **/
 	public function cron(){
+		echo DateFr::avecHeurePourConsole(Carbon::now())."\n\n";
+
 		$this->handleStatutLivraisonViaCron();
+		echo "\n";
 		$this->handleStatutCommandeViaCron();
+		echo "\n\n";
 	}
 
 
@@ -435,14 +439,19 @@ class Domaine
 	 * @author 
 	 **/
 	public function handleStatutLivraisonViaCron(){
-		$models = Livraison::whereNotIn('statut', $this->$livraison_morte)->get();
-		$models->each( function($item){
+		$models = Livraison::whereNotIn('statut', $this->livraison_statut_archive)->get();
+		$txt = "";
+		$models->each( function($item) {
+			$txt = "livraison n° ".$item->id;
+			$txt .= " (du ".DateFr::completePourConsole($item->date_livraison).') : ';
+			$txt .= $item->statut."\n";
+			echo $txt;
+
 			$statut = $item->statut;
 			$item->statut = $statut;
+
 			$item->update();
-			// var_dump($item);
 		});
-		// return var_dump('livraisons');
 	}
 
 
@@ -453,14 +462,18 @@ class Domaine
 	 * @author 
 	 **/
 	public function handleStatutCommandeViaCron(){
-		$models = Commande::whereNotIn('statut', $this->$commande_morte)->get();
+		$models = Commande::whereNotIn('statut', $this->commande_statut_archive)->get();
 		$models->each( function($item){
+			$txt = "commande n° ".$item->numero;
+			$txt .= " (du ".DateFr::completePourConsole($item->created_at).') : ';
+			$txt .= $item->statut."\n";
+			echo $txt;
+
 			$statut = $item->statut;
 			$item->statut = $statut;
+
 			$item->update();
-			// var_dump($item);
 		});
-		// return var_dump('commandes');
 	}
 
 

@@ -55,4 +55,22 @@ class DateFr {
 		return $date->formatlocalized('%A&nbsp;%e&nbsp;%B&nbsp;%Y');
 	}
 
+	public static function completePourConsole(Carbon $date){
+		setlocale(LC_TIME, 'fr_FR');
+		if(!($date instanceof Carbon)){
+			throw new Exception("La date n'est pas un objet Carbon", 1);
+			
+		}
+		return $date->formatlocalized('%A %e %B %Y');
+	}
+
+	public static function avecHeurePourConsole(Carbon $date){
+		setlocale(LC_TIME, 'fr_FR');
+		if(!($date instanceof Carbon)){
+			throw new Exception("La date n'est pas un objet Carbon", 1);
+			
+		}
+		return $date->formatlocalized("%A %e %B %Y - %Hh %i");
+	}
+
 }

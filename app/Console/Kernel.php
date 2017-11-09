@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         // Commands\Inspire::class,
+    Commands\ActualisationQuotidienne::class,
     ];
 
     /**
@@ -25,10 +26,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call(function () {
-            $domaine = new Domaine;  
-            $domaine->cron();
 
-        })->dailyAt('00:00');
+        $schedule->command('quotidactual')
+        // ->everyMinute()
+        ->dailyAt('00:00')
+        ->appendOutputTo('Log_ActualisationQuotidienne')
+        ->emailOutputTo('brunogabiot@club-internet.fr');
     }
 }
