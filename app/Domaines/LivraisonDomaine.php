@@ -23,7 +23,6 @@ class LivraisonDomaine extends Domaine
 
     public function getAllLivraisonsOuvertes($user = null)
     {
-        $this->ActualiserStatut();
         $models = $this->model->orderBy('date_livraison')->whereNotIn('statut', $this->livraison_morte)->get();
 
         if (!is_null($user)) {

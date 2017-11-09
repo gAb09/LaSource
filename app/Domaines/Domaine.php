@@ -39,13 +39,13 @@ class Domaine
     /**
     * Les états qui nécessitent d'être actualisés quotidiennement pour une livraison.
     **/
-    protected $livraison_statut_archive = ['L_ARCHIVED', 'L_ARCHIVABLE', 'L_ANNULED'];
+    protected $livraison_morte = ['L_ARCHIVED', 'L_ARCHIVABLE', 'L_ANNULED'];
 
 
     /**
     * Les états qui nécessitent d'être actualisés quotidiennement pour une commande.
     **/
-    protected $commande_statut_archive = ['C_ARCHIVED', 'C_ARCHIVABLE', 'C_ANNULED'];
+    protected $commande_morte = ['C_ARCHIVED', 'C_ARCHIVABLE', 'C_ANNULED'];
 
 
 
@@ -255,7 +255,7 @@ class Domaine
 	public function hasLiaisonDirecteWithLivraison($action)
 	{
 		$this->model->load(['livraison' => function ($query) {
-			$query->whereNotIn('statut', $this->livraison_statut_archive);
+			$query->whereNotIn('statut', $this->livraison_morte);
 		}])
 		;
 																								// return dd($this->model->livraison);
@@ -298,7 +298,7 @@ class Domaine
 		$occurences = \DB::table('livraison_panier')
 		->rightjoin('livraisons', function ($join) {
 			$join->on('livraisons.id', '=', 'livraison_panier.livraison_id')
-			->whereNotIn('statut', [$this->livraison_statut_archive]);
+			->whereNotIn('statut', [$this->livraison_morte]);
 		})
 		->where($model_name, $this->model->id)
 		->select(
@@ -439,7 +439,7 @@ class Domaine
 	 * @author 
 	 **/
 	public function handleStatutLivraisonViaCron(){
-		$models = Livraison::whereNotIn('statut', $this->livraison_statut_archive)->get();
+		$models = Livraison::whereNotIn('statut', $this->livraison_morte)->get();
 		$txt = "";
 		$models->each( function($item) {
 			$txt = "livraison n° ".$item->id;
@@ -462,7 +462,7 @@ class Domaine
 	 * @author 
 	 **/
 	public function handleStatutCommandeViaCron(){
-		$models = Commande::whereNotIn('statut', $this->commande_statut_archive)->get();
+		$models = Commande::whereNotIn('statut', $this->commande_morte)->get();
 		$models->each( function($item){
 			$txt = "commande n° ".$item->numero;
 			$txt .= " (du ".DateFr::completePourConsole($item->created_at).') : ';
