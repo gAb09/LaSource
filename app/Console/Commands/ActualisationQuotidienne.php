@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
-use App\Domaines\Domaine;
+use App\Domaines\CronDomaine as Cron;
 use Carbon\Carbon;
 
 
@@ -41,7 +41,7 @@ class ActualisationQuotidienne extends Command
      */
     public function handle()
     {
-            $domaine = new Domaine;  
-            $domaine->cron();
+            $cron = new Cron;  
+            $cron->ActualisationQuotidienne();
     }
 }
