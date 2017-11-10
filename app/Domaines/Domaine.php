@@ -298,7 +298,7 @@ class Domaine
 		$occurences = \DB::table('livraison_panier')
 		->rightjoin('livraisons', function ($join) {
 			$join->on('livraisons.id', '=', 'livraison_panier.livraison_id')
-			->whereNotIn('statut', [$this->livraison_morte]);
+			->whereNotIn('statut', $this->livraison_morte);
 		})
 		->where($model_name, $this->model->id)
 		->select(

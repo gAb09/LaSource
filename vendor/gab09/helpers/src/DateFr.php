@@ -70,7 +70,7 @@ class DateFr {
 			throw new Exception("La date n'est pas un objet Carbon", 1);
 			
 		}
-		return $date->formatlocalized("%A %e %B %Y - %Hh %i");
+		return $date->formatlocalized("%A %e %B %Y - %H h %M");
 	}
 
 }
