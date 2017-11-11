@@ -137,7 +137,7 @@
         
     <!-- - - - - - - - - - - - - - - -  CONTENT () - - - - - - - - - - - - - - -->
     @yield('content')
-
+{{var_dump($datas)}}
     </main>
 
     @include('layouts.footer')
