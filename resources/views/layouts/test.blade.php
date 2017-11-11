@@ -71,23 +71,23 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     @if (Auth::guest())
-                    <!-- Infos sur les Paniers et La Source -->
-                    @include('layouts.menuLeft.guest')
+                        <!-- Infos sur les Paniers et La Source -->
+                        @include('layouts.menuLeft.guest')
                     @else
-                    @include('layouts.menuLeft.auth')
+                        @include('layouts.menuLeft.auth')
                     @endif
                 </ul>
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     @if (Auth::guest())
-                    <!-- Authentication Links -->
-                    @include('layouts.menuRight.guest')
+                        <!-- Authentication Links -->
+                        @include('layouts.menuRight.guest')
                     @else
-                    @include('layouts.menuRight.auth')
-                    @if (Auth::user()->role->id == 1)
-                    @include('layouts.menuRight.dev')
-                    @endif
+                        @include('layouts.menuRight.auth')
+                        @if (Auth::user()->role->id == 1)
+                            @include('layouts.menuRight.dev')
+                        @endif
                     @endif
                 </ul>
             </div>
