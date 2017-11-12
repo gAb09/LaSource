@@ -1,0 +1,11 @@
+/*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+COULEURS
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Couleurs de bootstrap */
+/* Modèles */
+/* Couleurs site */
+.dashboard_main .dashboard_part {
+  background-color: yellow;
+  width: 32%;
+  height: 100px;
+}

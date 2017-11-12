@@ -19,14 +19,21 @@ Tableau de bord
 
 @section('content')
 DASHBOARD A VENIR
-	<a class="btn btn-primary" onClick="javascript:getComposerMailContent()">
-		<i class="fa fa-btn fa-envelope"></i>Gérer les mails pour cette livraison
-	</a>
-<!-- MAILS -->
+<div id="dashboard_main" class="offset3 span11 flexcontainer">
 
+	@include('dashboard.partials.base')
+
+
+	<a class="btn btn-primary" onClick="javascript:getComposerMailContent()">
+		<i class="fa fa-btn fa-envelope"></i>
+		Gérer les mails pour cette livraison
+	</a>
+
+	<!-- MAILS -->
     <div id="composer_mails" class="container-fluid">
     	Ici
     </div>
+</div>
 
 
 @include('livraison.partials.enCours', ['livraisons' => $livraisons])
