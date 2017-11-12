@@ -5,9 +5,9 @@
 LIVRAISON {{$livraison['name']}} A VENIR<br />
 @endforeach
 </div>
-@stop
+@endsection
 
 @section('script')
 @parent
 <script src="/js/livraison.js"></script>
-@stop
+@endsection

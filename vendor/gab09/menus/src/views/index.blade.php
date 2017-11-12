@@ -2,16 +2,16 @@
 
 @section('titre')
 @parent
-@stop
+@endsection
 
 
 @section('topcontent1')
 		<h1 class="titrepage">{{$titre_page}}</h1>
-@stop
+@endsection
 
 
 @section('topcontent2')
-@stop
+@endsection
 
 
 @section('contenu')
@@ -153,7 +153,6 @@
 	@section('zapette')
 		<a href ="{{ URL::action('\Menus\MenuController@create') }}" class="badge badge-locale iconemedium add"
 		style="font-size:1.1em">Créer un menu ou un item de menu</a>
-	@stop
+	@endsection
 
 	</div>
-	@stop

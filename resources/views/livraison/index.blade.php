@@ -2,7 +2,7 @@
 
 @section('titre')
 @parent
-@stop
+@endsection
 
 
 
@@ -12,13 +12,13 @@
 <a href="{{ route('livraison.create') }}" class="btn btn-primary"> <i class="fa fa-btn fa-trash-o"></i>
 	Créer une livraison
 </a>
-@stop
+@endsection
 
 
 
 @section('message')
 @parent
-@stop
+@endsection
 
 
 @section('content')
@@ -56,9 +56,9 @@
 {!! $models->render() !!}
 
 
-@stop
+@endsection
 
 @section('script')
 @parent
 <script src="/js/livraison.js"></script>
-@stop
+@endsection

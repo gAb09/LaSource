@@ -2,7 +2,7 @@
 
 @section('topcontent1')
 <h1 class="titrepage">{{ trans('titrepage.lesproducteurs') }}</h1>
-@stop
+@endsection
 
 @section('content')
                     <div class="col-md-3 producteur" style="background-color:#ccc">

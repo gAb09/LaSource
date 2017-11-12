@@ -2,20 +2,20 @@
 
 @section('titre')
 @parent
-@stop
+@endsection
 
 
 
 @section('topcontent1')
 <h1 class="titrepage">{{ trans('titrepage.commande.index') }}</h1>
 
-@stop
+@endsection
 
 
 
 @section('message')
 @parent
-@stop
+@endsection
 
 
 @section('content')
@@ -60,9 +60,8 @@
 </table>
 
 
-@stop
+@endsection
 
 @section('script')
 @parent
-<!-- <script src="/js/livraison.js"></script> -->
-@stop
+@endsection

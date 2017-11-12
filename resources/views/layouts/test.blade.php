@@ -14,4 +14,4 @@
 
 @section('script')
 @parent
-@stop
+@endsection

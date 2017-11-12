@@ -3,25 +3,28 @@
 @section('titre')
 Tableau de bord
 @parent
-@stop
+@endsection
 
 
 
 @section('topcontent1')
 <h1 class="titrepage">{{ trans('titrepage.dashboard.main') }}</h1>
-@stop
+@endsection
 
 
 @section('message')
 @parent
-@stop
+@endsection
 
 
 @section('content')
 DASHBOARD A VENIR
 <div id="dashboard_main" class="offset3 span11 flexcontainer">
 
-	@include('dashboard.partials.base')
+	@include('dashboard.partials.livraisons')
+	@include('dashboard.partials.commandes')
+	@include('dashboard.partials.relais')
+	@include('dashboard.partials.producteurs')
 
 
 	<a class="btn btn-primary" onClick="javascript:getComposerMailContent()">
@@ -37,9 +40,9 @@ DASHBOARD A VENIR
 
 
 @include('livraison.partials.enCours', ['livraisons' => $livraisons])
-@stop
+@endsection
 
 @section('script')
 @parent
 <script src="/js/dashboard.js"></script>
-@stop
+@endsection

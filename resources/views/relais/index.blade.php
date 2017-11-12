@@ -5,7 +5,7 @@
 	@if($mode == 'trashed')
 	@else
 	@endif
-@stop
+@endsection
 
 
 @section('titre')
@@ -15,7 +15,7 @@
 	@else
 		<h1 class="titrepage">{{ trans('titrepage.relais.index') }}</h1>
 	@endif
-@stop
+@endsection
 
 
 @section('topcontent1')
@@ -27,7 +27,7 @@
 			Créer un relais
 		</a>
 	@endif
-@stop
+@endsection
 
 
 @section('content')
@@ -42,10 +42,10 @@
 		@endif
 	@endforelse
 </div>
-@stop
+@endsection
 
 
 @section('script')
 @parent
 <script src="/js/relais.js"></script>
-@stop
+@endsection

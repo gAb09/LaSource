@@ -84,4 +84,4 @@ $('#date_fin_enclair').empty().append($('#datepicker_fin').val());
 
 </script>
 
-@stop
+@endsection

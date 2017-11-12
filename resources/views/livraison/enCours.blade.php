@@ -3,25 +3,25 @@
 @section('titre')
 Livraisons en cours
 @parent
-@stop
+@endsection
 
 
 
 @section('topcontent1')
 <h1 class="titrepage">{{ trans('titrepage.livraison.enCours') }}</h1>
-@stop
+@endsection
 
 
 @section('message')
 @parent
-@stop
+@endsection
 
 
 @section('content')
 @include('livraison.partials.enCours', ['livraisons' => 'livraisons'])
-@stop
+@endsection
 
 @section('script')
 @parent
 <script src="/js/livraison.js"></script>
-@stop
+@endsection

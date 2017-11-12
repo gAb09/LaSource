@@ -2,13 +2,13 @@
 
 @section('titre')
 @parent
-@stop
+@endsection
 
 
 
 @section('topcontent1')
 <h1 class="titrepage">{{ $titre_page }}</h1>
-@stop
+@endsection
 
 
 
@@ -21,7 +21,7 @@
 	Sur ANNULER :<br />
 	• La suppression de l'indisponibilité sera annulée.
 </p>
-@stop
+@endsection
 
 
 @section('content')
@@ -42,4 +42,4 @@
 	<button type="submit" class="btn btn-success">Valider</button>
 	<button name="Annuler" class="btn btn-danger">Annuler</button>
 </form>
-@stop
+@endsection

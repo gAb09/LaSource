@@ -5,7 +5,7 @@
 	@if($mode == 'trashed')
 	@else
 	@endif
-@stop
+@endsection
 
 
 @section('titre')
@@ -15,7 +15,7 @@
 	@else
 		<h1 class="titrepage">{{ trans('titrepage.producteur.index') }}</h1>
 	@endif
-@stop
+@endsection
 
 
 @section('topcontent1')
@@ -27,7 +27,7 @@
 			Créer un mode de paiement
 		</a>
 	@endif
-@stop
+@endsection
 
 
 @section('content')
@@ -42,9 +42,9 @@
 		@endif
 	@endforelse
 </div>
-@stop
+@endsection
 
 @section('script')
 @parent
 <script src="/js/producteur.js"></script>
-@stop
+@endsection
