@@ -213,6 +213,9 @@ Route::group(['middleware' => 'auth'], function () {
 // Menus...
 	Route::resource('menus', '\Menus\MenuController');
 
+// Test
+	Route::get('test', 'TestController@main');
+
 });
 
 
