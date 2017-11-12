@@ -22,8 +22,8 @@ class CommandeDomaine extends Domaine
 		$this->model = new Commande;
 		$this->lignesD = new LigneDomaine;
 		$this->ligne = new Ligne;
-        $this->modepaiementD = new ModePaiementDomaine;
-        $this->relaissD = new RelaisDomaine;
+		$this->modepaiementD = new ModePaiementDomaine;
+		$this->relaissD = new RelaisDomaine;
 	}
 
 
@@ -36,10 +36,11 @@ class CommandeDomaine extends Domaine
 	public function index($pages){
 		$commandes = $this->model->with('lignes.panier', 'Livraison', 'Client', 'Relais', 'ModePaiement')->orderBy('id', 'DESC')->paginate($pages);
 
-		$commandes = $this->getAllLignes($commandes);
+		$commandes->each(function ($commande, $keys) {
+			$commande = $this->getAllLignes($commande);
+		});
 
 		return $commandes;
-
 	}
 
 
@@ -76,41 +77,41 @@ class CommandeDomaine extends Domaine
 		$commandeBrute = $this->model->with('livraison.panier', 'lignes')->findOrFail($commande_id);
 		$commande = $this->getAllLignes($commandeBrute);
 
-        /* Pour chaque panier de cette livraison, connaître les quantités commandées par l'user current et les fournir à la vue */
-        $livraison = $commande->livraison;
-        $livraison->panier->each(function($panier) use($livraison, $commande){
-        	$commande->lignes->each(function($ligne) use ($livraison, $commande, $panier){
-        		if ($panier->id == $ligne->panier_id) {
-        			$panier->quantite = $ligne->quantite;
-        		}
-        	});
-        });
+		/* Pour chaque panier de cette livraison, connaître les quantités commandées par l'user current et les fournir à la vue */
+		$livraison = $commande->livraison;
+		$livraison->panier->each(function($panier) use($livraison, $commande){
+			$commande->lignes->each(function($ligne) use ($livraison, $commande, $panier){
+				if ($panier->id == $ligne->panier_id) {
+					$panier->quantite = $ligne->quantite;
+				}
+			});
+		});
 
-        /* Connaître le relais choisi par l'user current pour cette livraison et le fournir à la vue */
-        $relaiss = $this->relaissD->allActived('id');
-        $relaiss->each(function($item) use($commande){
-            if ($item->id == $commande->relais_id) {
-                $item->checked = 'checked';
-            }else{
-                $item->checked = '';
-            }
-        });
+		/* Connaître le relais choisi par l'user current pour cette livraison et le fournir à la vue */
+		$relaiss = $this->relaissD->allActived('id');
+		$relaiss->each(function($item) use($commande){
+			if ($item->id == $commande->relais_id) {
+				$item->checked = 'checked';
+			}else{
+				$item->checked = '';
+			}
+		});
 
-        /* Connaître le mode de paiement choisi par l'user current pour cette livraison et le fournir à la vue */
-        $modespaiement = $this->modepaiementD->allActived('id');
-        $modespaiement->each(function($item) use($commande){
-            if ($item->id == $commande->modepaiement_id) {
-                $item->checked = 'checked';
-            }else{
-                $item->checked = '';
-            }
-        });
+		/* Connaître le mode de paiement choisi par l'user current pour cette livraison et le fournir à la vue */
+		$modespaiement = $this->modepaiementD->allActived('id');
+		$modespaiement->each(function($item) use($commande){
+			if ($item->id == $commande->modepaiement_id) {
+				$item->checked = 'checked';
+			}else{
+				$item->checked = '';
+			}
+		});
 
-        $datas['commande'] = $commande;
-        $datas['livraison'] = $livraison;
-        $datas['modespaiement'] = $modespaiement;
-        $datas['relaiss'] = $relaiss;
-        $datas['model'] = $model;
+		$datas['commande'] = $commande;
+		$datas['livraison'] = $livraison;
+		$datas['modespaiement'] = $modespaiement;
+		$datas['relaiss'] = $relaiss;
+		$datas['model'] = $model;
 
         // return dd($commande);
 		return $datas;
@@ -181,32 +182,27 @@ class CommandeDomaine extends Domaine
 
 
 	/**
-	 * • Effectuer une requete des commandes avec ses relations, y compris les lignes avec leur relation panier pour le nom en clair de celui-ci.
+	 * • Effectuer une requete d'une commande avec ses relations, y compris les lignes avec leur relation panier pour le nom en clair de celui-ci.
 	 * • Pour chaque lignes en effectuer le complément (obtention du producteur associé au panier et son prix_livraison.
 	 * + pagination
 	 *
-	 * @param Integer : nombre de commandes par page.
+	 * @param App\Models\Commande
 	 *
 	 * @return Illuminate\Pagination\LengthAwarePaginator
 	 **/
-	function getAllLignes($commandes)
+	function getAllLignes($commande)
 	{
-		$commandes->each(function ($commande, $keys) {
-			$commande->montant_total = 0;
+		$commande->montant_total = 0;
 
-			$commande->lignes->each(function ($ligne, $keys) use($commande){
-				$complement = $this->lignesD->completeLignes($commande->livraison_id, $ligne->panier_id);
-				$ligne->prix_livraison = $complement->prix_livraison;
-				$ligne->montant_ligne = $ligne->prix_livraison*$ligne->quantite;
-				$ligne->producteur = $complement->producteur;
-				$commande->montant_total += $ligne->montant_ligne;
-			});
-			// return dd($commande);
-			return $commande;
+		$commande->lignes->each(function ($ligne, $keys) use($commande){
+			$complement = $this->lignesD->completeLignes($commande->livraison_id, $ligne->panier_id);
+			$ligne->prix_livraison = $complement->prix_livraison;
+			$ligne->montant_ligne = $ligne->prix_livraison*$ligne->quantite;
+			$ligne->producteur = $complement->producteur;
+			$commande->montant_total += $ligne->montant_ligne;
 		});
-
-		// return dd($commandes);
-		return $commandes;
+			// return dd($commande);
+		return $commande;
 
 	}
 

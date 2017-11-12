@@ -18,7 +18,7 @@ class Ligne extends Model
 
 	public function Panier()
 	{
-		return $this->belongsTo('App\Models\Panier');
+		return $this->belongsTo('App\Models\Panier')->withTrashed();
 	}
 
 

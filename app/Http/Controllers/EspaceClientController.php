@@ -34,9 +34,10 @@ class EspaceClientController extends Controller
 
         $model = User::with('client.commandes.livraison')->find($auth_user->id);
 
-        $commandesbrutes = $model->load('client.commandes')->client->commandes;
-        $commandes = $this->commandesD->getAllLignes($commandesbrutes);
+        $commandes = $model->load('client.commandes')->client->commandes;
+
         $commandes = $commandes->each(function($commande) {
+            $commande = $this->commandesD->getAllLignes($commande);
             if(in_array($commande->statut, ['C_ARCHIVED', 'C_ARCHIVABLE'])) {
                 $commande->en_cours = false;
             }else{
@@ -44,6 +45,7 @@ class EspaceClientController extends Controller
                 $this->commandes_en_cours[] = $commande->livraison->id;
             }
         });
+        
         $commandes_en_cours = $this->commandes_en_cours;
 
         $livraisons = $this->livraisonD->getAllLivraisonsOuvertes($auth_user);
