@@ -98,7 +98,7 @@ return [
     'archivagefailed'    => 'Problème. La livraison n’a pas pu être archivée…',
     'handleConcernedOk'        => '<br />Les modifications éventuelles demandées ont été apportées aux livraisons.',
     'handleConcernedfailed'    => 'Un problème est survenu aucune modifications n’ont été apportées, ni à l’indisponibilité, ni aux livraisons.<br />Veuillez réessayer et contacter le Ouaibmaistre si l’erreur persiste',
-    'ouvertes'              => '{0} Il n’y a aucune livraison ouverte à la commande | {1}Il y a une livraison ouverte à la commande | [2, Inf] Il y a :count livraisons ouvertes à la commande'
+    'ouvertes'              => '{0} Il n’y a aucune livraison ouverte | {1}Il y a une livraison ouverte | [2, Inf] Il y a :count livraisons ouvertes'
     ],
 
     'commande' => [

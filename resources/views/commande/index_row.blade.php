@@ -39,7 +39,7 @@
        <!-- livraison -->
        <td>
                @if(!is_null($model->livraison))
-               {{ $model->livraison->date_livraison_enClair }}
+               @date_complete($model->livraison->date_livraison)
                @else
                <span class="is_error_txt">
                        Livraison non identifiée

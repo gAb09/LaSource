@@ -26,7 +26,7 @@
 <div class="container-fluid espace_client">
     <div class="row">
         <div class="panel panel-default">
-                    <h2 style="text-align:center">{{ trans_choice('message.livraison.ouvertes', $livraisons->count(), [ 'count' => $livraisons->count() ]) }}
+                    <h2 style="text-align:center">{{ trans_choice('message.livraison.ouvertes', $livraisons->count(), [ 'count' => $livraisons->count() ]) }} à la commande
                         {{ trans_choice('message.commande.encours', count($commandes_en_cours), [ 'count' => count($commandes_en_cours) ]) }}
                     </h2>
 

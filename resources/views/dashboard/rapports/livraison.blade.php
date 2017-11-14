@@ -1,0 +1,37 @@
+<h4>Livraison du @date_complete($livraison->date_livraison)</h4>
+<h5>
+	Commandes ouvertes jusqu'au @date_complete($livraison->date_cloture)<br />
+	Paiement possible jusqu'au @date_complete($livraison->date_paiement)
+</h5>
+
+<table class="livraison" style="width:100%">
+	<thead>
+		<tr>
+			<th class="identifiant">Id panier</th>
+			<th class="surligned panier">Panier</th>
+			<th class="producteur">Producteur</th>
+			<th class="prix">Prix (euros)</th>
+			@foreach($livraison->relais as $relais)
+			<th class="relais">{{$relais->nom}}</th>
+			@endforeach
+			<th class="surligned total">Total</th>
+		</tr>
+	</thead>
+
+	@foreach($livraison->panier as $panier)
+	<tr>
+		<td class="identifiant">{{$panier->id}}</td>
+		<td class="surligned panier">{{$panier->nom_court}}</td>
+		<td class="producteur">{{$panier->exploitation}}</td>
+		<td class="prix">@nbreFR($panier->pivot->prix_livraison)</td>
+		@foreach($panier->relais as $relais => $value)
+		@if($relais == 'total')
+		<td class="surligned relais quantite">{{$value}}</td>
+		@else
+		<td class="relais quantite">{{$value}}</td>
+		@endif
+		@endforeach
+	</tr>
+	@endforeach
+
+</table>

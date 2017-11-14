@@ -42,6 +42,81 @@ class LivraisonDomaine extends Domaine
     }
 
 
+
+    /**
+     * undocumented function
+     *
+     * @return void
+     * @author 
+     **/
+    public function getLivraisonRapportDashboard($livraison)
+    {
+        $model = $this->model->with('panier', 'commandes.lignes', 'relais')->find($livraison->id);
+
+            /* Composition des lignes pour chaque panier (eux-mêmes complétés) */
+            $model = $this->composeLignesPaniersForRapportLivraison($livraison, $livraison->relais);
+
+        // return dd($model);
+        return $model;
+    }
+
+
+    /**
+     * undocumented function
+     *
+     * @return void
+     * @author 
+     **/
+    private function composeLignesPaniersForRapportLivraison($livraison, $relais)
+    {
+        $tableau_relais = $this->composeTableauDesRelais($relais);
+        $tableau_relais['total'] = 0;  // Une entré est ajoutée après composition pour stocker le total
+
+        $livraison->panier->each(function($panier)use($livraison, $tableau_relais){
+            /* récupération du nom du producteur via son id en pivot "livraison_panier"*/
+            $panier->exploitation = $this->producteurD->findFirst($panier->pivot->producteur)->exploitation;
+
+            $complement = \DB::table('commandes')
+            ->leftjoin('lignes', function ($join) use($panier){
+                $join->on('commande_id', '=', 'commandes.id')
+                ->where('lignes.panier_id', '=', $panier->id); 
+            })
+            ->leftjoin('relais', function ($join) {
+                $join->on('relais.id', '=', 'commandes.relais_id');
+            })
+            ->where('livraison_id', $livraison->id)
+            ->get(['relais.id as relais_id', 'relais.nom as relais', 'lignes.quantite as quantite']);
+
+
+            foreach($complement as $item){
+                if (is_integer($item->quantite) and count($tableau_relais) > 1) {
+                    $tableau_relais[$item->relais_id] = $tableau_relais[$item->relais_id] + $item->quantite;
+                    $tableau_relais['total'] = $tableau_relais['total'] + $item->quantite;
+                }
+            };
+            $panier->relais = $tableau_relais;
+        });
+        return $livraison;
+    }
+
+
+    /**
+     * undocumented function
+     *
+     * @return void
+     * @author 
+     **/
+    private function composeTableauDesRelais($relais)
+    {
+        $tableau = array();
+        $relais->each(function($relai) use(&$tableau){
+            $tableau[$relai->id] = 0;
+        });
+        return $tableau;
+    }
+
+
+
     public function index($nbre_pages = 8)
     {
         return $this->model->orderBy('id', 'desc')->paginate($nbre_pages);
@@ -60,34 +135,34 @@ class LivraisonDomaine extends Domaine
       $this->handleDatas($request);
 
       if($this->model->save()){
-       $modepaiement = new ModePaiementDomaine;
-       $relais = new RelaisDomaine;
+         $modepaiement = new ModePaiementDomaine;
+         $relais = new RelaisDomaine;
 
-       $modepaiements = $modepaiement->allActivedIdForSyncLivraison();
-       $relaiss = $relais->allActivedIdForSyncLivraison();
+         $modepaiements = $modepaiement->allActivedIdForSyncLivraison();
+         $relaiss = $relais->allActivedIdForSyncLivraison();
 
-       $this->model->modepaiements()->sync($modepaiements);
-       $this->model->relais()->sync($relaiss);
+         $this->model->modepaiements()->sync($modepaiements);
+         $this->model->relais()->sync($relaiss);
 
-       return $this->model->id;
-   }else{
-       return false;
-   }
-}
+         return $this->model->id;
+     }else{
+         return false;
+     }
+ }
 
 
-public function edit($id)
-{
+ public function edit($id)
+ {
   $livraison = Livraison::with('Panier')->findOrFail($id);
   foreach ($livraison->Panier as $panier) {
-   if (\Session::get('new_attached')) {
+     if (\Session::get('new_attached')) {
 				// var_dump($panier->id);
-    if (in_array($panier->id, \Session::get('new_attached'))) {
+        if (in_array($panier->id, \Session::get('new_attached'))) {
 					// var_dump('in_array');
-     $panier->changed = "changed";
+           $panier->changed = "changed";
 					// var_dump($panier);
- }
-}
+       }
+   }
 
 }
 return $livraison;
@@ -339,10 +414,10 @@ private function handleDatas($request){
     	if ($this->controleAvantArchivage($this->model)) {
             $this->model->statut = 'L_ARCHIVED';
             // dd('archivage ok');
-    		return $this->model->save();
-    	}
+            return $this->model->save();
+        }
 
-    	return true;
+        return true;
     }
 
 
