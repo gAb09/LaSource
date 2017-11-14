@@ -2,7 +2,7 @@
 
 @section('topcontent1')
 <h1 class="titrepage">{{ trans('titrepage.lasource') }}</h1>
-@stop
+@endsection
 
 @section('content')
 <div itemprop="articleBody">

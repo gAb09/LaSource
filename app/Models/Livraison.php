@@ -28,6 +28,12 @@ class Livraison extends Model
 
 
 
+    public function Commandes()
+    {
+        return $this->hasMany('App\Models\Commande');
+    }
+
+
     public function Panier()
     {
         return $this->belongsToMany('App\Models\Panier')->withPivot('producteur', 'prix_livraison');

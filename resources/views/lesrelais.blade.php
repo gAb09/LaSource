@@ -2,7 +2,7 @@
 
 @section('topcontent1')
 <h1 class="titrepage">{{ trans('titrepage.lesrelais') }}</h1>
-@stop
+@endsection
 
 @section('content')
                     <div class="col-md-3 relais" style="background-color:#ccc">

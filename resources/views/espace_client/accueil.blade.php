@@ -26,7 +26,7 @@
 <div class="container-fluid espace_client">
     <div class="row">
         <div class="panel panel-default">
-                    <h2 style="text-align:center">{{ trans_choice('message.livraison.ouvertes', $livraisons->count(), [ 'count' => $livraisons->count() ]) }}
+                    <h2 style="text-align:center">{{ trans_choice('message.livraison.ouvertes', $livraisons->count(), [ 'count' => $livraisons->count() ]) }} à la commande
                         {{ trans_choice('message.commande.encours', count($commandes_en_cours), [ 'count' => count($commandes_en_cours) ]) }}
                     </h2>
 
@@ -105,4 +105,4 @@
 <script type="text/javascript">
 window.addEventListener('keydown',function(e){if(e.keyIdentifier=='U+000A'||e.keyIdentifier=='Enter'||e.keyCode==13){if(e.target.nodeName=='INPUT'&&e.target.type=='text'){e.preventDefault();return false;}}},true);
 </script>
-@stop
+@endsection

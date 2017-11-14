@@ -181,6 +181,8 @@ class Domaine
 	public function destroy($id)
 	{
 		$this->model = $this->model->where('id', $id)->first();
+		$this->model->is_actived = 0;
+		$this->model->save();
 		return $this->model->delete();
 	}
 
@@ -204,6 +206,8 @@ class Domaine
 		if ($this->{$relation_type}('Suppression')) {
 			return false;
 		}
+		$this->model->is_actived = 0;
+		$this->model->save();
 
 		return $this->model->delete();
 	}

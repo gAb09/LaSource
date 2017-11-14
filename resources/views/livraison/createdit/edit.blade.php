@@ -2,18 +2,18 @@
 
 @section('titre')
 @parent
-@stop
+@endsection
 
 
 @section('message')
 @parent
-@stop
+@endsection
 
 
 @section('topcontent1')
 <h1 class="titrepage">{!! trans('titrepage.livraison.edit') !!} @date_complete($model->date_livraison) <small>({{ trans('constante.'.$model->statut) }})</small></h1>
 @parent
-@stop
+@endsection
 
 
 
@@ -62,4 +62,4 @@
 	</form>
 @endif
 
-@stop
+@endsection

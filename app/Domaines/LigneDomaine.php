@@ -22,20 +22,24 @@ class LigneDomaine extends Domaine
 	 **/
 	public function completeLignes($livraison_id, $panier_id){
 
-		$models = \DB::table('livraison_panier')
+		$complement = \DB::table('livraison_panier')
 
 		// Producteur
 		->leftjoin('producteurs', function ($join) {
 			$join->on('producteurs.id', '=', 'livraison_panier.producteur');
 		})
+		->leftjoin('paniers', function ($join) use($panier_id){
+			$join->on('paniers.id', '=', 'livraison_panier.panier_id');
+		})
 		->where([['livraison_id', '=', $livraison_id], ['panier_id', '=', $panier_id]])
 		->select(
 			'livraison_panier.producteur', 'livraison_panier.prix_livraison' // Pivot livraison_panier
 			, 'producteurs.exploitation as producteur' // Producteur
+			, 'paniers.nom_court as panier_nom', 'paniers.type as panier_type' // Panier
 			)
-		->get();
+		->first();
 
-		return $models[0];
+		return $complement;
 	}
 
 

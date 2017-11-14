@@ -2,19 +2,19 @@
 
 @section('titre')
 @parent
-@stop
+@endsection
 
 
 @section('message')
 @parent
-@stop
+@endsection
 
 
 @section('topcontent1')
 <h1 class="titrepage">{{ trans('titrepage.livraison.create') }}</h1>
 @include('livraison.partials.param_ecarts')
 @parent
-@stop
+@endsection
 
 
 
@@ -29,4 +29,4 @@
 	</div>
 </form>
 
-	@stop
+	@endsection

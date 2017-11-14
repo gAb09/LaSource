@@ -2,16 +2,16 @@
 
 @section('titre')
 @parent
-@stop
+@endsection
 
 
 @section('topcontent1')
 		<h1 class="titrepage">{{$titre_page}} “{{$menu->etiquette}}” <small>(Id {{$menu->id}})</small></h1>
-@stop
+@endsection
 
 
 @section('topcontent2')
-@stop
+@endsection
 
 
 @section('contenu')
@@ -20,7 +20,7 @@
 
 @include('menus/views/form')
 
-@stop
+@endsection
 
 
 
@@ -33,10 +33,10 @@
 {{ Form::open(['method' => 'delete', 'action' => ['MenuController@destroy', $menu->id]]) }}
 {{ Form::submit('Supprimer ce menu', array('class' => 'btn btn-danger', 'onClick' => 'javascript:return(confirmation());')) }}
 {{ Form::close() }}
-@stop
+@endsection
 
 @section('footer')
 @parent
 <h3>  Le footer de menus</h3>
 
-@stop
+@endsection

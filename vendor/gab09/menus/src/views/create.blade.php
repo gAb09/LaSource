@@ -2,16 +2,16 @@
 
 @section('titre')
 @parent
-@stop
+@endsection
 
 
 @section('topcontent1')
 		<h1 class="titrepage">{{$titre_page}}</h1>
-@stop
+@endsection
 
 
 @section('topcontent2')
-@stop
+@endsection
 
 
 @section('contenu')
@@ -21,18 +21,18 @@
 @include('menus/views/form')
 
 
-@stop
+@endsection
 
 @section('zapette')
 {{ link_to_action('MenuController@index', 'Retour à la liste', null, array('class' => 'btn btn-info btn-zapette iconesmall list')); }}
 
 {{ Form::submit('Créer ce menu', array('class' => 'btn btn-success')) }}
 {{ Form::close() }}
-@stop
+@endsection
 
 
 @section('footer')
 @parent
 <h3>  Le footer de menus</h3>
 
-@stop
+@endsection

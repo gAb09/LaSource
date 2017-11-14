@@ -191,11 +191,6 @@ Route::group(['middleware' => 'auth'], function () {
 
 	
 // DASHBOARD
-	//composerMails
-	Route::get('dashboard/composerMails', 
-		['as' => 'dashboardComposerMails', 'uses' => 'DashboardController@composerMails']
-		);
-
 
 	Route::resource('livraison', 'LivraisonController');
 

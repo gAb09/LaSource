@@ -4,13 +4,13 @@
 
 @section('titre')
 @parent
-@stop
+@endsection
 
 
 
 @section('topcontent1')
 <h1 class="titrepage titresmaller">{{ ucfirst($titre_page) }}</h1>
-@stop
+@endsection
 
 
 
@@ -26,7 +26,7 @@
 <p>Si c'est une des options “ajout automatique” ou “detach automatique” qui est choisie, “{{$indisponisable->nom}}” sera attaché à la livraison ou en sera détaché,<br />
 	dnas les 2 cas, un mail sera préparé, à destination de tous les clients, qui pourront alors changer de relais, ou encore annuler ou créer une commande.<br />
 </p>
-@stop
+@endsection
 
 
 @section('content')
@@ -109,5 +109,5 @@
 	<button type="submit" class="btn btn-success">Valider</button>
 	<a href="{{ route('annulationIndisponibilityChanges') }}" class="btn btn-danger">Annuler {{$action_for_view}}</a>
 </form>
-@stop
+@endsection
 

@@ -2,7 +2,7 @@
 
 @section('topcontent1')
 <h1 class="titrepage">{{ trans('titrepage.leslivraisons') }}</h1>
-@stop
+@endsection
 
 @section('content')
 Liste à venir

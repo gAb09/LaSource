@@ -199,12 +199,28 @@ class CommandeDomaine extends Domaine
 			$ligne->prix_livraison = $complement->prix_livraison;
 			$ligne->montant_ligne = $ligne->prix_livraison*$ligne->quantite;
 			$ligne->producteur = $complement->producteur;
+			$ligne->panier_nom = $complement->panier_nom;
+			$ligne->panier_type = $complement->panier_type;
 			$commande->montant_total += $ligne->montant_ligne;
 		});
-			// return dd($commande);
 		return $commande;
 
 	}
 
-
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function getCommandesRapportDashboard($livraison_id)
+	{
+		$commandes = $this->model->where('livraison_id', $livraison_id)->get();
+		$commandes->each(function($commande){
+			$commande = $this->getAllLignes($commande);
+			$commande->load('client');
+		});
+		// return dd($commandes);
+		return $commandes;
+	}
 }

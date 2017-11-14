@@ -12,12 +12,12 @@
 
 @section('titre')
 @parent
-@stop
+@endsection
 
 
 @section('message')
 @parent
-@stop
+@endsection
 
 
 @section('topcontent1')
@@ -25,12 +25,12 @@
 	<a href="{{ URL::route('livraison.index') }}" class="btn btn-info">
 		<i class="fa fa-btn fa-list-ul"></i>Retour à la liste
 	</a>
-@stop
+@endsection
 
 
 @section('modemploi')
 @include('livraison.modemploi')
-@stop
+@endsection
 
 
 @section('content')
@@ -40,9 +40,8 @@
 	@show
 </div>
 
+@endsection
 
-
-@stop
 
 @section('script')
 @parent
@@ -62,4 +61,4 @@ var liv = "{{ old('date_livraison', $model->date_livraison) }}";
 liv = liv.split(" ")[0];
 getComboDates('date_livraison', liv);
 </script>
-@stop
+@endsection

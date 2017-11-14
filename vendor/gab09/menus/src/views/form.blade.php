@@ -1,6 +1,6 @@
 @section('body')
 onLoad="toggle_publication();"
-@stop
+@endsection
 
 <!-- Etiquette - Nom système - Route -->
 <fieldset>
@@ -61,6 +61,6 @@ onLoad="toggle_publication();"
 @section('script')
 <script src="/assets/js/menus.js">
 </script>
-@stop
+@endsection
 
 

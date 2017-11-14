@@ -4,8 +4,74 @@ COULEURS
 /* Couleurs de bootstrap */
 /* Modèles */
 /* Couleurs site */
-.dashboard_main .dashboard_part {
-  background-color: yellow;
-  width: 32%;
-  height: 100px;
+#dashboard_console {
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  height: 95%;
 }
+#dashboard_console > div {
+  margin: 5px 0;
+  text-align: center;
+  background-color: yellow;
+}
+#dashboard_content {
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+}
+#dashboard_content > div {
+  text-align: center;
+  background-color: yellow;
+  /* height:300px; */
+}
+#dashboard_content table {
+  font-size: 0.9em;
+  line-height: 1.2em;
+  /* table-layout:fixed; */
+  width: 100%;
+  border: 2px solid #814623;
+  border-collapse: collapse;
+  margin-top: 1em;
+}
+#dashboard_content table th,
+#dashboard_content table td {
+  text-align: center;
+  border: 1px solid #814623;
+  padding: 3px;
+}
+#dashboard_content table .surligned {
+  color: #FFFFFF;
+  background-color: #814623;
+  border: 1px solid #fcf7f4;
+}
+#dashboard_content table .identifiant {
+  width: 5%;
+}
+#dashboard_content table .panier {
+  width: 20%;
+  text-align: left;
+}
+#dashboard_content table .producteur {
+  width: 20%;
+  text-align: left;
+}
+div #dashboard_content .livraison {
+  background-color: #fcf7f4;
+}
+div #dashboard_content .commande {
+  background-color: #f4f4c8;
+}
+div #dashboard_content .relai {
+  background-color: #e6f0fa;
+}
+div #dashboard_content .producteur {
+  background-color: #bdd8c9;
+}
+div #dashboard_content .mails {
+  background-color: #7fffd4;
+}
+div #dashboard_content .indispos {
+  background-color: #00ffff;
+}
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                          ISSUES DE LA SOURCE ANCIENNE VERSION (brutes sans aucun tri)
+                          - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
