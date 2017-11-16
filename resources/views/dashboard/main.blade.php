@@ -21,8 +21,8 @@ Tableau de bord
 <div class="container-fluid">
 		<div id="dashboard_console" class="col-md-2 flexcontainer">
 
-			{{-- @include('dashboard.console.livraisons')
-			@include('dashboard.console.commandes')
+			@include('dashboard.console.livraisons')
+			{{-- @include('dashboard.console.commandes')
 			@include('dashboard.console.relais')
 			@include('dashboard.console.producteurs')
 			@include('dashboard.console.mails')
@@ -35,20 +35,24 @@ Tableau de bord
 				{{$message}}
 			@else
 
-				@foreach($collections as $collection)
-				<div id="{{$collection->id}}">
+				@foreach($livraisons as $livraison)
+				<div id="{{$livraison->id}}">
 					<div model="livraison" class="livraison">
-						@include('dashboard.rapports.livraison', ['livraison' => $collection])
+						@include('dashboard.rapports.livraison', ['livraison' => $livraison])
 					</div>
-					<div model="commande" class="">
-						@include('dashboard.rapports.commande', ['commandes' => $collection->rapport_commandes])
-					</div>
-					<div model="producteur" class="producteur">
-						@include('dashboard.rapports.producteur', ['producteurs' => $collection->rapport_producteurs])
-					</div>
-					<div model="relai" class="relai">
-						@include('dashboard.rapports.relai', ['relais' => $collection->rapport_relais])
-					</div>
+					@if(!$livraison->rapport_commandes->isEmpty())
+						<div model="commande" class="">
+							@include('dashboard.rapports.commande', ['commandes' => $livraison->rapport_commandes])
+						</div>
+						<div model="producteur" class="">
+							@include('dashboard.rapports.producteur', ['producteurs' => $livraison->rapport_producteurs])
+						</div>
+						<div model="relai" class="">
+							@include('dashboard.rapports.relai', ['relais' => $livraison->rapport_relais])
+						</div>
+					@else
+						<h3>À ce jour aucune commande n’a été passée pour cette livraison …</h3>
+					@endif
 				</div>
 					@endforeach
 				<div model="mails" class="mails">

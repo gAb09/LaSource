@@ -54,7 +54,7 @@ class PanierDomaine extends Domaine
 		})->with('producteur')->where('is_actived', 1)->get();
 
 		foreach ($paniers_lied as $panier) {
-			$producteur = $panier->livraison->find($livraison_id)->pivot->producteur;
+			$producteur = $panier->livraison->find($livraison_id)->pivot->producteur_id;
 			if(is_null($producteur) ){
 				if(!empty(old('producteur.'.$panier->id))){
 					$panier->producteur = old('producteur.'.$panier->id);
@@ -131,6 +131,7 @@ class PanierDomaine extends Domaine
 
 	public function PanierSyncProducteurs($panier_id, $producteurs = array())
 	{
+		return dd($producteurs);
 		$model = Panier::find($panier_id);
 		if(is_null($producteurs)){
 			$model->producteur()->detach();

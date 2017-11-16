@@ -26,7 +26,7 @@ class Panier extends Model
 
     public function Livraison()
     {
-        return $this->belongsToMany('App\Models\Livraison')->withPivot('producteur', 'prix_livraison');
+        return $this->belongsToMany('App\Models\Livraison')->withPivot('producteur_id', 'prix_livraison');
     }
 
 }

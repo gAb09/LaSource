@@ -19,11 +19,11 @@ COULEURS
   justify-content: flex-start;
 }
 #dashboard_content > div {
-  margin-top: 10px;
+  margin-bottom: 20px;
   text-align: center;
   background-color: #fcf7f4;
   padding: 0 10px 10px 10px;
-  border: solid 1px #814623;
+  border: solid 2px #814623;
 }
 #dashboard_content > div h4 {
   background-color: #814623;
@@ -43,7 +43,7 @@ COULEURS
   line-height: 1.2em;
   /* table-layout:fixed; */
   width: 100%;
-  border: 2px solid #814623;
+  border: 1px solid #814623;
   border-collapse: collapse;
   margin-top: 1em;
 }
@@ -86,6 +86,10 @@ div #dashboard_content .mails {
 }
 div #dashboard_content .indispos {
   background-color: #00ffff;
+}
+/* undocumented function */
+td.libelle_chiffre_affaire {
+  text-align: right;
 }
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
                           ISSUES DE LA SOURCE ANCIENNE VERSION (brutes sans aucun tri)

@@ -1,4 +1,17 @@
 <div id="dash_rapports_producteurs">
 	<h3>Producteurs concernés</h3>
-	klfjklsdjfkl
+
+	<table class="producteur" style="width:100%">
+	<thead>
+		<tr>
+			<th class="exploitation">Exploitation</th>
+		</tr>
+	</thead>
+
+	@foreach($producteurs as $producteur)
+	<tr>
+			<th class="exploitation">{{$producteur->exploitation}}</th>
+	</tr>
+	@endforeach
+</table>
 </div>

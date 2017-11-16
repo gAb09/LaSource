@@ -66,7 +66,7 @@
 				<!-- producteur -->
 				<td class="form-group">
 				@foreach($panier->producteur as $producteur)
-					@if($producteur->id == $panier->pivot->producteur)
+					@if($producteur->id == $panier->pivot->producteur_id)
 						{{ $producteur->nompourpaniers }}
 					@endif
 				@endforeach

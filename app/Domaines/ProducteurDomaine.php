@@ -67,4 +67,25 @@ class ProducteurDomaine extends Domaine
 		return $collection;
 	}
 
+  /**
+  * undocumented function
+  *
+  * @return void
+  * @author 
+  **/
+  public function getRapportDashboard($livraison)
+  {
+  	$model = \DB::table('livraison_panier')->where('livraison_id', $livraison)
+  	->leftjoin('producteurs', function ($join) {
+  		$join->on('producteurs.id', '=', 'livraison_panier.producteur_id');
+  	}) 
+  	->get();
+
+  	/* Composition des lignes pour chaque panier (eux-mêmes complétés) */
+    // $model = $this->composeLignesPaniersForRapportLivraison($livraison, $livraison->relais);
+
+  	// return dd($model);
+  	return $model;
+  }
+
 }

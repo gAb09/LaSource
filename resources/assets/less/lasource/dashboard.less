@@ -16,11 +16,11 @@
 	flex-flow: column nowrap;
 	justify-content: flex-start;
 	>div{
-		margin-top: 10px;
+		margin-bottom: 20px;
 		text-align: center;
 		background-color: @color_livraison;
 		padding: 0 10px 10px 10px;
-		border: solid 1px @color_livraison_dark;
+		border: solid 2px @color_livraison_dark;
 		h4{
 			background-color: @color_livraison_dark;
 			color: #FFF;
@@ -40,7 +40,7 @@
 		line-height: 1.2em;
 		/* table-layout:fixed; */
 		width:100%;
-		border: 2px solid @color_livraison_dark;
+		border: 1px solid @color_livraison_dark;
 		border-collapse: collapse;
 		margin-top:1em;
 		th, td{
@@ -89,8 +89,10 @@ div #dashboard_content{
 	}
 }
 
-
-
+/* undocumented function */
+td.libelle_chiffre_affaire{
+	text-align: right;
+}
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
                           ISSUES DE LA SOURCE ANCIENNE VERSION (brutes sans aucun tri)

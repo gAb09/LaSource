@@ -213,7 +213,7 @@ class CommandeDomaine extends Domaine
 	 * @return void
 	 * @author 
 	 **/
-	public function getCommandesRapportDashboard($livraison_id)
+	public function getRapportDashboard($livraison_id)
 	{
 		$commandes = $this->model->where('livraison_id', $livraison_id)->get();
 		$commandes->each(function($commande){

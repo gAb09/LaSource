@@ -35,7 +35,7 @@ class LivraisonDomaine extends Domaine
         /* récupération du nom du producteur via son id en pivot "livraison_panier"*/
         $models->each(function($livraison){
             $livraison->panier->each(function($panier)use($livraison){
-                $panier->exploitation = $this->producteurD->findFirst($panier->pivot->producteur)->exploitation;
+                $panier->exploitation = $this->producteurD->findFirst($panier->pivot->producteur_id)->exploitation;
             });
         });
         return $models;
@@ -49,7 +49,7 @@ class LivraisonDomaine extends Domaine
      * @return void
      * @author 
      **/
-    public function getLivraisonRapportDashboard($livraison)
+    public function getRapportDashboard($livraison)
     {
         $model = $this->model->with('panier', 'commandes.lignes', 'relais')->find($livraison->id);
 
@@ -74,7 +74,7 @@ class LivraisonDomaine extends Domaine
 
         $livraison->panier->each(function($panier)use($livraison, $tableau_relais){
             /* récupération du nom du producteur via son id en pivot "livraison_panier"*/
-            $panier->exploitation = $this->producteurD->findFirst($panier->pivot->producteur)->exploitation;
+            $panier->exploitation = $this->producteurD->findFirst($panier->pivot->producteur_id)->exploitation;
 
             $complement = \DB::table('commandes')
             ->leftjoin('lignes', function ($join) use($panier){
@@ -88,13 +88,18 @@ class LivraisonDomaine extends Domaine
             ->get(['relais.id as relais_id', 'relais.nom as relais', 'lignes.quantite as quantite']);
 
 
+            /* Si il existe au moins une commande pour cette livraison, il y a donc au moins un relais (count($tableau_relais) > 1),
+               Si elle n'est pas nulle, report de la quantité et ajout au calcul du nombre total de ce panier */
             foreach($complement as $item){
                 if (is_integer($item->quantite) and count($tableau_relais) > 1) {
                     $tableau_relais[$item->relais_id] = $tableau_relais[$item->relais_id] + $item->quantite;
                     $tableau_relais['total'] = $tableau_relais['total'] + $item->quantite;
                 }
             };
+            $total_ligne = $panier->pivot->prix_livraison * $tableau_relais['total'];
+            $livraison->chiffre_affaire += $total_ligne; /* Calcul du chiffre affaire total de cette livraison. */
             $panier->relais = $tableau_relais;
+
         });
         return $livraison;
     }
@@ -191,7 +196,7 @@ private function handleDatas($request){
 
 
     /**
-    * Synchronisation avec les paniers (avec ou sans les données pivot : producteur et prix).
+    * Synchronisation avec les paniers (avec ou sans les données pivot : producteur_id et prix).
     *
     * @param integer $model_id
     * @param array[integer, integer] $paniers
@@ -219,7 +224,7 @@ private function handleDatas($request){
     *
     * La vue d'origine peut être :
     * – la vue modale de la liste des paniers, $paniers ne comporte alors que les panier_id
-    * – la vue édition d'une livraison, $paniers comporte alors panier_id, producteur, prix_livraison
+    * – la vue édition d'une livraison, $paniers comporte alors panier_id, producteur_id, prix_livraison
     *
     * @param integer $model_id
     * @param array[integer, integer] $paniers
@@ -229,10 +234,10 @@ private function handleDatas($request){
     public function prepareSyncPaniers($paniers)
     {
     	$datas = array();
-    	if (array_key_exists('producteur', $paniers)) {
+    	if (array_key_exists('producteur_id', $paniers)) {
 
     		foreach ($paniers['panier_id'] as $panier) {
-    			$datas[$panier] = [ 'producteur' => $paniers['producteur'][$panier], 'prix_livraison' => $paniers['prix_livraison'][$panier] ];
+    			$datas[$panier] = [ 'producteur_id' => $paniers['producteur_id'][$panier], 'prix_livraison' => $paniers['prix_livraison'][$panier] ];
     		}
     		return $this->model->panier()->sync($datas);
     	}

@@ -30,29 +30,29 @@
 
 				<!-- producteur -->
 					<?php
-					if (isset(old('producteur')[$panier->id])) {
-						$value_producteur = old('producteur')[$panier->id];
-					}elseif (is_null($panier->pivot->producteur)) {
-						$value_producteur = 0;
+					if (isset(old('producteur_id')[$panier->id])) {
+						$value_producteur_id = old('producteur_id')[$panier->id];
+					}elseif (is_null($panier->pivot->producteur_id)) {
+						$value_producteur_id = 0;
 					}else{
-						$value_producteur = $panier->pivot->producteur;
+						$value_producteur_id = $panier->pivot->producteur_id;
 					}
 					?>
-				<td class="form-group {{ $errors->has('producteur.'.$panier->id) ? ' has-error' : '' }}" style="width:58%">
+				<td class="form-group {{ $errors->has('producteur_id.'.$panier->id) ? ' has-error' : '' }}" style="width:58%">
 					<!-- validation -->
-					@if ($errors->has('producteur.'.$panier->id))
+					@if ($errors->has('producteur_id.'.$panier->id))
 					<span class="help-block">
-						<strong>{{ $errors->first('producteur.'.$panier->id) }}</strong>
+						<strong>{{ $errors->first('producteur_id.'.$panier->id) }}</strong>
 					</span>
 					@endif
 					<!-- affichage -->
-					<select class="{{ $panier->changed}}" name="producteur[{{ $panier->id }}]" onChange="javascript:changementDatasPaniersDetected(this);">
-						@if($value_producteur == 0))
+					<select class="{{ $panier->changed}}" name="producteur_id[{{ $panier->id }}]" onChange="javascript:changementDatasPaniersDetected(this);">
+						@if($value_producteur_id == 0))
 						<option value="0" selected="selected">producteur à déterminer</option>
 						@endif
 						@forelse($panier->producteur as $producteur)
 
-						@if($value_producteur == $producteur->id)
+						@if($value_producteur_id == $producteur->id)
 						<option value="{!! $producteur->id !!}" selected="selected">{!! $producteur->nompourpaniers !!}</option>
 
 						@else

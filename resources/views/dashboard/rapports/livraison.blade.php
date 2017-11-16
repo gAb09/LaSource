@@ -34,8 +34,9 @@
 	</tr>
 	@endforeach
 		<tr>
-		<td colspan="{{ $livraison->relais->count()+4 }}"></td>
-		<td class="total_livraison surligned">@nbreFR($panier->pivot->prix_livraison)</td>
+		<td colspan="{{ $livraison->relais->count()+2 }}"></td>
+		<td class="libelle_chiffre_affaire" colspan="2">Total livraison</td>
+		<td class="total_livraison surligned">@nbreFR($livraison->chiffre_affaire)</td>
 	</tr>
 
 </table>

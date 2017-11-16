@@ -32,12 +32,12 @@ class DashboardController extends Controller
      */
     public function Main()
     {
-        $collections = $this->domaine->getallCollectionsForDashboard();
-        if($collections == false){
+        $livraisons = $this->domaine->getAllLivraisonsForDashboard();
+        if($livraisons == false){
             // return dd($this->domaine);
             return view('dashboard.main')->with('message', $this->domaine->getMessage());
         }
-        return view('dashboard.main')->with(compact('collections'));
+        return view('dashboard.main')->with(compact('livraisons'));
 
     }
 
