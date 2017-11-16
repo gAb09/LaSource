@@ -16,9 +16,24 @@
 	flex-flow: column nowrap;
 	justify-content: flex-start;
 	>div{
+		margin-top: 10px;
 		text-align: center;
-		background-color: yellow;
-		/* height:300px; */
+		background-color: @color_livraison;
+		padding: 0 10px 10px 10px;
+		border: solid 1px @color_livraison_dark;
+		h4{
+			background-color: @color_livraison_dark;
+			color: #FFF;
+			margin: 0 -10px;
+			padding: 5px 0;
+		}
+		h3{
+			color: @color_livraison_dark;
+			background-color: @color_livraison;
+			font-size: 1.2em;
+			font-weight: 700;
+			padding-top: 5px;
+		}
 	}
 	table {
 		font-size:0.9em;

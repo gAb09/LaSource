@@ -19,9 +19,24 @@ COULEURS
   justify-content: flex-start;
 }
 #dashboard_content > div {
+  margin-top: 10px;
   text-align: center;
-  background-color: yellow;
-  /* height:300px; */
+  background-color: #fcf7f4;
+  padding: 0 10px 10px 10px;
+  border: solid 1px #814623;
+}
+#dashboard_content > div h4 {
+  background-color: #814623;
+  color: #FFF;
+  margin: 0 -10px;
+  padding: 5px 0;
+}
+#dashboard_content > div h3 {
+  color: #814623;
+  background-color: #fcf7f4;
+  font-size: 1.2em;
+  font-weight: 700;
+  padding-top: 5px;
 }
 #dashboard_content table {
   font-size: 0.9em;
@@ -61,7 +76,7 @@ div #dashboard_content .commande {
   background-color: #f4f4c8;
 }
 div #dashboard_content .relai {
-  background-color: #e6f0fa;
+  background-color: #e6f2fd;
 }
 div #dashboard_content .producteur {
   background-color: #bdd8c9;

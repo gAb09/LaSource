@@ -36,25 +36,28 @@ Tableau de bord
 			@else
 
 				@foreach($collections as $collection)
-				<div model="livraison" class="livraison">
-					@include('dashboard.rapports.livraison', ['livraison' => $collection])
+				<div id="{{$collection->id}}">
+					<div model="livraison" class="livraison">
+						@include('dashboard.rapports.livraison', ['livraison' => $collection])
+					</div>
+					<div model="commande" class="">
+						@include('dashboard.rapports.commande', ['commandes' => $collection->rapport_commandes])
+					</div>
+					<div model="producteur" class="producteur">
+						@include('dashboard.rapports.producteur', ['producteurs' => $collection->rapport_producteurs])
+					</div>
+					<div model="relai" class="relai">
+						@include('dashboard.rapports.relai', ['relais' => $collection->rapport_relais])
+					</div>
 				</div>
-				<div model="commande" class="commande">
-					@include('dashboard.rapports.commande', ['commandes' => $collection->rapport_commandes])
-				</div>
-				<div model="producteur" class="producteur">
-					@include('dashboard.rapports.producteur', ['producteurs' => $collection->rapport_producteurs])
-				</div>
-				<div model="relai" class="relai">
-					@include('dashboard.rapports.relai', ['relais' => $collection->rapport_relais])
-				</div>
-				@endforeach
-
+					@endforeach
 				<div model="mails" class="mails">
 				@include('dashboard.rapports.mails')
+				</div>
 
 				<div model="indispos" class="indispos">
 				@include('dashboard.rapports.indispos')
+				</div>
 
 			@endif
 
