@@ -152,3 +152,6 @@
     </div>
 </div>
 
+<!-- rang (pour conservation de celui-ci lors de  l'update) -->
+        <input type="text" class="hidden " name="rang" value="{{ $model->rang or old('rang') }}">
+
