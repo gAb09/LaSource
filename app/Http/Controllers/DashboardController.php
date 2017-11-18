@@ -33,9 +33,10 @@ class DashboardController extends Controller
     public function Main()
     {
         $livraisons = $this->domaine->getAllLivraisonsForDashboard();
-        if($livraisons == false){
+
+        if($livraisons->isEmpty()){
             // return dd($this->domaine);
-            return view('dashboard.main')->with('message', $this->domaine->getMessage());
+            return view('dashboard.main')->with(compact('livraisons'))->with('message', $this->domaine->getMessage());
         }
         return view('dashboard.main')->with(compact('livraisons'));
 

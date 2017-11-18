@@ -1,12 +1,14 @@
-<div id="dash_listes_livraisons">
-	<h3>{{ trans_choice('message.livraison.ouvertes', $livraisons->count(), [ 'count' => $livraisons->count() ]) }}</h3>
+<div id="dash_listes_livraisons" class="livraison">
+	<p>{{ trans_choice('message.livraison.ouvertes_listeDashboard', $livraisons->count(), [ 'count' => $livraisons->count() ]) }}
+		<small role="handleAllLivraisons" class="hidden" onClick="javascript:afficherAllLivraisons()"><br />Les afficher toutes</small>
+	</p>
 
-@foreach($livraisons as $livraison)
+	@foreach($livraisons as $livraison)
 
 	<p>
 		@date_complete($livraison->date_livraison)<br />
-		{{trans('constante.'.$livraison->statut)}}
+		<small role="handleOneLivraison" class="affiche_masque masquer"  onClick="javascript:afficherMasquerUneLivraison( this, {{ $livraison->id }} )"></small>
 	</p>
 
-@endforeach
+	@endforeach
 </div>

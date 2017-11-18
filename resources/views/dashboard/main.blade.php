@@ -32,22 +32,22 @@ Tableau de bord
 
 		<div id="dashboard_content" class="col-md-10">
 			@if(isset($message))
-				{{$message}}
+				<h3>{{$message}}</h3>
 			@else
 
 				@foreach($livraisons as $livraison)
-				<div id="{{$livraison->id}}">
-					<div model="livraison" class="livraison">
+				<div role="rapport" id="{{$livraison->id}}">
+					<div role="livraison" class="livraison">
 						@include('dashboard.rapports.livraison', ['livraison' => $livraison])
 					</div>
 					@if(!$livraison->rapport_commandes->isEmpty())
-						<div model="commande" class="">
+						<div role="commande" class="">
 							@include('dashboard.rapports.commande', ['commandes' => $livraison->rapport_commandes])
 						</div>
-						<div model="producteur" class="">
+						<div role="producteur" class="">
 							@include('dashboard.rapports.producteur', ['producteurs' => $livraison->rapport_producteurs])
 						</div>
-						<div model="relai" class="">
+						<div role="relai" class="">
 							@include('dashboard.rapports.relai', ['relais' => $livraison->rapport_relais])
 						</div>
 					@else
@@ -55,11 +55,11 @@ Tableau de bord
 					@endif
 				</div>
 					@endforeach
-				<div model="mails" class="mails">
+				<div role="mails" class="mails hidden">
 				@include('dashboard.rapports.mails')
 				</div>
 
-				<div model="indispos" class="indispos">
+				<div role="indispos" class="indispos hidden">
 				@include('dashboard.rapports.indispos')
 				</div>
 

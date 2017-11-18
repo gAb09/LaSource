@@ -69,27 +69,39 @@ COULEURS
   width: 20%;
   text-align: left;
 }
-div #dashboard_content .livraison {
+div #dashboard_content .livraison,
+div #dashboard_console .livraison {
   background-color: #fcf7f4;
 }
-div #dashboard_content .commande {
+div #dashboard_content .commande,
+div #dashboard_console .commande {
   background-color: #f4f4c8;
 }
-div #dashboard_content .relai {
+div #dashboard_content .relai,
+div #dashboard_console .relai {
   background-color: #e6f2fd;
 }
-div #dashboard_content .producteur {
+div #dashboard_content .producteur,
+div #dashboard_console .producteur {
   background-color: #bdd8c9;
 }
-div #dashboard_content .mails {
+div #dashboard_content .mails,
+div #dashboard_console .mails {
   background-color: #7fffd4;
 }
-div #dashboard_content .indispos {
+div #dashboard_content .indispos,
+div #dashboard_console .indispos {
   background-color: #00ffff;
 }
 /* undocumented function */
 td.libelle_chiffre_affaire {
   text-align: right;
+}
+small.affiche_masque.afficher:before {
+  content: "Afficher ";
+}
+small.affiche_masque.masquer:before {
+  content: "Masquer ";
 }
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
                           ISSUES DE LA SOURCE ANCIENNE VERSION (brutes sans aucun tri)

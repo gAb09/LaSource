@@ -68,7 +68,7 @@
 }
 
 
-div #dashboard_content{
+div #dashboard_content, div #dashboard_console{
 	.livraison{
 		background-color: @color_livraison;
 	}
@@ -92,6 +92,16 @@ div #dashboard_content{
 /* undocumented function */
 td.libelle_chiffre_affaire{
 	text-align: right;
+}
+
+small.affiche_masque.afficher:before{
+	// background-color: green;
+	content: "Afficher ";
+}
+
+small.affiche_masque.masquer:before{
+	 // background-color: red;
+	content: "Masquer ";
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
