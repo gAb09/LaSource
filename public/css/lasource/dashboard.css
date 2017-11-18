@@ -19,7 +19,7 @@ COULEURS
   justify-content: flex-start;
 }
 #dashboard_content > div {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   text-align: center;
   background-color: #fcf7f4;
   padding: 0 10px 10px 10px;
@@ -85,22 +85,22 @@ div #dashboard_content .producteur,
 div #dashboard_console .producteur {
   background-color: #bdd8c9;
 }
-div #dashboard_content .mails,
-div #dashboard_console .mails {
+div #dashboard_content .mail,
+div #dashboard_console .mail {
   background-color: #7fffd4;
 }
-div #dashboard_content .indispos,
-div #dashboard_console .indispos {
+div #dashboard_content .indispo,
+div #dashboard_console .indispo {
   background-color: #00ffff;
 }
 /* undocumented function */
 td.libelle_chiffre_affaire {
   text-align: right;
 }
-small.affiche_masque.afficher:before {
+.affiche_masque.afficher:before {
   content: "Afficher ";
 }
-small.affiche_masque.masquer:before {
+.affiche_masque.masquer:before {
   content: "Masquer ";
 }
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 

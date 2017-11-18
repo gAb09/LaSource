@@ -43,3 +43,23 @@ function afficherMasquerUneLivraison(zis, livraison_id)
 	});
 
 }
+
+function afficherMasquerPartie(zis, partie)
+{
+	console.log(partie);
+	var handleParties = $("[role="+partie+"]");
+
+	if ($(zis).hasClass('afficher')) {
+		$(zis).removeClass('afficher');
+		$(zis).addClass('masquer');
+		$(handleParties).each(function(index){
+			$(this).removeClass('hidden');
+		});
+	}else{
+		$(zis).removeClass('masquer');
+		$(zis).addClass('afficher');
+		$(handleParties).each(function(index){
+			$(this).addClass('hidden');
+		});
+	}
+}

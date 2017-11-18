@@ -18,15 +18,15 @@ Tableau de bord
 
 
 @section('content')
-<div class="container-fluid">
+<div class="container-fluid" style="background-color:grey">
 		<div id="dashboard_console" class="col-md-2 flexcontainer">
 
 			@include('dashboard.console.livraisons')
-			{{-- @include('dashboard.console.commandes')
-			@include('dashboard.console.relais')
+			@include('dashboard.console.commandes')
 			@include('dashboard.console.producteurs')
+			@include('dashboard.console.relais')
 			@include('dashboard.console.mails')
-			@include('dashboard.console.indispos') --}}
+			@include('dashboard.console.indispos')
 
 		</div>
 
@@ -55,11 +55,11 @@ Tableau de bord
 					@endif
 				</div>
 					@endforeach
-				<div role="mails" class="mails hidden">
+				<div role="mail" class="mail hidden">
 				@include('dashboard.rapports.mails')
 				</div>
 
-				<div role="indispos" class="indispos hidden">
+				<div role="indispo" class="indispo hidden">
 				@include('dashboard.rapports.indispos')
 				</div>
 

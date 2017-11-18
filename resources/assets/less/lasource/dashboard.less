@@ -16,7 +16,7 @@
 	flex-flow: column nowrap;
 	justify-content: flex-start;
 	>div{
-		margin-bottom: 20px;
+		margin-bottom: 30px;
 		text-align: center;
 		background-color: @color_livraison;
 		padding: 0 10px 10px 10px;
@@ -81,10 +81,10 @@ div #dashboard_content, div #dashboard_console{
 	.producteur{
 		background-color: @color_producteur;
 	}
-	.mails{
+	.mail{
 		background-color: @color_mails;
 	}
-	.indispos{
+	.indispo{
 		background-color: @color_indispos;
 	}
 }
@@ -94,12 +94,12 @@ td.libelle_chiffre_affaire{
 	text-align: right;
 }
 
-small.affiche_masque.afficher:before{
+.affiche_masque.afficher:before{
 	// background-color: green;
 	content: "Afficher ";
 }
 
-small.affiche_masque.masquer:before{
+.affiche_masque.masquer:before{
 	 // background-color: red;
 	content: "Masquer ";
 }
