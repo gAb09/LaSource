@@ -1,5 +1,5 @@
 	<h4 class="titre">Commande sur la livraison du @date_complete($commande->Livraison->date_livraison) <small>(numéro {{ $commande->numero }})</small></h4>
-	<p class="statut">{{ trans('constante.'.$commande->statut) }}</p>
+	<p class="statut">{{ trans('statuts.'.$commande->statut) }}</p>
 
 	
 

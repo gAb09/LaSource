@@ -5,12 +5,13 @@
 	<thead>
 		<tr>
 			<th class="exploitation">Exploitation</th>
+			<th class="exploitation">Paniers</th>
 		</tr>
 	</thead>
 
 	@foreach($producteurs as $producteur)
 	<tr>
-			<th class="exploitation">{{$producteur->exploitation}}</th>
+			<td class="exploitation">{{$producteur->exploitation}}</th>
 	</tr>
 	@endforeach
 </table>

@@ -84,7 +84,7 @@
                        </button>
                </form>
                @else
-               {{ trans('constante.'.$model->statut) }}
+               {{ trans('statuts.'.$model->statut) }}
                @endif
        </td>
 

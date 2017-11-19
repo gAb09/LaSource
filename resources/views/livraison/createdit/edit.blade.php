@@ -11,7 +11,7 @@
 
 
 @section('topcontent1')
-<h1 class="titrepage">{!! trans('titrepage.livraison.edit') !!} @date_complete($model->date_livraison) <small>({{ trans('constante.'.$model->statut) }})</small></h1>
+<h1 class="titrepage">{!! trans('titrepage.livraison.edit') !!} @date_complete($model->date_livraison) <small>({{ trans('statuts.'.$model->statut) }})</small></h1>
 @parent
 @endsection
 

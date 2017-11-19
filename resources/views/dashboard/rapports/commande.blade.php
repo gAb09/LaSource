@@ -13,6 +13,7 @@
 			<th class="commande">Payée</th>
 			<th class="commande">Livrée</th>
 			<th class="commande">Retirée</th>
+			<th class="commande">Statut</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -31,6 +32,7 @@
 				<td rowspan ="{{$rowspan}}" class="commande" >{{$commande->is_paid}}</td>
 				<td rowspan ="{{$rowspan}}" class="commande" >{{$commande->is_livred}}</td>
 				<td rowspan ="{{$rowspan}}" class="commande" >{{$commande->is_retired}}</td>
+				<td rowspan ="{{$rowspan}}" class="commande" >{{trans('statuts.'.$commande->statut)}}</td>
 			</tr>
 			@for ($i = 1; $i < $rowspan; $i++)
 			<tr>
