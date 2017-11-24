@@ -9,7 +9,7 @@
 
     <!-- Fonts -->
     <link href="{{asset('font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
+    <!-- <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'> -->
 
     <!-- Styles -->
     <link href="{{asset('bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -25,7 +25,7 @@
 
     <style>
     body {
-        font-family: 'Lato';
+        font-family: 'robotoregular';
     }
 
     .fa-btn {
