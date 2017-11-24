@@ -6,7 +6,7 @@
 	@foreach($livraisons as $livraison)
 
 	<p>
-		@date_complete($livraison->date_livraison)<br />
+		@date_eB($livraison->date_livraison) <small>({{trans('statuts.'.$livraison->statut)}})</small><br />
 		<small role="handleOneLivraison" class="affiche_masque masquer"  onClick="javascript:afficherMasquerUneLivraison( this, {{ $livraison->id }} )"></small>
 	</p>
 

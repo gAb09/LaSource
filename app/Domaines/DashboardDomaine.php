@@ -23,7 +23,7 @@ class DashboardDomaine extends Domaine
 	 **/
 	public function getAllLivraisonsForDashboard()
 	{
-		$livraisons = $this->livraisonD->getAllLivraisonsOuvertes();
+		$livraisons = $this->livraisonD->getAllLivraisonsVivantes();
 
 		if($livraisons->isEmpty()){
 			$this->message = 'Aucune livraison en cours';

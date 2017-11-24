@@ -31,6 +31,9 @@ COULEURS
   margin: 0 -10px;
   padding: 5px 0;
 }
+#dashboard_content > div h4 span {
+  font-size: 0.8em;
+}
 #dashboard_content > div h3 {
   color: #814623;
   background-color: #fcf7f4;

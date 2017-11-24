@@ -44,10 +44,10 @@ Tableau de bord
 						<div role="commande" class="">
 							@include('dashboard.rapports.commande', ['commandes' => $livraison->rapport_commandes])
 						</div>
-						<div role="producteur" class="">
+						<div role="producteur" class="hidden">
 							@include('dashboard.rapports.producteur', ['producteurs' => $livraison->rapport_producteurs])
 						</div>
-						<div role="relai" class="">
+						<div role="relai" class="hidden">
 							@include('dashboard.rapports.relai', ['relais' => $livraison->rapport_relais])
 						</div>
 					@else

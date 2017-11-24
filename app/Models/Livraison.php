@@ -115,6 +115,10 @@ class Livraison extends Model
             $newValue = "L_CLOTURED";
         }
 
+        if ($this->date_paiement->diffInDays(Carbon::now(), false) > 0) {
+            $newValue = 'L_MUSTBEPAID';
+        }
+
         if ($this->date_livraison->diffInDays(Carbon::now(), false) > 0) {
             $newValue = 'L_ARCHIVABLE';
         }

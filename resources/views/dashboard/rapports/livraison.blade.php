@@ -1,7 +1,7 @@
-<h4>Livraison du @date_complete($livraison->date_livraison)</h4>
+<h4>Livraison du @date_complete($livraison->date_livraison) <span>({{trans('statuts.'.$livraison->statut)}})</span></h4>
 <h5>
-	Commandes ouvertes jusqu'au @date_complete($livraison->date_cloture)<br />
-	Paiement possible jusqu'au @date_complete($livraison->date_paiement)
+	Date de clôture des commandes : @date_eB($livraison->date_cloture) — / — 
+	Date de clôture des paiements : @date_eB($livraison->date_paiement)
 </h5>
 
 <table class="livraison" style="width:100%">

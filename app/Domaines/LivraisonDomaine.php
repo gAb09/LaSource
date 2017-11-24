@@ -14,33 +14,80 @@ use Carbon\Carbon;
 
 class LivraisonDomaine extends Domaine
 {
-	public function __construct(){
-        $this->commandeD = new CommandeDomaine;
-        $this->producteurD = new ProducteurDomaine;
-        $this->model = new Livraison;
-    }
+
+  private $livraisons_ouvertes = ['L_CREATED', 'L_OUVERTE'];
+  private $livraisons_vivantes = ['L_CREATED', 'L_OUVERTE', 'L_CLOTURED', 'L_MUSTBEPAID'];
 
 
+  public function __construct(){
+    $this->commandeD = new CommandeDomaine;
+    $this->producteurD = new ProducteurDomaine;
+    $this->model = new Livraison;
+  }
+
+
+    /**
+     * undocumented function
+     *
+     * @param App\Models\Livraison
+     *  
+     * @return 
+     **/
     public function getAllLivraisonsOuvertes($user = null)
     {
-        $models = $this->model->orderBy('date_livraison')->whereIn('statut', ['L_CREATED', 'L_OUVERTE'])->get();
+      $models = $this->model->orderBy('date_livraison')->whereIn('statut', $this->livraisons_ouvertes)->get();
 
-        if (!is_null($user)) {
-            /* On retire les livraisons pour lesquelles l'user courant à déjà passé commande */
-            $models = $models->reject(function ($livraison) use($user){
-                return $this->rejectLivraisonNonOuverteForThisCurrentUser($livraison->id, $user->id);
-            });
-        }        
-
-        /* récupération du nom du producteur via son id en pivot "livraison_panier"*/
-        $models->each(function($livraison){
-            $livraison->panier->each(function($panier)use($livraison){
-                $panier->exploitation = $this->producteurD->findFirst($panier->pivot->producteur_id)->exploitation;
-            });
+      if (!is_null($user)) {
+        /* On retire les livraisons pour lesquelles l'user courant à déjà passé commande */
+        $models = $models->reject(function ($livraison) use($user){
+          return $this->rejectLivraisonNonOuverteForThisCurrentUser($livraison->id, $user->id);
         });
-        return $models;
+      }        
+
+      /* récupération du nom du producteur via son id en pivot "livraison_panier"*/
+      $models->each(function($livraison){
+        $livraison = $this->getProducteurs($livraison);
+      });
+      return $models;
     }
 
+
+    /**
+     * undocumented function
+     *
+     * @param App\Models\Livraison
+     *  
+     * @return 
+     **/
+    public function getAllLivraisonsVivantes()
+    {
+      $models = $this->model->with('panier')->orderBy('date_livraison')->whereIn('statut', $this->livraisons_vivantes)->get();
+
+      /* récupération du nom du producteur via son id en pivot "livraison_panier"*/
+      $models->each(function($livraison){
+        if(!$livraison->panier->isEmpty()){
+          $livraison = $this->getProducteurs($livraison);
+        }
+      });
+
+      return $models;
+    }
+
+
+    /**
+     * undocumented function
+     *
+     * @param App\Models\Livraison
+     *  
+     * @return 
+     **/
+    private function getProducteurs($livraison)
+    {
+      $livraison->panier->each(function($panier){
+        $panier->exploitation = $this->producteurD->findFirst($panier->pivot->producteur_id)->exploitation;
+      });
+      return $livraison;
+    }
 
 
     /**
@@ -51,13 +98,13 @@ class LivraisonDomaine extends Domaine
      **/
     public function getRapportDashboard($livraison)
     {
-        $model = $this->model->with('panier', 'commandes.lignes', 'relais')->find($livraison->id);
+      $model = $this->model->with('panier', 'commandes.lignes', 'relais')->find($livraison->id);
 
-            /* Composition des lignes pour chaque panier (eux-mêmes complétés) */
-            $model = $this->composeLignesPaniersForRapportLivraison($livraison, $livraison->relais);
+      /* Composition des lignes pour chaque panier (eux-mêmes complétés) */
+      $model = $this->composeLignesPaniersForRapportLivraison($livraison, $livraison->relais);
 
         // return dd($model);
-        return $model;
+      return $model;
     }
 
 
@@ -69,40 +116,40 @@ class LivraisonDomaine extends Domaine
      **/
     private function composeLignesPaniersForRapportLivraison($livraison, $relais)
     {
-        $tableau_relais = $this->composeTableauDesRelais($relais);
+      $tableau_relais = $this->composeTableauDesRelais($relais);
         $tableau_relais['total'] = 0;  // Une entré est ajoutée après composition pour stocker le total
 
         $livraison->panier->each(function($panier)use($livraison, $tableau_relais){
-            /* récupération du nom du producteur via son id en pivot "livraison_panier"*/
-            $panier->exploitation = $this->producteurD->findFirst($panier->pivot->producteur_id)->exploitation;
+          /* récupération du nom du producteur via son id en pivot "livraison_panier"*/
+          $panier->exploitation = $this->producteurD->findFirst($panier->pivot->producteur_id)->exploitation;
 
-            $complement = \DB::table('commandes')
-            ->leftjoin('lignes', function ($join) use($panier){
-                $join->on('commande_id', '=', 'commandes.id')
-                ->where('lignes.panier_id', '=', $panier->id); 
-            })
-            ->leftjoin('relais', function ($join) {
-                $join->on('relais.id', '=', 'commandes.relais_id');
-            })
-            ->where('livraison_id', $livraison->id)
-            ->get(['relais.id as relais_id', 'relais.nom as relais', 'lignes.quantite as quantite']);
+          $complement = \DB::table('commandes')
+          ->leftjoin('lignes', function ($join) use($panier){
+            $join->on('commande_id', '=', 'commandes.id')
+            ->where('lignes.panier_id', '=', $panier->id); 
+          })
+          ->leftjoin('relais', function ($join) {
+            $join->on('relais.id', '=', 'commandes.relais_id');
+          })
+          ->where('livraison_id', $livraison->id)
+          ->get(['relais.id as relais_id', 'relais.nom as relais', 'lignes.quantite as quantite']);
 
 
             /* Si il existe au moins une commande pour cette livraison, il y a donc au moins un relais (count($tableau_relais) > 1),
-               Si elle n'est pas nulle, report de la quantité et ajout au calcul du nombre total de ce panier */
+            Si elle n'est pas nulle, report de la quantité et ajout au calcul du nombre total de ce panier */
             foreach($complement as $item){
-                if (is_integer($item->quantite) and count($tableau_relais) > 1) {
-                    $tableau_relais[$item->relais_id] = $tableau_relais[$item->relais_id] + $item->quantite;
-                    $tableau_relais['total'] = $tableau_relais['total'] + $item->quantite;
-                }
+              if (is_integer($item->quantite) and count($tableau_relais) > 1) {
+                $tableau_relais[$item->relais_id] = $tableau_relais[$item->relais_id] + $item->quantite;
+                $tableau_relais['total'] = $tableau_relais['total'] + $item->quantite;
+              }
             };
             $total_ligne = $panier->pivot->prix_livraison * $tableau_relais['total'];
             $livraison->chiffre_affaire += $total_ligne; /* Calcul du chiffre affaire total de cette livraison. */
             $panier->relais = $tableau_relais;
 
-        });
-        return $livraison;
-    }
+          });
+return $livraison;
+}
 
 
     /**
@@ -113,18 +160,18 @@ class LivraisonDomaine extends Domaine
      **/
     private function composeTableauDesRelais($relais)
     {
-        $tableau = array();
-        $relais->each(function($relai) use(&$tableau){
-            $tableau[$relai->id] = 0;
-        });
-        return $tableau;
+      $tableau = array();
+      $relais->each(function($relai) use(&$tableau){
+        $tableau[$relai->id] = 0;
+      });
+      return $tableau;
     }
 
 
 
     public function index($nbre_pages = 8)
     {
-        return $this->model->orderBy('id', 'desc')->paginate($nbre_pages);
+      return $this->model->orderBy('id', 'desc')->paginate($nbre_pages);
     }
 
 
@@ -133,44 +180,44 @@ class LivraisonDomaine extends Domaine
       $model->clotureEnClair = $model->paiementEnClair= $model->livraisonEnClair = " en création";
 
       return $model;
-  }
+    }
 
 
-  public function store($request){
+    public function store($request){
       $this->handleDatas($request);
 
       if($this->model->save()){
-         $modepaiement = new ModePaiementDomaine;
-         $relais = new RelaisDomaine;
+       $modepaiement = new ModePaiementDomaine;
+       $relais = new RelaisDomaine;
 
-         $modepaiements = $modepaiement->allActivedIdForSyncLivraison();
-         $relaiss = $relais->allActivedIdForSyncLivraison();
+       $modepaiements = $modepaiement->allActivedIdForSyncLivraison();
+       $relaiss = $relais->allActivedIdForSyncLivraison();
 
-         $this->model->modepaiements()->sync($modepaiements);
-         $this->model->relais()->sync($relaiss);
+       $this->model->modepaiements()->sync($modepaiements);
+       $this->model->relais()->sync($relaiss);
 
-         return $this->model->id;
+       return $this->model->id;
      }else{
-         return false;
+       return false;
      }
- }
-
-
- public function edit($id)
- {
-  $livraison = Livraison::with('Panier')->findOrFail($id);
-  foreach ($livraison->Panier as $panier) {
-     if (\Session::get('new_attached')) {
-				// var_dump($panier->id);
-        if (in_array($panier->id, \Session::get('new_attached'))) {
-					// var_dump('in_array');
-           $panier->changed = "changed";
-					// var_dump($panier);
-       }
    }
 
-}
-return $livraison;
+
+   public function edit($id)
+   {
+    $livraison = Livraison::with('Panier')->findOrFail($id);
+    foreach ($livraison->Panier as $panier) {
+     if (\Session::get('new_attached')) {
+				// var_dump($panier->id);
+      if (in_array($panier->id, \Session::get('new_attached'))) {
+					// var_dump('in_array');
+       $panier->changed = "changed";
+					// var_dump($panier);
+     }
+   }
+
+ }
+ return $livraison;
 		// return dd(\Session::get('new_attached'));
 }
 
@@ -417,12 +464,12 @@ private function handleDatas($request){
     	$this->model = $this->model->findOrFail($id);
 
     	if ($this->controleAvantArchivage($this->model)) {
-            $this->model->statut = 'L_ARCHIVED';
+        $this->model->statut = 'L_ARCHIVED';
             // dd('archivage ok');
-            return $this->model->save();
-        }
+        return $this->model->save();
+      }
 
-        return true;
+      return true;
     }
 
 
@@ -449,7 +496,7 @@ private function handleDatas($request){
      **/
     public function creationCommande($id)
     {
-        return $this->model->with('panier')->find($id);
+      return $this->model->with('panier')->find($id);
     }
 
 
@@ -462,14 +509,14 @@ private function handleDatas($request){
      **/
     public function rejectLivraisonNonOuverteForThisCurrentUser($livraison_id, $user_id)
     {
-        $livraison_id;
-        $user_id;
-        $result = Commande::where([ ['livraison_id', '=', $livraison_id], ['client_id', '=', $user_id] ])->get();
-        if ($result->isEmpty()) {
-            return false;
-        }else{
-            return true;
-        }
+      $livraison_id;
+      $user_id;
+      $result = Commande::where([ ['livraison_id', '=', $livraison_id], ['client_id', '=', $user_id] ])->get();
+      if ($result->isEmpty()) {
+        return false;
+      }else{
+        return true;
+      }
     }
 
 
@@ -481,10 +528,10 @@ private function handleDatas($request){
      **/
     public function ActualiserStatut()
     {
-        $livraisons = $this->model->where('statut', '<>', 'L_ARCHIVED')->get();
-        foreach ($livraisons as $livraison) {
-            $livraison->save();
-        }
+      $livraisons = $this->model->where('statut', '<>', 'L_ARCHIVED')->get();
+      foreach ($livraisons as $livraison) {
+        $livraison->save();
+      }
     }
 
-}
+  }
