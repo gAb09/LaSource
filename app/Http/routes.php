@@ -188,8 +188,15 @@ Route::group(['middleware' => 'auth'], function () {
 		['as' => 'commande.archive', 'uses' => 'CommandeController@archiver']
 		);
 
+	Route::any('commande/{id}/toggle/{property}/{valeur}', 
+		['as' => 'commande.toggle', 'uses' => 'CommandeController@toggleProperty']
+		);
 
-	
+	Route::get('commande/updateStatut/{id}', 
+		['uses' => 'CommandeController@updateStatut']
+		);
+
+
 // DASHBOARD
 
 	Route::resource('livraison', 'LivraisonController');

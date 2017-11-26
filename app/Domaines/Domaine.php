@@ -304,7 +304,7 @@ class Domaine
 			$join->on('livraisons.id', '=', 'livraison_panier.livraison_id')
 			->whereNotIn('statut', $this->livraison_morte);
 		})
-		->where($model_name, $this->model->id)
+		->where($model_name.'_id', $this->model->id)
 		->select(
 			'livraison_panier.*' // Pivot livraison_panier
 			, 'livraisons.*' // Livraison
@@ -419,5 +419,29 @@ class Domaine
 		return $this->model->restore();
 	}
 
+    /**
+     * undocumented function
+     *
+     * @return void
+     * @author 
+     **/
+    function toggleProperty($id, $property, $valeur)
+    {
+    	try{
+    		$this->model = $this->model->findOrFail($id);
+
+    		$this->model->{$property} = (int)!$valeur;
+
+    		$this->model->save();
+
+        }catch(\Exception $e){ // ToDo revoir si gestion erreur ok
+        	$message = trans('message.booleen.Failed').trans('message.bug.transmis');
+            // $this->alertOuaibMaistre($e);
+        	$reponse = ['statut' => false, 'txt' => '<div class="alert alert-danger">'.$message.'</div>'];
+        	return $reponse;
+        }
+        $reponse = ['statut' => true];
+        return $reponse;
+    }
 
 }

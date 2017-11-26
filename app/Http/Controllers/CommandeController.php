@@ -107,4 +107,17 @@ class CommandeController extends Controller
     {
         return dd('archivage à implémenter ??');
     }
+
+     /**
+     * undocumented function
+     *
+     * @return void
+     * @author 
+     **/
+     public function updateStatut($id)
+     {
+        return ['statut' => true, 'txt' => $id];
+    }
+
+
 }

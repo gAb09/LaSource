@@ -133,6 +133,10 @@ return [
     'desactiveFailed' => 'Problème. Le :model n’a pas pu être desactivé',
     ],
 
+    'booleen' => [
+    'Failed' => 'Problème. cette action n\'a pas pu être effectuée',
+    ],
+
     'bug' => [
     'transmis'     => '<br />Le Ouaibmaistre vient d’en être informé et va répondre à ce problème dès que possible',
     ],

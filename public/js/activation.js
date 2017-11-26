@@ -55,31 +55,25 @@ function desactive(model_class, id){
 
 
 function handleActiveReponse(model_class, id, reponse){
+	$('#messages').empty().append(reponse['txt']);
 	if(reponse['statut'] === true){
-		$('#messages').empty().append(reponse['txt']);
-
 		$('#activation_button_'+id).attr('onClick', 'desactive("'+model_class+'", '+id+');');
 		$('#activation_icone_'+id).toggleClass('fa-square-o');
 		$('#activation_icone_'+id).toggleClass('fa-check-square-o');
 		$('#activation_etiquette_'+id).empty().append('Désactiver');
 		$('#fiche_'+id).toggleClass('is_actived');
 		$('#fiche_'+id).toggleClass('is_not_actived');
-	}else{
-		$('#messages').empty().append(reponse['txt']);
 	}
 }
 
 function handleDesactiveReponse(model_class, id, reponse){
+	$('#messages').empty().append(reponse['txt']);
 	if(reponse['statut'] === true){
-		$('#messages').empty().append(reponse['txt']);
-
 		$('#activation_button_'+id).attr('onClick', 'active("'+model_class+'", '+id+');');
 		$('#activation_icone_'+id).toggleClass('fa-square-o');
 		$('#activation_icone_'+id).toggleClass('fa-check-square-o');
 		$('#activation_etiquette_'+id).empty().append('Activer');
 		$('#fiche_'+id).toggleClass('is_actived');
 		$('#fiche_'+id).toggleClass('is_not_actived');
-	}else{
-		$('#messages').empty().append(reponse['txt']);
 	}
 }

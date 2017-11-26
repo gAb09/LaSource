@@ -223,4 +223,15 @@ class CommandeDomaine extends Domaine
 		// return dd($commandes);
 		return $commandes;
 	}
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function updateStatut($id)
+	{
+		return dd('commande/updateStatut'.$id);
+	}
 }

@@ -83,5 +83,15 @@ class Controller extends BaseController
         }
     }
 
+    /**
+     * undocumented function
+     *
+     * @return void
+     * @author 
+     **/
+    public function toggleProperty($id, $property, $valeur)
+    {
+        return $this->domaine->toggleProperty($id, $property, $valeur);
+    }
 
 }

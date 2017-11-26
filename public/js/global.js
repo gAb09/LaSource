@@ -14,30 +14,30 @@ console.log(domaine);
 **/
 function setRangs(model, tablo){
 // console.timeStamp();
-	/* console.log('model : '+model); */
-	/* console.log('tablo : '+tablo); */
+/* console.log('model : '+model); */
+/* console.log('tablo : '+tablo); */
 
-	var ad = 'setrangs/'+model;
-	$.ajax({
-		url : ad,
-		contentType : 'text/json',
-		type : 'GET',
-		data : {'tablo' : tablo},
-		dataType : 'html',
-		success : function(code_html, data, statut){
-			console.log(code_html);
-			$('#messages').empty().append(code_html);
-		},
+var ad = 'setrangs/'+model;
+$.ajax({
+	url : ad,
+	contentType : 'text/json',
+	type : 'GET',
+	data : {'tablo' : tablo},
+	dataType : 'html',
+	success : function(code_html, data, statut){
+		console.log(code_html);
+		$('#messages').empty().append(code_html);
+	},
 
-		error : function(data, resultat, statut, erreur){
-			$('#messages').empty().append('tralala');
-			console.log(data);
-			console.log(resultat);
-			console.log(statut);
-			console.log(erreur);
-		},
+	error : function(data, resultat, statut, erreur){
+		$('#messages').empty().append('tralala');
+		console.log(data);
+		console.log(resultat);
+		console.log(statut);
+		console.log(erreur);
+	},
 
-	});
+});
 
 }
 
@@ -61,4 +61,49 @@ function addIndisponibilite(route)
 {
 	console.log(route);
 	document.location.href = route;
+}
+
+
+function toggleBoolean(zis, model, id, property, valeur)
+{
+	var adresse = '/'+model+'/'+id+'/toggle/'+property+'/'+valeur;
+	var icone = $(zis).children("i");
+
+	console.log('zis : '+zis);
+	console.log(icone);
+	console.log('model : '+model);
+	console.log('id : '+id);
+	console.log('property : '+property);
+	console.log('valeur : '+valeur);
+	console.log('adresse : '+adresse);
+
+
+	$.ajax({
+		url : adresse,
+		type : 'GET',
+		dataType : 'json',
+		success : function(reponse, statut){
+			if(reponse['statut'] === true){
+				$(icone).toggleClass('fa-check-square');
+				$(icone).toggleClass('fa-square-o');
+			}else{
+				$('#messages').empty().append(reponse['txt']);
+			}
+			// console.log(reponse['statut']);
+			// console.log(reponse['txt']);
+		},
+
+		error : function(resultat, statut, erreur){
+			$('#messages').empty().append('tralala');
+			console.log('resultat : '+resultat);
+			console.log('statut : '+statut);
+			console.log('erreur : '+erreur);
+		},
+
+		complete : function(resultat, statut){
+
+		}
+	});
+
+
 }

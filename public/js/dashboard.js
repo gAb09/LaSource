@@ -63,3 +63,39 @@ function afficherMasquerPartie(zis, partie)
 		});
 	}
 }
+function updateStatutCommande(commande_id)
+{
+	var adresse = '/commande/updateStatut/'+commande_id;
+	var td_statut = $("#statut_"+commande_id);
+
+	console.log('adresse : '+adresse);
+	console.log('commande_id : '+$(commande_id));
+	console.log('td_statut : '+td_statut);
+
+	$.ajax({
+		url : adresse,
+		type : 'GET',
+		dataType : 'json',
+		success : function(reponse, statut){
+			if(reponse['statut'] === true){
+				$(td_statut).empty().append(reponse['txt']);
+			}else{
+				$('#messages').empty().append(reponse['txt']);
+			}
+			// console.log(reponse['statut']);
+			// console.log(reponse['txt']);
+		},
+
+		error : function(resultat, statut, erreur){
+			$('#messages').empty().append('tralala');
+			console.log('resultat : '+resultat);
+			console.log('statut : '+statut);
+			console.log('erreur : '+erreur);
+		},
+
+		complete : function(resultat, statut){
+
+		}
+	});
+
+}
