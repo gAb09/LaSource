@@ -119,5 +119,18 @@ class CommandeController extends Controller
         return ['statut' => true, 'txt' => $id];
     }
 
+    /**
+     * undocumented function
+     *
+     * @return void
+     * @author 
+     **/
+    public function toggleBooleanProperty($property, $id)
+    {
+        $reponse = $this->domaine->toggleBooleanProperty($property, $id);
+        return $reponse;
+    }
+
+
 
 }

@@ -64,46 +64,13 @@ function addIndisponibilite(route)
 }
 
 
-function toggleBoolean(zis, model, id, property, valeur)
+function toggleBooleanIcone(zis)
 {
-	var adresse = '/'+model+'/'+id+'/toggle/'+property+'/'+valeur;
 	var icone = $(zis).children("i");
 
 	console.log('zis : '+zis);
-	console.log(icone);
-	console.log('model : '+model);
-	console.log('id : '+id);
-	console.log('property : '+property);
-	console.log('valeur : '+valeur);
-	console.log('adresse : '+adresse);
+	console.log('icone : '+icone);
 
-
-	$.ajax({
-		url : adresse,
-		type : 'GET',
-		dataType : 'json',
-		success : function(reponse, statut){
-			if(reponse['statut'] === true){
-				$(icone).toggleClass('fa-check-square');
-				$(icone).toggleClass('fa-square-o');
-			}else{
-				$('#messages').empty().append(reponse['txt']);
-			}
-			// console.log(reponse['statut']);
-			// console.log(reponse['txt']);
-		},
-
-		error : function(resultat, statut, erreur){
-			$('#messages').empty().append('tralala');
-			console.log('resultat : '+resultat);
-			console.log('statut : '+statut);
-			console.log('erreur : '+erreur);
-		},
-
-		complete : function(resultat, statut){
-
-		}
-	});
-
-
+	$(icone).toggleClass('fa-check-square');
+	$(icone).toggleClass('fa-square-o');
 }

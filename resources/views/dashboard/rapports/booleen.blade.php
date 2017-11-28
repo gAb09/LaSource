@@ -1,4 +1,4 @@
-<a type="submit" class="booleen" onClick="javascript:toggleBoolean(this, '{{ $model }}', {{ $id }}, '{{ $property }}', {{ $valeur }})">
+<a onClick="javascript:toggleBooleanProperty( this, '{{ $model }}', {{ $id }}, '{{ $property }}' )">
 	@if($valeur == true)
 		<i class="booleen fa fa-btn fa-check-square"></i>
 	@else

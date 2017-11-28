@@ -63,24 +63,35 @@ function afficherMasquerPartie(zis, partie)
 		});
 	}
 }
-function updateStatutCommande(commande_id)
+
+
+function toggleBooleanProperty(zis, model, id, property)
 {
-	var adresse = '/commande/updateStatut/'+commande_id;
-	var td_statut = $("#statut_"+commande_id);
+	var adresse = 'toggle/'+property+'/'+model+'/'+id;
+	var icone = $(zis).children("i");
+	var td_statut = $("#statut_"+id);
 
 	console.log('adresse : '+adresse);
-	console.log('commande_id : '+$(commande_id));
-	console.log('td_statut : '+td_statut);
+	console.log('zis : '+zis);
+	console.log(icone);
+	console.log('model : '+model);
+	console.log('id : '+id);
+	console.log('property : '+property);
+	console.log('td_statut : '+td_statut.attr('id'));
 
 	$.ajax({
 		url : adresse,
 		type : 'GET',
 		dataType : 'json',
 		success : function(reponse, statut){
-			if(reponse['statut'] === true){
-				$(td_statut).empty().append(reponse['txt']);
+			console.log('status : '+reponse['status']);
+			console.log('etat : '+reponse['etat']);
+			if(reponse['status'] === true){
+				$(td_statut).html(reponse['etat']);
+				toggleBooleanIcone(zis);
 			}else{
-				$('#messages').empty().append(reponse['txt']);
+				alert(reponse['message']);
+				$('#messages').empty().append(reponse['message']);
 			}
 			// console.log(reponse['statut']);
 			// console.log(reponse['txt']);

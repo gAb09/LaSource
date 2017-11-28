@@ -230,8 +230,64 @@ class CommandeDomaine extends Domaine
 	 * @return void
 	 * @author 
 	 **/
-	public function updateStatut($id)
+	public function handleState($id)
 	{
-		return dd('commande/updateStatut'.$id);
+		return 'nouvel état';
 	}
+
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function toggleBooleanProperty($property, $id)
+	{
+		try{
+			$model = $this->model->with('livraison')->findOrFail($id);
+
+			if($this->isToggleAuthorized($model, $property)){
+
+				$reponse['status'] = true;
+
+				(bool) $valeur = !($model->{$property});
+				$model->{$property} = (int)$valeur;
+				$model->save();
+
+				$etat = $this->handleState($model);
+
+				$reponse['etat'] = $etat;
+
+			}else{
+				$reponse['status'] = false;
+				$reponse['message'] = '<div class="alert alert-danger">'.$this->message.'</div>';
+			}
+			return $reponse;
+
+		}catch(\exception $e){
+			$reponse['status'] = false;
+
+			/* $this->alertOuaibMaistre($e); */
+			$message = trans('message.bug.transmis');
+
+			$reponse['message'] = '<div class="alert alert-danger">'.trans('message.booleen.Failed').$message.'</div>';
+
+			return $reponse;
+		}
+	}
+
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function isToggleAuthorized($model, $property)
+	{
+		$this->message = "un beau message";
+		return true;
+	}
+
 }
