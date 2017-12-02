@@ -84,7 +84,7 @@
 					{{trans('statuts.'.$commande->statut)}}
 					@if($commande->statut == 'C_NONPAID')
 					<a class="close" title="Envoyer mail de relance au client {{$commande->client->id}}" 
-						href="" onClick="javascript:alert('Envoyer mail de relance au client {{$commande->client->id}}'))">
+						onClick="javascript:alert('Envoyer mail de relance au client {{$commande->client->id}}');">
 						<i class="btn_close fa fa-btn fa-mail-forward" style="font-size:0.6em"></i>
 					</a>
 					@endif
@@ -105,3 +105,9 @@
 		@endforeach
 	</tbody>
 </table>
+@php
+$str = <<<'EOD'
+Exemple de chaîne sur plusieurs lignes en utilisant la syntaxe Nowdoc.
+EOD;
+@endphp
+{{$str}}

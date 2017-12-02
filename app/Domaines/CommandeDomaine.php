@@ -224,16 +224,6 @@ class CommandeDomaine extends Domaine
 		return $commandes;
 	}
 
-	/**
-	 * undocumented function
-	 *
-	 * @return void
-	 * @author 
-	 **/
-	public function handleState($id)
-	{
-		return 'nouvel état';
-	}
 
 
 	/**
@@ -256,8 +246,18 @@ class CommandeDomaine extends Domaine
 				$model->save();
 
 				$etat = $this->handleState($model);
+				if ($etat == 'C_NONPAID') {
+					$button = <<<EOT
+<a class="close" title="Envoyer mail de relance au client $model->client_id" 
+onClick="javascript:alert('Envoyer mail de relance au client $model->client_id');">
+<i class="btn_close fa fa-btn fa-mail-forward" style="font-size:0.6em"></i>
+</a>
+EOT;
 
-				$reponse['etat'] = $etat;
+					$reponse['etat'] = trans('statuts.'.$etat).$button;
+				}else{
+					$reponse['etat'] = trans('statuts.'.$etat);
+				}
 
 			}else{
 				$reponse['status'] = false;
@@ -289,5 +289,69 @@ class CommandeDomaine extends Domaine
 		$this->message = "un beau message";
 		return true;
 	}
+
+
+
+    /**
+     * Non implémentée.
+     * Prévoit la possibilté de fixer des conditions avant qu'une livraison créée puisse être ouverte,
+     * (par exemple qu'un nombre minimum de commandes soit atteint).
+     *
+     * @var array
+     */
+    public function checkIfOkForOuverture()
+    {
+    	if (1 == 1) {
+    		return true;
+    	}
+    }
+
+
+    public function handleState($model)
+    {
+    	$nouvel_etat = "C_CREATED";
+
+    	if ($this->checkIfOkForOuverture()) {
+    		$nouvel_etat = "C_REGISTERED";
+    	}
+
+    	/* date de clôture passée */
+    	if ($model->livraison->date_cloture->diffInDays(Carbon::now(), false) > 0) {
+    		$nouvel_etat = "C_CLOTURED";
+    	}
+
+    	/* date de paiement passée */
+    	if ($model->livraison->date_paiement->diffInDays(Carbon::now(), false) > 0) {
+    		if ($model->is_paid) {
+    			$nouvel_etat = 'C_PAID';
+    		}else{
+    			$nouvel_etat = 'C_NONPAID';
+    		}
+    	}
+
+    	/* date de livraison passée */
+    	if ($model->livraison->date_livraison->diffInDays(Carbon::now(), false) > 0) {
+    		if ($model->is_retired and $model->is_paid) {
+    			$nouvel_etat = 'C_ARCHIVABLE';
+    		}
+    		if (!$model->is_retired and $model->is_paid) {
+    			$nouvel_etat = 'C_OUBLIED';
+    		}
+    		if ($model->is_retired and !$model->is_paid) {
+    			$nouvel_etat = 'C_NONPAID';
+    		}
+    		if (!$model->is_retired and !$model->is_paid) {
+    			$nouvel_etat = 'C_SUSPECTED';
+    		}
+
+    	}
+
+    	if ($model->statut == 'C_ARCHIVED') {
+    		$nouvel_etat = "C_ARCHIVED";
+    	}
+
+    	return $nouvel_etat;
+
+    }
 
 }
