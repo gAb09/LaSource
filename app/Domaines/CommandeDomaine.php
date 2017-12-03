@@ -168,6 +168,7 @@ class CommandeDomaine extends Domaine
         		$this->model->numero = \date('y')."-C".\Auth::user()->id."-".$this->model->id;
         		$this->model->relais_id = $value['relais'];
         		$this->model->modepaiement_id = $value['paiement'];
+        		$this->model->statut = $this->getEtat($this->model);;
 
         		$this->model->save();
         		$count++;
