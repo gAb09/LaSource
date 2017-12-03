@@ -34,7 +34,7 @@
 		</div>
 	@endforeach
 	<div class="paiement_relais">
-		@include('espace_client.paiement_relais', ['ref_livraison' => $livraison->id, 'par_defaut' => ''])
+		@include('espace_client.paiement_relais', ['ref_livraison' => $livraison->id, 'par_defaut' => '', 'modespaiement' => $livraison->Modepaiements, 'relaiss' => $livraison->relais])
 	</div>
 	</div>
 		<p  name="{{$livraison->id}}_total_livraison" class="total_livraison">

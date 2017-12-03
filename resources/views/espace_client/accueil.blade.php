@@ -30,7 +30,7 @@
                         {{ trans_choice('message.commande.encours', count($commandes_en_cours), [ 'count' => count($commandes_en_cours) ]) }}
                     </h2>
 
-            <div class="panel-body col-md-2" style="position:fixed">
+            <div class="panel-body col-md-2">
                 <h3>Mes coordonnées</h3>
                 <h4>{{ $model->Client->prenom }} {{ $model->Client->nom }}<br/><small>(Pseudo : {{ $model->pseudo }})</small><br /></h4>
                 {{ $model->Client->ad1 }}<br />
@@ -47,10 +47,10 @@
 
                 <br/>
                 <h3 style="margin-top:10px">Mes préférences</h3>
-                @include('espace_client.paiement_relais', ['ref_livraison' => 0, 'par_defaut' => "par défaut"])
+                @include('espace_client.paiement_relais', ['ref_livraison' => 0, 'par_defaut' => "par défaut", 'modespaiement' => $all_modes, 'relaiss' => $all_relais])
             </div>
 
-            <div class="panel-body col-md-offset-2 col-md-10">
+            <div class="panel-body col-md-10">
                 <form id="commande_store" class="form-horizontal" role="form" method="POST" action="{{ route('commande.store', $model->id) }}">
                 {!! csrf_field() !!}
                     

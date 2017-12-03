@@ -163,4 +163,23 @@ class RelaisDomaine extends Domaine
     return $model;
   }
 
+
+  /**
+  * undocumented function
+  *
+  * @return void
+  * @author 
+  **/
+  public function getRelaisliedWithOneLivraison($livraison)
+  {
+    $model = \DB::table('livraison_relais')->where('livraison_id', $livraison)
+    ->leftjoin('relais', function ($join) {
+      $join->on('relais.id', '=', 'livraison_relais.relais_id');
+    }) 
+    ->get();
+
+  // return dd($model);
+    return $model;
+  }
+
 }
