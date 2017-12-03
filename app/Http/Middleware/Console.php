@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Carbon\Carbon;
 
 class Console
 {
@@ -16,6 +17,7 @@ class Console
     public function handle($request, Closure $next)
     {
         setlocale(LC_ALL, 'fr_FR.utf-8'); // TOTO Trouver meilleur emplacement
+        Carbon::setLocale('fr');
 
         return $next($request);
     }

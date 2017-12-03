@@ -1,3 +1,4 @@
+<?php use Carbon\Carbon ?>
 <h4>Livraison du @date_complete($livraison->date_livraison) <span>({{trans('statuts.'.$livraison->statut)}})</span></h4>
 <h5>
 	Date de clôture des commandes : @date_eB($livraison->date_cloture) — / — 

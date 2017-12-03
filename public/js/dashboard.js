@@ -70,6 +70,8 @@ function toggleBooleanProperty(zis, model, id, property)
 	var adresse = 'toggle/'+property+'/'+model+'/'+id;
 	var icone = $(zis).children("i");
 	var td_statut = $("#statut_"+id);
+	var message = $('#messages');
+
 
 	console.log('adresse : '+adresse);
 	console.log('zis : '+zis);
@@ -78,6 +80,9 @@ function toggleBooleanProperty(zis, model, id, property)
 	console.log('id : '+id);
 	console.log('property : '+property);
 	console.log('td_statut : '+td_statut.attr('id'));
+	console.log('messages : '+td_statut.attr('messages'));
+
+	message.empty();
 
 	$.ajax({
 		url : adresse,
@@ -90,8 +95,8 @@ function toggleBooleanProperty(zis, model, id, property)
 				$(td_statut).html(reponse['etat']);
 				toggleBooleanIcone(zis);
 			}else{
-				alert(reponse['message']);
-				$('#messages').empty().append(reponse['message']);
+				// alert(reponse['message']);
+				message.append(reponse['message']);
 			}
 			// console.log(reponse['statut']);
 			// console.log(reponse['txt']);

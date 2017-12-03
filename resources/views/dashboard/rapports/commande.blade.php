@@ -105,9 +105,3 @@
 		@endforeach
 	</tbody>
 </table>
-@php
-$str = <<<'EOD'
-Exemple de chaîne sur plusieurs lignes en utilisant la syntaxe Nowdoc.
-EOD;
-@endphp
-{{$str}}
