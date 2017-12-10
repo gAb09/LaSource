@@ -40,9 +40,12 @@ class CommandeController extends Controller
 
 
     /**
-     * undocumented function
+     * Solliciter le domaine pour persister une(des) commande(s).
+     * Gérer les messages d'erreur selon le résultat fourni.
      *
-     * @return void
+     * @param Illuminate\Http\Request $request 
+     *
+     * @return View
      **/
     public function store(Request $request)
     {

@@ -1,6 +1,6 @@
 <h5>Mode de paiement {{$par_defaut}}</h5>
 <div class="modepaiement flexcontainer">
-	<input class="" type="txt" name="{{ $ref_livraison }}_paiement" value="{{ $paiement_initial }}">
+	<input class="hidden" type="txt" name="{{ $ref_livraison }}_paiement" value="{{ $paiement_initial }}">
 
 	@foreach($modespaiement as $mode)
 		<?php
@@ -23,7 +23,7 @@
 
 <h5>Relais {{$par_defaut}}</h5>
 <div class="relais flexcontainer">
-	<input class="" type="txt" name="{{ $ref_livraison }}_relais" value="{{$relais_initial}}">
+	<input class="hidden" type="txt" name="{{ $ref_livraison }}_relais" value="{{$relais_initial}}">
 
 	@foreach($relaiss as $relais)
 		<?php

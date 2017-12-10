@@ -29,8 +29,9 @@ class CommandeDomaine extends Domaine
 
 
 	/**
+	 * Lister toutes les commandes existantes quel que soit leur état.
 	 *
-	 * @param Integer : nombre de commandes par page.
+	 * @param integer $pages : nombre de commandes par page.
 	 *
 	 * @return Illuminate\Pagination\LengthAwarePaginator
 	 **/
@@ -45,6 +46,16 @@ class CommandeDomaine extends Domaine
 	}
 
 
+	/**
+	 * Persister une(des) nouvelle(s) commande(s)
+	 * • On commence par recomposer les commandes à partir de la requête (handleRequest)
+	 * • On initialise une transaction, puis on traite la validation et la persistance des commandes.
+	 * • On catch les exceptions qui sont alors repassée au contrôleur.
+	 *
+	 * @param Illuminate\Http\Request $request 
+	 *
+	 * @return void $result : (int) 0 si aucune quantité saisie) | (int) nombre de commandes traitées) | Exception
+	 **/
 	public function store($request){
 			try {
 			$commandes = $this->handleRequest($request);
@@ -70,9 +81,8 @@ class CommandeDomaine extends Domaine
 	 **/
 	function edit($commande_id)
 	{
-
-		// $model = User::with('client.commandes.livraison')->find($auth_user->id);
-		$model = User::with('client.commandes.livraison')->find(300);
+		$model = User::with('client.commandes.livraison')->find(\Auth::user()->id);
+		// $model = User::with('client.commandes.livraison')->find(300);
 
 		$commandeBrute = $this->model->with('livraison.panier', 'lignes')->findOrFail($commande_id);
 		$commande = $this->getAllLignes($commandeBrute);
@@ -115,21 +125,12 @@ class CommandeDomaine extends Domaine
 		return $datas;
 	}
 
-	private function transcode_modepaiement($modepaiement)
-	{
-		if ($modepaiement == 'chèque') {
-			return ModePaiement::where('nom', 'Chèque')->first()->id;
-		}elseif ($modepaiement == 'virement') {
-			return ModePaiement::where('nom', 'Virement')->first()->id;
-		}
-		return ModePaiement::where('nom', 'Problème')->first()->id;
-	}
-
-
 	/**
-	 * Décompose/recompose les éléments de la requête pour traiter les valeurs de la (des) commande(s).
+	 * Décomposer/recomposer les éléments de la requête pour préparer le traitement de la (des) commande(s).
 	 *
-	 * @return array : request recomposée
+	 * @param Illuminate\Http\Request $request 
+	 *
+	 * @return array : requete recomposée
 	 **/
 	private function handleRequest($request)
 	{
@@ -150,9 +151,11 @@ class CommandeDomaine extends Domaine
 
 
 	/**
-     * undocumented function
-	 * Enregistre les commandes valides ainsi que les lignes associées.
+     * Procéder aux validations, puis enregistrer commandes + lignes.
+     *
+	 * @param array $commandes
 	 *
+	 * @return int $result : 0 si aucune quantité saisie) | nombre de commandes traitées)
 	 **/
 	private function handleCommandes($commandes)
 	{
@@ -313,4 +316,19 @@ EOT;
 		}
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	private function transcode_modepaiement($modepaiement)
+	{
+		if ($modepaiement == 'chèque') {
+			return ModePaiement::where('nom', 'Chèque')->first()->id;
+		}elseif ($modepaiement == 'virement') {
+			return ModePaiement::where('nom', 'Virement')->first()->id;
+		}
+		return ModePaiement::where('nom', 'Problème')->first()->id;
+	}
 }
