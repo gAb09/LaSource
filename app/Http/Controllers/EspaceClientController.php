@@ -51,45 +51,42 @@ class EspaceClientController extends Controller
         $livraisons = $this->livraisonD->getAllLivraisonsOuvertes($auth_user);
 
 
+
         $livraisons->each(function ($livraison, $keys) use($model){
 
             $livraison->relais = $livraison->load('relais')->relais;
-            $livraison->relais->each(function($item) use($model){
-                if ($item->id == $model->client->pref_relais) {
-                    $item->checked = 'checked';
-                }else{
-                    $item->checked = '';
+            $livraison->relais->each(function($item) use($model, $livraison){
+                if (!isset($livraison->relais_initial)) {
+                    if (!is_null(old($livraison->id.'_relais'))){
+                        $livraison->relais_initial = old($livraison->id.'_relais');
+                    }elseif ($item->id == $model->client->pref_relais){
+                        $livraison->relais_initial = $model->client->pref_relais;
+                    }else{
+                        $livraison->relais_initial = "";
+                    }
                 }
             });
 
+
+
             $livraison->modepaiements = $livraison->load('Modepaiements')->Modepaiements;
-            $livraison->modepaiements->each(function($item) use($model){
-                if ($item->id == $model->client->pref_paiement) {
-                    $item->checked = 'checked';
+            $livraison->modepaiements->each(function($item) use($model, $livraison){
+                if (!is_null(old($livraison->id.'_paiement'))){
+                    $livraison->paiement_initial = old($livraison->id.'_paiement');
+                }elseif ($item->id == $model->client->pref_paiement){
+                    $livraison->paiement_initial = $model->client->pref_paiement;
                 }else{
-                    $item->checked = '';
+                    $livraison->paiement_initial = "";
                 }
             });
 
         });
 
         $all_relais = $this->relaissD->allActived('id');
-        $all_relais->each(function($item) use($model){
-            if ($item->id == $model->client->pref_relais) {
-                $item->checked = 'checked';
-            }else{
-                $item->checked = '';
-            }
-        });
 
         $all_modes = $this->modepaiementD->allActived('id');
-        $all_modes->each(function($item) use($model){
-            if ($item->id == $model->client->pref_paiement) {
-                $item->checked = 'checked';
-            }else{
-                $item->checked = '';
-            }
-        });
+
+   // return dd($livraisons);
    // return dd($all_relais);
 
         return view('espace_client.accueil')->with(compact('model', 'commandes', 'commandes_en_cours', 'livraisons', 'all_relais', 'all_modes'));

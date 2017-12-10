@@ -28,7 +28,7 @@ class IndisponibiliteReported extends Model
 
     public function getPrevDateFinEnclairAttribute($value)
     {
-        $value = $this->prev_date_debutdate_fin;
+        $value = $this->prev_date_fin;
         if (!is_null($value)) {
             return $value->formatLocalized('%A %e %B %Y');
         }

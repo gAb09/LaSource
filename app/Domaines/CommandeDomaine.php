@@ -46,11 +46,10 @@ class CommandeDomaine extends Domaine
 
 
 	public function store($request){
-
-		try {
+			try {
 			$commandes = $this->handleRequest($request);
 			\DB::beginTransaction();
-			$count = $this->handleCommandes($commandes);
+			$result = $this->handleCommandes($commandes);
 		}
 		catch(\exception $e){
 			\DB::rollBack();
@@ -58,7 +57,7 @@ class CommandeDomaine extends Domaine
 		}
 
 		\DB::commit();
-		return $count;
+		return $result;
 	}
 
 
@@ -87,24 +86,22 @@ class CommandeDomaine extends Domaine
 				}
 			});
 		});
+		// 'paiement_initial' => $livraison->paiement_initial, 
+		// 'relais_initial' => $livraison->relais_initial, 
 
 		/* Connaître le relais choisi par l'user current pour cette livraison et le fournir à la vue */
 		$relaiss = $this->relaissD->allActived('id');
-		$relaiss->each(function($item) use($commande){
+		$relaiss->each(function($item) use($commande, $livraison){
 			if ($item->id == $commande->relais_id) {
-				$item->checked = 'checked';
-			}else{
-				$item->checked = '';
+				$livraison->relais_initial = $item->id;
 			}
 		});
 
 		/* Connaître le mode de paiement choisi par l'user current pour cette livraison et le fournir à la vue */
 		$modespaiement = $this->modepaiementD->allActived('id');
-		$modespaiement->each(function($item) use($commande){
+		$modespaiement->each(function($item) use($commande, $livraison){
 			if ($item->id == $commande->modepaiement_id) {
-				$item->checked = 'checked';
-			}else{
-				$item->checked = '';
+				$livraison->paiement_initial = $item->id;
 			}
 		});
 
@@ -132,57 +129,96 @@ class CommandeDomaine extends Domaine
 	/**
 	 * Décompose/recompose les éléments de la requête pour traiter les valeurs de la (des) commande(s).
 	 *
-	 * @return array : recomposition des commandes
+	 * @return array : request recomposée
 	 **/
 	private function handleRequest($request)
 	{
+		$requete = [];
 		foreach ($request->except('_token') as $key => $value) {
 			if (!($value == 0 or $value == "")) {
 				$key_parts = explode("_", $key);
-				if (count($key_parts) == 2) {
-					$commandes[$key_parts[0]][$key_parts[1]] = $value;
-				}else{
-					$commandes[$key_parts[0]]['paniers'][$key_parts[2]] = $value;
+				$livraison_id = $key_parts[0];
+				if (count($key_parts) == 2) { 									
+					$requete[$livraison_id][$key_parts[1]] = $value; /* $key_parts[1] = "paiement" || "relais" */
+				}else{  															
+					$requete[$livraison_id]['paniers'][$key_parts[2]] = $value; /* $key_parts[1] = "qte" - $key_parts[2] = "panier_id"  */
 				}
 			}
 		}
-		return $commandes;
+		return $requete;
 	}
 
 
-
 	/**
+     * undocumented function
 	 * Enregistre les commandes valides ainsi que les lignes associées.
 	 *
 	 **/
 	private function handleCommandes($commandes)
 	{
-		$count = (int) 0;
-		foreach($commandes as $key => $value){
-        	if (isset($value['paniers'])) { // Forcément, on ne traite pas une commande sans panier commandé…
-        		$this->model = $this->model->create();
-        		// return dd($this->model);
-        		// $this->model->id = \DB::table('commandes')->max('id')+1;
-        		$this->model->livraison_id =  $key;
-        		$this->model->client_id = \Auth::user()->id;
-        		$this->model->numero = \date('y')."-C".\Auth::user()->id."-".$this->model->id;
-        		$this->model->relais_id = $value['relais'];
-        		$this->model->modepaiement_id = $value['paiement'];
-        		$this->model->statut = $this->getEtat($this->model);;
+		$result = (int) 0;
+		// var_dump($commandes);
+		foreach($commandes as $livraison_id => $values){
+			if (isset($values['paniers'])) { // Forcément, on ne traite pas une commande sans panier commandé…
+				$this->validate($livraison_id, $values);
+
+				$this->model = $this->model->create();
+
+				$this->model->livraison_id =  $livraison_id;
+				$this->model->client_id = \Auth::user()->id;
+				$this->model->numero = \date('y')."-C".\Auth::user()->id."-".$this->model->id;
+				$this->model->relais_id = $values['relais'];
+				$this->model->modepaiement_id = $values['paiement'];
+				$this->model->statut = $this->getEtat($this->model);;
 
         		$this->model->save();
-        		$count++;
+				$result++;
 
-        		foreach ($value['paniers'] as $id => $qte) {
+        		foreach ($values['paniers'] as $id => $qte) {
         			$ligne = new ligne(['commande_id' => $this->model->id, 'panier_id' => $id, 'quantite' => $qte]); 
         			$ligne->save(); 
         		}
-        	}
-        }
-        return $count;
+			}
+		}
+		// return dd($result);
+		return $result;
+	}
+
+
+    /**
+     * undocumented function
+     *
+     * @return void
+     * @author 
+     **/
+    private function validate($livraison_id, $values)
+    {
+    	if(!isset($values['paiement'])){
+    		$livraison_date = $this->getLivraisonDateForException($livraison_id);
+    		$message = trans('message.commande.paiementRequired', ['date' => $livraison_date]);
+    		throw new \Exception($message, 1);
+    	}
+
+    	if(!isset($values['relais'])){
+    		$livraison_date = $this->getLivraisonDateForException($livraison_id);
+    		$message = trans('message.commande.relaisRequired', ['date' => $livraison_date]);
+    		throw new \Exception($message, 1);
+    	}
+
     }
 
 
+    /**
+     * undocumented function
+     *
+     * @return void
+     * @author 
+     **/
+    private function getLivraisonDateForException($livraison_id)
+    {
+    	$date = Livraison::findOrFail($livraison_id)->date_livraison;
+    	return  Carbon::createFromFormat('Y-m-d H:i:s', $date)->formatLocalized('%A %e %B %Y');
+    }
 	/**
 	 * • Effectuer une requete d'une commande avec ses relations, y compris les lignes avec leur relation panier pour le nom en clair de celui-ci.
 	 * • Pour chaque lignes en effectuer le complément (obtention du producteur associé au panier et son prix_livraison.

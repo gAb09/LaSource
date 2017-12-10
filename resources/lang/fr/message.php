@@ -107,6 +107,8 @@ return [
     'storeOk'       => '{1} Votre commande a bien été prise en compte. | [2, Inf] Vos :count commandes ont bien été prises en compte.',
     'storeNul'       => 'Aucune commande n’a été validée (toutes les quantités étaient nulles).',
     'storefailed'       => 'Problème. Votre demande n’a pas pu être prise en compte…',
+    'paiementRequired'       => 'Vous n’avez pas choisi de mode de mode de paiement pour la livraison du :date',
+    'relaisRequired'       => 'Vous n’avez pas choisi de relais pour la livraison du :date',
     ],
 
     'indisponibilite' => [

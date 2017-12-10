@@ -131,7 +131,7 @@ class PanierDomaine extends Domaine
 
 	public function PanierSyncProducteurs($panier_id, $producteurs = array())
 	{
-		return dd($producteurs);
+		// return dd($producteurs);
 		$model = Panier::find($panier_id);
 		if(is_null($producteurs)){
 			$model->producteur()->detach();

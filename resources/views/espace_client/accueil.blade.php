@@ -47,7 +47,14 @@
 
                 <br/>
                 <h3 style="margin-top:10px">Mes préférences</h3>
-                @include('espace_client.paiement_relais', ['ref_livraison' => 0, 'par_defaut' => "par défaut", 'modespaiement' => $all_modes, 'relaiss' => $all_relais])
+                @include('espace_client.paiement_relais', [
+                'paiement_initial' => $model->client->pref_paiement, 
+                'relais_initial' => $model->client->pref_relais, 
+                'ref_livraison' => 0, 
+                'par_defaut' => "par défaut", 
+                'modespaiement' => $all_modes, 
+                'relaiss' => $all_relais
+                ])
             </div>
 
             <div class="panel-body col-md-10">
@@ -55,9 +62,11 @@
                 {!! csrf_field() !!}
                     
 
-                    <div class="une_livraison_ouverte">
+                    <div class="les_livraisons_ouvertes">
                         @foreach($livraisons as $livraison)
+                        <div class="une_livraison_ouverte">
                             @include('espace_client.une_livraison_ouverte')
+                        </div>
                         @endforeach
                     </div>
                     <div class="commandes">

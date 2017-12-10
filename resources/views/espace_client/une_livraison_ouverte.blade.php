@@ -1,5 +1,4 @@
-
-<h4 class=""><span id="modification_livraison" class=""></span>Livraison du @date_complete($livraison->date_livraison)
+<h4 class="" style="background-color:white;padding:10px;margin:0 8px"><span id="modification_livraison" class=""  ></span>Livraison du @date_complete($livraison->date_livraison)
 	<small>ouverte jusqu'au @date_complete($livraison->date_cloture) et payable avant le @date_complete($livraison->date_paiement)</small>
 </h4>
 @if($livraison->remarques)<p class="remarques">{{$livraison->remarques}}</p>@endif
@@ -25,16 +24,33 @@
 				<small>@nobr($panier->idee)</small>
 			</p>
 			<div class="quantite">
+				<?php
+				if (!is_null(old($livraison->id."_qte_".$panier->id))){
+					$valeur = old($livraison->id."_qte_".$panier->id);
+				}elseif(!is_null($panier->quantite)){
+					$valeur = $panier->quantite;
+				}else{
+					$valeur = 0;
+				}
+				?>
+
 				<span class="fleche decrement" onclick="javascript:decrement({{$livraison->id}}, {{$panier->id}});"><i class="fa fa-angle-double-down"></i></span>
 				<span class="fleche increment" onclick="javascript:increment({{$livraison->id}}, {{$panier->id}});"><i class="fa fa-angle-double-up"></i></span>
-				<input type="txt" class="" name="{{ $livraison->id }}_qte_{{ $panier->id }}" value="{{$panier->quantite or 0}}" onBlur="javascript:qteChange(this, {{$livraison->id}}, {{$panier->id}})">
+				<input type="txt" class="" name="{{ $livraison->id }}_qte_{{ $panier->id }}" value="{{$valeur}}" onBlur="javascript:qteChange(this, {{$livraison->id}}, {{$panier->id}})">
 			<br />
 			</div>
 				<p class="total_panier" name="{{$livraison->id}}_total_panier_{{$panier->id}}" >non commandé</p>
 		</div>
 	@endforeach
 	<div class="paiement_relais">
-		@include('espace_client.paiement_relais', ['ref_livraison' => $livraison->id, 'par_defaut' => '', 'modespaiement' => $livraison->Modepaiements, 'relaiss' => $livraison->relais])
+		@include('espace_client.paiement_relais', [
+		'paiement_initial' => $livraison->paiement_initial, 
+		'relais_initial' => $livraison->relais_initial, 
+		'ref_livraison' => $livraison->id, 
+		'par_defaut' => '', 
+		'modespaiement' => $livraison->Modepaiements, 
+		'relaiss' => $livraison->relais]
+		)
 	</div>
 	</div>
 		<p  name="{{$livraison->id}}_total_livraison" class="total_livraison">

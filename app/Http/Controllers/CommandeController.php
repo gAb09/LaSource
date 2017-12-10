@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Domaines\CommandeDomaine as Domaine;
 use App\Http\Controllers\getDeletedTrait;
 use App\Domaines\LivraisonDomaine;
+use App\Http\Requests\CommandeRequest;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -45,20 +46,20 @@ class CommandeController extends Controller
      **/
     public function store(Request $request)
     {
-        // return dd($request->all());
+         // return dd($request->all());
         $result = $this->domaine->store($request);
         if( !is_integer($result) ){
             if ($result instanceof \Exception) {
                 $e_message = "<br />".$result->getMessage();
             }else{
-                $e_message = "";
+                $e_message = $this->domaine->getMessage();
             }
             $message = trans('message.commande.storefailed').$e_message;
-            return redirect()->back()->with('status', $message);
+            return redirect()->back()->with('status', $message)->withInput();
         }else if($result == 0) {
-            return redirect()->back()->with('status', trans('message.commande.storeNul'));
+            return redirect()->back()->with('status', trans('message.commande.storeNul'))->withInput();
         }else{
-            return redirect()->back()->with('success', trans_choice('message.commande.storeOk', $result, ['count' => $result]));
+            return redirect()->back()->with('success', trans_choice('message.commande.storeOk', $result, ['count' => $result]))->withInput();
         }
     }
 
