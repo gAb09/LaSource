@@ -231,10 +231,11 @@ function toggleCommandesArchived(){
 
 
 function editCommande(commande_id, livraison_id){
-	// console.log('commande n° '+commande_id);
-	// console.log(domaine);
+	console.log('commande n° '+commande_id);
+	console.log('livraison_id : '+livraison_id);
+	console.log(domaine);
 	var adresse = 'commande/'+commande_id+'/edit';
-	// console.log(adresse);
+	console.log(adresse);
 
 
 	$.ajax({
@@ -246,7 +247,7 @@ function editCommande(commande_id, livraison_id){
 
 			$('#modification_livraison').empty().html('Modification de la ');
 
-			$('#commande_update').attr('action', 'http://'+domaine+"/commande/"+livraison_id);
+			$('#commande_update').attr('action', 'http://'+domaine+"/commande/"+commande_id);
 
 
 			all_qte_panier = $("[name^='" + livraison_id + "_qte']");

@@ -48,7 +48,7 @@ class CommandeDomaine extends Domaine
 
 	/**
 	 * Persister une(des) nouvelle(s) commande(s)
-	 * • On commence par recomposer les commandes à partir de la requête (handleRequest)
+	 * • On commence par recomposer les commandes à partir de la requête (recomposeRequest)
 	 * • On initialise une transaction, puis on traite la validation et la persistance des commandes.
 	 * • On catch les exceptions qui sont alors repassée au contrôleur.
 	 *
@@ -57,10 +57,11 @@ class CommandeDomaine extends Domaine
 	 * @return void $result : (int) 0 si aucune quantité saisie) | (int) nombre de commandes traitées) | Exception
 	 **/
 	public function store($request){
-			try {
-			$commandes = $this->handleRequest($request);
+		try {
+			$request = $request->except('_token');
+			$commandes = $this->recomposeRequest($request);
 			\DB::beginTransaction();
-			$result = $this->handleCommandes($commandes);
+			$result = $this->validateAndStore($commandes);
 		}
 		catch(\exception $e){
 			\DB::rollBack();
@@ -81,9 +82,6 @@ class CommandeDomaine extends Domaine
 	 **/
 	function edit($commande_id)
 	{
-		$model = User::with('client.commandes.livraison')->find(\Auth::user()->id);
-		// $model = User::with('client.commandes.livraison')->find(300);
-
 		$commandeBrute = $this->model->with('livraison.panier', 'lignes')->findOrFail($commande_id);
 		$commande = $this->getAllLignes($commandeBrute);
 
@@ -119,34 +117,66 @@ class CommandeDomaine extends Domaine
 		$datas['livraison'] = $livraison;
 		$datas['modespaiement'] = $modespaiement;
 		$datas['relaiss'] = $relaiss;
-		$datas['model'] = $model;
 
         // return dd($commande);
 		return $datas;
 	}
+
+
+	/**
+	 * Persister les modifications sur une commande
+	 * • On commence par recomposer la commande à partir de la requête (recomposeRequest)
+	 * • On recherche la commande enregistrée que l'on compare au datas proposées pour déceler une absence de changement,
+	 *   si c'est le ce cas on revient à la page d'origine.
+	 * • Sinon on initialise une transaction, puis on traite la validation et la persistance des commandes.
+	 * • Si on a catché des exceptions elles sont repassées au contrôleur.
+	 *
+	 * @param Illuminate\Http\Request $request 
+	 *
+	 * @return void $result : (int) 0 si aucune modification) | (int) nombre de commandes traitées) | Exception
+	 **/
+	public function update($id, $request){
+		try {
+			$datas = $request->except('_token', '_method');
+			$commandes = $this->recomposeRequest($datas);
+			\DB::beginTransaction();
+			$result = $this->validateAndUpdate($commandes, $id);
+		}
+		catch(\exception $e){
+			\DB::rollBack();
+			return $e;
+		}
+
+		\DB::commit();
+		return $result;
+	}
+
 
 	/**
 	 * Décomposer/recomposer les éléments de la requête pour préparer le traitement de la (des) commande(s).
 	 *
 	 * @param Illuminate\Http\Request $request 
 	 *
-	 * @return array : requete recomposée
+	 * @return array : commande recomposée
 	 **/
-	private function handleRequest($request)
+	private function recomposeRequest($datas)
 	{
-		$requete = [];
-		foreach ($request->except('_token') as $key => $value) {
-			if (!($value == 0 or $value == "")) {
+		$commandes = [];
+		$this->cumul_qte = 0;
+		foreach ($datas as $key => $value) {
+			if ($value !== "") {
+				$value = (int) $value;
 				$key_parts = explode("_", $key);
 				$livraison_id = $key_parts[0];
-				if (count($key_parts) == 2) { 									
-					$requete[$livraison_id][$key_parts[1]] = $value; /* $key_parts[1] = "paiement" || "relais" */
+				if ($key_parts[1] == 'qte') { 		
+					$commandes[$livraison_id]['paniers'][$key_parts[2]] = $value; /* $key_parts[1] = "qte" - $key_parts[2] = "panier_id"  */
+					$this->cumul_qte += $value;
 				}else{  															
-					$requete[$livraison_id]['paniers'][$key_parts[2]] = $value; /* $key_parts[1] = "qte" - $key_parts[2] = "panier_id"  */
+					$commandes[$livraison_id][$key_parts[1]] = $value; /* $key_parts[1] = "paiement" || "relais" */
 				}
 			}
 		}
-		return $requete;
+		return $commandes;
 	}
 
 
@@ -157,12 +187,11 @@ class CommandeDomaine extends Domaine
 	 *
 	 * @return int $result : 0 si aucune quantité saisie) | nombre de commandes traitées)
 	 **/
-	private function handleCommandes($commandes)
+	private function validateAndStore($commandes)
 	{
 		$result = (int) 0;
-		// var_dump($commandes);
 		foreach($commandes as $livraison_id => $values){
-			if (isset($values['paniers'])) { // Forcément, on ne traite pas une commande sans panier commandé…
+			if ($this->getCumulQte() !== 0) {
 				$this->validate($livraison_id, $values);
 
 				$this->model = $this->model->create();
@@ -174,18 +203,78 @@ class CommandeDomaine extends Domaine
 				$this->model->modepaiement_id = $values['paiement'];
 				$this->model->statut = $this->getEtat($this->model);;
 
-        		$this->model->save();
+				$this->model->save();
 				$result++;
 
-        		foreach ($values['paniers'] as $id => $qte) {
-        			$ligne = new ligne(['commande_id' => $this->model->id, 'panier_id' => $id, 'quantite' => $qte]); 
-        			$ligne->save(); 
-        		}
+				foreach ($values['paniers'] as $id => $qte) {
+					$ligne = new ligne(['commande_id' => $this->model->id, 'panier_id' => $id, 'quantite' => $qte]); 
+					$ligne->save(); 
+				}
+			}
+		}
+		return $result;
+	}
+
+
+	/**
+     * Procéder aux validations, puis modifier commandes + lignes.
+     *
+	 * @param array $commandes
+	 *
+	 * @return int $result : 0 si aucune quantité saisie) | nombre de commandes traitées)
+	 **/
+	private function validateAndUpdate($commandes, $id)
+	{
+		$result = (int) 0;
+
+		$this->model = $this->model->where('id', $id)->first();
+		// dd($this->model);
+
+		// var_dump($commandes);
+		foreach($commandes as $livraison_id => $values){
+			if ($this->getCumulQte() !== 0) {
+				$this->validate($livraison_id, $values);
+
+
+				$this->model->relais_id = $values['relais'];
+				$this->model->modepaiement_id = $values['paiement'];
+				$this->model->statut = $this->getEtat($this->model);;
+
+				// $this->model->save();
+				$result++;
+
+				foreach ($values['paniers'] as $id => $qte) {
+					$ligne = $this->ligne->where('panier_id', $id)->where('commande_id', $this->model->id)->first();
+					var_dump($id);
+					var_dump($this->model->id);
+					var_dump($qte);
+					// return dd($ligne);
+					$ligne->quantite = $qte;
+
+					$ligne->save(); 
+				}
+				// dd('fin');
 			}
 		}
 		// return dd($result);
 		return $result;
 	}
+
+
+    /**
+     * On ne fait le traitement que si au moins une quantité est non nulle
+     *
+     * @return void
+     * @author 
+     **/
+    private function getCumulQte()
+    {
+    	return $this->cumul_qte;
+    	
+    }
+
+
+
 
 
     /**
@@ -264,6 +353,7 @@ class CommandeDomaine extends Domaine
 		// return dd($commandes);
 		return $commandes;
 	}
+
 
 
 

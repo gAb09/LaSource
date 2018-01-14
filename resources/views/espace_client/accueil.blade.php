@@ -7,7 +7,7 @@
         <a class="close" href="#noWhere" onClick="javascript:$('#modification_livraison').empty()">
             <i class="btn_close fa fa-btn fa-close"></i>
         </a>
-        <form id="commande_update" class="form-horizontal" role="form" method="POST" action="">
+        <form id="commande_update" class="form-horizontal" role="form" method="POST" action="{{ route('commande.update', '999') }}">
                         {!! csrf_field() !!}
                         <input type="hidden" class="form-control" name="_method" value="PUT">
             <div id="livraison_modified">
@@ -58,7 +58,7 @@
             </div>
 
             <div class="panel-body col-md-10">
-                <form id="commande_store" class="form-horizontal" role="form" method="POST" action="{{ route('commande.store', $model->id) }}">
+                <form id="commande_store" class="form-horizontal" role="form" method="POST" action="{{ route('commande.store') }}">
                 {!! csrf_field() !!}
                     
 

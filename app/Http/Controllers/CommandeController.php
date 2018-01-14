@@ -80,10 +80,9 @@ class CommandeController extends Controller
         $livraison = $datas['livraison'];
         $modespaiement = $datas['modespaiement'];
         $relaiss = $datas['relaiss'];
-        $model = $datas['model'];
 
 
-        return view('espace_client.une_livraison_ouverte')->with(compact('model', 'commande', 'livraison', 'modespaiement', 'relaiss'));
+        return view('espace_client.une_livraison_ouverte')->with(compact('commande', 'livraison', 'modespaiement', 'relaiss'));
     }
 
     /**
@@ -95,9 +94,20 @@ class CommandeController extends Controller
      **/
     function update($id, Request $request)
     {
-        var_dump('Si toutes les quantités sont à 0 => delete ??');
-        var_dump('Si pas de modifications => ???');
-        return dd($request->except('_token', '_method'));
+        $result = $this->domaine->update($id, $request);
+        if( !is_integer($result) ){
+            if ($result instanceof \Exception) {
+                $e_message = "<br />".$result->getMessage();
+            }else{
+                $e_message = $this->domaine->getMessage();
+            }
+            $message = trans('message.commande.storefailed').$e_message;
+            return redirect()->back()->with('status', $message)->withInput();
+        }else if($result == 0) {
+            return redirect()->back()->with('status', trans('message.commande.storeNul'))->withInput();
+        }else{
+            return redirect()->back()->with('success', trans_choice('message.commande.storeOk', $result, ['count' => $result]))->withInput();
+        }
     }
 
 
