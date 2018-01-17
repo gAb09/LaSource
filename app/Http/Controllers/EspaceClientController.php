@@ -27,7 +27,12 @@ class EspaceClientController extends Controller
     }
 
 
-
+    /**
+     * undocumented function
+     *
+     * @return void
+     * @author 
+     **/
     public function espaceClient()
     {
         $auth_user = \Auth::user();
@@ -55,41 +60,39 @@ class EspaceClientController extends Controller
         $livraisons->each(function ($livraison, $keys) use($model){
 
             $livraison->relais = $livraison->load('relais')->relais;
-            $livraison->relais->each(function($item) use($model, $livraison){
-                if (!isset($livraison->relais_initial)) {
-                    if (!is_null(old($livraison->id.'_relais'))){
-                        $livraison->relais_initial = old($livraison->id.'_relais');
-                    }elseif ($item->id == $model->client->pref_relais){
-                        $livraison->relais_initial = $model->client->pref_relais;
-                    }else{
-                        $livraison->relais_initial = "";
-                    }
+            $livraison->relais->each(function($relai) use($model, $livraison){
+                if (!is_null($v = old($livraison->id.'_relais'))){
+                    $livraison->relais_initial = $v;
+                }elseif(!is_null($v = $model->client->pref_relais)){
+                    $livraison->relais_initial = $v;
+                }else{
+                    $livraison->relais_initial = null;
                 }
             });
 
 
 
+
             $livraison->modepaiements = $livraison->load('Modepaiements')->Modepaiements;
-            $livraison->modepaiements->each(function($item) use($model, $livraison){
-                if (!is_null(old($livraison->id.'_paiement'))){
-                    $livraison->paiement_initial = old($livraison->id.'_paiement');
-                }elseif ($item->id == $model->client->pref_paiement){
-                    $livraison->paiement_initial = $model->client->pref_paiement;
+            $livraison->modepaiements->each(function($modepaiement) use($model, $livraison){
+                if (!is_null($v = old($livraison->id.'_paiement'))){
+                    $livraison->paiement_initial = $v;
+                }elseif(!is_null($v = $model->client->pref_paiement)){
+                    $livraison->paiement_initial = $v;
                 }else{
-                    $livraison->paiement_initial = "";
+                    $livraison->paiement_initial = null;
                 }
             });
 
         });
 
-        $all_relais = $this->relaissD->allActived('id');
+    $all_relais = $this->relaissD->allActived('id');
 
-        $all_modes = $this->modepaiementD->allActived('id');
+    $all_modes = $this->modepaiementD->allActived('id');
 
-   // return dd($livraisons);
-   // return dd($all_relais);
+    // return dd($livraisons);
 
-        return view('espace_client.accueil')->with(compact('model', 'commandes', 'commandes_en_cours', 'livraisons', 'all_relais', 'all_modes'));
+    return view('espace_client.accueil')->with(compact('model', 'commandes', 'commandes_en_cours', 'livraisons', 'all_relais', 'all_modes'));
     }
 
 

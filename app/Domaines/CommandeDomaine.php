@@ -161,6 +161,7 @@ class CommandeDomaine extends Domaine
 	 **/
 	private function recomposeRequest($datas)
 	{
+		return dd($datas);
 		$commandes = [];
 		$this->cumul_qte = 0;
 		foreach ($datas as $key => $value) {

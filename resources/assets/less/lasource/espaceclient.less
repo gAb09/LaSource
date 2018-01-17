@@ -1,24 +1,24 @@
 @import "variables.less";
 
 #overlay{
-    display: none;
-    position: fixed;
-    top:0; right:0; bottom:0; left:0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
+	display: none;
+	position: fixed;
+	top:0; right:0; bottom:0; left:0;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 1000;
 }
 #overlay:target{
-    display: block;
+	display: block;
 }
 .popup_block{
-    background: #fff;
-    padding: 20px;
-    border: 20px solid #ddd;
-    position: relative;
-    margin: 10% auto;
-    width: 100%;
-    box-shadow: 0px 0px 20px #000;
-    border-radius: 10px;
+	background: #fff;
+	padding: 20px;
+	border: 20px solid #ddd;
+	position: relative;
+	margin: 10% auto;
+	width: 100%;
+	box-shadow: 0px 0px 20px #000;
+	border-radius: 10px;
 }
 
 .espace_client, #overlay{
@@ -40,6 +40,10 @@
 	}
 	h4{
 		padding-top: 5px;
+	}
+	.groupe_preference_client{
+		border-top: 1px dotted @color_titres;
+		padding: 7px 0 0;
 	}
 	.livraisons_ouvertes{
 		h4{
@@ -88,6 +92,13 @@
 		}
 		.relais, .modepaiement{
 			background-color: white;
+			p.nopref{
+				text-align: center;
+				color: @color_warning;
+				font-size: 0.7em;
+				width: 100%;
+				margin: 0;
+			}
 			span{
 				background-color: white;
 				border: solid 2px @color_commande;
@@ -117,7 +128,7 @@
 			flex-direction: column;		
 			align-items: space-between;		
 			.type{
-				background-color: @color_commande;
+				background-color: lighten(@color_commande, 7%);
 				text-align: center;
 				width: 100%;
 			}
@@ -130,7 +141,7 @@
 				margin: auto;
 				height:40px;
 				input{
-					background-color: @color_commande;
+					background-color:lighten(@color_commande, 7%);
 					border: none;
 					width:25%;
 					height:100%;
