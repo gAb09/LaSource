@@ -60,7 +60,7 @@ class CommandeController extends Controller
             $message = trans('message.commande.storefailed').$e_message;
             return redirect()->back()->with('status', $message)->withInput();
         }else if($result == 0) {
-            return redirect()->back()->with('status', trans('message.commande.storeNul'))->withInput();
+            return redirect()->back()->with('status', trans('message.commande.storeAllNull'))->withInput();
         }else{
             return redirect()->back()->with('success', trans_choice('message.commande.storeOk', $result, ['count' => $result]))->withInput();
         }
@@ -104,7 +104,7 @@ class CommandeController extends Controller
             $message = trans('message.commande.storefailed').$e_message;
             return redirect()->back()->with('status', $message)->withInput();
         }else if($result == 0) {
-            return redirect()->back()->with('status', trans('message.commande.storeNul'))->withInput();
+            return redirect()->back()->with('status', trans('message.commande.storeOneNull'))->withInput();
         }else{
             return redirect()->back()->with('success', trans_choice('message.commande.storeOk', $result, ['count' => $result]))->withInput();
         }

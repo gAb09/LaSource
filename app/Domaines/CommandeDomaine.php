@@ -163,15 +163,16 @@ class CommandeDomaine extends Domaine
 		$commandes = [];
 		$this->cumul_qte = 0;
 		foreach ($datas as $key => $value) {
-			if ($value !== "") {
+			if ($value != 0 and $value != '') {
 				$value = (int) $value;
-				$key_parts = explode("_", $key);
-				$livraison_id = $key_parts[0];
-				if ($key_parts[1] == 'qte') { 		
-					$commandes[$livraison_id]['paniers'][$key_parts[2]] = $value; /* $key_parts[1] = "qte" - $key_parts[2] = "panier_id"  */
+				$explode = explode("_", $key);
+				$livraison_id = $explode[0];
+				$critere = $explode[1];
+				if ($critere == 'qte') { 		
+					$commandes[$livraison_id]['paniers'][$explode[2]] = $value; /* $key_parts[1] = "qte" - $key_parts[2] = "panier_id"  */
 					$this->cumul_qte += $value;
 				}else{  															
-					$commandes[$livraison_id][$key_parts[1]] = $value; /* $key_parts[1] = "paiement" || "relais" */
+					$commandes[$livraison_id][$critere] = $value; /* $key_parts[1] = "paiement" || "relais" */
 				}
 			}
 		}
@@ -187,36 +188,39 @@ class CommandeDomaine extends Domaine
 	 * @return int $result : 0 si aucune quantité saisie) | nombre de commandes traitées)
 	 **/
 	private function validateAndStore($commandes)
-	{
-		$result = (int) 0;
-		foreach($commandes as $livraison_id => $values){
-			if ($this->getCumulQte() !== 0) {
-				$this->validate($livraison_id, $values);
+	{		
+		$nbre_commande = (int) 0;
+
+		foreach($commandes as $livraison_id => $datas){
+
+			if ($this->getCumulQte() !== 0 and isset($datas['paniers'])) {
+				$this->validate($livraison_id, $datas);
 
 				$this->model = $this->model->create();
 
 				$this->model->livraison_id =  $livraison_id;
 				$this->model->client_id = \Auth::user()->id;
 				$this->model->numero = \date('y')."-C".\Auth::user()->id."-".$this->model->id;
-				$this->model->relais_id = $values['relais'];
-				$this->model->modepaiement_id = $values['paiement'];
+				$this->model->relais_id = $datas['relais'];
+				$this->model->modepaiement_id = $datas['paiement'];
 				$this->model->statut = $this->getEtat($this->model);;
 
 				$this->model->save();
-				$result++;
+				$nbre_commande++;
 
-				foreach ($values['paniers'] as $id => $qte) {
+				foreach ($datas['paniers'] as $id => $qte) {
 					$ligne = new ligne(['commande_id' => $this->model->id, 'panier_id' => $id, 'quantite' => $qte]); 
 					$ligne->save(); 
 				}
 			}
+
 		}
-		return $result;
+		return $nbre_commande;
 	}
 
 
 	/**
-     * Procéder aux validations, puis modifier commandes + lignes.
+     * Procéder aux validations, puis modifier commande + lignes.
      *
 	 * @param array $commandes
 	 *
@@ -227,9 +231,7 @@ class CommandeDomaine extends Domaine
 		$result = (int) 0;
 
 		$this->model = $this->model->where('id', $id)->first();
-		// dd($this->model);
 
-		// var_dump($commandes);
 		foreach($commandes as $livraison_id => $values){
 			if ($this->getCumulQte() !== 0) {
 				$this->validate($livraison_id, $values);
@@ -240,22 +242,17 @@ class CommandeDomaine extends Domaine
 				$this->model->statut = $this->getEtat($this->model);;
 
 				// $this->model->save();
-				$result++;
+				$result = 1;
 
 				foreach ($values['paniers'] as $id => $qte) {
 					$ligne = $this->ligne->where('panier_id', $id)->where('commande_id', $this->model->id)->first();
-					var_dump($id);
-					var_dump($this->model->id);
-					var_dump($qte);
-					// return dd($ligne);
+
 					$ligne->quantite = $qte;
 
 					$ligne->save(); 
 				}
-				// dd('fin');
 			}
 		}
-		// return dd($result);
 		return $result;
 	}
 
