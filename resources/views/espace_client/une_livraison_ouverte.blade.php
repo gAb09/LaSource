@@ -44,8 +44,8 @@
 	@endforeach
 	<div class="paiement_relais">
 		@include('espace_client.paiement_relais', [
-		'paiement_initial' => $livraison->paiement_initial, 
-		'relais_initial' => $livraison->relais_initial, 
+		'paiement_selected' => $livraison->paiement_selected, 
+		'relais_selected' => $livraison->relais_selected, 
 		'ref_livraison' => $livraison->id, 
 		'par_defaut' => '', 
 		'modespaiement' => $livraison->Modepaiements, 

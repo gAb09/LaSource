@@ -28,72 +28,70 @@ class EspaceClientController extends Controller
 
 
     /**
-     * undocumented function
+     * Le contrôleur doit fournir
+     * – Les données du user (client en l'occurence)
+     * – Pour les préférences, l'ensemble des relais actifs
+     * – Pour les préférences, l'ensemble des modes de paiements actifs
+     * – Les livraisons ouvertes à la commande avec pour chacune,
+     *   la détermination du relais et du mode de paiement sélectionné
+     *   (prise en compte du choix différent du choix par défaut 
+     *   et/ou d'une éventuelle représentation du formulaire si refus de validation )
+     * – Les commandes en cours, pour consultation ou pour modification
+     * – Les commandes archivées ou archivables.
      *
      * @return void
      * @author 
      **/
     public function espaceClient()
     {
-        $auth_user = \Auth::user();
+        /* user */
+        $user = \Auth::user();
 
-        $model = User::with('client.commandes.livraison')->find($auth_user->id);
+        /* relais actifs */
+        $relais_actifs = $this->relaissD->allActived('id');
 
-        $commandes = $model->load('client.commandes')->client->commandes;
+        /* modes paiements actifs */
+        $modes_actifs = $this->modepaiementD->allActived('id');
 
-        $commandes = $commandes->each(function($commande) {
-            $commande = $this->commandesD->getAllLignes($commande);
-            if(in_array($commande->statut, ['C_ARCHIVED', 'C_ARCHIVABLE'])) {
-                $commande->en_cours = false;
-            }else{
-                $commande->en_cours = true;
-                $this->commandes_en_cours[] = $commande->livraison->id;
-            }
-        });
-        
-        $commandes_en_cours = $this->commandes_en_cours;
+        /* Livraisons ouvertes */
+        $livraisons = $this->livraisonD->getAllLivraisonsOuvertes($user);
 
-        $livraisons = $this->livraisonD->getAllLivraisonsOuvertes($auth_user);
-
-
-
-        $livraisons->each(function ($livraison, $keys) use($model){
+        /* détermination du relais et du mode de paiement sélectionné */
+        $livraisons->each(function ($livraison, $keys) use($user){
 
             $livraison->relais = $livraison->load('relais')->relais;
-            $livraison->relais->each(function($relai) use($model, $livraison){
+            $livraison->relais->each(function($relai) use($user, $livraison){
                 if (!is_null($v = old($livraison->id.'_relais'))){
-                    $livraison->relais_initial = $v;
-                }elseif(!is_null($v = $model->client->pref_relais)){
-                    $livraison->relais_initial = $v;
+                    $livraison->relais_selected = $v;
+                }elseif(!is_null($v = $user->client->pref_relais)){
+                    $livraison->relais_selected = $v;
                 }else{
-                    $livraison->relais_initial = null;
+                    $livraison->relais_selected = null;
                 }
             });
-
-
-
 
             $livraison->modepaiements = $livraison->load('Modepaiements')->Modepaiements;
-            $livraison->modepaiements->each(function($modepaiement) use($model, $livraison){
+            $livraison->modepaiements->each(function($modepaiement) use($user, $livraison){
                 if (!is_null($v = old($livraison->id.'_paiement'))){
-                    $livraison->paiement_initial = $v;
-                }elseif(!is_null($v = $model->client->pref_paiement)){
-                    $livraison->paiement_initial = $v;
+                    $livraison->paiement_selected = $v;
+                }elseif(!is_null($v = $user->client->pref_paiement)){
+                    $livraison->paiement_selected = $v;
                 }else{
-                    $livraison->paiement_initial = null;
+                    $livraison->paiement_selected = null;
                 }
             });
-
         });
 
-    $all_relais = $this->relaissD->allActived('id');
 
-    $all_modes = $this->modepaiementD->allActived('id');
+        /* les commandes en cours */
+        $commandes_en_cours = $this->commandesD->getCommandesEnCours($user);
 
-    // return dd($livraisons);
 
-    return view('espace_client.accueil')->with(compact('model', 'commandes', 'commandes_en_cours', 'livraisons', 'all_relais', 'all_modes'));
+        /* les commandes archivées */
+        $commandes_archived = $this->commandesD->getCommandesArchived($user);
+
+
+    return view('espace_client.accueil')->with(compact('user', 'relais_actifs', 'modes_actifs', 'livraisons', 'commandes_en_cours', 'commandes_archived'));
     }
-
 
 }

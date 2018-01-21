@@ -224,7 +224,7 @@ function changementDetected(){
 }
 
 function toggleCommandesArchived(){
-	$('#une_commande_archive').toggleClass('hidden');
+	$('#une_commande_archived').toggleClass('hidden');
 	$('#show_commandes_archived').toggleClass('hidden');
 	$('#hide_commandes_archived').toggleClass('hidden');
 }

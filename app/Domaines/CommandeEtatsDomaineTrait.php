@@ -5,8 +5,9 @@ namespace App\Domaines;
 use Carbon\Carbon;
 
 
-trait EtatsCommandeDomaineTrait
+trait CommandeEtatsDomaineTrait
 {
+    private $commandes_archived = array('C_ARCHIVED', 'C_ARCHIVABLE');
 
 	/**
      * Non implémentée.

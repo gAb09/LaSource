@@ -32,28 +32,28 @@
 
             <div class="panel-body col-md-2">
                 <h3>Mes coordonnées</h3>
-                <h4>{{ $model->Client->prenom }} {{ $model->Client->nom }}<br/><small>(Pseudo : {{ $model->pseudo }})</small><br /></h4>
-                {{ $model->Client->ad1 }}<br />
-                @if(!empty($model->Client->ad2))
-                {{ $model->Client->ad2 }}<br />
+                <h4>{{ $user->Client->prenom }} {{ $user->Client->nom }}<br/><small>(Pseudo : {{ $user->pseudo }})</small><br /></h4>
+                {{ $user->Client->ad1 }}<br />
+                @if(!empty($user->Client->ad2))
+                {{ $user->Client->ad2 }}<br />
                 @endif
-                {{ $model->Client->cp }} {{ $model->Client->ville }}<br />
-                Tél : {{ $model->Client->tel }}<br />
-                Portable : {{ $model->Client->mobile }}<br />
-                Courriel : {{ $model->email }}<br />
-                Rôle : {{ $model->role->etiquette }}<br /><br />
-                <a href="{{ route('client.edit', $model->id) }}" class="btn btn-primary btn-xs">Modifier mes coordonnées</a><br />
-                <a href="{{ route('user.edit', $model->id) }}" class="btn btn-primary btn-xs" style="margin-top:5px">Modifier mes identifiants</a>
+                {{ $user->Client->cp }} {{ $user->Client->ville }}<br />
+                Tél : {{ $user->Client->tel }}<br />
+                Portable : {{ $user->Client->mobile }}<br />
+                Courriel : {{ $user->email }}<br />
+                Rôle : {{ $user->role->etiquette }}<br /><br />
+                <a href="{{ route('client.edit', $user->id) }}" class="btn btn-primary btn-xs">Modifier mes coordonnées</a><br />
+                <a href="{{ route('user.edit', $user->id) }}" class="btn btn-primary btn-xs" style="margin-top:5px">Modifier mes identifiants</a>
 
                 <br/>
                 <h3 style="margin-top:10px">Mes préférences</h3>
                 @include('espace_client.paiement_relais', [
-                'paiement_initial' => $model->client->pref_paiement, 
-                'relais_initial' => $model->client->pref_relais, 
+                'paiement_selected' => $user->client->pref_paiement, 
+                'relais_selected' => $user->client->pref_relais, 
                 'ref_livraison' => 0, 
                 'par_defaut' => "par défaut", 
-                'modespaiement' => $all_modes, 
-                'relaiss' => $all_relais
+                'modespaiement' => $modes_actifs, 
+                'relaiss' => $relais_actifs
                 ])
             </div>
 
@@ -70,24 +70,24 @@
                         @endforeach
                     </div>
                     <div class="commandes">
-                        @if($commandes->isEmpty())
+                        @if($commandes_en_cours->isEmpty() and $commandes_archived->isEmpty())
                             Aucune commande trouvée
                         @else
-                            @foreach($commandes as $commande) <!-- affichage des commandes en cours -->
-                                @if($commande->en_cours)
+                            <!-- affichage des commandes en cours -->
+                            @foreach($commandes_en_cours as $commande) 
                                 <div class="une_commande" style="position:relative">
-                                    @include('espace_client.une_commande', ['en_cours' => true])
+                                    @include('espace_client.une_commande')
                                 </div>
-                                @endif
                             @endforeach
+
+                            <!-- affichage des commandes archivées -->
                             <div id="show_commandes_archived" style="margin-top:10px" class="btn btn-info" onClick="javascript:toggleCommandesArchived();" >Voir mes commandes archivées</div>
                             <div id="hide_commandes_archived" style="margin-top:10px" class="btn btn-info hidden" onClick="javascript:toggleCommandesArchived();" >Masquer mes commandes archivées</div>
-                            @foreach($commandes as $commande)  <!-- affichage des commandes archivées -->
-                                @if(!$commande->en_cours)
-                                <div id="une_commande_archive" class="hidden" style="position:relative">
-                                    @include('espace_client.une_commande', ['en_cours' => false])
+
+                            @foreach($commandes_archived as $commande)  
+                                <div id="une_commande_archived" class="hidden" style="position:relative">
+                                    @include('espace_client.une_commande')
                                 </div>
-                                @endif
                             @endforeach
                         @endif
                     </div>

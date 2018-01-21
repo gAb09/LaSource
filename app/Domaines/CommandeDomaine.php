@@ -15,7 +15,7 @@ use App\Models\User;
 
 class CommandeDomaine extends Domaine
 {
-	use EtatsCommandeDomaineTrait;
+	use CommandeEtatsDomaineTrait;
 
 	private $montant_ligne = 0;
 
@@ -54,7 +54,7 @@ class CommandeDomaine extends Domaine
 	 *
 	 * @param Illuminate\Http\Request $request 
 	 *
-	 * @return void $result : (int) 0 si aucune quantité saisie) | (int) nombre de commandes traitées) | Exception
+	 * @return void $result : (int) = 0 si aucune quantité saisie) | (int) nombre de commandes traitées) | Exception
 	 **/
 	public function store($request){
 		try {
@@ -94,14 +94,12 @@ class CommandeDomaine extends Domaine
 				}
 			});
 		});
-		// 'paiement_initial' => $livraison->paiement_initial, 
-		// 'relais_initial' => $livraison->relais_initial, 
 
 		/* Connaître le relais choisi par l'user current pour cette livraison et le fournir à la vue */
 		$relaiss = $this->relaissD->allActived('id');
 		$relaiss->each(function($item) use($commande, $livraison){
 			if ($item->id == $commande->relais_id) {
-				$livraison->relais_initial = $item->id;
+				$livraison->relais_selected = $item->id;
 			}
 		});
 
@@ -109,7 +107,7 @@ class CommandeDomaine extends Domaine
 		$modespaiement = $this->modepaiementD->allActived('id');
 		$modespaiement->each(function($item) use($commande, $livraison){
 			if ($item->id == $commande->modepaiement_id) {
-				$livraison->paiement_initial = $item->id;
+				$livraison->paiement_selected = $item->id;
 			}
 		});
 
@@ -312,6 +310,9 @@ class CommandeDomaine extends Domaine
     	$date = Livraison::findOrFail($livraison_id)->date_livraison;
     	return  Carbon::createFromFormat('Y-m-d H:i:s', $date)->formatLocalized('%A %e %B %Y');
     }
+
+
+
 	/**
 	 * • Effectuer une requete d'une commande avec ses relations, y compris les lignes avec leur relation panier pour le nom en clair de celui-ci.
 	 * • Pour chaque lignes en effectuer le complément (obtention du producteur associé au panier et son prix_livraison.
@@ -352,6 +353,41 @@ class CommandeDomaine extends Domaine
 			$commande->load('client');
 		});
 		// return dd($commandes);
+		return $commandes;
+	}
+
+
+	/**
+	 * Obtenir une collection des commandes non archivées (en cours) pour un client donné.
+	 *
+	 * @param App\Models\User 
+	 * @return collection de App\Models\Commande
+	 **/
+	public function getCommandesEnCours(User $user)
+	{
+		$commandes = $this->model->where('client_id', $user->id)->whereNotIn('statut', $this->commandes_archived)->get();
+
+		$commandes->each(function($commande){
+			$commande = $this->getAllLignes($commande);
+		});
+
+		return $commandes;
+	}
+
+	/**
+	 * Obtenir une collection des commandes archivées (ou archivable) pour un client donné.
+	 *
+	 * @param App\Models\User 
+	 * @return collection de App\Models\Commande
+	 **/
+	public function getCommandesArchived(User $user)
+	{
+		$commandes = $this->model->where('client_id', $user->id)->whereIn('statut', $this->commandes_archived)->get();
+
+		$commandes->each(function($commande){
+			$commande = $this->getAllLignes($commande);
+		});
+
 		return $commandes;
 	}
 
