@@ -42,10 +42,14 @@
 				<p class="total_panier" name="{{$livraison->id}}_total_panier_{{$panier->id}}" >non commandé</p>
 		</div>
 	@endforeach
+
+
 	<div class="paiement_relais">
 		@include('espace_client.paiement_relais', [
 		'paiement_selected' => $livraison->paiement_selected, 
 		'relais_selected' => $livraison->relais_selected, 
+		'prefrelais_not_lied' => $livraison->prefrelais_not_lied, 
+		'prefpaiement_not_lied' => $livraison->prefpaiement_not_lied, 
 		'ref_livraison' => $livraison->id, 
 		'par_defaut' => '', 
 		'modespaiement' => $livraison->Modepaiements, 

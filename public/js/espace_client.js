@@ -1,18 +1,18 @@
 /* --------------------------------------------------------------
 Gestion de la sélection des modes de paiement et des relais + valeurs par défaut + report dans formulaire.
 ----------------------------------------------------------------*/
-
 function becomeSelected(item, id){
 	var livraison = $(item).attr('livraison');
 	var model = $(item).attr('model');
 	var nom_item = $(item).attr('name');
 
-	to_uncheck = $("span[livraison="+livraison+"][model="+model+"]");
+	var to_uncheck = $("span[livraison="+livraison+"][model="+model+"]");
 
-	// console.log('item : '+item);
-	// console.log('livraison : '+livraison);
-	// console.log('nom_item : '+nom_item);
-	//console.log('to_uncheck : '+$(to_uncheck).length);
+	console.log('item : '+item); // span cliqué
+	console.log('id : '+id);  // id du relais ou du mode de paiement cliqué
+	console.log('livraison : '+livraison);  // id de la livraison (0 si partie préférences utilisateur)
+	console.log('nom_item : '+nom_item); // nom du relais ou du mode de paiement cliqué
+	console.log('to_uncheck : '+$(to_uncheck).length);
 
 	/* On décoche tous les boutons de ce model pour cette livraison + on coche ce bouton  */
 	$(to_uncheck).removeClass('checked');
@@ -22,10 +22,13 @@ function becomeSelected(item, id){
 	donc il faut persister ce choix en BDD + le reporter immédiatement sur toutes les livraisons actuellement affichées.
 	Si l'id désigne une livraison on actualise l'input associé.
 	Et dans les 2 cas on avertit qu'il y a eu un changement sur la page */
+
 	if (livraison === '0') {
-		persisterParametres(id, model);
+
+		// persisterParametres(id, model);
 		reporterValeurDefaut(model, nom_item, id);
-		changementDetected();
+		handleAlertNoPref(model);
+		handleAlerFavNotLied(model, id);
 	}else{
 		updateAssociatedInput(livraison, model, id);
 		changementDetected();
@@ -88,9 +91,55 @@ function reporterValeurDefaut(model, nom_item, valeur){
 
 
 
-function updateAssociatedInput(livraison, model, valeur) {
-	var input = $("[name="+livraison+"_"+model+"]");
-	$(input).val(valeur);
+	function handleAlertNoPref(model) {
+		// alert('toggleAlertNoPref');
+		var alert_nopref = $("p[role='nopref'][model='"+model+"']");
+		$(alert_nopref).addClass('hidden');
+	}
+
+
+	function handleAlerFavNotLied(model, id) {
+		var all_fav_not_lied = $("p[role='fav_not_lied'][model='"+model+"']");
+		console.log('model : '+model);
+		console.log('all_fav_not_lied : '+all_fav_not_lied.length);
+
+		all_fav_not_lied.each(function(index){
+			console.log('this :'+$(this).attr('livraison'));
+			var livraison_id = $(this).attr('livraison');
+			var tablo;
+			if (model === 'relais') {
+				tablo = relais_lied[livraison_id];
+			}
+			if (model === 'paiement') {
+				tablo = paiement_lied[livraison_id];
+			}
+			console.log('livraison_id : '+livraison_id);
+			console.log('tablo : '+tablo);
+			console.log('id critere : '+id);
+
+			var a = tablo.indexOf(id);
+			if (livraison_id !== 0) {
+				if (a === -1) {
+					console.log('favori absent - '+model);
+					// alert('favori absent - '+model);
+					$(this).removeClass('hidden');
+				}else{
+					// alert('favori présent - '+model);
+					console.log('favori présent - '+model);
+					$(this).addClass('hidden');
+				}
+			}
+
+		});
+
+	}
+
+
+
+
+	function updateAssociatedInput(livraison, model, valeur) {
+		var input = $("[name="+livraison+"_"+model+"]");
+		$(input).val(valeur);
 	//console.log("input vaut : "+$(input).val());
 }
 

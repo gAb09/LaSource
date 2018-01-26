@@ -17,7 +17,8 @@ class CommandeDomaine extends Domaine
 {
 	use CommandeEtatsDomaineTrait;
 
-	private $montant_ligne = 0;
+	private $relais_proposed = 0;
+	private $paiements_proposed = 0;
 
 	public function __construct(){
 		$this->model = new Commande;

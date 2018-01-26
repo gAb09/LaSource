@@ -534,4 +534,26 @@ private function handleDatas($request){
       }
     }
 
+    /**
+     * undocumented function
+     *
+     * @return void
+     * @author 
+     **/
+    function getLiedCritere($livraisons, $critere)
+    {
+      $this->tablo = array();
+      $livraisons->each(function($livraison) use($critere){
+        $this->critere = [];
+        $livraison->{$critere}->each(function($item) use($livraison){
+          // $this->relais = array('test');
+          $this->critere[] = $item->id;
+        });
+        $this->tablo[$livraison->id] = $this->critere;
+      });
+
+      return $this->tablo;
+    }
+
+
   }

@@ -56,10 +56,12 @@ class EspaceClientController extends Controller
         /* Livraisons ouvertes */
         $livraisons = $this->livraisonD->getAllLivraisonsOuvertes($user);
 
-        /* détermination du relais et du mode de paiement sélectionné */
+        /* détermination du relais sélectionné */
         $livraisons->each(function ($livraison, $keys) use($user){
 
             $livraison->relais = $livraison->load('relais')->relais;
+            // return dd($livraison->relais->toArray());
+
             $livraison->relais->each(function($relai) use($user, $livraison){
                 if (!is_null($v = old($livraison->id.'_relais'))){
                     $livraison->relais_selected = $v;
@@ -68,9 +70,19 @@ class EspaceClientController extends Controller
                 }else{
                     $livraison->relais_selected = null;
                 }
+
+                $this->relais_proposed[] = $relai->id;
             });
 
+            /* si le relais favori n'est pas disponible pour cette livraison, on assigne la propriété "prefrelais_indispo"*/      
+            if (!in_array($user->client->pref_relais, $this->relais_proposed) ) {
+                $livraison->prefrelais_not_lied = true;
+            }
+
+
+        /* détermination du mode de paiement sélectionné */
             $livraison->modepaiements = $livraison->load('Modepaiements')->Modepaiements;
+
             $livraison->modepaiements->each(function($modepaiement) use($user, $livraison){
                 if (!is_null($v = old($livraison->id.'_paiement'))){
                     $livraison->paiement_selected = $v;
@@ -79,8 +91,20 @@ class EspaceClientController extends Controller
                 }else{
                     $livraison->paiement_selected = null;
                 }
+
+                $this->paiement_proposed[] = $modepaiement->id;
             });
+
+            /* si le mode de paiement favori n'est pas disponible pour cette livraison, on assigne la propriété "prefpaiement_indispo"*/      
+            if (!in_array($user->client->pref_paiement, $this->relais_proposed) ) {
+                $livraison->prefpaiement_not_lied = true;
+            }
+
         });
+
+        /* Les tableaux des relais et modes de paiement liés pour chaque livraison ouverte */
+        $relais_lied = json_encode($this->livraisonD->getLiedCritere($livraisons, "relais"));
+        $paiement_lied = json_encode($this->livraisonD->getLiedCritere($livraisons, "modepaiements"));
 
 
         /* les commandes en cours */
@@ -91,7 +115,7 @@ class EspaceClientController extends Controller
         $commandes_archived = $this->commandesD->getCommandesArchived($user);
 
 
-    return view('espace_client.accueil')->with(compact('user', 'relais_actifs', 'modes_actifs', 'livraisons', 'commandes_en_cours', 'commandes_archived'));
+    return view('espace_client.accueil')->with(compact('user', 'relais_actifs', 'modes_actifs', 'livraisons', 'commandes_en_cours', 'commandes_archived', 'relais_lied', 'paiement_lied'));
     }
 
 }

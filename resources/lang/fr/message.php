@@ -21,8 +21,11 @@ return [
     'confirmDelete'         => 'Êtes-vous sur de vouloir supprimer le client “:model” ?\nTous les liens éventuels avec …… seront supprimés.',
     'setPrefRelaisOK'       => 'Le changement de relais par défaut a bien été pris en compte.<br />ATTENTION : ce changement changement vient d’être répercuté sur toutes les commandes actuellement affichées !',
     'setPrefRelaisFailed'   => 'Problème : le relais par défaut n’a pas pu être enregistré',
-    'setPrefPaiementOK'        => 'Le changement de mode de paiement par défaut a bien été pris en compte.<br />ATTENTION : ce changement vient d’être répercuté sur toutes les commandes actuellement affichées !',
-    'setPrefPaiementFailed'    => 'Problème : le mode de paiement par défaut n’a pas pu être enregistré',
+    'setPrefPaiementOK'     => 'Le changement de mode de paiement par défaut a bien été pris en compte.<br />ATTENTION : ce changement vient d’être répercuté sur toutes les commandes actuellement affichées !',
+    'setPrefPaiementFailed' => 'Problème : le mode de paiement par défaut n’a pas pu être enregistré',
+    'nopref'                => 'Aucune préférence n’est paramétrée',
+    'paiementfav_indispo'   => 'ATTENTION ! Votre mode de paiement favori n’est pas disponible pour cette livraison',
+    'relaisfav_indispo'     => 'ATTENTION ! Votre relais favori n’est pas disponible pour cette livraison',
     ],
 
     'producteur' => [

@@ -50,6 +50,8 @@
                 @include('espace_client.paiement_relais', [
                 'paiement_selected' => $user->client->pref_paiement, 
                 'relais_selected' => $user->client->pref_relais, 
+                'prefrelais_not_lied' => false, 
+                'prefpaiement_not_lied' => false, 
                 'ref_livraison' => 0, 
                 'par_defaut' => "par défaut", 
                 'modespaiement' => $modes_actifs, 
@@ -105,11 +107,11 @@
     </div>
 </div>
 
-
 @endsection
 
 @section('script')
 @parent
+<script  type="text/javascript">var relais_lied = {!! $relais_lied !!}; var paiement_lied = {!! $paiement_lied !!};</script>
 <script src="/js/espace_client.js"></script>
 <script type="text/javascript">
 window.addEventListener('keydown',function(e){if(e.keyIdentifier=='U+000A'||e.keyIdentifier=='Enter'||e.keyCode==13){if(e.target.nodeName=='INPUT'&&e.target.type=='text'){e.preventDefault();return false;}}},true);
