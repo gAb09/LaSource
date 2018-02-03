@@ -44,6 +44,7 @@
                 Rôle : {{ $user->role->etiquette }}<br /><br />
                 <a href="{{ route('client.edit', $user->id) }}" class="btn btn-primary btn-xs">Modifier mes coordonnées</a><br />
                 <a href="{{ route('user.edit', $user->id) }}" class="btn btn-primary btn-xs" style="margin-top:5px">Modifier mes identifiants</a>
+                <a href="" class="btn btn-danger btn-xs" style="margin-top:5px;font-size:0.7em" onClick="javascript:alert('Fonctionnalité souhaitée ??');">Demander la fermeture de mon compte</a>
 
                 <br/>
                 <h3 style="margin-top:10px">Mes préférences</h3>
@@ -73,7 +74,7 @@
                     </div>
                     <div class="commandes">
                         @if($commandes_en_cours->isEmpty() and $commandes_archived->isEmpty())
-                            Aucune commande trouvée
+                            Aucune commande n’a été trouvée
                         @else
                             <!-- affichage des commandes en cours -->
                             @foreach($commandes_en_cours as $commande) 
@@ -83,9 +84,10 @@
                             @endforeach
 
                             <!-- affichage des commandes archivées -->
-                            <div id="show_commandes_archived" style="margin-top:10px" class="btn btn-info" onClick="javascript:toggleCommandesArchived();" >Voir mes commandes archivées</div>
-                            <div id="hide_commandes_archived" style="margin-top:10px" class="btn btn-info hidden" onClick="javascript:toggleCommandesArchived();" >Masquer mes commandes archivées</div>
-
+                            <div id="commandes_archived">
+                                <div id="show_commandes_archived" class="btn btn-info" onClick="javascript:toggleCommandesArchived();" >Voir mes commandes archivées</div>
+                                <div id="hide_commandes_archived" class="btn btn-info hidden" onClick="javascript:toggleCommandesArchived();" >Masquer mes commandes archivées</div>
+                            </div>
                             @foreach($commandes_archived as $commande)  
                                 <div id="une_commande_archived" class="hidden" style="position:relative">
                                     @include('espace_client.une_commande')
