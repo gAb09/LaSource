@@ -84,7 +84,7 @@ class Controller extends BaseController
     }
 
     /**
-     * undocumented function
+     * undocumented function A supprimer ?
      *
      * @return void
      * @author 
