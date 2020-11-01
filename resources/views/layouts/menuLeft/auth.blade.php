@@ -37,4 +37,3 @@
 		<li><a href="{{ route('client.getdeleted') }}">Client</a></li>
 	</ul>
 </li>
-

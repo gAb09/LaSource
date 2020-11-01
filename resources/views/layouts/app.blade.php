@@ -73,6 +73,8 @@
                     @if (Auth::guest())
                     <!-- Infos sur les Paniers et La Source -->
                     @include('layouts.menuLeft.guest')
+                    @elseif (Auth::user()->role->id == 10)
+                    @include('layouts.menuLeft.guest')
                     @else
                     @include('layouts.menuLeft.auth')
                     @endif
@@ -83,11 +85,12 @@
                     @if (Auth::guest())
                     <!-- Authentication Links -->
                     @include('layouts.menuRight.guest')
-                    @else
+                    @elseif (Auth::user()->role->id == 10)
                     @include('layouts.menuRight.auth')
-                    @if (Auth::user()->role->id == 1)
+                    @elseif (Auth::user()->role->id == 5)
+                    @include('layouts.menuRight.auth')
+                    @elseif (Auth::user()->role->id == 1)
                     @include('layouts.menuRight.dev')
-                    @endif
                     @endif
                 </ul>
             </div>
@@ -134,7 +137,7 @@
 
         </div>
         @endif
-        
+
     <!-- - - - - - - - - - - - - - - -  CONTENT () - - - - - - - - - - - - - - -->
     @yield('content')
 

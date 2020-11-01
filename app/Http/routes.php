@@ -112,7 +112,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('relais', 'RelaisController');
 
 	// Indisponibilité...
-	Route::put('relais/handleIndisponibilitiesChanges/{indisponisable_id}', 
+	Route::put('relais/handleIndisponibilitiesChanges/{indisponisable_id}',
 		['as' => 'relais.handleIndisponibilitiesChanges', 'uses' => 'RelaisController@handleIndisponibilitiesChanges']
 		);
 
@@ -138,7 +138,7 @@ Route::group(['middleware' => 'auth'], function () {
 		'create'
 		]]);
 
-	Route::get('annulationIndisponibilityChanges', 
+	Route::get('annulationIndisponibilityChanges',
 		['as' => 'annulationIndisponibilityChanges', 'uses' => 'IndisponibiliteController@annulationIndisponibilityChanges']
 		);
 
@@ -147,48 +147,48 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('livraison/combodate/{valeur}', 'LivraisonController@getComboDates');
 
 	// Pivot Panier
-	Route::get('livraison/{livraison_id}/listpaniers', 
+	Route::get('livraison/{livraison_id}/listpaniers',
 		['as' => 'livraisonListpaniers', 'uses' => 'LivraisonController@listPaniers']
 		);
 
-	Route::any('livraison/{livraison}/detachpanier/{panier}', 
+	Route::any('livraison/{livraison}/detachpanier/{panier}',
 		['as' => 'livraisonDetachPanier', 'uses' => 'LivraisonController@detachPanier']
 		);
 
-	Route::post('livraison/{livraison}/syncPaniers', 
+	Route::post('livraison/{livraison}/syncPaniers',
 		['as' => 'livraisonSyncPaniers', 'uses' => 'LivraisonController@syncPaniers']
 		);
 
-	Route::put('livraison/{livraison}/syncRelaiss', 
+	Route::put('livraison/{livraison}/syncRelaiss',
 		['as' => 'livraisonSyncRelaiss', 'uses' => 'LivraisonController@syncRelaiss']
 		);
 
-	Route::put('livraison/{livraison}/syncModespaiements', 
+	Route::put('livraison/{livraison}/syncModespaiements',
 		['as' => 'livraisonSyncModespaiements', 'uses' => 'LivraisonController@syncModespaiements']
 		);
 
-	Route::patch('livraison/archive/{id}', 
+	Route::patch('livraison/archive/{id}',
 		['as' => 'livraison.archive', 'uses' => 'LivraisonController@archiver']
 		);
 
 
 	// Pivot Panier / Producteur...
-	Route::get('livraison/panier/{panier_id}/listProducteurs', 
+	Route::get('livraison/panier/{panier_id}/listProducteurs',
 		['as' => 'listProducteursForPanier', 'uses' => 'LivraisonController@listProducteursForPanier']
 		);
 
-	Route::post('panier/{panier_id}/syncProducteurs', 
+	Route::post('panier/{panier_id}/syncProducteurs',
 		['as' => 'PanierSyncProducteurs', 'uses' => 'PanierController@syncProducteurs']
 		);
 
 // COMMANDE...
 	Route::resource('commande', 'CommandeController');
 
-	Route::patch('commande/archive/{id}', 
+	Route::patch('commande/archive/{id}',
 		['as' => 'commande.archive', 'uses' => 'CommandeController@archiver']
 		);
 
-	Route::any('toggle/{property}/commande/{id}', 
+	Route::any('toggle/{property}/commande/{id}',
 		['as' => 'commande.toggle', 'uses' => 'CommandeController@toggleBooleanProperty']
 		);
 
@@ -199,11 +199,11 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 // ACTIVATION
-	Route::any('active/{model_class}/{id}', 
+	Route::any('active/{model_class}/{id}',
 		['as' => 'active', 'uses' => 'ActivableController@active']
 		);
 
-	Route::any('desactive/{model_class}/{id}', 
+	Route::any('desactive/{model_class}/{id}',
 		['as' => 'desactive', 'uses' => 'ActivableController@desactive']
 		);
 
@@ -215,5 +215,3 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('test', 'TestController@main');
 
 });
-
-
