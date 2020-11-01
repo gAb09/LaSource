@@ -7,7 +7,7 @@
         <a class="close" href="#noWhere" onClick="javascript:$('#modification_livraison').empty()">
             <i class="btn_close fa fa-btn fa-close"></i>
         </a>
-        <form id="commande_update" class="form-horizontal" role="form" method="POST" action="{{ route('commande.update', '999') }}">
+        <form id="commande_update" class="form-horizontal" role="form" method="POST" action="">
                         {!! csrf_field() !!}
                         <input type="hidden" class="form-control" name="_method" value="PUT">
             <div id="livraison_modified">
@@ -38,8 +38,8 @@
                 {{ $user->Client->ad2 }}<br />
                 @endif
                 {{ $user->Client->cp }} {{ $user->Client->ville }}<br />
-                Tél : {{ $user->Client->tel }}<br />
-                Portable : {{ $user->Client->mobile }}<br />
+                Tél : {{ $user->getFormatedTel($user->Client->tel) }}<br />
+                Portable : {{ $user->getFormatedTel($user->Client->mobile) }}<br />
                 Courriel : {{ $user->email }}<br />
                 Rôle : {{ $user->role->etiquette }}<br /><br />
                 <a href="{{ route('client.edit', $user->id) }}" class="btn btn-primary btn-xs">Modifier mes coordonnées</a><br />
@@ -49,13 +49,13 @@
                 <br/>
                 <h3 style="margin-top:10px">Mes préférences</h3>
                 @include('espace_client.paiement_relais', [
-                'paiement_selected' => $user->client->pref_paiement, 
-                'relais_selected' => $user->client->pref_relais, 
-                'prefrelais_not_lied' => false, 
-                'prefpaiement_not_lied' => false, 
-                'ref_livraison' => 0, 
-                'par_defaut' => "par défaut", 
-                'modespaiement' => $modes_actifs, 
+                'paiement_selected' => $user->client->pref_paiement,
+                'relais_selected' => $user->client->pref_relais,
+                'prefrelais_not_lied' => false,
+                'prefpaiement_not_lied' => false,
+                'ref_livraison' => 0,
+                'par_defaut' => "par défaut",
+                'modespaiement' => $modes_actifs,
                 'relaiss' => $relais_actifs
                 ])
             </div>
@@ -63,7 +63,7 @@
             <div class="panel-body col-md-10">
                 <form id="commande_store" class="form-horizontal" role="form" method="POST" action="{{ route('commande.store') }}">
                 {!! csrf_field() !!}
-                    
+
 
                     <div class="les_livraisons_ouvertes">
                         @foreach($livraisons as $livraison)
@@ -77,7 +77,7 @@
                             Aucune commande n’a été trouvée
                         @else
                             <!-- affichage des commandes en cours -->
-                            @foreach($commandes_en_cours as $commande) 
+                            @foreach($commandes_en_cours as $commande)
                                 <div class="une_commande" style="position:relative">
                                     @include('espace_client.une_commande')
                                 </div>
@@ -88,7 +88,7 @@
                                 <div id="show_commandes_archived" class="btn btn-info" onClick="javascript:toggleCommandesArchived();" >Voir mes commandes archivées</div>
                                 <div id="hide_commandes_archived" class="btn btn-info hidden" onClick="javascript:toggleCommandesArchived();" >Masquer mes commandes archivées</div>
                             </div>
-                            @foreach($commandes_archived as $commande)  
+                            @foreach($commandes_archived as $commande)
                                 <div id="une_commande_archived" class="hidden" style="position:relative">
                                     @include('espace_client.une_commande')
                                 </div>
@@ -97,9 +97,9 @@
                     </div>
                         <div id="change_detected" class="btn btn-warning hidden" style="float:right;">
                             <big>Vous êtes en train de faire des changements !!!</big><br />
-                            Une fois que vous aurez fini, pensez à les  
-                            <button class="btn btn-success btn-xs"  type="submit" >valider</button><br /> 
-                            Sinon vous pouvez les 
+                            Une fois que vous aurez fini, pensez à les
+                            <button class="btn btn-success btn-xs"  type="submit" >valider</button><br />
+                            Sinon vous pouvez les
                             <a class="btn btn-danger btn-xs" href="">annuler</a>
 
                         </div>
