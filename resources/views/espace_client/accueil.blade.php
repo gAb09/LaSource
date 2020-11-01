@@ -97,8 +97,7 @@
                     </div>
                         <div id="change_detected" class="btn btn-warning hidden" style="float:right;">
                             <big>Vous êtes en train de faire des changements !!!</big><br />
-                            Une fois que vous aurez fini, pensez à les
-                            <button class="btn btn-success btn-xs"  type="submit" >valider</button><br />
+                            Une fois que vous aurez fini, pensez à les valider<br />
                             Sinon vous pouvez les
                             <a class="btn btn-danger btn-xs" href="">annuler</a>
 

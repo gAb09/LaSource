@@ -53,7 +53,7 @@ class CommandeDomaine extends Domaine
 	 * • On initialise une transaction, puis on traite la validation et la persistance des commandes.
 	 * • On catch les exceptions qui sont alors repassée au contrôleur.
 	 *
-	 * @param Illuminate\Http\Request $request 
+	 * @param Illuminate\Http\Request $request
 	 *
 	 * @return void $result : (int) = 0 si aucune quantité saisie) | (int) nombre de commandes traitées) | Exception
 	 **/
@@ -130,7 +130,7 @@ class CommandeDomaine extends Domaine
 	 * • Sinon on initialise une transaction, puis on traite la validation et la persistance des commandes.
 	 * • Si on a catché des exceptions elles sont repassées au contrôleur.
 	 *
-	 * @param Illuminate\Http\Request $request 
+	 * @param Illuminate\Http\Request $request
 	 *
 	 * @return void $result : (int) 0 si aucune modification) | (int) nombre de commandes traitées) | Exception
 	 **/
@@ -154,7 +154,7 @@ class CommandeDomaine extends Domaine
 	/**
 	 * Décomposer/recomposer les éléments de la requête pour préparer le traitement de la (des) commande(s).
 	 *
-	 * @param Illuminate\Http\Request $request 
+	 * @param Illuminate\Http\Request $request
 	 *
 	 * @return array : commande recomposée
 	 **/
@@ -169,10 +169,10 @@ class CommandeDomaine extends Domaine
 				$explode = explode("_", $key);
 				$livraison_id = $explode[0];
 				$critere = $explode[1];
-				if ($critere == 'qte') { 		
+				if ($critere == 'qte') {
 					$commandes[$livraison_id]['paniers'][$explode[2]] = $value; /* $key_parts[1] = "qte" - $key_parts[2] = "panier_id"  */
 					$this->cumul_qte += $value;
-				}else{  															
+				}else{
 					$commandes[$livraison_id][$critere] = $value; /* $key_parts[1] = "paiement" || "relais" */
 				}
 			}
@@ -189,7 +189,7 @@ class CommandeDomaine extends Domaine
 	 * @return int $result : 0 si aucune quantité saisie) | nombre de commandes traitées)
 	 **/
 	private function validateAndStore($commandes)
-	{		
+	{
 		$nbre_commande = (int) 0;
 
 		foreach($commandes as $livraison_id => $datas){
@@ -210,8 +210,8 @@ class CommandeDomaine extends Domaine
 				$nbre_commande++;
 
 				foreach ($datas['paniers'] as $id => $qte) {
-					$ligne = new ligne(['commande_id' => $this->model->id, 'panier_id' => $id, 'quantite' => $qte]); 
-					$ligne->save(); 
+					$ligne = new ligne(['commande_id' => $this->model->id, 'panier_id' => $id, 'quantite' => $qte]);
+					$ligne->save();
 				}
 			}
 
@@ -223,34 +223,34 @@ class CommandeDomaine extends Domaine
 	/**
      * Procéder aux validations, puis modifier commande + lignes.
      *
-	 * @param array $commandes
+	 * @param array $commande
 	 *
 	 * @return int $result : 0 si aucune quantité saisie) | nombre de commandes traitées)
 	 **/
-	private function validateAndUpdate($commandes, $id)
+	private function validateAndUpdate($commande, $id)
 	{
 		$result = (int) 0;
 
 		$this->model = $this->model->where('id', $id)->first();
 
-		foreach($commandes as $livraison_id => $values){
+		foreach($commande as $livraison_id => $param){
 			if ($this->getCumulQte() !== 0) {
-				$this->validate($livraison_id, $values);
+				$this->validate($livraison_id, $param);
 
 
-				$this->model->relais_id = $values['relais'];
-				$this->model->modepaiement_id = $values['paiement'];
+				$this->model->relais_id = $param['relais'];
+				$this->model->modepaiement_id = $param['paiement'];
 				$this->model->statut = $this->getEtat($this->model);;
 
-				// $this->model->save();
+				$this->model->save();
 				$result = 1;
 
-				foreach ($values['paniers'] as $id => $qte) {
+				foreach ($param['paniers'] as $id => $qte) {
 					$ligne = $this->ligne->where('panier_id', $id)->where('commande_id', $this->model->id)->first();
 
 					$ligne->quantite = $qte;
 
-					$ligne->save(); 
+					$ligne->save();
 				}
 			}
 		}
@@ -262,12 +262,12 @@ class CommandeDomaine extends Domaine
      * On ne fait le traitement que si au moins une quantité est non nulle
      *
      * @return void
-     * @author 
+     * @author
      **/
     private function getCumulQte()
     {
     	return $this->cumul_qte;
-    	
+
     }
 
 
@@ -278,7 +278,7 @@ class CommandeDomaine extends Domaine
      * undocumented function
      *
      * @return void
-     * @author 
+     * @author
      **/
     private function validate($livraison_id, $values)
     {
@@ -301,7 +301,7 @@ class CommandeDomaine extends Domaine
      * undocumented function
      *
      * @return void
-     * @author 
+     * @author
      **/
     private function getLivraisonDateForException($livraison_id)
     {
@@ -341,7 +341,7 @@ class CommandeDomaine extends Domaine
 	 * undocumented function
 	 *
 	 * @return void
-	 * @author 
+	 * @author
 	 **/
 	public function getRapportDashboard($livraison_id)
 	{
@@ -358,7 +358,7 @@ class CommandeDomaine extends Domaine
 	/**
 	 * Obtenir une collection des commandes non archivées (en cours) pour un client donné.
 	 *
-	 * @param App\Models\User 
+	 * @param App\Models\User
 	 * @return collection de App\Models\Commande
 	 **/
 	public function getCommandesEnCours(User $user)
@@ -375,7 +375,7 @@ class CommandeDomaine extends Domaine
 	/**
 	 * Obtenir une collection des commandes archivées (ou archivable) pour un client donné.
 	 *
-	 * @param App\Models\User 
+	 * @param App\Models\User
 	 * @return collection de App\Models\Commande
 	 **/
 	public function getCommandesArchived(User $user)
@@ -396,7 +396,7 @@ class CommandeDomaine extends Domaine
 	 * undocumented function
 	 *
 	 * @return void
-	 * @author 
+	 * @author
 	 **/
 	public function toggleBooleanProperty($property, $id)
 	{
@@ -415,7 +415,7 @@ class CommandeDomaine extends Domaine
 				$reponse['etat'] = trans('statuts.'.$etat);
 				if ($etat == 'C_NONPAID') {
 					$button = <<<EOT
-					<a class="close" title="Envoyer mail de relance au client $model->client_id" 
+					<a class="close" title="Envoyer mail de relance au client $model->client_id"
 					onClick="javascript:alert('Envoyer mail de relance au client $model->client_id');">
 					<i class="btn_close fa fa-btn fa-mail-forward" style="font-size:0.6em"></i>
 					</a>
@@ -445,7 +445,7 @@ EOT;
 	 * undocumented function
 	 *
 	 * @return void
-	 * @author 
+	 * @author
 	 **/
 	private function transcode_modepaiement($modepaiement)
 	{
