@@ -9,7 +9,7 @@ function becomeSelected(item, id){
 	var to_uncheck = $("span[livraison="+livraison+"][model="+model+"]");
 
 	console.log('item : '+item); // span cliqué
-	console.log('id : '+id);  // id du relais ou du mode de paiement cliqué
+	console.log('id item cliqué : '+id);  // id du relais ou du mode de paiement cliqué
 	console.log('livraison : '+livraison);  // id de la livraison (0 si partie préférences utilisateur)
 	console.log('nom_item : '+nom_item); // nom du relais ou du mode de paiement cliqué
 	console.log('to_uncheck : '+$(to_uncheck).length);
@@ -18,7 +18,7 @@ function becomeSelected(item, id){
 	$(to_uncheck).removeClass('checked');
 	$(item).addClass('checked');
 
-	/* Si l'id de la livraison est 0 c'est que nous ne sommes pas dans le cadre d'une livraison mais dans celui du réglage des préférences par défaut, 
+	/* Si l'id de la livraison est 0 c'est que nous ne sommes pas dans le cadre d'une livraison mais dans celui du réglage des préférences par défaut,
 	donc il faut persister ce choix en BDD + le reporter immédiatement sur toutes les livraisons actuellement affichées.
 	Si l'id désigne une livraison on actualise l'input associé.
 	Et dans les 2 cas on avertit qu'il y a eu un changement sur la page */
@@ -38,7 +38,7 @@ function becomeSelected(item, id){
 
 /**
 * Persister l'id du model en BDD, table client, colonne pref_relais ou pref_mode.
-* 
+*
 * @arguments : id, model.
 **/
 function persisterParametres(id, model) {
@@ -46,7 +46,7 @@ function persisterParametres(id, model) {
 	// console.log('model : '+model);
 	// console.log('id : '+id);
 
-	var ad = 'http://'+domaine+'/client/setPref/'+model;
+	var ad = domaine+'/client/setPref/'+model;
 
 	$.ajax({
 		url : ad,
@@ -140,7 +140,7 @@ function reporterValeurDefaut(model, nom_item, valeur){
 	function updateAssociatedInput(livraison, model, valeur) {
 		var input = $("[name="+livraison+"_"+model+"]");
 		$(input).val(valeur);
-	//console.log("input vaut : "+$(input).val());
+	console.log("input vaut : "+$(input).val());
 }
 
 
@@ -152,7 +152,7 @@ Gestion de l'incrémentation/décrémentation des quantités des paniers.
 function increment(livraison, panier) {
 	var c = getContextPanierChange(livraison, panier);
 	var qte_panier_cible = c.qte_panier_cible();
-	
+
 	sanitizeInputValue(qte_panier_cible);
 
 	qte_panier_cible.value++;
@@ -184,7 +184,7 @@ function decrement(livraison, panier) {
 
 function qteChange(input, livraison, panier){
 	var c = getContextPanierChange(livraison, panier);
-	
+
 	if (input.value < 0) {
 		input.focus();
 		alert('Vous ne pouvez pas saisir des valeurs négatives');
@@ -282,7 +282,7 @@ function toggleCommandesArchived(){
 function editCommande(commande_id, livraison_id){
 	console.log('commande n° '+commande_id);
 	console.log('livraison_id : '+livraison_id);
-	console.log(domaine);
+	console.log('domaine : '+domaine);
 	var adresse = 'commande/'+commande_id+'/edit';
 	console.log(adresse);
 
@@ -296,7 +296,7 @@ function editCommande(commande_id, livraison_id){
 
 			$('#modification_livraison').empty().html('Modification de la ');
 
-			$('#commande_update').attr('action', 'http://'+domaine+"/commande/"+commande_id);
+			$('#commande_update').attr('action', domaine+"/commande/"+commande_id);
 
 
 			all_qte_panier = $("[name^='" + livraison_id + "_qte']");

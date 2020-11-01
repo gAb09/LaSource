@@ -1,15 +1,15 @@
-var domaine = document.domain;
-console.log(domaine);
+var domaine = window.location.origin;
+console.log('Domaine : '+domaine);
 
 
 /**
 * Disponible pour tous les models.
 * Accède à l'API Laravel pour mettre à jour le nouvel ordre des models.
 * Appelé par le script de l'élément draggable qui doit fournir les arguments
-* 
+*
 * @param model : modèle concerné
 * @param tablo : tablo de doublets [model_id, position après drop]
-* 
+*
 * @return string|null : contenu html pour les messages utilisateurs
 **/
 function setRangs(model, tablo){
@@ -45,8 +45,8 @@ $.ajax({
 /**
 * ??????????????????
 * Affiche les mode d'emploi.
-* 
-* 
+*
+*
 **/
 function showModemploi()
 {

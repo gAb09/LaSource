@@ -1,12 +1,12 @@
 /**
-* 
-* 
+*
+*
 * Call setRangs dans global.js
 * @arguments : string : nom du model / json array : doublets (id: rang)
 **/
 $("#producteurs_index").sortable({
 	update: function(event, ui){
-	// Actualiser la page 
+	// Actualiser la page
 		// Lister les éléments "sortable"
 		list = ui.item.parent('div#producteurs_index');
 
@@ -38,9 +38,8 @@ $("#producteurs_index").sortable({
 function editProducteur(producteur_id){
 	// console.log(domaine);
 	// console.log(producteur_id);
-	var adresse = 'http://'+domaine+'/producteur/'+producteur_id+'/edit';
+	var adresse = domaine+'/producteur/'+producteur_id+'/edit';
 	// console.log('adresse : '+adresse);
 
 	document.location.href = adresse;
 }
-

@@ -46,7 +46,7 @@ function getComboDates(nom, valeur)
     valeur = valeur.split(" ")[0];
     if (valeur === '') {valeur = 0;}
 
-    var ad = 'http://'+domaine+'/livraison/combodate/'+valeur;
+    var ad = domaine+'/livraison/combodate/'+valeur;
     var span_enclair = '#'+nom+'_enclair';
     var span_delai = '#'+nom+'_delai';
     var input_date = '#'+nom;
@@ -91,7 +91,7 @@ function listProducteursForPanier(idpanier)
 
     resetChangeDetected();
 
-    var ad = 'http://'+domaine+'/livraison/panier/' + idpanier + '/listProducteurs';
+    var ad = domaine+'/livraison/panier/' + idpanier + '/listProducteurs';
 
     $.ajax({
         url : ad,
@@ -118,7 +118,7 @@ function listProducteursForPanier(idpanier)
 /**
 * Vider la modale listProducteurs à sa fermeture
 *
-* @param 
+* @param
 **/
 $('#ModallistProducteursForPanier').on('hidden.bs.modal', function () {
     $('#ModallistProducteursForPanier').empty();
@@ -128,7 +128,7 @@ $('#ModallistProducteursForPanier').on('hidden.bs.modal', function () {
 /**
 * Acquisition du contenu html pour la vue modale : listPaniers
 *
-* @param 
+* @param
 **/
 function listPaniers(livraison_id)
 {
@@ -143,7 +143,7 @@ function listPaniers(livraison_id)
     resetChangeDetected();
 
 
-    var ad = 'http://'+domaine+'/livraison/' + livraison_id + '/listpaniers';
+    var ad = domaine+'/livraison/' + livraison_id + '/listpaniers';
 
     $.ajax({
         url : ad,
@@ -170,7 +170,7 @@ function listPaniers(livraison_id)
 /**
 * Vider la modale listPaniers à sa fermeture
 *
-* @param 
+* @param
 **/
 $('#ModallistPaniers').on('hidden.bs.modal', function () {
     $('#ModallistPaniers').empty();
@@ -198,7 +198,7 @@ var change_detected = false;
 /**
 * Report du prix de base dans l'input .prixlivraison
 *
-* @param 
+* @param
 **/
 function reporterPrixBase(input)
 {
@@ -219,7 +219,7 @@ console.log(change_detected);
 /**
 * Alerte si des modifications apportées à un (plusieurs) panier(s) n'ont pas été validées.
 * Annulation possible.
-* 
+*
 **/
 function changementDatasPaniersDetected(item){
     $(item).addClass('changed');
@@ -311,4 +311,3 @@ function detachModepaiement(modepaiement_id)
     target.value=0;
     console.log(target.id+' : '+target.value);
 }
-
