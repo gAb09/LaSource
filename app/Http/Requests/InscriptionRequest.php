@@ -30,7 +30,7 @@ class InscriptionRequest extends Request
         // 'ad2' => 'required_with:ad1,cp,ville',
         'cp' => 'digits:5|required_with:ad1,ad2,ville',
         'ville' => 'required_with:ad1,ad2,cp',
-        'telephone' => 'digits:10',
+        'tel' => 'required|digits:10',
         'mobile' => 'digits:10',
 
         'pseudo' => 'required|max:255|unique:users',
@@ -39,4 +39,3 @@ class InscriptionRequest extends Request
         ];
     }
 }
-

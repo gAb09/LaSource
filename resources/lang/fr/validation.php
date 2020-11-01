@@ -77,7 +77,7 @@ return [
     ],
     'string'               => 'Le champ :attribute doit être une chaîne de caractères.',
     'timezone'             => 'Le champ :attribute doit être une timezone valide.',
-    'unique'               => 'Le champ :attribute est déjà pris.',
+    'unique'               => 'Ce :attribute est déjà pris.',
     'url'                  => 'Le format du champ :attribute est invalide.',
 
     /*

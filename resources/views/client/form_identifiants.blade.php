@@ -3,7 +3,7 @@
                             <label class="col-md-4 control-label">Pseudo *</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="pseudo" value="{{ old('pseudo', $model->pseudo) }}">
+                                <input type="text" class="form-control" name="pseudo" value="{{ $model->pseudo or old('pseudo') }}">
 
                                 @if ($errors->has('pseudo'))
                                 <span class="help-block">
@@ -57,4 +57,3 @@
                                 @endif
                             </div>
                         </div>
-
