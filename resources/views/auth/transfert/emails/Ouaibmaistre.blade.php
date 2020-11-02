@@ -1,3 +1,3 @@
-@foreach($datas as $data)
-{{var_dump($data)}}<br />
-@endforeach
+
+voici le mail de test avec une data :<br />
+{{$datas['nom']}}

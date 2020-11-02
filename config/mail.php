@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'driver' => env('MAIL_DRIVER', 'mail'),
+    'driver' => env('MAIL_DRIVER'),
 
     /*
     |--------------------------------------------------------------------------
@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'mail.confluence09.fr'),
+    'host' => env('MAIL_HOST'),
 
     /*
     |--------------------------------------------------------------------------
@@ -107,10 +107,10 @@ return [
     |
     */
 
-    'sendmail' => '/usr/sbin/sendmail -bs',
+    'sendmail' => env('SENDMAIL'),
 
     'to' => [
-    'address' => 'lasource@confluence09.fr',
-    'name' => 'OuaibMaistre La Source'
+    'address' => env('MAIL_OM_ADRESS'),
+    'name' => env('MAIL_OM_NAME')
 ],
 ];

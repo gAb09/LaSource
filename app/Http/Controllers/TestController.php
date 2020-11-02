@@ -14,6 +14,8 @@ use App\Domaines\LigneDomaine as LigneD;
 use App\Domaines\RelaisDomaine as RelaisD;
 use App\Domaines\ModepaiementDomaine as ModepaiementD;
 
+use Mail;
+
 class TestController extends Controller
 {
     /**
@@ -30,6 +32,27 @@ class TestController extends Controller
         $this->modepaiementD = $modepaiementD;
     }
 
+
+    public function testmail()
+    {
+      $datas = ['nom' => 'Enligne'];
+      $param['to'] = 'gbom@club-internet.fr';
+      $param['subject'] = 'Confirmation d’inscription : '.$datas['nom'];
+
+      // $vue = 'layouts.testmail';
+      $vue =  'auth.transfert.emails.Ouaibmaistre';
+
+      // try{
+      $result = Mail::send($vue, ['datas' => $datas], function ($m) use($datas, $param) {
+      	$m->to($param['to']);
+      	$m->subject($param['subject']);
+      });
+      // }catch (Exception $e){
+      // 	dd($e);
+      // }
+
+        return view($vue)->with(compact('datas', 'result', 'param'));
+    }
 
     public function main()
     {
