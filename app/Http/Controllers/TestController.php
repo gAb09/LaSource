@@ -35,19 +35,11 @@ class TestController extends Controller
 
     public function testmail()
     {
-<<<<<<< HEAD
-      $datas = ['nom' => 'Enligne'];
-      $param['to'] = 'gbom@club-internet.fr';
-      $param['subject'] = 'Confirmation d’inscription : '.$datas['nom'];
-
-      // $vue = 'layouts.testmail';
-=======
       $datas = ['nom' => 'EnLocal'];
       $param['to'] = 'gbom@club-internet.fr';
       $param['subject'] = 'Confirmation d’inscription : '.$datas['nom'];
 
       $vue = 'layouts.testmail';
->>>>>>> ed2b688f0515a0b53a7a42cc9a3771e80c638d76
       $vue =  'auth.transfert.emails.Ouaibmaistre';
 
       // try{
