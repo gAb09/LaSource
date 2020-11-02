@@ -8,7 +8,7 @@
 
 @section('content')
 
-    {{-- var_dump($livraisons) --}}
+    {{ var_dump($datas) }}
 
 @endsection
 

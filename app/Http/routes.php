@@ -76,6 +76,10 @@ $this->get('transfert/paniers', 'TransfertController@paniers');
 $this->get('transfert/livraisons', 'TransfertController@livraisons');
 $this->get('transfert/commandes', 'TransfertController@commandes');
 
+// Test
+Route::get('test', 'TestController@main');
+Route::get('testmail', 'TestController@testmail');
+
 
 Route::group(['middleware' => 'auth'], function () {
 
@@ -210,8 +214,5 @@ Route::group(['middleware' => 'auth'], function () {
 
 // Menus...
 	Route::resource('menus', '\Menus\MenuController');
-
-// Test
-	Route::get('test', 'TestController@main');
 
 });
