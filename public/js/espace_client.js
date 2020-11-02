@@ -9,44 +9,49 @@ function becomeSelected(item, id){
 	var to_uncheck = $("span[livraison="+livraison+"][model="+model+"]");
 
 	console.log('item : '+item); // span cliqué
-	console.log('id : '+id);  // id du relais ou du mode de paiement cliqué
+	console.log('id item cliqué : '+id);  // id du relais ou du mode de paiement cliqué
 	console.log('livraison : '+livraison);  // id de la livraison (0 si partie préférences utilisateur)
 	console.log('nom_item : '+nom_item); // nom du relais ou du mode de paiement cliqué
 	console.log('to_uncheck : '+$(to_uncheck).length);
 
-	/* On décoche tous les boutons de ce model pour cette livraison + on coche ce bouton  */
+	/* On modifie l'affichage :
+	– décocher tous les boutons de ce model pour cette livraison
+	– cocher le bouton du model sélectionné  */
 	$(to_uncheck).removeClass('checked');
 	$(item).addClass('checked');
 
-	/* Si l'id de la livraison est 0 c'est que nous ne sommes pas dans le cadre d'une livraison mais dans celui du réglage des préférences par défaut, 
-	donc il faut persister ce choix en BDD + le reporter immédiatement sur toutes les livraisons actuellement affichées.
-	Si l'id désigne une livraison on actualise l'input associé.
-	Et dans les 2 cas on avertit qu'il y a eu un changement sur la page */
 
 	if (livraison === '0') {
-
-		// persisterParametres(id, model);
-		reporterValeurDefaut(model, nom_item, id);
-		handleAlertNoPref(model);
-		handleAlerFavNotLied(model, id);
+		/* Si l'id de la livraison est 0 c'est que nous ne sommes pas dans le cadre d'une livraison
+		mais dans celui du réglage des préférences par défaut.
+		– persister ce choix en BDD (table client)
+		– masquer le message indiquant qu'il n'y a pas de choix par défaut (pour ce model)
+		*/
+		persisterParametresParDefaut(id, model);
+		MasquerMessageAucunChoixParDefaut(model);
 	}else{
+		/*
+		Si l'id désigne une livraison
+		– avertir qu'il y a eu un changement sur la commande et qu'il faudra valider.
+		– persister ce choix en BDD (table commande)
+		*/
+		signalerChangement();
 		updateAssociatedInput(livraison, model, id);
-		changementDetected();
 	}
 }
 
 
 /**
-* Persister l'id du model en BDD, table client, colonne pref_relais ou pref_mode.
-* 
+* Persister l'id du model (Mode paiement ou Relais) en BDD, table client, colonne pref_relais ou pref_mode.
+*
 * @arguments : id, model.
 **/
-function persisterParametres(id, model) {
+function persisterParametresParDefaut(id, model) {
 
 	// console.log('model : '+model);
 	// console.log('id : '+id);
 
-	var ad = 'http://'+domaine+'/client/setPref/'+model;
+	var ad = domaine+'/client/setPref/'+model;
 
 	$.ajax({
 		url : ad,
@@ -72,67 +77,52 @@ function persisterParametres(id, model) {
 
 
 
-function reporterValeurDefaut(model, nom_item, valeur){
-	//console.log('reporterValeurDefaut');
-	var tous_les_models = $("[model='"+model+"']");
-	var models_du_meme_nom = $("[name='"+nom_item+"']");
-
-	$(tous_les_models).each(function(index){
-		//console.log($(this).attr('livraison'));
-		$(this).removeClass('checked');
-	});
-
-	$(models_du_meme_nom).each(function(index){
-		//console.log($(this).attr('livraison'));
-		updateAssociatedInput($(this).attr('livraison'), model, valeur);
-		$(this).addClass('checked');
-	});
-}
-
-
-
-	function handleAlertNoPref(model) {
-		// alert('toggleAlertNoPref');
+/**
+* Masque le message indiquant qu'il n'y a pas de choix par défaut.
+*
+* @arguments : model (Relais || Mode de paiement)
+**/
+function MasquerMessageAucunChoixParDefaut(model) {
 		var alert_nopref = $("p[role='nopref'][model='"+model+"']");
 		$(alert_nopref).addClass('hidden');
 	}
 
 
-	function handleAlerFavNotLied(model, id) {
-		var all_fav_not_lied = $("p[role='fav_not_lied'][model='"+model+"']");
-		console.log('model : '+model);
-		console.log('all_fav_not_lied : '+all_fav_not_lied.length);
-
-		all_fav_not_lied.each(function(index){
-			console.log('this :'+$(this).attr('livraison'));
-			var livraison_id = $(this).attr('livraison');
-			var tablo;
-			if (model === 'relais') {
-				tablo = relais_lied[livraison_id];
-			}
-			if (model === 'paiement') {
-				tablo = paiement_lied[livraison_id];
-			}
-			console.log('livraison_id : '+livraison_id);
-			console.log('tablo : '+tablo);
-			console.log('id critere : '+id);
-
-			var a = tablo.indexOf(id);
-			if (livraison_id !== 0) {
-				if (a === -1) {
-					console.log('favori absent - '+model);
-					// alert('favori absent - '+model);
-					$(this).removeClass('hidden');
-				}else{
-					// alert('favori présent - '+model);
-					console.log('favori présent - '+model);
-					$(this).addClass('hidden');
-				}
-			}
-
-		});
-
-	}
+	// function handleAlerFavNotLied(model, id) {
+	// 	var all_fav_not_lied = $("p[role='fav_not_lied'][model='"+model+"']");
+	// 	console.log('model : '+model);
+	// 	console.log('all_fav_not_lied : '+all_fav_not_lied.length);
+	//
+	// 	all_fav_not_lied.each(function(index){
+	// 		console.log('this :'+$(this).attr('livraison'));
+	// 		var livraison_id = $(this).attr('livraison');
+	// 		var tablo;
+	// 		if (model === 'relais') {
+	// 			tablo = relais_lied[livraison_id];
+	// 		}
+	// 		if (model === 'paiement') {
+	// 			tablo = paiement_lied[livraison_id];
+	// 		}
+	// 		console.log('livraison_id : '+livraison_id);
+	// 		console.log('tablo : '+tablo);
+	// 		console.log('id critere : '+id);
+	//
+	// 		var a = tablo.indexOf(id);
+	// 		if (livraison_id !== 0) {
+	// 			if (a === -1) {
+	// 				console.log('favori absent - '+model);
+	// 				// alert('favori absent - '+model);
+	// 				$(this).removeClass('hidden');
+	// 			}else{
+	// 				// alert('favori présent - '+model);
+	// 				console.log('favori présent - '+model);
+	// 				$(this).addClass('hidden');
+	// 			}
+	// 		}
+	//
+	// 	});
+	//
+	// }
 
 
 
@@ -140,7 +130,7 @@ function reporterValeurDefaut(model, nom_item, valeur){
 	function updateAssociatedInput(livraison, model, valeur) {
 		var input = $("[name="+livraison+"_"+model+"]");
 		$(input).val(valeur);
-	//console.log("input vaut : "+$(input).val());
+	console.log("L’input "+$(input).attr('name')+" vaut : "+$(input).val());
 }
 
 
@@ -152,7 +142,7 @@ Gestion de l'incrémentation/décrémentation des quantités des paniers.
 function increment(livraison, panier) {
 	var c = getContextPanierChange(livraison, panier);
 	var qte_panier_cible = c.qte_panier_cible();
-	
+
 	sanitizeInputValue(qte_panier_cible);
 
 	qte_panier_cible.value++;
@@ -161,7 +151,7 @@ function increment(livraison, panier) {
 	ActualiserTotalPanier(c);
 	ActualiserTotalLivraison(c);
 
-	changementDetected();
+	signalerChangement();
 }
 
 function decrement(livraison, panier) {
@@ -177,14 +167,14 @@ function decrement(livraison, panier) {
 		ActualiserTotalPanier(c);
 		ActualiserTotalLivraison(c);
 
-		changementDetected();
+		signalerChangement();
 	}
 }
 
 
 function qteChange(input, livraison, panier){
 	var c = getContextPanierChange(livraison, panier);
-	
+
 	if (input.value < 0) {
 		input.focus();
 		alert('Vous ne pouvez pas saisir des valeurs négatives');
@@ -201,7 +191,7 @@ function qteChange(input, livraison, panier){
 	ActualiserTotalPanier(c);
 	ActualiserTotalLivraison(c);
 
-	changementDetected();
+	signalerChangement();
 }
 
 
@@ -265,10 +255,11 @@ function ActualiserTotalLivraison(c){
 Global.
 -----------------------------------------------------------------*/
 
-function changementDetected(){
-	if ($("#modification_livraison").html() === '') {
-		$("#change_detected").removeClass('hidden');
-	}
+function signalerChangement(){
+	$("#change_detected").removeClass('hidden');
+	// if ($("#modification_livraison").html() === '') {
+	// 	$("#change_detected").removeClass('hidden');
+	// }
 
 }
 
@@ -282,7 +273,7 @@ function toggleCommandesArchived(){
 function editCommande(commande_id, livraison_id){
 	console.log('commande n° '+commande_id);
 	console.log('livraison_id : '+livraison_id);
-	console.log(domaine);
+	console.log('domaine : '+domaine);
 	var adresse = 'commande/'+commande_id+'/edit';
 	console.log(adresse);
 
@@ -296,7 +287,7 @@ function editCommande(commande_id, livraison_id){
 
 			$('#modification_livraison').empty().html('Modification de la ');
 
-			$('#commande_update').attr('action', 'http://'+domaine+"/commande/"+commande_id);
+			$('#commande_update').attr('action', domaine+"/commande/"+commande_id);
 
 
 			all_qte_panier = $("[name^='" + livraison_id + "_qte']");

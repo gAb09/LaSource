@@ -1,6 +1,6 @@
 $("#modepaiements_index").sortable({
 	update: function(event, ui){
-	// Actualiser la page 
+	// Actualiser la page
 		// Lister les éléments "sortable"
 		list = ui.item.parent('div#modepaiements_index');
 
@@ -33,7 +33,5 @@ function editModePaiement(modepaiement_id){
 	console.log(modepaiement_id);
 	console.log(domaine);
 
-	document.location.href='http://'+domaine+'/modepaiement/'+modepaiement_id+'/edit';
+	document.location.href = domaine+'/modepaiement/'+modepaiement_id+'/edit';
 }
-
-

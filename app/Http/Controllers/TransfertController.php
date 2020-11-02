@@ -21,10 +21,27 @@ use App\Http\Requests;
 use Carbon\Carbon;
 
 class TransfertController extends Controller
-{	
+{
 	public function index()
 	{
 		return view('admin.main');
+	}
+
+
+	public function user()
+	{
+		foreach ($olds as $old) {
+			$model = new User;
+
+			$model->id = $old->id_client;
+			$model->pseudo = $old->login_client;
+			$model->email = $old->email;
+			$model->role_id = 10;
+			$model->created_at = $this->checkAndReformateDate($old->date_creation);
+			$model->updated_at = $this->checkAndReformateDate($old->date_modif);
+
+				$model->save();
+		}
 	}
 
 
@@ -32,9 +49,10 @@ class TransfertController extends Controller
 	{
 		\DB::transaction(function(){
 
+			$olds = \DB::connection('mysql_old')->table('paniers_clients')->select('*')->get();
+
 			$this->user();
 
-			$olds = \DB::connection('mysql_old')->table('paniers_clients')->select('*')->get();
 			foreach ($olds as $old) {
 				$model = new Client;
 
@@ -46,8 +64,8 @@ class TransfertController extends Controller
 				$model->ad2 = $old->ad2;
 				$model->cp = $old->cp;
 				$model->ville = $old->ville;
-				$model->tel = $old->telephone;
-				$model->mobile = $old->mobile;
+				$model->tel = $this->reformateTel($old->telephone);
+				$model->mobile = $this->reformateTel($old->mobile);
 				$model->created_at = $this->checkAndReformateDate($old->date_creation);
 				$model->updated_at = $this->checkAndReformateDate($old->date_modif);
 
@@ -56,23 +74,6 @@ class TransfertController extends Controller
 		});
 
 		return redirect()->back();
-	}
-
-	public function user()
-	{
-		$olds = \DB::connection('mysql_old')->table('paniers_clients')->select('*')->get();
-		foreach ($olds as $old) {
-			$model = new User;
-
-			$model->id = $old->id_client;
-			$model->pseudo = $old->login_client;
-			$model->email = $old->email;
-			$model->role_id = 10;
-			$model->created_at = $this->checkAndReformateDate($old->date_creation);
-			$model->updated_at = $this->checkAndReformateDate($old->date_modif);
-				
-				$model->save();
-		}
 	}
 
 	public function relais()
@@ -87,16 +88,19 @@ class TransfertController extends Controller
 			$model->ad2 = $old->ad2;
 			$model->cp = $old->cp;
 			$model->ville = $old->lieu_livraison;
-			$model->tel = $old->tel;
+			$model->tel = $this->reformateTel($old->tel);
 			$model->email = $old->mail;
 			$model->retrait = $old->horaires;
 			$model->ouvertures = $old->remarques;
 			$model->is_actived = 1;
+			$model->created_at = $this->checkAndReformateDate();
+			$model->updated_at = $this->checkAndReformateDate();
 
 			$model->save();
 		}
 		return redirect()->back();
 	}
+
 
 
 	public function producteurs()
@@ -114,10 +118,8 @@ class TransfertController extends Controller
 				$model->ad2 = $old->adresse;
 				$model->cp = $old->cp;
 				$model->ville = $old->commune;
-				$old->tel = str_replace('.', '', $old->tel);
-				$model->tel = $old->tel;
-				$old->mobile = str_replace('.', '', $old->mobile);
-				$model->mobile = $old->mobile;
+				$model->tel = $this->reformateTel($old->tel);
+				$model->mobile = $this->reformateTel($old->mobile);
 				if(is_null($old->mail)){
 					$model->email = "Inconnu";
 				}else{
@@ -125,6 +127,8 @@ class TransfertController extends Controller
 				}
 				$model->nompourpaniers = $old->paniers;
 				$model->is_actived = 1;
+				$model->created_at = $this->checkAndReformateDate();
+				$model->updated_at = $this->checkAndReformateDate();
 
 				$model->save();
 			}
@@ -148,6 +152,8 @@ class TransfertController extends Controller
 			$model->prix_base = $old->pu;
 			$model->remarques = $old->remarques;
 			$model->is_actived = 1;
+			$model->created_at = $this->checkAndReformateDate();
+			$model->updated_at = $this->checkAndReformateDate();
 
 			$model->save();
 		}
@@ -169,7 +175,10 @@ class TransfertController extends Controller
 			$model->updated_at = null;
 			$model->deleted_at = null;
 			$model->is_actived = 1;
+			$model->statut = "L_ARCHIVED";
 			$model->remarques = '';
+			$model->created_at = $this->checkAndReformateDate();
+			$model->updated_at = $this->checkAndReformateDate();
 
 			$model->save();
 		}
@@ -191,19 +200,16 @@ class TransfertController extends Controller
 					$model->livraison_id = $old->id_date;
 					$model->client_id= trim($old->numero_client, 'C');
 					$model->numero = $old->numero_commande;
-					$model->created_at = $old->date_creation;
-					if ($old->date_modif != '0000-00-00') {
-						$model->updated_at = $old->date_modif;
-					}else{
-						$model->updated_at = Carbon::now();
-					}
-					$model->relais_id = $this->transcode_oldrelais($old->lieu_livraison);
-					$model->modepaiement_id = $this->transcode_modepaiement($old->mode_reglement);
+					$model->relais_id = $this->transcodeRelais($old->lieu_livraison);
+					$model->modepaiement_id = $this->transcodeModepaiement($old->mode_reglement);
 					$model->is_paid = $old->paiement_ok;
 					$model->is_livred = $old->livraison_ok;
 					$model->is_retired = $old->retrait_ok;
 					$model->is_actived = 1;
+					$model->statut = "C_ARCHIVABLE";
 					$model->remarques = '';
+					$model->created_at = checkAndReformateDate($old->date_creation);
+					$model->updated_at = checkAndReformateDate($old->date_modif);
 
 
 					$lignes = $this->transpositionLignes($old);
@@ -226,7 +232,16 @@ class TransfertController extends Controller
 
 
 
-	private function transcode_modepaiement($modepaiement)
+	private function reformateTel($tel)
+	{
+		$newtel = str_replace('.', '', $tel);
+		$newtel = str_replace(' ', '', $tel);
+
+		return $newtel;
+	}
+
+
+	private function transcodeModepaiement($modepaiement)
 	{
 		if ($modepaiement == 'chèque') {
 			return ModePaiement::where('nom', 'Chèque')->first()->id;
@@ -238,27 +253,31 @@ class TransfertController extends Controller
 
 
 
-	private function transcode_oldrelais($ville)
+	private function transcodeRelais($ville)
 	{
 		switch ($ville) {
 			case 'Foix':
-			return 9;
+			return 1;
 			break;
 
 			case 'La Bastide de Sérou':
-			return 10;
+			return 2;
 			break;
 
 			case 'Pamiers':
-			return 11;
+			return 3;
 			break;
 
 			case 'Saint-Girons':
-			return 12;
+			return 4;
+			break;
+
+			case 'Lavelanet':
+			return 7;
 			break;
 
 			default:
-			return 13;
+			return 5;
 			break;
 		}
 	}
@@ -305,11 +324,11 @@ class TransfertController extends Controller
 
 
 	/**
-	 * À partir du muméro de ligne, récupérer la quantité et le panier_id, 
+	 * À partir du muméro de ligne, récupérer la quantité et le panier_id,
 	 * les assigner à la nouvelle ligne et retourner celle-ci.
 	 *
 	 * @return void
-	 * @author 
+	 * @author
 	 **/
 	private function recompositionLigne($numeroLigne, $commande_old)
 	{
@@ -328,7 +347,7 @@ class TransfertController extends Controller
 
 	/**
 	 * Il s'agit ici de créer un enregistrement dans panier_livraison lorsqu'une ligne d'une commande est créée,
-	 * ce, pour persister le producteur et le prix livraison. 
+	 * ce, pour persister le producteur et le prix livraison.
 	 * Mais attention, plusieurs commandes d'une même livraison peuvent faire référence à un même couple panier/livraison.
 	 * En ce cas on ne recrée pas un nouvel enregistrement pour conserver l'unicité des données en BDD.
 	 *
@@ -347,7 +366,7 @@ class TransfertController extends Controller
 		}
 
 	}
-	
+
 
 
 	private function getPrixFinal($panier_id, $commande_old)
@@ -356,7 +375,7 @@ class TransfertController extends Controller
 		$date_creation = Carbon::createFromFormat('Y-m-d', $commande_old->date_creation);
 
 		if ($date->diffInDays($date_creation) > 0) {
-			
+
 			switch ($panier_id) {
 				case '1':
 				return 80.00;
@@ -466,12 +485,12 @@ class TransfertController extends Controller
 	 * Filtrer les dates, car, par erreur, au début de l'utilisation de l'ancienne base certaines dates ont été codées (D-m-Y) et non (Y-m-D)
 	 *
 	 * @return void
-	 * @author 
+	 * @author
 	 **/
-	function checkAndReformateDate($date)
+	function checkAndReformateDate($date = '')
 	{
-		if ($date == '') {
-			$date = '2009-10-22';
+		if ($date == '' || $date = '0000-00-00') {
+			$date = date('Y-m-d', time());
 		}else{
 			$date = explode('-', $date);
 			if( strlen($date[2]) == 4 ){

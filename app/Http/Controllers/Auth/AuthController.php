@@ -93,7 +93,7 @@ class AuthController extends Controller
         }
 
 
-        // Si l'utilisateur n'est pas authentifié dans la nouvelle application, 
+        // Si l'utilisateur n'est pas authentifié dans la nouvelle application,
         // il faut voir s'il existait dans l'ancienne et pas encore transféré.
         return $this->tryOldPseudo($request);
 
@@ -144,7 +144,8 @@ class AuthController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function register(InscriptionRequest $request)
-    {dd('stopregister');
+    {
+      // dd('stopregister');
         $this->isItReinscriptionCases($request);
 
         Auth::guard($this->getGuard())->login($this->create($request->all()));
@@ -181,7 +182,8 @@ class AuthController extends Controller
      * @return User
      */
     protected function create(array $data)
-    {dd('stop');
+    {
+      // dd('stop');
         $user = new UserModel;
         $user->pseudo = $data['pseudo'];
         $user->email = $data['email'];
@@ -197,10 +199,10 @@ class AuthController extends Controller
         $client->ad2 = $data['ad2'];
         $client->cp = $data['cp'];
         $client->ville = $data['ville'];
-        $client->telephone = $data['telephone'];
+        $client->tel = $data['tel'];
         $client->mobile = $data['mobile'];
         $client->save();
-        
+
         return $user;
 
     }
@@ -224,12 +226,10 @@ class AuthController extends Controller
         $params['subject'] = 'Confirmation d’inscription : '.$input['prenom'].' '.$input['nom'].' -- '.$input['email'];
         $datas['content'] = 'Confirmation d’inscription : '.$input['prenom'].' '.$input['nom'].' -- '.$input['email'];
         $this->SendMailGestionnaire($params, $datas);
-        
+
         $datas['content'] = $request->input();
         $this->SendMailOuaibmaistre($params, $datas);
 
     }
 
 }
-
-

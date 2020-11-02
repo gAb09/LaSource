@@ -12,6 +12,9 @@
 				<td colspan="3">
 					@if($commande->statut == 'C_CREATED' or $commande->statut == 'C_REGISTERED')
 						<a class="btn btn-primary btn-xs" href="#overlay"  onClick="javascript:editCommande({{ $commande->id }}, {{ $commande->Livraison->id }});$('#change_detected').addClass('hidden');" >Modifier cette commande</a>
+						<a class="btn btn-danger btn-xs" onClick="javascript:alert('Fonctionnalité souhaitée ??');" >Annuler cette commande</a>
+					@else
+						<a class="btn btn-warning btn-xs" onClick="javascript:alert('Fonctionnalité souhaitée ??');" >Pour tout changement, contacter le gestionnaire</a>
                     @endif
 				</td>
 				<td colspan="2">

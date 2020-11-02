@@ -13,7 +13,7 @@ trait ModelTrait
     }
 
 
-    public function formatTel($value)
+    public function getFormatedTel($value)
     {
         $value = str_split($value, 2);
         $value = implode(' ', $value);
@@ -21,16 +21,16 @@ trait ModelTrait
     }
 
 
-    public function getMobileAttribute($value)
-    {
-        return $this->formatTel($value);
-    }
-
-
-    public function getTelAttribute($value)
-    {
-    	return $this->formatTel($value);
-    }
+    // public function getMobileAttribute($value)
+    // {
+    //     return $this->formatTel($value);
+    // }
+    //
+    //
+    // public function getTelAttribute($value)
+    // {
+    // 	return $this->formatTel($value);
+    // }
 
 
     public function getClassActivedAttribute($value)

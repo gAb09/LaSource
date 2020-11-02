@@ -1,6 +1,6 @@
 $("#paniers_index").sortable({
 	update: function(event, ui){
-	// Actualiser la page 
+	// Actualiser la page
 		// Lister les éléments "sortable"
 		list = ui.item.parent('div#paniers_index');
 
@@ -33,5 +33,5 @@ function editPanier(panier_id){
 	// console.log(domaine);
 	// console.log(panier_id);
 
-	document.location.href='http://'+domaine+'/panier/'+panier_id+'/edit';
+	document.location.href = domaine+'/panier/'+panier_id+'/edit';
 }

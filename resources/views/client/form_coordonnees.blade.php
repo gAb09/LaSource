@@ -89,12 +89,10 @@
                         </div>
 
                         <!-- tel -->
-                        <?php $tel = $model->cleanTel($model->tel); $old_tel = $model->cleanTel(old('tel')); ?>
                         <div class="form-group{{ $errors->has('tel') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Téléphone&nbsp*</label>
-
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="tel" value="{{ $tel or $old_tel }}">
+                                <input type="text" class="form-control" name="tel" value="{{ $model->tel or $old('tel') }}">
 
                                 @if ($errors->has('tel'))
                                 <span class="help-block">
@@ -106,12 +104,11 @@
 
 
                         <!-- Mobile -->
-                        <?php $mobile = $model->cleanTel($model->mobile); $old_mobile = $model->cleanTel(old('mobile')); ?>
                         <div class="form-group{{ $errors->has('mobile') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Mobile</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="mobile" value="{{ $mobile or $old_mobile }}">
+                                <input type="text" class="form-control" name="mobile" value="{{ $model->mobile or old('mobile') }}">
 
                                 @if ($errors->has('mobile'))
                                 <span class="help-block">

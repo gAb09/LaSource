@@ -420,7 +420,7 @@ class Domaine
 	}
 
     /**
-     * undocumented function
+     * undocumented function A supprimer ?
      *
      * @return void
      * @author 

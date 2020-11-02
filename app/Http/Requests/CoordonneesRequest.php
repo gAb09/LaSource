@@ -29,10 +29,9 @@ class CoordonneesRequest extends Request
         'ad1' => 'required_with:ad2,cp,ville',
         'cp' => 'digits:5|required_with:ad1,ad2,ville',
         'ville' => 'required_with:ad1,ad2,cp',
-        'tel' => 'required|numeric|digits:10',
-        'mobile' => 'numeric|digits:10',
-        'email' => 'email|required',
+        'tel' => 'required|digits:10|numeric',
+        'mobile' => 'digits:10|numeric',
+        'email' => 'required|email',
         ];
     }
 }
-

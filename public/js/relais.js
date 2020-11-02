@@ -1,12 +1,12 @@
 /**
-* 
-* 
+*
+*
 * Call setRangs dans global.js
 * @arguments : string : nom du model / json array : doublets (id: rang)
 **/
 $("#relaiss_index").sortable({
 	update: function(event, ui){
-	// Actualiser la page 
+	// Actualiser la page
 		// Lister les éléments "sortable"
 		list = ui.item.parent('div#relaiss_index');
 
@@ -38,5 +38,5 @@ function editRelais(relais_id){
 	// console.log(domaine);
 	// console.log(relais_id);
 
-	document.location.href='http://'+domaine+'/relais/'+relais_id+'/edit';
+	document.location.href = domaine+'/relais/'+relais_id+'/edit';
 }
