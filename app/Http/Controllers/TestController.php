@@ -35,8 +35,8 @@ class TestController extends Controller
 
     public function testmail()
     {
-      $datas = ['nom' => 'EnLocal'];
-      $param['to'] = 'gbom@club-internet.fr';
+      $datas = ['nom' => env('APP_ENV')];
+      $param['to'] = 'paniers@viandes-bio-ariege.fr';
       $param['subject'] = 'Confirmation d’inscription : '.$datas['nom'];
 
       $vue = 'layouts.testmail';
@@ -45,6 +45,7 @@ class TestController extends Controller
       // try{
       $result = Mail::send($vue, ['datas' => $datas], function ($m) use($datas, $param) {
       	$m->to($param['to']);
+        $m->cc('brunogabiot@club-internet.fr');
       	$m->subject($param['subject']);
       });
       // }catch (Exception $e){
